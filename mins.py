@@ -1,4 +1,5 @@
 """ Something Python. """
+# write something
 
 def min1(*args):
     res = args[0]
