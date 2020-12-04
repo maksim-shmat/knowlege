@@ -1,3 +1,5 @@
+""" Something Python. """
+
 def min1(*args):
     res = args[0]
     for arg in args[1:]:
