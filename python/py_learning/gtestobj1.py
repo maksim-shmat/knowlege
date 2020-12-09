@@ -1,0 +1,17 @@
+""" Make graph for base class and do control search. """
+
+from graph import Graph
+
+for name in 'ABCDEFG':
+    exec("%s = Graph('%s')" % (name, name))
+
+A.arcs = [B, E, G]
+B.arcs = [C]
+C.arcs = [D, E]
+D.arcs = [F]
+E.arcs = [C, F, G]
+G.arcs = [A]
+
+A.search(G)
+for (start, stop) in [(E, D), (A, G), (G, F), (B, A), (D, A)]:
+    print(start.search(stop))
