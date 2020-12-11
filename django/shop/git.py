@@ -44,3 +44,15 @@ git push --set-upstream origin shop2
 ###########
 # from one com git push
 # and from other com git pull origin
+
+To many trubles:
+1. add dir to git in com
+2. add  files to git in A50
+3. git push - no
+4. git pull - no
+5. git pull origin --rebase  (files from A50 is lost!)
+
+##########
+# cache username and pswd for 15 min
+$ git config --global credential.helper cache (but data will be git-credentials file?)
+

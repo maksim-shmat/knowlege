@@ -22,3 +22,6 @@ $ python manage.py inspectdb > models.py
 
 Помните, что запуск миграции создаст Django
 административные таблицы (django_ * и auth_ *) в устаревшей базе данных.
+
+# I will trubles with db from runserver if in db be left note. I clear it or remove, sorry. It for db.sqlite3.
+

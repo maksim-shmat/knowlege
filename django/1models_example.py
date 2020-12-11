@@ -1,3 +1,5 @@
+""" Examples how write models. """
+
 class Sighting(models.Model):
     superhero = models.ForeignKey(
             settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -21,3 +23,30 @@ class Sighting(models.Model):
         ordering = ["-sighted_on"]
         verbose_name = "Sighting & Encounter"
         verbose_name_plural = "Sightings & Encounters"
+
+#############
+# This example from django site, it is site-anketa.
+from django.db import models
+
+class Question(models.Model):
+    """ Make a field for ask a question. """
+    question_text = models.CharField(max_length=200)
+    pub_date = models.DateTimeField('date published')
+    
+    def was_published_recently(self):
+        return self.pub_date >= timezone.now() -
+    datetime.timedelta(days=1)
+
+    def __str__(self):
+        return self.question_text
+
+class Choice(models.Model):
+    """ Make a field for get answer. """
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    choice_text = models.CharField(max_length=200)
+    votes = models.IntegerField(default=0)
+
+    def __str__(self):
+        return self.choice_text
+
+

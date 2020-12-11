@@ -13,7 +13,6 @@ account/templates/base.html
 
 sudo apt install redis-server
 sudo systemctl status redis-server
-sudo systemctl status redis-server
 automatic start
 redis-cli
 127.0.0.1:6379> ping
