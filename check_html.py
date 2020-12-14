@@ -21,3 +21,4 @@ if __name__ == '__main__':
     values = parse_html(html)
     write_to_csv(values, "forecast.csv")
     print(values)
+
