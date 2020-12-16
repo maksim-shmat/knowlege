@@ -31,3 +31,16 @@ endNum = int(input("How many slices have you eaten? "))
 slicesLeft = startNum - endNum
 print("You have", slicesLeft, "slices remaining")
 
+# 007
+name = input("What is your name? ")
+age = int(input("How old are you? "))
+newAge = age + 1
+print(name, "next birthday you will be", newAge)
+
+# 008
+
+bill = int(input("What is the total cost of the bill? "))
+people = int(input("How many people are there? "))
+each = bill/people
+print("Each person should pay $", each)
+
