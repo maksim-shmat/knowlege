@@ -44,3 +44,16 @@ people = int(input("How many people are there? "))
 each = bill/people
 print("Each person should pay $", each)
 
+# 009
+
+days = int(input("Enter the number of days: "))
+hours = days*24
+minutes = hours*60
+seconds = minutes*60
+print("In", days,"days there are...")
+print(hours, "hours")
+print(minutes, "minutes")
+print(seconds, "seconds")
+
+# 010
+
