@@ -71,9 +71,10 @@ HANGMAN_PICS = ['''
        / \  |
 
            ===''']
-words = 'kozel'.split()
+words = 'kozel aist akula babuin baran barsuk bobr bik verblud'.split()
 
 def getRandomWord(wordList):
+    """ This func return random str from get list."""
     wordIndex = random.randint(0, len(wordList) - 1)
     return wordList[wordIndex]
 
@@ -82,7 +83,7 @@ def displayBoard(missedLetters, correctLetters, secretWord):
     print()
 
     print('Error letter:', end=' ')
-    for leter in missedLetters:
+    for letter in missedLetters:
         print(letter, end=' ')
     print()
 
