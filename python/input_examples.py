@@ -1,4 +1,4 @@
-""" From tose book for dummy."""
+""" There is a victorina, man."""
 
 # 001
 firstname = input("Please inter your first name: ")
@@ -57,3 +57,13 @@ print(seconds, "seconds")
 
 # 010
 
+kilo = int(input("Enter the number of kilo: "))
+pound = kilo * 2.204
+print("That is", pound, "pounds")
+
+# 011
+
+larger = int(input("Enter a number over 100: "))
+smaller = int(input("Ente a number under 10: "))
+answer = larger//smaller
+print(smaller, "goes into", larger, answer, "times")
