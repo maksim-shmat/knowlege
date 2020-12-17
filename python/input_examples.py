@@ -210,7 +210,7 @@ if first != "a" and first != "e" and first != "i" and first != "o" and first != 
 else:
     newword = word + "way"
 print(newword.lower())
-"""
+
 # 027
 
 num = float (input("Enter a number with lots of decimal places: "))
@@ -221,14 +221,14 @@ print(num*2)
 num = float(input("Enter a number with lots of decimal places: "))
 answer = num*2
 print(answer)
-print(round(ansver, 2))
+print(round(answer, 2))
 
 # 029
 
 import math
 num = int(input("Enter a number over 500: "))
 answer = math.sqrt(num)
-print(round(ansver, 2))
+print(round(answer, 2))
 
 # 030
 
@@ -253,4 +253,26 @@ print(round(volume,3))
 
 # 033
 
+num1 = int(input("Enter a number: "))
+num2 = int(input("Enter another number: "))
+ans1 = num1//num2
+ans2 = num1%num2
+print(num1, "divided by", num2, "is", ans1, "with", ans2, "remaining.")
+"""
+# 034
 
+print("1) Square")
+print("2) Triangle")
+print()
+menuselection = int(input("Enter a number: "))
+if menuselection == 1:
+    side = int(input("Enter the length of one side: "))
+    area = side*side
+    print("The area of your chosen shape is", area)
+elif menuselection == 2:
+    base = int(input("Enter the length of the base: "))
+    height = int(input("Enter the height of the triangle: "))
+    area = (base*height)/2
+    print("The area of your chosen shape is", area)
+else:
+    print("Incorrect option selected")
