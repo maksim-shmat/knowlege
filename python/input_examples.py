@@ -1,5 +1,5 @@
 """ There is a victorina, man."""
-
+"""
 # 001
 firstname = input("Please inter your first name: ")
 print("Hello",firstname)
@@ -148,3 +148,21 @@ elif num == "3":
     print("Correct")
 else:
     print("Error message")
+"""
+# 020
+
+name = input("Enter your first name: ")
+length = len(name)
+print(length)
+
+# 021
+
+firstname = input("Enter your first name: ")
+surname = input("Enter your surname: ")
+name = firstname + " " + surname
+length = len(name)
+print(name)
+print(length)
+
+# 022
+
