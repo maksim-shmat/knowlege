@@ -225,3 +225,32 @@ print(round(ansver, 2))
 
 # 029
 
+import math
+num = int(input("Enter a number over 500: "))
+answer = math.sqrt(num)
+print(round(ansver, 2))
+
+# 030
+
+import math
+print(round(math.pi, 5))
+
+# 031
+
+import math
+radius = int(input("Enter the radius of the circle: "))
+area = math.pi*(radius**2)
+print(area)
+
+# 032
+
+import  math
+radius = int(input("Enter the radius of the circle: "))
+depth = int(input("Enter depth: "))
+area = math.pi*(radius**2)
+volume = area*depth
+print(round(volume,3))
+
+# 033
+
+
