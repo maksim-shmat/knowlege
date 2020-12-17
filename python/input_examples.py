@@ -217,3 +217,11 @@ num = float (input("Enter a number with lots of decimal places: "))
 print(num*2)
 
 # 028
+
+num = float(input("Enter a number with lots of decimal places: "))
+answer = num*2
+print(answer)
+print(round(ansver, 2))
+
+# 029
+
