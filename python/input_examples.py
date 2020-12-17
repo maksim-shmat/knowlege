@@ -182,7 +182,7 @@ start = int(input("Enter a starting number: "))
 end = int(input("Enter an end number: "))
 part = (phrase[start:end])
 print(part)
-"""
+
 # 024
 
 word = input("Enter a word: ")
@@ -210,3 +210,10 @@ if first != "a" and first != "e" and first != "i" and first != "o" and first != 
 else:
     newword = word + "way"
 print(newword.lower())
+"""
+# 027
+
+num = float (input("Enter a number with lots of decimal places: "))
+print(num*2)
+
+# 028
