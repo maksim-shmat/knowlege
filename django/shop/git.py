@@ -56,6 +56,4 @@ To many trubles:
 # cache username and pswd for 15 min
 $ git config --global credential.helper cache (but data will be git-credentials file?)
 
-==============
-$ git shortlog --since="2020-12-13"  # How many commits today?
 
