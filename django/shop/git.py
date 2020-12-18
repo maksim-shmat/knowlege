@@ -56,4 +56,5 @@ To many trubles:
 # cache username and pswd for 15 min
 $ git config --global credential.helper cache (but data will be git-credentials file?)
 
+########
 
