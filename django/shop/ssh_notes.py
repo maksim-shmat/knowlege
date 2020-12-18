@@ -30,3 +30,12 @@ $ ssh-add ~/.ssh/maksim-shmat_github_openssh
 >Enter passphrase for /home/jack/.ssh/maksim-shmat_github_openssh: 
 Identity added: /home/jack/.ssh/maksim-shmat_github_openssh (***@gmail.com)
 
+# check github connection with ssh
+$ ssh -T git@github.com
+Hi maksim-shmat! You`ve successfully authenticated, but GitHub does not
+provide shell access.
+
+# change https to ssh
+git remote -v (chech http or ssh)
+copy ssh-address repo in github <green button"Code">
+git remote set-url origin <ssh-address> # for concreet repo
