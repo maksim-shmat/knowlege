@@ -82,7 +82,7 @@ def displayBoard(missedLetters, correctLetters, secretWord):
     print(HANGMAN_PICS[len(missedLetters)])
     print()
 
-    print('Error letter:', end=' ')
+    print('Missed letters:', end=' ')
     for letter in missedLetters:
         print(letter, end=' ')
     print()

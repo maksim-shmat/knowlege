@@ -258,7 +258,7 @@ num2 = int(input("Enter another number: "))
 ans1 = num1//num2
 ans2 = num1%num2
 print(num1, "divided by", num2, "is", ans1, "with", ans2, "remaining.")
-"""
+
 # 034
 
 print("1) Square")
@@ -276,3 +276,19 @@ elif menuselection == 2:
     print("The area of your chosen shape is", area)
 else:
     print("Incorrect option selected")
+"""
+# 035
+
+name = input("Type in your name: ")
+for i in range(0,3):
+    print(name)
+
+# 036
+
+name = input("Type in your name: ")
+number = int(input("Enter a number: "))
+for i in range (0, number):
+    print(name)
+
+# 037
+
