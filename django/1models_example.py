@@ -201,3 +201,19 @@ class Person(models.Model):
     def full_name(self):
         "Returns the person's full name."
         return '%s %s' % (self.first_name, self.last_name)
+
+##########
+# overriding methods for save
+form djnago.db import models
+
+class Blog(models.Model):
+    name = models.CharField(max_length=100)
+    tagline = models.TextField()
+
+    def save(self, *args, **kwargs):
+        do_something()
+        super().save(*args, **kwargs)  # Call the "real" save() method.
+        do_something_else()
+
+#############
+# overriding methods prevent saving
