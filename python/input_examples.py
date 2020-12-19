@@ -379,5 +379,19 @@ if num < 10:
 else:
     print("Too many people")
 
-# 045
+# just example loop while
+
+again = "yes"
+while again == "yes":
+    print('Hello')
+    again = input("Do you want to loop again? ")
+
+# and more
+total = 0
+while total < 100:
+    num = int(input("Enter a number: "))
+    total = total + num
+print("The total is ", total)
+
+#
 
