@@ -345,7 +345,7 @@ for i in range(0, 5):
     if ans == "y":
         total = total + num
 print(total)
-"""
+
 # 043
 # Ask which direction the user wants to count (up or down). If they select up,
 # then ask them for top number and then count from 1 to that number. If they
@@ -364,4 +364,20 @@ elif direction == "d":
         print(i)
 else:
     print("I don`t understand")
+"""
+# 044
+# Ask how many people the user wants to invite to a party. If they enter a 
+# number below 10, ask for the names and after each name display "[name] has
+# been invited". If they enter a number which is 10 or higher, display the
+# message "Too many people".
+
+num = int(input("How many friends do you want to invite to the party?"))
+if num < 10:
+    for i in range(0, num):
+        name = input("Enter a name: ")
+        print(name, "has been invited")
+else:
+    print("Too many people")
+
+# 045
 
