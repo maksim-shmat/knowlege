@@ -405,5 +405,14 @@ while total <= 50:
      print("The total is...", total)
 
 # 046
+# Ask the user to inter a number. Keep asking until they enter a vlue over
+# 5 and then display the number you entered was a [number]" and sntop the
+# progtram.
 
+num = 0
+while num <= 5:
+    num = int(input("Enter a number: "))
+print("The last number you entered was a", num)
+
+# 047
 
