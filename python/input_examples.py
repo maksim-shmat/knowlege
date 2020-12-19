@@ -295,3 +295,15 @@ for i in range (0, number):
 name = input("Enter your name: ")
 for i in name:
     print(i)
+
+# 038
+
+num  = int(input("Enter a number: "))
+name = input("Enter your name: ")
+for x in range(0, name):
+    for i in name:
+        print(1)
+
+# 039
+
+
