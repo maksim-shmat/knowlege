@@ -276,7 +276,7 @@ elif menuselection == 2:
     print("The area of your chosen shape is", area)
 else:
     print("Incorrect option selected")
-"""
+
 # 035
 
 name = input("Type in your name: ")
@@ -295,21 +295,26 @@ for i in range (0, number):
 name = input("Enter your name: ")
 for i in name:
     print(i)
-
+"""
 # 038
 
 num  = int(input("Enter a number: "))
 name = input("Enter your name: ")
-for x in range(0, name):
+for x in range(0, num):
     for i in name:
-        print(1)
+        print(i)
 
 # 039
 
-num = int(input("Enter a number between 1 and 12: "0))
+num = int(input("Enter a number between 1 and 12: "))
 for i in range(1, 13):
     answer = i * num
     print(i, "x", num, "=", answer)
 
 # 040
+num = int(input("Enter a number below 50: "))
+for i in range(50, num-1, -1):
+    print(i)
+
+# 041
 
