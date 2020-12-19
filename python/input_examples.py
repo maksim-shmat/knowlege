@@ -364,7 +364,7 @@ elif direction == "d":
         print(i)
 else:
     print("I don`t understand")
-"""
+
 # 044
 # Ask how many people the user wants to invite to a party. If they enter a 
 # number below 10, ask for the names and after each name display "[name] has
@@ -392,6 +392,18 @@ while total < 100:
     num = int(input("Enter a number: "))
     total = total + num
 print("The total is ", total)
+"""
+# 045
+# Set the total to 0 to start with. While th total is 50 ot less, ask the
+# user to input a number. Add that number to the total and print the message
+# "The total is...[total]". Stop loop when the total is over 50.
 
-#
+total = 0
+while total <= 50:
+     num = int(input("Enter a number: "))
+     total = total + num
+     print("The total is...", total)
+
+# 046
+
 
