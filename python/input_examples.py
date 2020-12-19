@@ -292,3 +292,6 @@ for i in range (0, number):
 
 # 037
 
+name = input("Enter your name: ")
+for i in name:
+    print(i)
