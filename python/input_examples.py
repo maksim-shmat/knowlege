@@ -316,7 +316,7 @@ for i in range(1, 13):
 num = int(input("Enter a number below 50: "))
 for i in range(50, num-1, -1):
     print(i)
-"""
+
 # 041
 # Ask the user to enter their name and a number. If the number is less than
 # 10, then display their name that number of times; otherwise display the
@@ -345,7 +345,23 @@ for i in range(0, 5):
     if ans == "y":
         total = total + num
 print(total)
-
+"""
 # 043
+# Ask which direction the user wants to count (up or down). If they select up,
+# then ask them for top number and then count from 1 to that number. If they
+# select down, ask them to enter a number below 20 and then count down from
+# 20 to that number. If they entered something other than up or down, display
+# the message "I dont`t understand".
 
+direction = input("Do you want to count up or down? (u/d) ")
+if direction == "u":
+    num = int(input("What is the top number? "))
+    for i in range(1, num+1):
+        print(i)
+elif direction == "d":
+    num = int(input("Enter a number below 20: "))
+    for i in range(20, num-1, -1):
+        print(i)
+else:
+    print("I don`t understand")
 
