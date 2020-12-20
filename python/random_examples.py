@@ -29,4 +29,12 @@ colour = random.choice(["red", "black", "green"])
 # it as the variable "colour". Remember: strings need to include speech
 # marks but numeric data does not.
 """
+# 052
+# Display a random integer between 1 and 100 inclusive.
+
+import random
+num = random.randint(1,100)
+print(num)
+
+# 053
 
