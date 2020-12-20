@@ -230,4 +230,179 @@ class Blog(models.Model):
             super().save(*args, **kwargs) # Call the "real" save() method.
 
 ############
+# Abstract base class for make one a table in db for all
+from django.db import models
+
+class CommonInfo(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.PositiveIntegerField()
+
+    class Meta:
+        abstract = True  # Check abstract class
+
+class Student(CommonInfo):    # Inheritance
+    home_group = models.CharField(max_length=5)
+
+###
+from django.db import models
+
+class CommonInfo(models.Model):
+    # ...
+    class Meta:
+        abstract = True    # inherit from Meta abstract
+        ordering = ['nam'] # and add new 
+
+class Student(CommonInfo):
+    # ...
+    class Meta(CommonInfo.Meta):
+        db_table = 'student_info' # add new 
+
+###########
+# Need sets abstract=True, else Django set False default
+from djaango.db import models
+
+class CommonInfo(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.PositiveIntegerField()
+
+    class Meta:
+        abstract = True
+        ordering = ['name']
+
+class Unmanaged(models.Model):
+    class Meta:
+        abstract = True
+        managed = False
+
+class Student(CommonInfo, Unmanaged):
+    home_group = models.CharField(max_length=5)
+
+    class Meta(CommonInfo.Meta, Unmanaged.Meta):
+        pass
+#############
+# Be careful with related_name and related_query_name
+from django.db import models
+
+class Base(models.Model):
+    m2m = models.ManyToManyField(
+            OtherModel,
+            related_name="%(app_label)s_%(class)s_related",
+            related_query_name="%(app_label)s_%(class)ss",
+    )
+    
+    class Meta:
+        abstract = True
+
+    class ChildA(Base):
+        pass
+
+    class ChildB(Base):
+        pass
+# Along with another app rare/models.py:
+from common.models import Base
+
+class ChildB(Base):
+    pass
+
+##############
+# Multi-table inheritance
+from django.db import models
+
+class Place(models.Model):
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=80)
+
+class Restaurant(Place):
+    server_hot_dogs = models.BooleanField(default=False)
+    server_pizza = models.BooleanField(default=False)
+
+##############
+# Proxy model
+from django.db import models
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+
+class MyPerson(Person):
+    class Meta:
+        proxy = True    # check the proxy
+
+    def do_something(self):
+        # ...
+        pass
+
+###
+class OrderedPerson(Person):
+    class Meta:
+        ordering = ["last_name"]
+        proxy = True
+
+###########
+# Proxy model managers
+from django.db import models
+
+class NewManager(models.Manager):
+    # ...
+    pass
+
+class MyPerson(Person):
+    objects = NewManager()
+
+    class Meta:
+        proxy = True
+
+###########
+# Create an abstract class for the new manager.
+class ExtraManagers(models.Model):
+    secondary = NewManager()
+
+    class Meta:
+        abstract = True
+
+class MyPerson(Person, ExtraManagers):
+    class Meta:
+        proxy = True
+
+#######
+# Multiple inheritance
+class Article(models.Model):
+    article_id = models.AutoField(primary_key=True)
+    ...
+
+class Book(models.Model):
+    book_id = models.AutoField(primary_key=True)
+    ...
+
+class BookReview(Book, Article):
+    pass
+
+#######
+# Use a commmon ancestor to hold the AutoField
+class Piece(models.Model):
+    pass
+
+class Article(Piece):
+    article_piece = models.OneToOneField(Piece, on_delete=models.CASCADE,
+            parent_link=True)
+    ...
+
+class Book(Piece):
+    book_piece = models.OneToOneField(Piece, on_delete=models.CASCADE,
+            parent_link=True)
+    ...
+
+class BookReview(Book, Article):
+    pass
+
+##########
+Organizing models in a package
+To do so, create a models package. Remove models.py and create a myapp/models/
+directory with an __init__.py file and the files to store your models. You
+most import the models in the __init__.py file.
+
+Explicitly important each model rather than using from .models import * has
+the advantages of not cluttering the namespace, making code more readable, 
+and keeping code tools useful.
+
 
