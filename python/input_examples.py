@@ -413,7 +413,7 @@ num = 0
 while num <= 5:
     num = int(input("Enter a number: "))
 print("The last number you entered was a", num)
-"""
+
 # 047
 # Ask the user to enter a number and then enter another number. Add these two
 # numbers together and then ask if they want to add another number. If they
@@ -428,7 +428,24 @@ while again == "y":
     total = total + num2
     again = input("Do you want to add another number? (y/n)")
     print("The total is ", total)
-
+"""
 # 048
+
+# Ask for the name of somebody the use wants to invite to a party. After this,
+# display the message "[name] has now been invited" and add 1 to the count.
+# Then ask if they want to invite somebody else. Keep repeating this until
+# they no longer want to invite anyone else to the party and then display how
+# many people they have coming to the party.
+
+again = "y"
+count = 0
+while again =="y":
+    name = input("Enter a name of sombody you want to invite to your party: ")
+    print(name, "has now been invited")
+    count = count + 1
+    again = input("Do you want to invite somebody else? (y/n) ")
+print("You have", count, "people coming to your party")
+
+# 049
 
 
