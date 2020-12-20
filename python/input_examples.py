@@ -392,7 +392,7 @@ while total < 100:
     num = int(input("Enter a number: "))
     total = total + num
 print("The total is ", total)
-"""
+
 # 045
 # Set the total to 0 to start with. While th total is 50 ot less, ask the
 # user to input a number. Add that number to the total and print the message
@@ -413,6 +413,22 @@ num = 0
 while num <= 5:
     num = int(input("Enter a number: "))
 print("The last number you entered was a", num)
-
+"""
 # 047
+# Ask the user to enter a number and then enter another number. Add these two
+# numbers together and then ask if they want to add another number. If they
+# enter "y", ask them to enter another number and keep adding numbers "y". 
+# Once the loop has stopped, display the total.
+
+num1 = int(input("Enter a number: "))
+total = num1
+again = "y"
+while again == "y":
+    num2 = int(input("Enter another number: "))
+    total = total + num2
+    again = input("Do you want to add another number? (y/n)")
+    print("The total is ", total)
+
+# 048
+
 
