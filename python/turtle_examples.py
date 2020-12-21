@@ -37,7 +37,7 @@ for i in range(0, 360):
     turtle.forward(1)
     turtle.left(1)
 turtle.exitonclick()
-"""
+
 
 # 063
 # Draw three squares in a row with a gap between each. Fill them using three
@@ -72,3 +72,15 @@ for i in range(0, 4):
     turtle.right(90)
 turtle.end_fill()
 turtle.exitonclick()
+"""
+# 064
+# Draw a five-pointed star.
+
+import turtle
+
+for i in range(0, 5):
+    turtle.forward(100)
+    turtle.right(144)
+turtle.exitonclick()
+
+# 065
