@@ -117,7 +117,7 @@ while correct == False:
         print("Too high")
     else:
         print("Too low")
-"""
+
 # 058
 # Make a maths quiz that asks five questions by randomly generating two
 # whole numbers to make the question (e.g.[num1]+[num2]. Ask the user to enter
@@ -137,3 +137,35 @@ for i in range(1, 6):
     if answer == correct:
         score = score + 1
 print("You scored", score, "out of 5")
+"""
+# 059
+# Display five colours and ask the user to pick one. If they pick the same
+# as the program has chosen, say "Well done", otherwise display a witty
+# answer which involves the correct colour, e.g. "I bet you are GREEN with
+# envy" or "You are probably feeling BLUE right now". Ask them to guess again;
+# if they have still not got it right, keep giving them the same clue and ask
+# the user to enter a colour until they guess it correctly.
+
+import random
+
+colour = random.choice(["red", "blue", "green", "white", "pink"])
+print("Select from red, blue, green, white or pink")
+tryagain = True
+while tryagain == True:
+    theirchoice = input("Enter a colour: ")
+    theirchoice = theirchoice.lower()
+    if colour == theirchoice:
+        print("Well done")
+        tryagain = False
+    else:
+        if colour == "red":
+            print("I bet you are seeing RED reight now!")
+            tryagain = False
+        elif colour == "blue":
+            print("Don't feel BLUE.")
+        elif colour == "green":
+            print("I bet you are GREEN with envy right now.")
+        elif colour == "white":
+            print("Are you WHITE as a sheet, as you didn't guess correctly?")
+        elif colour == "pink":
+            print("Shame you are not feeling in the PINK, as you got it wrong!")
