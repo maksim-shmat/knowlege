@@ -28,7 +28,7 @@ colour = random.choice(["red", "black", "green"])
 # Picks a random value from the options "red", "black" or "green" and stores
 # it as the variable "colour". Remember: strings need to include speech
 # marks but numeric data does not.
-"""
+
 # 052
 # Display a random integer between 1 and 100 inclusive.
 
@@ -87,6 +87,19 @@ elif guess < num:
         print("Correct")
     else:
         print("You lose")
-
+"""
 # 056
+# Randomly pick a whole number between 1 and 10. Ask the user to enter a 
+# number and keep entering numbers until they enter the number that was
+# randomly picked
+
+import random
+num = random.randint(1, 10)
+correct = False
+while correct == False:
+    guess = int(input("Enter a number: "))
+    if guess == num:
+        correct = True
+
+# 057
 
