@@ -1,5 +1,5 @@
 """ Graphical exercises."""
-
+"""
 import turtle
 
 # fivecorners of 72 degrees
@@ -27,3 +27,14 @@ for i in range(0, 3):
     turtle.forward(100)
     turtle.left(120)
 turtle.exitonclick()
+"""
+# 062
+# Draw a circle.
+
+import turtle
+
+for i in range(0, 360):
+    turtle.forward(1)
+    turtle.left(1)
+turtle.exitonclick()
+
