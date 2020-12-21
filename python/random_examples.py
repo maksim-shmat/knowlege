@@ -87,7 +87,7 @@ elif guess < num:
         print("Correct")
     else:
         print("You lose")
-"""
+
 # 056
 # Randomly pick a whole number between 1 and 10. Ask the user to enter a 
 # number and keep entering numbers until they enter the number that was
@@ -117,5 +117,23 @@ while correct == False:
         print("Too high")
     else:
         print("Too low")
-
+"""
 # 058
+# Make a maths quiz that asks five questions by randomly generating two
+# whole numbers to make the question (e.g.[num1]+[num2]. Ask the user to enter
+# the answer, if they get it right adda point to their scope. At the end of
+# the quiz, tell them how many they got correct out of five.
+
+import random
+
+score = 0
+for i in range(1, 6):
+    num1 = random.randint(1, 50)
+    num2 = random.randint(1, 50)
+    correct = num1 + num2
+    print(num1, "+", num2, "= ")
+    answer = int(input("Your answer: "))
+    print()
+    if answer == correct:
+        score = score + 1
+print("You scored", score, "out of 5")
