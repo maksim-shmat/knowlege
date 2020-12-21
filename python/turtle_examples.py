@@ -19,4 +19,11 @@ for i in range(0, 10):
         turtle.forward(100)
         turtle.right(72)
 
-#
+# 061 
+# Draw a triangle.
+
+import turtle
+for i in range(0, 3):
+    turtle.forward(100)
+    turtle.left(120)
+turtle.exitonclick()
