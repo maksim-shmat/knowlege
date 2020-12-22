@@ -119,7 +119,7 @@ turtle.forward(75)
 
 turtle.hideturtle()
 turtle.exitonclick()
-"""
+
 # 066
 # Draw an octagon that uses a different colour (randomly selected from a list
 # of six possible colours) for each line.
@@ -135,8 +135,20 @@ for i in range(0, 8):
     turtle.right(45)
 
 turtle.exitonclick()
-
+"""
 # 067
+# Create the following patern
+import turtle
+import random
+
+for x in range(0, 10):
+    for i in range(0, 8):
+        turtle.forward(50)
+        turtle.right(45)
+    turtle.right(36)
+
+turtle.hideturtle()
+turtle.exitonclick()
 
 # 068
 
