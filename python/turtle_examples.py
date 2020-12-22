@@ -72,7 +72,7 @@ for i in range(0, 4):
     turtle.right(90)
 turtle.end_fill()
 turtle.exitonclick()
-"""
+
 # 064
 # Draw a five-pointed star.
 
@@ -82,5 +82,40 @@ for i in range(0, 5):
     turtle.forward(100)
     turtle.right(144)
 turtle.exitonclick()
-
+"""
 # 065
+# Write the numbers as shown below, starting at the bottom of the number one.
+
+import turtle
+turtle.left(90)
+turtle.forward(100)
+turtle.right(90)
+turtle.penup()
+turtle.forward(50)
+turtle.pendown()
+turtle.forward(50)
+turtle.right(90)
+turtle.forward(50)
+turtle.right(90)
+turtle.forward(75)
+turtle.left(90)
+turtle.forward(50)
+turtle.left(90)
+turtle.forward(75)
+turtle.penup()
+turtle.forward(50)
+turtle.pendown()
+turtle.forward(75)
+turtle.left(90)
+turtle.forward(50)
+turtle.left(90)
+turtle.forward(45)
+turtle.left(180)
+turtle.forward(45)
+turtle.left(90)
+turtle.forward(50)
+turtle.left(90)
+turtle.forward(75)
+
+turtle.hideturtle()
+turtle.exitonclick()

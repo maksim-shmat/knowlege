@@ -107,7 +107,7 @@ def getGuess(alreadyGuessed):
             print('Please, input one letter.')
         elif guess in alreadyGuessed:
             print('You already write this letter, olegafriend. Write another!')
-        elif guess not in 'abcdefghijklmnorstuvwxyz':
+        elif guess not in 'abcdefghijklmnopqrstuvwxyz':
             print('Please, enter LETTER.')
         else:
             return guess
@@ -156,4 +156,9 @@ if gameIsDone:
         gameIsDone = False
         secretWord = getRandomWord(words)
     #else:
-    #    break
+        #break
+"""
+Debuging:
+    1. not visualising missed letters, but correct in both fields
+    2. Not a break and ask to play more
+    3. Hangman up with correct letters.
