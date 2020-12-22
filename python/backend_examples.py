@@ -48,4 +48,22 @@ del subject_list[getrid]
 print(subject_list)
 
 # 73
+# Ask the user to enter four of their favorite foods and store them in
+# a dictionary so that they are indexed with numbers starting from 1.
+# Display the dictionary in full, showing the index number and the item.
+# Ask them which they want to get rid of and remove it from the list.
+# Sort the remaining data and display the dictionary.
 
+food_dictionary = {}
+food1 = input("Enter a food you like: ")
+food_dictionary[1] = food1
+food2 = input("Enter another food you like: ")
+food_dictionary[2] = food2
+food3 = input("Enter a third food you like: ")
+food_dictionary[3] = food3
+food4 = input("Enter one last food you like: ")
+food_dictionary[4] = food4
+print(food_dictionary)
+dislike = int(input("Which of these do you want to get rid of? "))
+del food_dictionary[dislike]
+print(sorted(food_dictionary.values()))
