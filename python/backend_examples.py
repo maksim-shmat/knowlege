@@ -36,4 +36,16 @@ sports_list.sort()
 print(sports_list)
 
 # 072
+# Create a list of six shcool subjects. Ask the user which of these
+# subjects they don't like. Delete the subject they have chosen from the
+# list before you display the list again.
+
+subject_list = ["maths", "english", "computing", "history", "science", "spanish"]
+print(subject_list)
+dislike = input("Which of these subjects do you dislike? ")
+getrid = subject_list.index(dislike)
+del subject_list[getrid]
+print(subject_list)
+
+# 73
 
