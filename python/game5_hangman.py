@@ -70,13 +70,41 @@ HANGMAN_PICS = ['''
 
        / \  |
 
-           ===''']
-words = 'kozel aist akula babuin baran barsuk bobr bik verblud'.split()
+           ===''', '''
+           
+        +---+
+       
+       [O   |
 
-def getRandomWord(wordList):
-    """ This func return random str from get list."""
-    wordIndex = random.randint(0, len(wordList) - 1)
-    return wordList[wordIndex]
+       /|\  |
+
+       / \  |
+
+           ===''', '''
+        
+        +---+
+
+       [O]  |
+
+       /|\  |
+
+       / \  |
+
+           ===''']
+
+words = {'Animals': 'kozel aist akula babuin baran barsuk bobr bik verblud'.split(),
+        'Figures': 'square triangle rectangle ring elipse'.split(),
+        'Fruits': 'apple orange limon laim pinapple mandarinec banana'.split(),
+        'Colors': 'red purple violet tiffany blue black white green'.split()}
+
+def getRandomWord(wordDict):
+    """ This func return random str from get dict of list of strings, and key."""
+    # In a first random choice get a key from dict.
+    wordKey = random.choice(list(wordDict.keys()))
+
+    # In a second random choice get a word from the list of keys in dict.
+    wordIndex = random.randint(0, len(wordDict[wordKey]) - 1)
+
 
 def displayBoard(missedLetters, correctLetters, secretWord):
     print(HANGMAN_PICS[len(missedLetters)])
@@ -118,12 +146,26 @@ def playAgain():
     return input().lower().startswith('y')
 
 print('H A N G M A N')
+difficulty = ''
+while difficulty not in 'LMH':
+    print('Change level of difficulty: L - Low, M - Mid, H - High')
+    difficulty = input().upper()
+if difficulty == 'M':
+    del HANGMAN_PICS[8]
+    del HANGMAN_PICS[7]
+if difficulty == 'H':
+    del HANGMAN_PICS[8]
+    del HANGMAN_PICS[7]
+    del HANGMAN_PICS[5]
+    del HANGMAN_PICS[3]
+
 missedLetters = ''
 correctLetters = ''
-secretWord = getRandomWord(words)
+secretWord, secretSet = getRandomWord(words)
 gameIsDone = False
 
 while True:
+    print('Secret word from the set: ' + secretSet)
     displayBoard(missedLetters, correctLetters, secretWord)
     # Accessed for player to write a letter
     guess = getGuess(missedLetters + correctLetters)
@@ -145,20 +187,20 @@ while True:
             # Check go up player's limit and lose
             if len(missedLetters) == len(HANGMAN_PICS) - 1:
                 displayBoard(missedLetters, correctLetter, secretWord)
-print('This is the end.\n Loose leters: '+str(len(missedLetters))+'and check:'+str(len(correctLetters))+'.General Word is"'+secretWord+'".')
-igameIsDone = True
+            print('This is the end.\n Loose leters: '+str(len(missedLetters))+'and check:'+str(len(correctLetters))+'.General Word is"'+secretWord+'".')
+            gameIsDone = True
 
 # Ask player want more?
-if gameIsDone:
-    if playAgain():
-        missedLetters = ''
-        correctLetters = ''
-        gameIsDone = False
-        secretWord = getRandomWord(words)
-    #else:
-        #break
+        if gameIsDone:
+            if playAgain():
+                missedLetters = ''
+                correctLetters = ''
+                gameIsDone = False
+                secretWord, secretSet = getRandomWord(words)
+            else:
+                break
 """
 Debuging:
-    1. not visualising missed letters, but correct in both fields
-    2. Not a break and ask to play more
-    3. Hangman up with correct letters.
+    * Need write tests for each functions
+
+"""
