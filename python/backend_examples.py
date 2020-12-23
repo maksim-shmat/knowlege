@@ -150,7 +150,7 @@ position = int(input("Enter a number between 0 and 3: "))
 tv.insert(position, newtv)
 for i in tv:
     print(i)
-"""
+
 # 079
 # Create an empty list called "nums". Ask the user to enter numbers. After
 # each number is entered, add it to the end of the nums list and display the
@@ -169,3 +169,21 @@ lastnum = input("Do you want the last number saved (y/n): ")
 if lastnum == "n":
     nums.remove(num)
 print(nums)
+"""
+# 080
+# Ask the user to enter their first name and then display the length of then
+# first name. Then ask for their surname and
+# display the length of their surname. Join their first name and surname
+# together with a space between and display the result. Finally, display the
+# length of their full name(including the space).
+
+fname = input("Enter your first name: ")
+print("That has", len(fname), "characters in it")
+sname = input("Enter your surname: ")
+print("That has", len(sname), "characters in it")
+name = fname + " " + sname
+print("Your full name is", name)
+print("That has", len(name), "characters in it")
+
+# 081
+
