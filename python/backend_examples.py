@@ -93,7 +93,7 @@ if selection in nums:
     print(selection, "is in position", nums.index(selection))
 else:
     print("That is not in the list")
-"""
+
 # 076
 # Ask the user to enter the names of three people they want to invite
 # to a party and store them in a list. After they have entered all three
@@ -134,6 +134,22 @@ stillcome = input("Do you still want them to come (y/n): ")
 if stillcome == "n":
     party.remove(selection)
 print(party)
-
+"""
 # 078
+# Create a list containing the titles of four TV programmes and display
+# them on separate lines. Ask the user to enter another show and a position
+# they want it itserted into the list. Display the list again, showing all
+# five TV programmes in their now positions.
+
+tv = ["Task Master", "Top Gear", "The Big Bang Theory", "How I Met Your Mother"]
+for i in tv:
+    print(i)
+print()
+newtv = input("Enter another TV show: ")
+position = int(input("Enter a number between 0 and 3: "))
+tv.insert(position, newtv)
+for i in tv:
+    print(i)
+
+# 079
 
