@@ -25,7 +25,7 @@ print(country, "has index number", country_tuple.index(country))
 print()
 num = int(input("Enter a number between 0 and 4: "))
 print(country_tuple[num])
-"""
+
 # 071
 # Create a list of two sports. Ask the user what their favourite sport is
 # and add this to the end of the list. Sort the list and display it.
@@ -47,7 +47,7 @@ getrid = subject_list.index(dislike)
 del subject_list[getrid]
 print(subject_list)
 
-# 73
+# 073
 # Ask the user to enter four of their favorite foods and store them in
 # a dictionary so that they are indexed with numbers starting from 1.
 # Display the dictionary in full, showing the index number and the item.
@@ -67,3 +67,16 @@ print(food_dictionary)
 dislike = int(input("Which of these do you want to get rid of? "))
 del food_dictionary[dislike]
 print(sorted(food_dictionary.values()))
+"""
+# 074
+# Enter a list of ten colours. Ask the user for a srarting number between 0 
+# and 4 and an end number between the start and end numbers the user input.
+
+colours = ["red", "blue", "green", "black", "white", "pink", "grey",
+        "purple", "yellow", "brown"]
+start = int(input("Enter a starting number(0-4): "))
+end = int(input("Enter an end number (5-9): "))
+print(colours[start: end])
+
+# 075
+
