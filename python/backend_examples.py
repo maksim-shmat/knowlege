@@ -186,4 +186,12 @@ print("Your full name is", name)
 print("That has", len(name), "characters in it")
 
 # 081
+# Ask the user to type in their favorite school subject. Display it with '-"
+# after each letter, e.g. S-p-a-n-i-s-h-.
+
+subject = input("Enter your favorite school subject: ")
+for letter in subject:
+    print(letter, end = "-")
+
+# 082
 
