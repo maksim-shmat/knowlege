@@ -169,7 +169,7 @@ lastnum = input("Do you want the last number saved (y/n): ")
 if lastnum == "n":
     nums.remove(num)
 print(nums)
-"""
+
 # 080
 # Ask the user to enter their first name and then display the length of then
 # first name. Then ask for their surname and
@@ -192,6 +192,16 @@ print("That has", len(name), "characters in it")
 subject = input("Enter your favorite school subject: ")
 for letter in subject:
     print(letter, end = "-")
-
+"""
 # 082
+# Show the user a line of text from your favorite poem and ask for a 
+# starting and ending point. Display the characters between those two points.
 
+poem = "Oh, I wish I'd looked after me teeth,"
+print(poem)
+start = int(input("Enter a starting number: "))
+end = int(input("Enter an end number: "))
+print(poem[start:end])
+
+# 083
+#
