@@ -67,7 +67,7 @@ print(food_dictionary)
 dislike = int(input("Which of these do you want to get rid of? "))
 del food_dictionary[dislike]
 print(sorted(food_dictionary.values()))
-"""
+
 # 074
 # Enter a list of ten colours. Ask the user for a srarting number between 0 
 # and 4 and an end number between the start and end numbers the user input.
@@ -77,6 +77,22 @@ colours = ["red", "blue", "green", "black", "white", "pink", "grey",
 start = int(input("Enter a starting number(0-4): "))
 end = int(input("Enter an end number (5-9): "))
 print(colours[start: end])
-
+"""
 # 075
+# Create a list of four three-digit numbers. Display the list to the user,
+# showing each item from the list on a separate line. Ask the user to enter a
+# three-digit number. If the number they have typed in matches one in the
+# list, display the position of that number in the list, otherwise display
+# the message "That is not in the list".
+
+nums = [123, 345, 234, 765]
+for i in nums:
+    print(i)
+selection = int(input("Enter a number from the list: "))
+if selection in nums:
+    print(selection, "is in position", nums.index(selection))
+else:
+    print("That is not in the list")
+
+# 076
 
