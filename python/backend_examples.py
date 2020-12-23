@@ -134,7 +134,7 @@ stillcome = input("Do you still want them to come (y/n): ")
 if stillcome == "n":
     party.remove(selection)
 print(party)
-"""
+
 # 078
 # Create a list containing the titles of four TV programmes and display
 # them on separate lines. Ask the user to enter another show and a position
@@ -150,6 +150,22 @@ position = int(input("Enter a number between 0 and 3: "))
 tv.insert(position, newtv)
 for i in tv:
     print(i)
-
+"""
 # 079
+# Create an empty list called "nums". Ask the user to enter numbers. After
+# each number is entered, add it to the end of the nums list and display the
+# list. Once they have entered three numbers, ask them if they still want the
+# last number they entered saved. If they say "no", remove the last item from
+# the list. Display the list of numbers.
 
+nums = []
+count = 0
+while count <3:
+    num = int(input("Enter a number: "))
+    nums.append(num)
+    print(nums)
+    count = count + 1
+lastnum = input("Do you want the last number saved (y/n): ")
+if lastnum == "n":
+    nums.remove(num)
+print(nums)
