@@ -202,7 +202,7 @@ print(poem)
 start = int(input("Enter a starting number: "))
 end = int(input("Enter an end number: "))
 print(poem[start:end])
-"""
+
 # 083
 # Ask the user to type in a word in upper case. If they type it in lower
 # case, ask them to try again. Keep repeating this until they type in a 
@@ -239,4 +239,19 @@ for x in name:
 print("Vowels =", count)
 
 # 086
+# Ask the user to enter a new password. Ask them to enter it again. If the
+# two passwords match, display "Thank you". If the letters are correct but
+# in the wrong case, display the message "They must be in the same case",
+# otherwise display the message "incorrect".
 
+pswd1 = input("Enter a password: ")
+pswd2 = input("Enter it again: ")
+if pswd1 == pswd2:
+    print("Thank you")
+elif pswd1.lower() == pswd2.lower():
+    print("They must be the same case")
+else:
+    print("Incorrect")
+"""
+# 087
+# 
