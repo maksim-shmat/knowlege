@@ -266,7 +266,7 @@ for x in word:
     letter = word[position]
     print(letter)
     num = num + 1
-"""
+
 # -------- Arrays --------
 # 088
 # Ask the user for a list of five integers. Store them in an array. Sort the
@@ -281,6 +281,22 @@ for i in range(0, 5):
 nums = sorted(nums)
 nums.reverse()
 print(nums)
-
+"""
 # 089
+# Create an array which will store a list of integers. Generate five random
+# numbers and store them in the array. Display the array(showing each item
+# on a separate line).
+
+from array import *
+import random
+
+nums = array('i', [])
+for i in range(0, 5):
+    num = random.randint(1, 100)
+    nums.append(num)
+
+for i in nums:
+    print(i)
+
+# 090
 
