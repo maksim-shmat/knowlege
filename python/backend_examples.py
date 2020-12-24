@@ -252,7 +252,7 @@ elif pswd1.lower() == pswd2.lower():
     print("They must be the same case")
 else:
     print("Incorrect")
-"""
+
 # 087
 # Ask the user to type in a word and then display it backwards on separate
 # lines. For instance, if they type in "Hello" it should display as shown
@@ -266,3 +266,21 @@ for x in word:
     letter = word[position]
     print(letter)
     num = num + 1
+"""
+# -------- Arrays --------
+# 088
+# Ask the user for a list of five integers. Store them in an array. Sort the
+# list and display it in reverse order.
+
+from array import *
+
+nums = array('i', [])
+for i in range(0, 5):
+    num = int(input("Enter a number: "))
+    nums.append(num)
+nums = sorted(nums)
+nums.reverse()
+print(nums)
+
+# 089
+
