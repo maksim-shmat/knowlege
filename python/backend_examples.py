@@ -192,7 +192,7 @@ print("That has", len(name), "characters in it")
 subject = input("Enter your favorite school subject: ")
 for letter in subject:
     print(letter, end = "-")
-"""
+
 # 082
 # Show the user a line of text from your favorite poem and ask for a 
 # starting and ending point. Display the characters between those two points.
@@ -202,6 +202,21 @@ print(poem)
 start = int(input("Enter a starting number: "))
 end = int(input("Enter an end number: "))
 print(poem[start:end])
-
+"""
 # 083
-#
+# Ask the user to type in a word in upper case. If they type it in lower
+# case, ask them to try again. Keep repeating this until they type in a 
+# message all in uppercase.
+
+msg = input("Enter a message in uppercase: ")
+tryagain = False
+while tryagain == False:
+    if msg.isupper():
+        print("Thank you")
+        tryagain = True
+    else:
+        print("Try again")
+        msg = input("Enter a message in uppercase: ")
+
+# 084
+
