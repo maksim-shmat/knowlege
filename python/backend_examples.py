@@ -219,4 +219,12 @@ while tryagain == False:
         msg = input("Enter a message in uppercase: ")
 
 # 084
+# Ask the user to type in their postcode. Display the first two letters in 
+# uppercase.
 
+postcode = input("Enter your postcode: ")
+start = postcode[0:2]
+print(start.upper())
+
+# 085
+#

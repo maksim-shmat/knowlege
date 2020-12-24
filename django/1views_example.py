@@ -212,4 +212,131 @@ class DetailView(generic.DetailView):
         return Question.objects.filter(pub_date__lte=timezone.now())
 
 #########
+# transactions
+from django.db import transaction
+
+@transaction.non_atomic_requests
+def my_view(request):
+    do_stuff()
+
+@transaction.non_atomic_requests(using='other')
+def my_other_view(request):
+    do_stuff_on_the_other_database()
+
+###
+# Atomicity transactions
+from django.db import transaction
+
+@transaction.atomic
+def viewfunc(request):
+    # This code executes inside a transaction.
+    do_stuff()
+
+# And as a context manager
+from django.db import transaction
+
+def viewfunc(request):
+    # This code executes in autocommit mode (Django's default).
+    do_stuff()
+    with transaction.atomic():
+        # This code executes inside a transaction.
+        do_more_stuff()
+        
+# Wrapping atomic in a try/except block allows for natural handling of 
+# integrity errors:
+from django.db import IntegrityError, transaction
+
+@transaction.atomic
+def viewfunc(request):
+    create_parent()
+    try:
+        with transaction.atomic():
+            generate_relationships()
+    except IntegrityError:
+        handle_exception()
+    add_children()
+
+##########
+#
+# Atomicity transactions
+from django.db import transaction
+
+@transaction.atomic
+def viewfunc(request):
+    # This code executes inside a transaction.
+    do_stuff()
+
+# And as a context manager
+from django.db import transaction
+
+def viewfunc(request):
+    # This code executes in autocommit mode (Django's default).
+    do_stuff()
+    with transaction.atomic():
+        # This code executes inside a transaction.
+        do_more_stuff()
+        
+# Wrapping atomic in a try/except block allows for natural handling of 
+# integrity errors:
+from django.db import IntegrityError, transaction
+
+@transaction.atomic
+def viewfunc(request):
+    create_parent()
+    try:
+        with transaction.atomic():
+            generate_relationships()
+    except IntegrityError:
+        handle_exception()
+    add_children()
+
+##########
+#
+# Atomicity transactions
+from django.db import transaction
+
+@transaction.atomic
+def viewfunc(request):
+    # This code executes inside a transaction.
+    do_stuff()
+
+# And as a context manager
+from django.db import transaction
+
+def viewfunc(request):
+    # This code executes in autocommit mode (Django's default).
+    do_stuff()
+    with transaction.atomic():
+        # This code executes inside a transaction.
+        do_more_stuff()
+        
+# Wrapping atomic in a try/except block allows for natural handling of 
+# integrity errors:
+from django.db import IntegrityError, transaction
+
+@transaction.atomic
+def viewfunc(request):
+    create_parent()
+    try:
+        with transaction.atomic():
+            generate_relationships()
+    except IntegrityError:
+        handle_exception()
+    add_children()
+
+###
+# You may need to manually revert model state when rolling back a transaction
+from django.db import DatabaseError, transaction
+
+obj = MyModel(active=False)
+obj.active = True
+try:
+    with transaction.atomic():
+        obj.save()
+except DatabaseError:
+    obj.active = False
+
+if obj.active:
+    ...
+##########
 
