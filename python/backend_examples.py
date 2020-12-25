@@ -462,4 +462,22 @@ list[row].append(newvalue)
 print(list[row])
 
 # 099
+# Change your previous program to ask the user which row they want 
+# displayed. Display that row. Ask which column in that row they want
+# displayed and display the value that is held there. Ask the user if they
+# want to change the value. If they do, ask for a new value and change the
+# data. Finally, display the whole row again.
+
+list = [[2, 5, 8], [3, 7, 4], [1, 6, 9], [4, 2, 0]]
+row = int(input("Select a row: "))
+print(list[row])
+col = int(input("Select a column: "))
+print(list[row][col])
+change = input("Do you want to change the value? (y/n) ")
+if change == "y":
+    newvalue = int(input("Enter new value: "))
+    list[row][col] = newvalue
+print(list[row])
+
+# 100
 
