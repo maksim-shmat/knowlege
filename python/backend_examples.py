@@ -410,7 +410,7 @@ while tryagain == True:
     else:
         print("Not in array")
         num = int(input("Select one of the numbers: "))
-"""
+
 # 095
 # Create an array of five numbers between 10 and 100 which each have two 
 # decimal places. Ask the user to enter a whole number between 2 and 5.
@@ -433,4 +433,21 @@ while tryagain == True:
 for i in range(0, 5):
     ans = nums[i]/num
     print(round(ans, 2))
+"""
+# 096
+# Create the following using a simple 2D list using the standard Python
+# indexig
 
+list = [[2, 5, 8], [3, 7, 4], [1, 6, 9], [4, 2, 0]]
+
+# 097
+# Using the 2D list from program 096, ask the user to select a row and a 
+# column and display that value.
+
+list = [[2, 5, 8], [3, 7, 4], [1, 6, 9], [4, 2, 0]]
+row = int(input("Select a row: "))
+col = int(input("Select a column: "))
+print(list[row][col])
+
+# 098
+# 
