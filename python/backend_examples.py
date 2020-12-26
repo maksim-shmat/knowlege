@@ -642,7 +642,7 @@ elif selection == 3:
 else:
     print("Invalid option")
 
-"""
+
 # 110
 # Using the Names.txt file you created earlier, display the list of names in
 # Python. Ask the user to type in one of the names and then save all the
@@ -663,6 +663,38 @@ for row in file:
             file.write(newrecord)
             file.close()
 file.close()
+"""
+# csv examples
+import csv
 
-# 111
+file = open("Stars.csv", "w")
+newRecord = "Brian, 73, Taurus\n"
+file.write(str(newRecord))
+file.close()
+
+file = open("Stars.csv", "a")
+name = input("Enter name: ")
+age = input("Enter age: ")
+star = input("Enter star sign: ")
+newRecord = name + "," + age + "," + star + "\n"
+file.write(str(newRecord))
+file.close()
+
+file = open("Stars.csv", "r")
+for row in file:
+    print(row)
+
+file = open("Stars.csv", "r")
+reader = csv.reader(file)
+rows = list(reader)
+print(rows[1])
+
+file = open("Stars.csv", "r")
+search = input("Enter the data you are searching for: ")
+reader = csv.reader(file)
+for row in file:
+    if search in str(row):
+        print(row)
+
+###########
 
