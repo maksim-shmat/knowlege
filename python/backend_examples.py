@@ -552,7 +552,7 @@ del list[getrid]
 for name in list:
     print((name), list[name]["Age"], list[name]["Shoe size"])
 
-"""
+
 # 105
 # Write a new file called "Numbers.txt". Add five numbers to the document
 # which are stored on th same line and only separated by a comma. Once you
@@ -568,4 +568,19 @@ file.write("5, ")
 file.close()
 
 # 106
+# Create a new file called "Names.txt". Add five names to the document,which
+# are stored on separate lines. Once you have run the program, look in the 
+# location where your program is stored and check that the file has been
+# created properly.
+
+file = open("Names.txt", "w")
+file.write("Bob\n")
+file.write("Tom\n")
+file.write("Gemma\n")
+file.write("Sarah\n")
+file.write("Timothy\n")
+file.close()
+
+"""
+# 107
 #
