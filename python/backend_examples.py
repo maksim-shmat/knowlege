@@ -663,7 +663,7 @@ for row in file:
             file.write(newrecord)
             file.close()
 file.close()
-"""
+
 # csv examples
 import csv
 
@@ -696,5 +696,16 @@ for row in file:
     if search in str(row):
         print(row)
 
+"""
 ###########
+# A .csv file cannot be altered, only added to. If you need to alter the file
+# you need to write it to a temporary list. This block of code will read the
+# original .csv file and write it to a list called "tmp".
+import csv
+file = list(csv.reader(open("Stars.csv")))
+tmp = []
+for row in file:
+    tmp.append(row)
+
+####
 
