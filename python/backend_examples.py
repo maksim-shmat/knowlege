@@ -533,7 +533,7 @@ for in in range(0, 4):
 
 for name in list:
     print((name), list[name]["Age"])
-"""
+
 # 104
 # After gathering the four names, ages and shoe sizes, ask the user to enter
 # the name of the person they want to remove from the list. Delete this row
@@ -552,3 +552,20 @@ del list[getrid]
 for name in list:
     print((name), list[name]["Age"], list[name]["Shoe size"])
 
+"""
+# 105
+# Write a new file called "Numbers.txt". Add five numbers to the document
+# which are stored on th same line and only separated by a comma. Once you
+# have run the program, look in the location where your program is stored
+# and you should see that the file has been created.
+
+file = open("Numbers.txt", "w")
+file.write("4, ")
+file.write("6, ")
+file.write("10, ")
+file.write("8, ")
+file.write("5, ")
+file.close()
+
+# 106
+#

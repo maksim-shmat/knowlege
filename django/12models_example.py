@@ -159,4 +159,132 @@ class PrimaryReplicaRouter:
         return True
 
 ############
+# Tablespaces
+class TablespaceExample(model.Model):
+    name = models.CharField(max_length=30, db_index=True,
+db_tablespace="indexes")
+    data = models.CharField(max_length=30, db_index=True)
+    shortcut = models.CharField(max_length=7)
+    edges = models.ManyToManyField(to="self", db_tablespace="indexes")
+
+    class Meta:
+        db_tablespace = "tables"
+        indexes = [models.Index(field=['shortcut'],
+db_tablespace='other_indexes')]
+
+############
+# Query logger
+import time
+
+class QueryLogger:
+    def __init__(self):
+        self.queries = []
+
+    def __call__(self, execute, sql, params, many, context):
+        current_query = {'sql': sql, 'params': params, 'many': many}
+        start = time.monotonic()
+        try:
+            result = execute(sql, params, many, context)
+        except Exception as e:
+            current_query['status'] = 'error'
+            current_query['exception'] = e
+            raise
+        else:
+            current_query['status'] = 'ok'
+            return result
+        finally:
+            duration = time.monotonic() - start
+            current_query['duration'] = duration
+            self.queries.append(current_query)
+
+###
+# To use this, you would create a logger object and install it as a wrapper.
+from django.db import connection
+
+ql = QueryLogger()
+with connection.execute_wrapper(ql):
+    do_queries()
+# Now we can print the log.
+print(ql.queries)
+
+#############
+# Many-to-many relationships
+
+from django.db import models
+
+class Publication(models.Model):
+    title = models.CharField(max_length=30)
+
+    class Meta:
+        ordering = ['title']
+
+    def __str__(self):
+        return self.title
+
+class Article(models.Model):
+    headline = models.CharField(max_length=100)
+    publications = models.ManyToManyField(Publication)
+
+    class Meta:
+        ordering = ['headline']
+
+    def __str__(self):
+        return self.headline
+
+###########
+# Many-to-one realationships
+
+from django.db import models
+
+class Reporter(models.Model):
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
+    email = models.EmailField()
+
+    def __str__(self):
+        return "%s %s" % (self.first_name, self.last_name)
+
+class Articlt(models.Model):
+    headline = models.CharField(max_length=100)
+    pub_date = models.DateField()
+    reporter = models.ForeignKey(Reporter, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.headline
+
+    class Meta:
+        ordering = ['headline']
+
+###########
+# One-to-one relationships
+
+from django.db import models
+
+class Place(models.Model):
+    name = model.CharField(max_length=50)
+    address = models.CharField(max_length=80)
+
+    def __str__(self):
+        return "%s the place" % self.name
+
+class Restaurant(model.Model):
+    place = models.OneToOneField(
+            Place,
+            on_delete=models.CASCADE,
+            primary_key=True,
+    )
+    serves_hot_dogs = models.BooleanField(default=False)
+    serves_pizza = models.BooleanField(default=False)
+
+    def __str__(self):
+        return "%s the restaurant" % self.place.name
+
+class Waiter(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return "%s the waiter at %s" % (self.name, self.restaurant)
+
+#############
 

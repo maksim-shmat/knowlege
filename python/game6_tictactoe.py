@@ -4,7 +4,7 @@
 import random
 
 def drawBoard(board):
-    """ This function show playing fild, squares for checks."""
+    """ This function show playfild, squares for checks."""
     # "board" - it is list with 10 strings, for make playing fild(index 0 ignored.
     print(board[7] + '|' + board[8] + '|' + board[9])
     print('-+-+-')
@@ -165,3 +165,4 @@ while gameIsPlaying:
     print('Play again? (yes or no)')
     if not input().lower().startswith('y'):
         break
+
