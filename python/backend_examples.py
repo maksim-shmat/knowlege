@@ -696,7 +696,7 @@ for row in file:
     if search in str(row):
         print(row)
 
-"""
+
 ###########
 # A .csv file cannot be altered, only added to. If you need to alter the file
 # you need to write it to a temporary list. This block of code will read the
@@ -706,6 +706,30 @@ file = list(csv.reader(open("Stars.csv")))
 tmp = []
 for row in file:
     tmp.append(row)
+# Writes from a list into a new .csv file called "NewStars.csv".
+file = open("NewStars.csv", "w")
+x = 0
+for row in tmp:
+    newRec = tmp[x][0] + "," + tmp[x][1] + "," + tmp[x][2] + "\n"
+    file.write(newRec)
+    x = x + 1
+file.close()
+"""
+# 111
+# Create a .csv file that will store the following data. Call it "Books.csv".
+import csv
+file = open("Books.csv", "w")
+newrecord = "To Kill A Mockingbird, Harper Lee, 1960\n"
+file.write(str(newrecord))
+newrecord = "A Brief History of Time, Stephen Hawking, 1988\n"
+file.write(str(newrecord))
+newrecord = "The Great Gatsby, F. Scott Fitzgerald, 1922\n"
+file.write(str(newrecord))
+newrecord = "The Man Who Mistook His Wife for a Hat, Oliver Sacks, 1985\n"
+file.write(str(newrecord))
+newrecord = "Pride and Prejudice, Jane Austin, 1813\n"
+file.write(str(newrecord))
+file.close()
 
-####
+##########
 
