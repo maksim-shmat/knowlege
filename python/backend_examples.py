@@ -581,6 +581,27 @@ file.write("Sarah\n")
 file.write("Timothy\n")
 file.close()
 
-"""
+
 # 107
+# Open the Names.txt file and display the data in Python
+
+file = open("Names.txt", "r")
+print(file.read())
+file.close()
+
+"""
+# 108
+# Open the Names.txt file. Ask the user to input a new name. Add this to the
+# end of the file and display the entire file.
+
+file = open("Names.txt", "a")
+newname = input("Enter a new name: ")
+file.write(newname + "\n")
+file.close
+
+file = open("Names.txt", "r")
+print(file.read())
+file.close
+
+# 109
 #
