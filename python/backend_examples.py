@@ -780,7 +780,7 @@ for row in file:
 if count == 0:
     print("There are no books by that author in this list.")
 file.close()
-"""
+
 # 114
 # Using the Books.csv file, ask the user to enter a starting year and an
 # end year. Display all books released between those two years.
@@ -802,3 +802,24 @@ for row in tmp:
     x = x + 1
 
 # 115
+# Using th Books.csv file, display  the data in the file along with the row
+# number of each
+
+import csv
+
+start = int(input("Enter a starting year: "))
+end = int(input("Enter an end year: "))
+
+file = list(csv.reader(open("Books.csv")))
+tmp = []
+for row in file:
+    tmp.append(row)
+
+x = 0
+for row in tmp:
+    if int(tmp[x][2]) >= start and int(tmp[x][2]) <=end:
+        print(tmp[x])
+    x = x+1
+"""
+# 116
+
