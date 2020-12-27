@@ -897,13 +897,55 @@ newrecord = name + "," + question1 + "," + str(ans1) + "," + question2 + "," + s
 file.write(str(newrecord))
 file.close
 
-"""
+
 # Subprograms
 # Combined into a tuple
 def get_data():
     user_name = input("Enter your name: ")
     user_age = int(input("Enter your age: "))
     data_tuple = (user_name, user_age)
-    return data_tuple
+return data_tuple
+
 ###
+# Defines a subprogram called message() which uses two variables that have
+# previously been defined (user_name and user_age).
+def message(user_name, user_age):
+    if user_age <= 10:
+        print("Hi", user_name)
+    else:
+        print("Hello", user_name)
+
+###
+# Defines a subprogram called main() which obtains the two variables from the
+# get_data() subprogram. These must be labelled in the same order os they 
+# were defined in the tuple. It the calls the message() subprogram to run 
+# with the two variables
+
+def main():
+    user_name, user_age = get_data()
+    message(user_name, user_age)
+"""
+# 118
+# Define a subprogram that will ask the user to enter a number and save it as
+# the variable "num". Define another subprogram that will use "num" and count
+# from 1 to that number.
+
+def ask_value():
+    num = int(input("Enter a number: "))
+    return num
+
+def count(num):
+    n = 1
+    while n <= num:
+        print(n)
+        n = n + 1
+
+def main():
+    num = ask_value()
+    count(num)
+
+main()
+
+# 119
+
 
