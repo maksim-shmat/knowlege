@@ -358,4 +358,19 @@ def viewfunc(request):
         # open transaction now contains only a.save()
 
 ###########
+# Specifying defaults for view arguments
+# URL conf
+from django.urls import path
+from . import views
+
+urlpatterns = [
+        path('blog/', views.page),
+        path('blog/page<int:num>/', views.page),
+]
+# View (in blog/views.py)
+def page(request, num=1):
+    # Output the appropriate page of blog entries, according to num.
+    ...
+
+##########
 
