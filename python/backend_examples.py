@@ -865,7 +865,7 @@ for row in Booklist:
     file.write(newrecord)
     x = x + 1
 file.close()
-"""
+
 # 117
 # Create a simple maths quiz that will ask the user for their name and then
 # generate two random questions. Store their name, the questions they were
@@ -897,4 +897,13 @@ newrecord = name + "," + question1 + "," + str(ans1) + "," + question2 + "," + s
 file.write(str(newrecord))
 file.close
 
-# 
+"""
+# Subprograms
+# Combined into a tuple
+def get_data():
+    user_name = input("Enter your name: ")
+    user_age = int(input("Enter your age: "))
+    data_tuple = (user_name, user_age)
+    return data_tuple
+###
+
