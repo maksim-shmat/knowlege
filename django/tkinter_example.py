@@ -72,7 +72,7 @@ output_txt["text"] = total
 
 # This must be at the end of the program to make sure it keeps working.
 window.mainloop()
-"""
+
 # 124
 # Create a window that will ask the user to enter their name. When they click
 # on a button it should display the message "Hello" and their name and change
@@ -107,7 +107,30 @@ textbox2["bg"] = "white"
 textbox2["fg"] = "black"
 
 window.mainloop()
-
+"""
 # 125
+# Write a program that can be used instead of rolling a six-sided die in a
+# board game. When the user clicks a button it should display a random whole
+# number between 1 to 6 (inclusive).
+from tkinter import *
+import random
+
+def click():
+    num = random.randint(1, 6)
+    answer["text"] = num
+
+window = Tk()
+window.title("Roll a dice")
+window.geometry("100x120")
+
+button1 = Button(text = "Roll", command = click)
+button1.place(x = 30, y = 30, width = 50, height = 25)
+
+answer = Message(text = "")
+answer.place(x = 40, y = 70, width = 30, height = 25)
+
+window.mainloop()
+
+# 126
 
 
