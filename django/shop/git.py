@@ -61,4 +61,7 @@ $ git config --global credential.helper cache (but data will be git-credentials 
 git reflog
 git reset HEAD@{index}
 ###
+# Change the last commit
+git commit --amend
+###
 
