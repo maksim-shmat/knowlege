@@ -57,4 +57,8 @@ To many trubles:
 $ git config --global credential.helper cache (but data will be git-credentials file?)
 
 ########
+# time machine
+git reflog
+git reset HEAD@{index}
+###
 
