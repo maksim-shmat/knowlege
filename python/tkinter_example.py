@@ -590,7 +590,7 @@ textbox2["bg"] = "white"
 textbox2["fg"] = "black"
 
 window.mainloop()
-"""
+
 # 134
 # Create a new program that will generate two random whole numbers between
 # 10 and 50. It should ask the user to add the numbers together and type in
@@ -657,5 +657,34 @@ imgbx.place(x = 25, y = 100, width = 200, height = 150)
 nextquestion()
 
 window.mainloop()
+"""
 # 135
+# Create a simple program that shows a drop-down list containing several
+# colours and a Click Me button. When the user selects a colour from the
+# list and clicks the button it should change the background of the window
+# to the background of the window to that colour. For an extra challenge,
+# try to avoid using an if statment to do this.
+
+from tkinter import *
+
+def clicked():
+    sel = selectcolour.get()
+    window.configure(background = sel)
+
+window = Tk()
+window.title("background")
+window.geometry("200x200")
+
+selectcolour = StringVar(window)
+selectcolour.set("Gray")
+
+colourlist = OptionMenu(window, selectcolour, "Gray", "Red", "Blue", "Green", "Yellow")
+colourlist.place(x = 50, y = 30)
+
+clickme = Button(text = "Click Me", command = clicked)
+clickme.place(x = 50, y = 150, width = 60, height = 30)
+
+mainloop()
+
+# 136
 
