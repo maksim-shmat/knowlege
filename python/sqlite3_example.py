@@ -19,3 +19,23 @@ cursor.execute("""CREATE TABLE IF NOT EXISTS employees(
         dept text NOT NULL,
         salary integer);""")
 
+# Insert data into the employees table. The db.commit() line saves the changes
+cursor.execute("""INSERT INTO employees(id,name,dept,salary)
+        VALUES("1","Bob","Sales","25000")""")
+db.commit()
+
+# Allows a user to enter new data which is then inserted into the table
+newID = input("Enter ID number: ")
+newName = input("Enter name: ")
+newDept = input("Enter department: ")
+newSalary = input("Enter salary: ")
+cursor.execute("""INSERT INTO employees(id,name,dept,salary)
+        VALUES(?,?,?,?)""",(newID,newName,newDept,newSalary))
+db.commit()
+
+# Display all the data from the employees table.
+cursor.execute("SELECT * FROM employees")
+print(cursor.fetchall())
+
+# This must be the last line in the program to close the database.
+db.close()
