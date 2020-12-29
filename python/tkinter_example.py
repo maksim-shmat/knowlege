@@ -429,7 +429,7 @@ window.mainloop()
 # that will allow people to add names and ages to the list and create a
 # button that will display the contents of the .csv file by importing it to a
 # list box.
-"""
+
 from tkinter import *
 import csv
 
@@ -488,4 +488,67 @@ name_list = Listbox()
 name_list.place(x = 120, y = 80, width = 230, height = 100)
 
 window.mainloop()
+
+# Tkinter support only .git
+# Change the icon displayed in the title of the window.
+window.wm_iconbitmap("MyIcon.ico")  # for Windows?
+
+# Change the background colour of the window, in this case to light green.
+window.configure(background = "light green")
+
+# Displays an image in a label widget. This image will not change while the
+# program is running.
+logo = PhotoImage(file = "logo.gif")
+logoimage = Label(image = logo)
+logoimage.place(x = 30, y = 20, width = 200, height = 120)
+
+# This is similar to the block above but as we want the image to change as
+# we update the data we need to add the code photobox.image = photo, which
+# makes it updatable.
+photo = PhotoImage(file = "logo.gif")
+photobox = Label(window, image = photo)
+photobox.image = photo
+photobox.place(x = 30, y = 20, width = 200, height = 120)
+
+# Creates a variable called selectName which will store a string where the 
+# original value of the variable is "SelectName". It will then create a
+# drop-down option menu which stores the value the user selects in the 
+# selectNames variable and displays the values in the list: Bob, Sue and Tom.
+selectName = StringVar(window)
+selectName.set("Select Name")
+namesList = OptionMenu(window, selectName, "Bob", "Sue", "Tom")
+namesList.place(x = 30, y = 250)
+
+# In this example, when a button is clicked it will run the "clicked" 
+# subprogram. This will obtain the value from the selctName variable and
+# create a message that will be displayed in a label. It will then check to
+# see which option has been selected and change the picture to the correct
+# image, which is displayed in the photo variable. If no name is selected it
+# will simply show the logo.
+
+def clicked():
+    sel = selectName.get()
+    mseg = "Hello " + sel
+    mlabel["text"] = mesg
+    if sel == "Bob":
+        photo = PhotoImage(file = "Bob.git")
+        photobox.image = photo
+    elif sel == "Sue":
+        photo = PhotoImage(file = "Sue.gif")
+        photobox.image = photo
+    elif sel == "Tim":
+        photo = PhotoImag(file = "Tim.gif")
+        photobox.image = photo
+    else:
+        photo = PhotoImage(file = "logo.gif")
+        photobox.image = photo
+        photobox["image"] = photo
+        photobox.update()
+
+# 133
+# Create your own icon that consists of several vertical multi-coloured lines.
+# Create a logo which measures 200x150, using Paint or another graphics
+# package. Create the following window using your own icon and logo.
+# When the user enters their name and clicks on the Press Me button it should
+# display "Hello" and their name in the second text box.
 

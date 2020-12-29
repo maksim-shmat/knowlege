@@ -159,4 +159,115 @@ def upload_file(request):
     return render(request, 'upload.html', {'form': form})
 
 ##########
+# Uploading multiple files
+# forms.py
+from django import forms
 
+class FileFieldForm(forms.Form):
+    file_field = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+# Then override the post method of your FormView subclass to handle
+# multiple file uploads:
+# views.py
+from django.views.generic.edit import FormView
+from .forms import FileFieldForm
+
+class FileFieldView(FormView):
+    form_class = FileFieldForm
+    template_name = 'upload.html'  # Replace with your template.
+    success_url = '...'  # Replace with your URL or reverse()
+
+    def post(self, request, *args, **kwargs):
+        form_class = self.get_form_class()
+        form = self.get_form(form_class)
+        files = request.FILES.getlist('file_field')
+        if form.is_valid():
+            for f in files:
+                ...  # Do something with each file.
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+#######
+# render(), Django does not provide a shortcut function which returns a
+# TemplateResponse 
+# The following example renders the template myapp/index.html
+from django.shortcuts import render
+
+def my_view(request):
+    # View code here...
+    return render(request, 'myapp/index.html', {
+        'foo': 'bar',
+        }, content_type = 'application/xhtml+xml')
+# This example is equivalent to:
+from django.http imprt HttpResponse
+from django.template import loader
+
+def my_view(request):
+    # View code here...
+    t = loader.get_template('myapp/index.html')
+    c = {'foo': 'bar'}
+    return HttpResponse(t.render(c, request),
+            content_type='application/xhtml+xml')
+##########
+# Middleware asynchronous support
+import asyncio
+from django.utils.decorators import sync_and_async_middleware
+
+@sync_and_async_middleware
+def simple_middleware(get_response):
+    # One-time configuration and initialization goes here.
+    if asyncio.iscoroutinefunction(get_response):
+        async def middleware(request):
+            # Do something here!
+            response = await get_response(request)
+            return response
+    else:
+        def middleware(request):
+            # Do something here!
+            response = get_response(request)
+            return response
+    return middleware
+
+#############
+# This simplistic view sets a has_commented variable to True after a user
+# posts a comment. It doesn't let a user post a comment more than once:
+def post_comment(request, new_comment):
+    if request.session.get('has_commented', False):
+        return HttpResponse("You've already commented.")
+    c = comments.Comment(comment=new_comment)
+    c.save()
+    request.session['has_commented'] = True
+    return HttpResponse('Thanks for your comment!')
+
+# This simplistic view logs in a "member" of the site:
+def login(request):
+    m = Member.objects.get(username=request.POST['username'])
+    if m.password == request.POST['password']:
+        request.session['member_id'] = m.id
+        return HttpResponse("You're logged in.")
+    else:
+        return HttpResponse("Your username and password didn't match.")
+
+# And this one logs a member out, according to login() above:
+def logout(request):
+    try:
+        del request.session['member_id']
+    except KeyError:
+        pass
+    return HttpResponse("You're logged out.")
+#######
+# Settings test cookies
+from django.http import HttpResponse
+from django.shortcuts import render
+
+def login(request):
+    if request.method == 'POST':
+        if request.session.test_cookie_worked():
+            request.session.delete_test_cookie()
+            return HttpResponse("You're logged in.")
+        else:
+            return HttpResponse("Please enable cookies and try again.")
+    request.session.set_test_cookie()
+    return render(request, 'foo/login_form.html')
+##########
