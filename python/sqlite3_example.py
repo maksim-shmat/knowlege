@@ -76,4 +76,12 @@ cursor.execute("SELECT * FROM employees WHERE dept=?", [whichDept])
 for x in cursor.fetchall():
     print(x)
 ###
+# Selects the ID and name fields from the employees table and the manager
+# field from the department table, using the dept fields to link the data.
+# If you do not specify how the tables are linked, Python will assume every
+# employee works in every department and you will not get the results you
+# are expecting.
+cursor.execute("""SELECT employees.id,employees.name,dept.manager
+        FROM employees,dept WHERE employees.dept=dept.dept""")
+###
 
