@@ -57,4 +57,17 @@ for x in cursor.fetchall():
 # Select all the data from the employees table where the salary is over 20,000
 cursor.execute("SELECT * FROM employees WHERE salary>20000")
 ###
+# Selects all the data from the employees table where the department is "Sales".
+cursor.execute("SELECT * FROM employees WHERE dept='Sales'")
+###
+# Select th ID and name fields from the employees table and the manager field
+# from the department table if the salary is over 20,000
+cursor.execute("""SELECT * FROM employees.id,employees.name,dept.manager
+        FROM employees,dept WHERE employees.dept=dept.dept
+        AND employees.salary >20000""")
+###
+# Selects the ID, name and salary fields from the employees table.
+cursor.execute("SELECT id,name,salary FROM employees")
+###
+
 
