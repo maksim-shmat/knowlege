@@ -47,4 +47,11 @@ cursor.execute("SELECT * FROM employees")
 for x in cursor.fetchall():
     print(x)
     # sqlite3.ProgrammingError: Cannot operate on a closed database.
+###
+# Selects all the data from the employees table, sorted by name, and 
+# displays each record on a separate line.
+cursor.execute("SELECT * FROM employees ORDER BY name")
+for x in cursor.fetchall():
+    print(x)
+###
 
