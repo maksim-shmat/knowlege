@@ -54,4 +54,7 @@ cursor.execute("SELECT * FROM employees ORDER BY name")
 for x in cursor.fetchall():
     print(x)
 ###
+# Select all the data from the employees table where the salary is over 20,000
+cursor.execute("SELECT * FROM employees WHERE salary>20000")
+###
 
