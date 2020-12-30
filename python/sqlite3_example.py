@@ -84,4 +84,7 @@ for x in cursor.fetchall():
 cursor.execute("""SELECT employees.id,employees.name,dept.manager
         FROM employees,dept WHERE employees.dept=dept.dept""")
 ###
-
+# Updates the data in the table(overwriting the original data) to change the
+# name to "Tony" for employee ID1.
+cursor.execute("UPDATE employees SET name = 'Tony' WHERE id=1")
+###
