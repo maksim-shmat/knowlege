@@ -39,3 +39,12 @@ print(cursor.fetchall())
 
 # This must be the last line in the program to close the database.
 db.close()
+###############
+# Display all the data from the employees table and display each record on
+# a separate line.
+
+cursor.execute("SELECT * FROM employees")
+for x in cursor.fetchall():
+    print(x)
+    # sqlite3.ProgrammingError: Cannot operate on a closed database.
+
