@@ -69,5 +69,11 @@ cursor.execute("""SELECT * FROM employees.id,employees.name,dept.manager
 # Selects the ID, name and salary fields from the employees table.
 cursor.execute("SELECT id,name,salary FROM employees")
 ###
-
+# Allows the user to type in a department and displays the records of all
+# the employees in that department.
+whichDept = input("Enter a department: ")
+cursor.execute("SELECT * FROM employees WHERE dept=?", [whichDept])
+for x in cursor.fetchall():
+    print(x)
+###
 
