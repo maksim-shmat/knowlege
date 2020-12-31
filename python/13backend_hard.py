@@ -105,7 +105,7 @@ def main():
             print("Incorrect selection")
 
 main()
-'''
+
 # 147
 """ You are going to make an on-screen version of the board game "Mastermind".
 The computer will automatically generate four colours from a list of possible
@@ -231,3 +231,195 @@ def main():
     print("You took", score, "guesses")
 
 main()
+'''
+# 148
+""" Passwords.
+You need to create a program that will store the user ID and passwords for 
+the users of a system. It should display the following menu:
+    1) Create a new User ID
+    2) Change a password
+    3) Display all User IDs
+    4) Quit
+    Enter Selection:
+
+If the user selcts 1, it should ask them to enter a user ID. It should check
+if the user ID is already in the list. If it is, the program should display a
+suitable message and ask them to selct another user ID. Once a suitable user
+ID has been entered it should ask for a password. Passwords should be scored
+with 1 point for each of the following:
+    - it should have at least 8 characters;
+    - it should include uppercase letters;
+    - it should include lower case letters;
+    - it should include numbers; and
+    - it should include at least one special character such as!, $, % , &,
+    <, * or @.
+
+If the password scores only 1 or 2 it should be rejected with a message saying
+it is a weak password; if it scores 3 or 4 tell them that "This password could
+be improved." Ask them if they want to try again. If it scores 5 tell them
+they have selected a strong password. Only acceptable user IDs and passwords
+should be added to the end of the .csv file.
+
+if they select 2 from the menu they will need to enter a user ID, check to see
+if the user ID exists in the list, and if it does, allow the user to change
+the password and save the changes to the .csv file. Make sure the program only
+alters the existing password and does not create a new record.
+
+If the user selects 3 from the menu, display all the user IDs but not the
+passwords.
+
+If the user selects 4 from the menu it should stop the program.
+
+=== Problems You Will Have to Overcome. ===
+
+As existing data in .csv files cannot be edited and can only be read or added
+to, you will need to import the data as a temporary list into Python so you
+can make the change before the data is written to the .csv file afresh.
+
+Make sure only passwords belonging to an existing user ID can be altered.
+
+Use suitable messages to guide the user easily throught the system.
+
+Repeat the menu until they quit the program.
+"""
+# First set up a .csv file, called "passwords.csv"
+import csv
+
+def get_data():
+    file = list (csv.reader(open("passwords.csv")))
+    tmp = []
+    for x in file:
+        tmp.append(x)
+    return tmp
+
+def create_userID(tmp):
+    name_again = True
+    while name_again == True:
+        userID = input("Enter a new user ID: ")
+        userID.lower()
+        inlist = False
+        row = 0
+        for y in tmp:
+            if userID in tmp[row][0]:
+                print(userID, "has already been allocated")
+                inlist = True
+            row = row + 1
+        if inlist == False:
+            name_again = False
+    return userID
+
+def create_password():
+    sclist = ["!", "$", "%", "^", "&", "*", "(", ")", "?", "@", "#"]
+    nclist = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
+    tryagain = True
+    while tryagain == True:
+        score = 0
+        uc = False
+        lc = False
+        sc = False
+        nc = False
+        password = input("Enter Password: ")
+        length = len(password)
+        if length >= 8:
+            score = score + 1
+        for x in password:
+            if x.islower():
+                lc = True
+            if x.isupper():
+                uc = True
+            if x in sclist:
+                sc = True
+            if x in nclist:
+                nc = True
+        if sc == True:
+            score = score + 1
+        if lc == True:
+            score = score + 1
+        if uc == True:
+            score = score + 1
+        if nc == True:
+            score = score + 1
+        if score == 1 or score == 2:
+            print("This is a weeek password, try again")
+        if score == 3 or score == 4:
+            print("This password could be importved")
+            again = input("Do you want to try for a stronger password? (y/n) ")
+            again.lower()
+            if again == "n":
+                tryagain = False
+       # if password != password2:    # what is the password2?
+        #    print("Passwords do not match. File not saved")
+         #   main()
+        else:
+            return password
+
+def find_userID(tmp):
+    ask_name_again = True
+    userID = ""
+    while ask_name_again == True:
+        searchID = input("Enter the user ID you are looking for ")
+        searchID.lower()
+        inlist = False
+        row = 0
+        for y in tmp:
+            if searchID in tmp[row][0]:
+                inlist = True
+            row = row + 1
+        if inlist == True:
+            userID = searchID
+            ask_name_again = False
+        else:
+            print(searchID, "is NOT in the list")
+    return userID
+
+def change_password(userID, tmp):
+    if userID != "":
+        password = create_password()
+        ID = userID.index(userID)
+        tmp[ID][1] = password
+        file = open("passwords.csv", "w")
+        x = 0
+        for row in tmp:
+            newrecord = tmp[x][0] + ", " + tmp[x][1] + "\n"
+            file.write(newrecord)
+            x = x + 1
+        file.close()
+
+def display_all_userID():
+    tmp = get_data()
+    x = 0
+    for row in tmp:
+        print(tmp[x][0])
+        x = x + 1
+
+def main():
+    tmp = get_data()
+    go_again = True
+    while go_again == True:
+        print()
+        print("1) Create a new User ID")
+        print("2) Change a password")
+        print("3) Display all User IDs")
+        print("4) Quit")
+        print()
+        selection = int(input("Enter Selection: "))
+        if selection == 1:
+            userID = create_userID(tmp)
+            password = create_password()
+            file = open("passwords.csv", "a")
+            newrecord = userID + ", " + password + "\n"
+            file.write(str(newrecord))
+            file.close()
+        elif selection == 2:
+            userID = find_userID(tmp)
+            change_password(userID, tmp)
+        elif selection == 3:
+            display_all_userID()
+        elif selection == 4:
+            go_again = False
+        else:
+            print("Incorrect selection")
+
+main()
+
+
