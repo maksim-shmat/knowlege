@@ -297,7 +297,7 @@ cursor.execute(""" INSERT INTO Books(ID,Title,Author,DatePublished)
 db.commit()
 
 db.close()
-'''
+
 # 142
 # Using the Bookinfo database from program 141, display the list of authors
 # and their place of birth. Ask the user to enter a place of birth and then
@@ -322,5 +322,23 @@ for x in cursor.fetchall():
     print(x)
 
 db.close()
-
+'''
 # 143
+# Using the BookInfo database, ask the user to enter a year and display all
+# the books published after that year, sorted by the year they were published.
+
+import sqlite3
+with sqlite3.connect("BookInfo.db") as db:
+    cursor = db.cursor()
+
+selectionyear = int(input("Enter a year: "))
+print()
+
+cursor.execute("""SELECT Books.Title, Books.DatePublished, Books.Author
+        FROM Books WHERE DatePublished>? ORDER BY DatePublished""",[selectionyear])
+for x in cursor.fetchall():
+    print(x)
+
+db.close()
+
+# 144
