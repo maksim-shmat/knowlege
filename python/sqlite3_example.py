@@ -218,7 +218,7 @@ db.close()
 # Agatha Christie     Torquay
 # The second should be called Books and contain the following data;
 # ID    Title    Author    Date Published
-'''
+
 import sqlite3
 
 with sqlite3.connect("BookInfo.db") as db:
@@ -297,3 +297,30 @@ cursor.execute(""" INSERT INTO Books(ID,Title,Author,DatePublished)
 db.commit()
 
 db.close()
+'''
+# 142
+# Using the Bookinfo database from program 141, display the list of authors
+# and their place of birth. Ask the user to enter a place of birth and then
+# show the title, date published and author's name for all the books by
+# authors who were born in the location they selected.
+
+import sqlite3
+
+with sqlite3.connect("BookInfo.db") as db:
+    cursor = db.cursor()
+
+cursor.execute("SELECT * FROM Authors")
+for x in cursor.fetchall():
+    print(x)
+print()
+location = input("Enter a place of birth: ")
+print()
+
+cursor.execute("""SELECT Books.Title, Books.DatePublished, Books.Author
+        FROM Books,Authors WHERE Authors.Name=Books.Author AND Authors.PlaceofBirth=?""",[location])
+for x in cursor.fetchall():
+    print(x)
+
+db.close()
+
+# 143
