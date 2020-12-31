@@ -322,7 +322,7 @@ for x in cursor.fetchall():
     print(x)
 
 db.close()
-'''
+
 # 143
 # Using the BookInfo database, ask the user to enter a year and display all
 # the books published after that year, sorted by the year they were published.
@@ -342,3 +342,87 @@ for x in cursor.fetchall():
 db.close()
 
 # 144
+# Using the Bookinfo database, ask the user for an author's name and then
+# save all the books by that author to a text file, with each field
+# separated by dashes so it looks as follows:
+# 5 - Murder on the Orient Express - Agatha Christie -1934
+# 8 - The murder on the links - Agatha Christie - 1923
+# 10 - The secret adversary - Agatha Christie - 1921
+# 11 - The seven dials mystery - Agatha Christie - 1929
+# Open the text file to make sure it has worked correctly.
+
+import sqlite3
+
+file = open("BooksList.txt", "w")
+
+with sqlite3.connect("BookInfo.db") as db:
+    cursor = db.cursor()
+
+cursor.execute("SELECT Name from Authors")
+for x in cursor.fetchall():
+    print(x)
+
+print()
+selectauthor = input("Enter an author's name: ")
+print()
+
+cursor.execute("SELECT *FROM Books WHERE Author=?", [selectauthor])
+for x in cursor.fetchall():
+    newrecord = str(x[0]) + " - " + x[1] + " - " + x[2] + " - " + str(x[3]) + "\n"
+    file.write(newrecord)
+
+file.close()
+
+db.close()
+'''
+# 145
+# Create a program name's TestScores that displays: folder - "Enter student's name,
+# folder - "Enter student's grade, and two buttons: Add and Clear.
+# If should save the data to an SQL database called TestScores when the Add
+# button is clicked. The Clear button should clear window.
+
+import sqlite3
+from tkinter import *
+
+def addtolist():
+    newname = sname.get()
+    newgrade = sgrade.get()
+    cursor.execute("""INSERT INTO Scores (name, score) VALUES (?,?)""",
+            (newname,newgrade))
+    db.commit()
+    sname.delete(0,END)
+    sgrade.delete(0,END)
+    sname.focus()
+
+def clearlist():
+    sname.delete(0,END)
+    sgrade.delete(0,END)
+    sname.focus()
+
+with sqlite3.connect("TestScore.db") as db:
+    cursor = db.cursor()
+
+cursor.execute(""" CREATE TABLE IF NOT EXISTS Scores(
+        id integer PRIMARY KEY, name text, score integer); """)
+
+window = Tk()
+window.title("TestScores")
+window.geometry("450x200")
+
+label1 = Label(text = "Enter student's name:")
+label1.place(x = 30, y = 35)
+sname = Entry(text = "")
+sname.place(x = 150, y = 35, width = 200, height = 25)
+sname.focus()
+label2 = Label(text = "Enter student's grade:")
+label2.place(x = 30, y = 80)
+sgrade = Entry(text = "")
+sgrade.place(x = 150, y = 80, width = 200, height = 25)
+sgrade.focus()
+addbtn = Button(text = "Add", command = addtolist)
+addbtn.place(x = 150, y = 120, width = 75, height = 25)
+clearbtn = Button(text = "Clear", command = clearlist)
+clearbtn.place(x = 250, y = 120, width = 75, height = 25)
+
+window.mainloop()
+db.close()
