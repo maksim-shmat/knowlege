@@ -15,3 +15,10 @@ total = num1 + num2
 name = firstname + surname
 
 # And
+# Used to specify that both conditions must be met to return a true value.
+if num > 10 and num < 20:
+    print("In range")
+else:
+    print("Out of range")
+
+# Append
