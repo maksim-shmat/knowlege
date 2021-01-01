@@ -41,4 +41,15 @@ def CheckAnswer(UserAns):
     else:
         print("Wrong")
 
-#
+# Array
+# In Python arrays are similar to lists but they are only used to store
+# numbers. The user defines the specific number type, i.e. integer, long,
+# double or floating-point.
+nums = aray ('i', [45, 324, 654, 45, 264])
+print(nums)
+
+# Blob 
+# A data type that is stored exactly as it was input. See SQL and database.
+
+# Button
+
