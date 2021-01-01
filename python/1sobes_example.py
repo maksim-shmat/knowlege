@@ -32,4 +32,13 @@ file = open("Countries.txt", "a")
 file.write("France\n")
 file.close
 
+# Argument
+# A value passed to a subprogram. In this example UserAns is the argument and
+# would have been defined outside of the subprogram.
+def CheckAnswer(UserAns):
+    if UserAns == 20:
+        print("Correct")
+    else:
+        print("Wrong")
+
 #
