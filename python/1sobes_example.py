@@ -52,4 +52,13 @@ print(nums)
 # A data type that is stored exactly as it was input. See SQL and database.
 
 # Button
+# Used in GUI with Tkinter. The code below creates a button that will run the
+# subprogram "click".
+button1 = Button(text = "Click here", command = click)
 
+# Capitslize
+# Change the case so the first letter is uppercase and all other letters are
+# lower case.
+print(name.capitalize())
+
+# Choice
