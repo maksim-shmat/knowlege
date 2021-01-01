@@ -9,4 +9,9 @@
 number_list = [[23, 16, 35], [45, 29, 48]]
 
 # Addition
-# 
+# Adds two values together if they are numbers
+total = num1 + num2
+# or juins them if they contain text(see concatenation).
+name = firstname + surname
+
+# And
