@@ -22,3 +22,14 @@ else:
     print("Out of range")
 
 # Append
+# Adds a single item to the end of a list, tuple, dictionary, string or an array.
+names_list.append("Timothy")
+
+# Append to a file
+# Opens an existing text or .csv file and allows data to be added to the end
+# of the existing contents.
+file = open("Countries.txt", "a")
+file.write("France\n")
+file.close
+
+#
