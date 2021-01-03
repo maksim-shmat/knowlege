@@ -70,5 +70,27 @@ class ArticleForm(ModelForm):
         model = Article
         fields = ['pub_date', 'headline', 'content', 'reporter', 'slug']
 
-###
+########
+# Using a custom queryset
+from django.forms import modelformset_factory
+from django.shortcuts import render
+from myapp.models import Author
+
+def manage_authors(request):
+    AuthorFormSet = modelFormset_factory(Author, fields=('name', 'title'))
+    if request.method == "POST":
+        formset = AuthorFormSet(
+                request.POST, request.FILES,
+                queryset=Author.objects.filter(name__startswith='O'),
+        )
+        if formset.is_valid():
+            formset.save()
+            # Do something.
+    else:
+        formset =
+AuthorFormSet(queryset=Author.objects.filter(name__startswith='O'))
+return render(request, 'manage_authors.html', {'formset': formset})
+
+############
+
 
