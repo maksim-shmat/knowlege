@@ -4,8 +4,7 @@
 import random
 
 def drawBoard(board):
-    """ This function show playfild, squares for checks."""
-    # "board" - it is list with 10 strings, for make playing fild(index 0 ignored.
+    """ This function return on the screen gamefield."""
     print(board[7] + '|' + board[8] + '|' + board[9])
     print('-+-+-')
     print(board[4] + '|' + board[5] + '|' + board[6])
@@ -30,30 +29,30 @@ def inputPlayerLetter():
 def whoGoesFirst():
     """ Random choice who's first step."""
     if random.randint(0, 1) == 0:
-        return 'Manificent Artificial Inteligence'
+        return 'Com '
     else:
-        return 'Leather bastard'
+        return 'Man '
 
 def makeMove(board, letter, move):
     board[move] = letter
 
-def idWinner(bo, le):
+def isWinner(board, letter):
     """ True is player win. 'bo' equals board, 'le' equals letter."""
-    return((bo[7] == le and bo[8] == le and bo[9] == le) or # across the top
-           (bo[4] == le and bo[5] == le and bo[6] == le) or # across the center
-           (bo[1] == le and bo[2] == le and bo[3] == le) or # across the down
-           (bo[7] == le and bo[4] == le and bo[1] == le) or # down from the left side
-           (bo[8] == le and bo[5] == le and bo[2] == le) or # down from the center
-           (bo[9] == le and bo[6] == le and bo[3] == le) or # down from the right
-           (bo[7] == le and bo[5] == le and bo[3] == le) or # down from the diagonal
-           (bo[9] == le and bo[5] == le and bo[1] == le)) # down from the diagonal
+    return((board[7] == letter and board[8] == letter and board[9] == letter) or # across the top
+           (board[4] == letter and board[5] == letter and board[6] == letter) or # across the center
+           (board[1] == letter and board[2] == letter and board[3] == letter) or # across the down
+           (board[7] == letter and board[4] == letter and board[1] == letter) or # down from the left side
+           (board[8] == letter and board[5] == letter and board[2] == letter) or # down from the center
+           (board[9] == letter and board[6] == letter and board[3] == letter) or # down from the right
+           (board[7] == letter and board[5] == letter and board[3] == letter) or # down from the diagonal
+           (board[9] == letter and board[5] == letter and board[1] == letter)) # down from the diagonal
 
-def getBoardCopy(board):
-    """ Make a copy of a play filed."""
-    boardCopy = []
-    for i in  board:
-        boardCopy.append(i)
-    return boardCopy
+    def getBoardCopy(board):
+        """ Make a copy of a play filed."""
+        boardCopy = []
+        for i in  board:
+            boardCopy.append(i)
+        return boardCopy
 
 def isSpaceFree(board, move):
     """ Return True, if get a move to free square."""
@@ -129,7 +128,7 @@ while True:
     gameIsPlaying = True
 
 while gameIsPlaying:
-    if turn == 'Leather bastart':
+    if turn == 'Man ':
         # Humans turn
         drawBoard(theBoard)
         move = getPlayerMove(theBoard)
@@ -145,7 +144,7 @@ while gameIsPlaying:
                 print('Draw')
                 break
             else:
-                turn = 'Manivicien Artificial Inteligence'
+                turn = 'Com '
     else:
         # Turn com
         move = getComputerMove(theBoard, computerLetter)
@@ -153,7 +152,7 @@ while gameIsPlaying:
 
         if isWinner(theBoard, computerLetter):
             drawBoard(theBoard)
-            print('Manivicient Artificial Inteligenc is Win! You loose.')
+            print('Com is Win! You loose.')
             gameIsPlaying = False
         else:
             if isBoardFull(theBoard):
@@ -161,7 +160,7 @@ while gameIsPlaying:
                 print('Draw')
                 break
             else:
-                turn = 'Humans'
+                turn = 'Man '
     print('Play again? (yes or no)')
     if not input().lower().startswith('y'):
         break
