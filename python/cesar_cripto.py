@@ -1,6 +1,6 @@
 """ Primitive cripto, shifre of Cesar."""
 
-SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+SYMBOLS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz 1234567890!?@#$%^&*()'
 
 MAX_KEY_SIZE = len(SYMBOLS)
 
