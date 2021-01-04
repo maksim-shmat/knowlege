@@ -27,7 +27,7 @@ def getKey():
             return key
 
 def getTranslatedMessage(mode, message, key):
-    if mode[0] == 'p':
+    if mode[0] == 'u':
         key = -key
     translated = ''
 
