@@ -375,4 +375,47 @@ class BookListView(ListView):
         response['Last-Modified'] = last_book.publication_date.strftime('%a, %d %b %Y %H: %M:%S GMT')
         return response
 ########
+# Using class-based views
+# view function
+from django.http import HttpResponse
+
+def my_view(request):
+    if request.method == 'GET':
+        # <view logic>
+        return HttpResponse('result')
+
+### In a class-based view, this would become:
+from django.http import HttpResponse
+from django.views import View
+
+class MyView(View):
+    def get(self, request):
+        # <view logic>
+        return HttpResponse('result')
+### urls.py
+from django.urls import path
+from myapp.views import MyView
+
+urlpatterns = [
+        path('about/', MyView.as_view()),
+]
+###########
+from django.http import HttpResponse
+from django.views import View
+
+class GreetingView(View):
+    greeting = "Good Day"
+
+    def get(self, request):
+        return HttpResponse(self.greeting)
+
+###
+class MorningGreetingView(GreetingView):
+    greeting = "Morning to ya"
+
+###
+urlpatterns = [
+        path('about/', GreetingView.as_view(greeting="G'day")),
+]
+############
 
