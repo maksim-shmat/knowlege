@@ -611,6 +611,55 @@ def my_custom_sql(self):
 cursor.execute("SELECT foo FROM bar WHERE baz = '30%'")
 cursor.execute("SELECT foo FROM bar WHERE baz = '30%%' AND id = %s", [self.id])
 
-#
+#########
+# Generic views of objects
+# models.py
+from django.db import models
+
+class Publisher(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=50)
+    city = models.CharField(max_length=30)
+    state_province = models.CharField(max_lenght=30)
+    country = models.CharField(max_length=50)
+    website = models.URLField()
+
+    class Meta:
+        ordering = ["-name"]
+
+    def __str__(self):
+        return self.name
+
+class Author(models.Model):
+    salution = model.CharField(max_length=10)
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    headshot = models.ImageField(upload_to='author_headshots')
+
+    def __str__(self):
+        return self.name
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+    authors = models.ManyToManyField('Author')
+    publisher = models.ForeighKey(Publisher, on_delete=models.CASCADE)
+    publication_date = models.DateField()
+
+### And view.py
+from django.views.generic import ListView
+from books.models import Publisher
+
+class PublisherList(ListView):
+    model = Publisher
+
+### And urls.py
+from django.urls import path
+from books.views import PublisherList
+
+urlpatterns = [
+        path('publishers/', PublisherList.as_view()),
+]
+##########
+
 
 
