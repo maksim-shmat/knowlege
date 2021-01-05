@@ -351,4 +351,28 @@ urlpatterns = [
         path('about/', AboutView.as_view()),
 ]
 ##########
+# Supporting other Http methods
+# urls.py
+from django.urls import path
+from books.views import BookListView
+
+urlpatterns = [
+        path('books/', BookListView.as_view()),
+]
+###
+# views.py
+from django.http import HttpResponse
+from django.views.generic import ListView
+from books.models import Book
+
+class BookListView(ListView):
+    model = Book
+
+    def head(self, *args, ** kwargs):
+        last_book = self.get_queryset().latest('publication_date')
+        response = HttpResponse()
+        # RFC 1123 date format
+        response['Last-Modified'] = last_book.publication_date.strftime('%a, %d %b %Y %H: %M:%S GMT')
+        return response
+########
 
