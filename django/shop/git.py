@@ -1,25 +1,26 @@
 """ How make good commits?
-build: Changes that affect the build system or external dependencies (example
+build: changes that affect the build system or external dependencies (example
 
 scopes: gulp, broccoli, npm)
 
-ci: Changes to our CI configuration files and scripts (example scopes: Travis,
+ci: changes to our CI configuration files and scripts (example scopes: Travis,
     Circle, BrowserStack, SauceLabs)
 
-docs: Documentation only changes
+docs: documentation only changes
 
-feat: A new feature
+feat: a new feature
 
-fix: A bug fix
+fix: a bug fix
 
-perf: A code change that improves performance.
+perf: a code change that improves performance.
 
-refactor: A code change that neither fixes a bug nor adds a future
+refactor: a code change that neither fixes a bug nor adds a future
 
-style: Changes that do not affect the meaning of the code (white-space,
+style: changes that do not affect the meaning of the code (white-space,
     formatting, missing semi-colons, etc)
+chore: updating grunt tasks etc; no production code change.
 
-test: Adding missing tests or correcting existing tests
+test: adding missing tests or correcting existing tests
 """
 
 $ cat .gitignore
