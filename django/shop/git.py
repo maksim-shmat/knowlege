@@ -1,4 +1,5 @@
-""" How make good commits?
+""" How make good commits?"""
+
 build: changes that affect the build system or external dependencies (example
 
 scopes: gulp, broccoli, npm)
@@ -21,7 +22,7 @@ style: changes that do not affect the meaning of the code (white-space,
 chore: updating grunt tasks etc; no production code change.
 
 test: adding missing tests or correcting existing tests
-"""
+
 
 $ cat .gitignore
 
