@@ -335,3 +335,20 @@ def manage_authors(request):
     return render(request, 'manage_authors.html', {'formset': formset})
 
 #########
+# Subclassing generic views
+# some_app/views.py
+from django.views.generic import TemplateView
+
+class AboutView(TemplateView):
+    template_name = "about.html"
+
+###
+# urls.py
+from django.urls import path
+from some_app.views import AboutView
+
+urlpatterns = [
+        path('about/', AboutView.as_view()),
+]
+##########
+
