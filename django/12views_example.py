@@ -548,4 +548,33 @@ class AcmeBookList(ListView):
     template_name = 'books/acme_list.html'
 
 ###############
+# Dynamic filtering
+# urls.py
+from django.urls import path
+from books.views import PublisherBookList
+
+urlpatterns = [
+        path('books/<publisher>/', PublisherBookList.as_view()),
+]
+###
+# views.py
+from django.shortcuts import get_object_or_404
+from django.views.generic import ListView
+from books.models import Book, Publisher
+
+class PublisherBookList(ListView):
+    template_name = 'books/books_by_publisher.html'
+
+    def get_queryset(self):
+        self.publisher = get_object_or_404(Publisher,
+                name=self.kwargs['publisher'])
+        return Book.objects.filter(publisher=self.publisher)
+###
+def get_context_data(self, **kwargs):
+    # Call the base implementation first to get a context
+    context = super().get_context_data(**kwargs)
+    # Add in the publisher
+    context['publisher'] = self.publisher
+    return context
+############
 
