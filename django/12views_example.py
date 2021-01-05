@@ -498,4 +498,14 @@ class ProtectedView(TemplateView):
 class ProtectedView(TemplateView):
     tmplate_name = 'secret.html'
 #########
+# Making "friendly" template contexts.
+# views.py
+from django.views.generic import ListView
+from books.models import Publisher
+
+class PublisherList(ListView):
+    model = Publisher
+    context_object_name = "my_favorite_publishers"
+
+##########
 
