@@ -660,6 +660,39 @@ urlpatterns = [
         path('publishers/', PublisherList.as_view()),
 ]
 ##########
+# Performing extra work
+# models.py
+from django.db import models
+
+class Author(models.Model):
+    salutation = models.CharField(max_length=10)
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    headshot = models.ImageField(upload_to='author_headshots')
+    last_accessed = model.DateTimeField()
+###
+from django.urls import path
+from books.views import AuthorDetailView
+
+urlpatterns = [
+        #...
+        path('authors/<int:pk>/', AuthorDetailView.as_view(), name='author-detail'),
+]
+###
+from django.utils import timezone
+from django.views.generic import DetailView
+from books.models import Author
+
+class AuthorDetailView(DetailView):
+    queryset = Author.objects.all()
+
+    def get_object(self):
+        obj = super().get_object()
+        # Record the last accessed date
+        obj.last_accessed = timezone.now()
+        obj.save()
+        return obj
+#########
 
 
 
