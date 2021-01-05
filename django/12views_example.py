@@ -469,4 +469,33 @@ urlpatterns = [
         path('vote/', permission_required('polls.can_vote')(VoteView.as_view())),
 ]
 ###########
+# Decorating the class
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from django.views.generic import TemplateView
+
+class ProtectedView(TemplateView):
+    template_name = 'sectet.html'
+
+    @method_decorator(login_required)
+    def dispatch(self, *args, **kwargs):
+        return super().dispatch(*args, **kwargs)
+###
+# or more succinctly
+@method_decorator(login_required, name='dispatch')
+class ProtectedView(TemplateView):
+    template_name = 'secret.html'
+###
+# These two classes are equivalent
+decorators = [never_cache, login_required]
+
+@method_decorator(decorators, name='dispatch')
+class ProtectedView(TemplateView):
+    template_name = 'secret.html'
+
+@method_decorator(never_cache, name='dispatch')
+@method_decorator(login_required, name='dispatch')
+class ProtectedView(TemplateView):
+    tmplate_name = 'secret.html'
+#########
 
