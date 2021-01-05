@@ -523,4 +523,29 @@ class PublisherDetail(DetailView):
         return context
 
 ###########
+# Viewing subsets of objects
+# using th queryset argument
+from django.views.generic import DetailView
+from books.models import Publisher
+
+class PublisherDetail(DetailView):
+    context_object_name = 'publisher'
+    queryset = Publisher.objects.all()
+###
+from django.views.generic import ListView
+from books.models import Book
+
+class BookList(ListView):
+    queryset = Book.objects.order_by('-publication_date')
+    context_object_name = 'book_list'
+###
+from django.views.generic import ListView
+from books.models import Book
+
+class AcmeBookList(ListView):
+    context_object_name = 'book_list'
+    queryset = Book.objects.filter(publisher__name='ACME Publishing')
+    template_name = 'books/acme_list.html'
+
+###############
 
