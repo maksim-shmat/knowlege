@@ -577,3 +577,38 @@ def get_context_data(self, **kwargs):
     context['publisher'] = self.publisher
     return context
 ############
+# Content negatiation example
+from django.http import JsonResponse
+from django.views.generic.edit import CreateView
+from myapp.models import Author
+
+class JsonableResponseMixin:
+    """
+    Mixin to add JSON support to a form.
+    Must be used with an object_based FormView (e.g. CreateView)
+    """
+    def from_invalid(self, form):
+        response = super().form_invalid(form)
+        if self.request.accepts('text/html'):
+            return response
+        else:
+            return JsonResponse(form.errors, status=400)
+
+    def form_valid(self, form):
+        # We make sure to call the parent's form_valid() method because
+        # it might do some processing (in the case of CreateView, it will
+        # call form.save() for example).
+        response = super().form_valid(form)
+        if self.request.accepts('text/html'):
+            return response
+        else:
+            data = {
+                    'pk': self.object.pk,
+            }
+            return JsonResponse(data)
+
+class AuthorCreate(JsonableResponseMixin, CreateView):
+    model = Author
+    fields = ['name']
+###
+
