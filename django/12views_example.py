@@ -730,4 +730,53 @@ class AuthorDetail(FormMixin, DetailView):
         # passed in form.cleaned_data['message']
         return super().form_valid(form)
 ###########
+# An alternative using DetailView
+from django import forms
+from django.views.generic import DetailView
+from books.models import Author
+
+class AuthorInterestForm(form.Form):
+    message = forms.CharField()
+
+class AuthorDisplay(DetailView):
+    model = Author
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = AuthorInterestForm()
+        return context
+###
+from django.http import HttpResponseForbidden
+from django.urls import reverse
+from django.views.generic import FormView
+from django.views.generic.detail import SingleObjectMixin
+
+class AuthorInterest(SingleObjectMixin, FormView):
+    template_name = 'books/author_detail.html'
+    form_class = AuthorInterestForm
+    model = Author
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated:
+            return HttpResponseForbidden()
+        self.object = self.get_object()
+        return super().post(request, *args, **kwargs)
+
+    def get_success_url(self):
+        return reverse('author-detail', kwargs={'pk': self.object.pk})
+
+###
+from django.views import View
+
+class AuthorDetail(View):
+
+    def get(self, request, *args, **kwargs):
+        view = AuthorDisplay.as_view()
+        return view(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        view = AuthorInterest.as_view()
+        return view(request, *args, **kwargs)
+##############
+
 
