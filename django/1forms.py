@@ -92,5 +92,31 @@ AuthorFormSet(queryset=Author.objects.filter(name__startswith='O'))
 return render(request, 'manage_authors.html', {'formset': formset})
 
 ############
+# Basic forms
+# forms.py
+from django import forms
 
+class ContactForm(forms.Form):
+    name = forms.CharField()
+    message = forms.CharField(widget=forms.Textarea)
+
+    def send_email(self):
+        # send email using the self.cleaned_data dictionary
+        pass
+# The view can be constructed using a FormView
+# views.py
+from myapp.forms import ContactForm
+from django.views.generic.edit import FormView
+
+class ContactView(FormView):
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = '/thanks/'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.send_email()
+        return super().form_valid(form)
+##########
 
