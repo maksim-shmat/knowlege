@@ -335,4 +335,43 @@ class BookForm(forms.Form):
     authors = forms.ModelMultipleChoiceField(queryset=Author.objects.all())
 
 ##########
+# Model forms
+# models.py
+from django.db import models
+from django.urls import reverse
+
+class Author(models.Model):
+    name = models.Model):
+        name = models.CharField(max_length=200)
+
+        def get_absolute_url(self):
+            return reverse('author-detail', kwargs={'pk': self.pk})
+# views.py
+from django.urls import reverse_lazy
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from myapp.models import Author
+
+class AuthorCreate(CreateView):
+    model = Author
+    fields = ['nam']
+
+class AuthorUpdate(UpdateView):
+    model = Author
+    fields = ['name']
+
+class AuthorDelete(DeleteView):
+    model = Author
+    success_url = reverse_lazy('author-list')
+###
+# urls.py
+from django.urls import path
+from myapp.views import AuthorCreate, AuthorDelete, AuthorUpdate
+
+urlpatterns = [
+        # ...
+        path('author/add/', AuthorCreate.as_view(), name='author-add'),
+        path('author/<int:pk>/', AuthorUpdate.as_view(), name='author-update'),
+        path('author/<int:pk>/delete/', AuthorDelete.as_view(), name='author-delete'),
+]
+##########
 
