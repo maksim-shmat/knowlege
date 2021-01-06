@@ -634,4 +634,62 @@ class RecordInterest(SingleObjectMixin, View):
         return HttpResponseRedirect(reverse('author-detail', kwargs={'pk': self.object.pk}))
 
 ###
+# urls.py
+from django.urls import path
+from books.views import RecordInterest
+
+urlpatterns = [
+        # ...
+        path('author/<int:pk>/interest/', RecordInterest.as_view(), name='author-interest'),
+]
+############
+# Using SingleObjectMixin with ListView
+from django.views.generic import ListView
+from django.views.generic.detail import SingleObjectMixin
+from books.models import Publisher
+
+class PublisherDetail(SingleObjectMixin, ListView):
+    paginate_by = 2
+    template_name = "books/publisher_detail.html"
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object(queryset=Publisher.objects.all())
+        return super().get(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['publisher'] = self.object
+        return context
+
+    def get_queryset(self):
+        return self.objecty.book_set.all()
+
+###
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Publisher {{ publisher.name }}</h2>
+  <ol>
+    {% for book in page_obj %}
+      <li>{{ book.title }}</li>
+    {% endfor %}
+  </ol>
+  
+  <div class="pagination">
+    <span class="step-links">
+      {% if page_obj.has_previous %}
+        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+      {% endif %}
+
+      <span class="current">
+        Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+      </span>
+
+      {% if page_obj.has_next %}
+        <a href="?page={{ page_obj.next_page_number }}">next</a>
+      {% endif %}
+    </span>
+  </div>
+{% endblock %}
+########
 
