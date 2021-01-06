@@ -374,4 +374,26 @@ urlpatterns = [
         path('author/<int:pk>/delete/', AuthorDelete.as_view(), name='author-delete'),
 ]
 ##########
+# Models and request.user
+# models.py
+from django.contrib.auth.models import User
+from django.db import models
+
+class Author(models.Model):
+    name = models.CharField(max_length=200)
+    created_by = models.ForeighKey(User, on_delete=models.CASCADE)
+    #...
+###
+# views.py
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView
+
+class AuthorCreate(LoginRequiredMixin, CreateView):
+    model = Author
+    field = ['name']
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
+###
 
