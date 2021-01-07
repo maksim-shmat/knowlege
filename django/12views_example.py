@@ -778,5 +778,54 @@ class AuthorDetail(View):
         view = AuthorInterest.as_view()
         return view(request, *args, **kwargs)
 ##############
+# JSON mixin example
+from django.http import JsonResponse
+
+class JSONResponseMixin:
+    """
+    A mixin that can be used to render a JSON response.
+    """
+    def render_to_json_response(self, context, **response_kwargs):
+        """
+        Returns a JSON response, transforming 'context' to make the payload.
+        """
+        return JsonResponse(
+                self.get_data(context),
+            **response_kwargs
+        )
+
+    def get_data(self, context):
+        """
+        Return an object that will be serialized as JSON by json.dumps().
+        """
+        # Note: This is *EXTREMELY* naive; in reality, you'll need
+        # to do much more complex handling to ensure that arbitrary
+        # objects -- such as Django model instances or querysets
+        # -- can be serialized as JSON.
+        return context
+###
+from django.views.generic import TemplateView
+
+class JSONView(JSONResponseMixin, TemplateView):
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
+###
+from django.views.generic.detail import BaseDetailView
+
+class JSONDetailView(JSONResponseMixin, BaseDetailView):
+    def render_to_response(self, context, **response_kwargs):
+        return self.render_to_json_response(context, **response_kwargs)
+###
+from django.views.generic.detail import SingleObjectTemplateResponseMixin
+
+class HybridDetailView(JSONResponseMixin, SingleObjectTemplateResponseMixin,
+        BaseDetailView):
+    def render_to_response(self, context):
+        # Look for a 'format=json' GET argument
+        if self.request.GET.get('format') == 'json':
+            return self.render_to_json_response(context)
+        else:
+            return super().render_to_response(context)
+##########
 
 
