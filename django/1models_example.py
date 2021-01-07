@@ -693,6 +693,14 @@ class AuthorDetailView(DetailView):
         obj.save()
         return obj
 #########
+# Useing files in models
+from django.db import models
 
+class Car(models.Model):
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+    photo = models.ImageField(upload_to='cars')
+
+###
 
 
