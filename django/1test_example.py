@@ -39,7 +39,7 @@ def test_was_published_recently_with_recent_question(self):
     time = timezone.now() - datetime.timedelta(hours=23, minutes=59, second=59)
     recent_question = Question(pub_date=time)
     self.assertIs(recent_question.was_published_recently(), True)
-
+"""
 ###########
 # polls/tests.py
 from django.urls import reverse
@@ -108,16 +108,12 @@ class QuestionIndexViewTests(TestCase):
         self.assertQuerysetEqual(
                 response.context['latest_question_list'],
                 ['<Question: Past question 2.>', '<Question: Past question 1.>']
-
+"""
 ###########
 # polls/tests.py testing class DetailView in views.py
 
 class QuestionDetailViewTests(TestCase):
     def test_future_question(self):
-        """
-        The detail view of a question with a pub_date in the future
-        returns a 404 not fount.
-        """
         future_question = create_question(question_text='Future question.',
             days=-5)
         url = reverse('polls:detail', args=(post_question.id,))
@@ -125,4 +121,20 @@ class QuestionDetailViewTests(TestCase):
         self.assertContains(response, past_question.question_text)
 
 
+#########
+# Writing tests with django
+from django.test import TestCase
+from myapp.models import Animal
 
+class AnimalTestCase(TestCase):
+    def setUP(self):
+        Animal.objects.create(name="lion", sound="roar")
+        Animal.objects.create(name='cat', sound="meow")
+
+    def test_animals_can_speak(self):
+        """Animals that can speak are correctly identified"""
+        lion = Animal.objects.get(name="lion")
+        cat = Animal.objects.get(name="cat")
+        self.assertEqual(lion.speak(), 'The lion says "roar"')
+        self.assertEqual(cat.speak(), 'The cat says "meow"')
+#########
