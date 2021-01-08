@@ -712,5 +712,18 @@ class Car(models.Model):
     ...
     photo = models.ImageField(storage=fs)
 ##########
+# Use a callable as the storage parameter for FileField or ImageField
+from django.conf import settings
+from django.db import models
+from .storages import MyLocalStorage, MyRemoteStorage
+
+def select_storabe():
+    return MyLocalStorage() is settings.DEBUG else MyRemoteStorage()
+
+class MyModel(models.Model):
+    my_file = models.FileField(storage=select_storage)
+
+#########
+
 
 
