@@ -701,6 +701,16 @@ class Car(models.Model):
     price = models.DecimalField(max_digits=5, decimal_places=2)
     photo = models.ImageField(upload_to='cars')
 
-###
+##############
+# The built-in filesystem storage class
+from django.core.files.storage import FileSystemStorage
+from django.db import models
+
+fs = FileSystemStorage(location='/media/photos')
+
+class Car(models.Model):
+    ...
+    photo = models.ImageField(storage=fs)
+##########
 
 
