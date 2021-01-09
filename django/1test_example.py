@@ -274,4 +274,22 @@ class LoginTestCase(TestCase):
             response = self.client.get('/sekrit/')
             self.assertRedirects(response, '/other/login/?next=/sekrit/')
 ###########
+# use SimpleTestCase.modify_settings()
+from django.test import TestCase
+
+class MiddlewareTestCase(TestCase):
+
+    def test_cache_middleware(self):
+        with self.modify_settings(MIDDLEWARE={
+            'append': 'django.middleware.cache.FetchFromCacheMiddleware',
+            'prepend': 'django.middleware.cache.UpdateCacheMiddleware',
+            'remove': [
+                'django.contrib.sessions.middleware.SessionMiddleware',
+                'django.contrib.auth.middleware.AuthenticationMiddleware',
+                'django.contrib.messages.middleware.MessageMiddleware',
+            ],
+        }):
+            response = self.client.get('/')
+            # ...
+############
 
