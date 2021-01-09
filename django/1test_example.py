@@ -443,3 +443,30 @@ class SimpleTest(TestCase):
         self.assertEqual(response.status_code, 200)
 
 ###########
+# testing class-based views
+# views.py
+from django.views.generic import TemplateView
+
+class HomeView(TemplateView):
+    template_name = 'myapp/home.html'
+
+    def get_context_data(self, **kwargs):
+        kwargs['environment'] = 'Production'
+        return super().get_context_data(**kwargs)
+
+###
+# tests.py
+from django.test import RequestFactory, TesCase
+from .views import HomeView
+
+class HomePageTest(TestCase):
+    def test_environment_set_in_context(self):
+        request = RequestFactory().get('/')
+        view = HomeView()
+        view.setup(request)
+
+        context = view.get_context_data()
+        self.assertIn('environment', context)
+
+###########
+
