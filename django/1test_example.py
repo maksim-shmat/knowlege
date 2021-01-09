@@ -198,3 +198,14 @@ class MySeleniumTests(StaticLiveServerTestCase):
         password_input.send_keys('secret')
         self.selenium.find_element_by_wpath('//input[@value="Log in"]').click()
 ##########
+# SQLite run the tests with selenium
+def test_login(self):
+    from selenium.webdriver.support.wait import WebDriverWait
+    timeout = 2
+    ...
+    self.selenium.find_element_by_xpath('//input[@value="Login"]').click()
+    # Wait until the response is received
+    WebDriverWait(self.selenium, timeout).until(
+            lambda driver: driver.find_element_by_tag_nam('body'))
+########
+
