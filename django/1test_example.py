@@ -292,4 +292,13 @@ class MiddlewareTestCase(TestCase):
             response = self.client.get('/')
             # ...
 ############
+# use override_settings()
+from django.test import TestCase, override_settings
 
+class LoginTestCase(TestCase):
+    @override_settings(LOGIN_URL='/other/login/')
+    def test_login(self):
+        response = self.client.get('/sekrit/')
+        self.assertRedirects(response, '/other/login/?next=/sekrit/')
+
+#########
