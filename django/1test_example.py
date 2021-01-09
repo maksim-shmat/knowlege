@@ -301,4 +301,38 @@ class LoginTestCase(TestCase):
         response = self.client.get('/sekrit/')
         self.assertRedirects(response, '/other/login/?next=/sekrit/')
 
-#########
+###
+# The decorator can also be applied to TestCase classes
+from django.test import TestCase, override_settings
+
+@override_settings(LOGIN_URL='/other/login/')
+class LoginTestCase(TestCase):
+
+    def test_login(self):
+        response = self.client.get('/sekrit/')
+        self.assertRedirects(response, '/other/login/?next=/sekrit/')
+
+############
+# use modify_settings() decorator
+from django.test import TestCase, modify_settings
+
+class MiddlewareTestCase(TestCase):
+    @modify_settings(MIDDLEWARE={
+        'append': 'django.middleware.cache.FetchFromCacheMiddleware',
+        'prepend': 'django.middleware.cache.UpdateCacheMiddleware',
+    })
+    def test_cache_middleware(self):
+        response = self.client.get('/')
+        # ...
+###
+# the decorator can also be applied to test case classes:
+from django.test import TestCase, modify_settings
+
+@modify_settings(MIDDLEWARE={
+    'append': 'django.middleware.cache.FetchFromCacheMiddleware',
+    'prepend': 'django.middleware.cache.UpdateCacheMiddleware',
+})
+class MiddlewareTestCase(TestCase):
+    def test_cache_middleware(self):
+        response = self.client.get('/')
+        # ...
