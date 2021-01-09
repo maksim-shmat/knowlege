@@ -336,3 +336,30 @@ class MiddlewareTestCase(TestCase):
     def test_cache_middleware(self):
         response = self.client.get('/')
         # ...
+##########
+# tagging tests
+# you can tag your tests so you can easily run a particular subset. For
+# example, you might label fast or slow tests
+from django.test import tag
+
+class SampleTestCase(TestCase):
+    @tag('fast')
+    def test_fast(self):
+        ...
+    @tag('slow')
+    def test_slow(self):
+        ...
+    @tag('slow', 'core')
+    def test_slow_but_core(self):
+        ...
+### subclasses inherit tags from superclasses, and methods inherit tags from
+# their class
+    @tag('slow', 'core')
+    class SampleTestCase(TestCase):
+        ...
+    @tag('foo')
+    class SampleTestCaseChild(SampleTestCase):
+        @tag('bar')
+        def test(self):
+            ...
+###########
