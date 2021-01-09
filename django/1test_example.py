@@ -397,3 +397,18 @@ class ClosepollTest(TestCase):
         self.assertIn('Expected output', out.getvalue())
 
 ###########
+# skipping tests
+class MyTests(TestCase):
+    @skipIfDBFeature('supports_transactions')
+    def test_transaction_behavior(self):
+        # ... conditional test code
+        pass
+
+###
+class MyTests(TestCase):
+    @skipUnlessDBFeature('supports_transactions')
+    def test_transaction_behavior(self):
+        # ... conditional test code
+        pass
+############
+
