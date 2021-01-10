@@ -88,4 +88,22 @@ def logout_view(request):
     # Redirect to a success page.
 
 ###########
+# limiting access to logged-in users
+# and either redirect to a login page
+from django.conf import settings
+from django.shortcuts import redirect
+
+def my_view(request):
+    if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    # ...
+
+# or display an error message
+from django.shortcuts import render
+
+def my_view(request):
+    if not request.user.is_authenticated:
+        return render(request, 'myapp/login_error.html')
+    # ...
+###########
 
