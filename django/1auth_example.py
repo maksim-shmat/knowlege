@@ -106,4 +106,28 @@ def my_view(request):
         return render(request, 'myapp/login_error.html')
     # ...
 ###########
+# use login_required decorator
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def my_view(request):
+    ...
+###
+from django.contrib.auth.decorators import login_required
+
+@login_required(redirect_field_name='my_redirect_field')
+def my_view(request):
+    ...
+###
+from django.contrib.auth.decorators import login_required
+
+@login_required(login_url='/accounts/login/')
+def my_view(request):
+    ...
+###
+from django.contrib.auth import views as auth_views
+
+path('accounts/login/', auth_views.LoginViewf.as_view()),
+
+##############
 
