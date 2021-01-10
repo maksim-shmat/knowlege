@@ -493,3 +493,27 @@ class ResizeImageTests(ImageTestCaseMixin, TestCase):
         self.assertEqual(get_image_size(self.file), (48, 48))
 
 ##########
+# using the django test runner to test reusable applications
+# runtests.py
+import os
+import sys
+
+import django
+from django.conf import settings
+from django.test.utils import get_runner
+
+if __name__ == "__main__":
+    os.environ['DJANGO_SETTINGS_MODULE'] = 'tests.test_settings'
+    django.setup()
+    TestRunner = get_runner(settings)
+    test_runner = TestRunner()
+    failures = test_runner.run_test(["tests"])
+    sys.exit(bool(failures))
+
+###
+# tests/test_settings.py
+SECRET_KEY = 'fake-key'
+INSTALLED_APPS = [
+        "tests",
+]
+##########
