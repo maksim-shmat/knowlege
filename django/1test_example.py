@@ -469,4 +469,27 @@ class HomePageTest(TestCase):
         self.assertIn('environment', context)
 
 ###########
+# enforce running test classes sequentially
+import os
 
+from django.test import TestCase
+from django.test.testcases import SerializeMixin
+
+class ImageTestCaseMixin(SerializeMixin):
+    lockfile = __file__
+
+    def setUp(self):
+        self.filename = os.path.join(temp_storage_dir, 'my_file.png')
+        self.file = create_file(self.filename)
+
+class RemoveImageTests(ImageTestCaseMixin, TestCase):
+    def test_remove_image(self):
+        os.remove(self.filename)
+        self.assertFalse(os.path.exists(self.filename))
+
+class ResizeImageTests(ImageTestCaseMixin, TestCase):
+    def test_resize_image(self):
+        resize_image(self.file, (48, 48))
+        self.assertEqual(get_image_size(self.file), (48, 48))
+
+##########
