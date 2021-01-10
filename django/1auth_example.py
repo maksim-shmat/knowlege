@@ -43,4 +43,26 @@ def user_gains_perms(request, user_id):
     # Permission cache is repopulated from the database
     user.has_perm('myapp.change_blogpost') # True
 ###########
+# proxy models
+class Person(models.Model):
+    class Meta:
+        permissions = [('can_eat_pizzas', 'Can eat pizzas')]
+
+class Student(Person):
+    class Meta:
+        proxy True
+        permissions = [('can_deliver_pizzas', 'Can deliver pizzas')]
+"""
+>>> # Fetch the content type for the proxy model.
+>>> content_type = ContentType.objects.get_for_model(Student,
+        for_concrete_model=False)
+>>> student_permissions = Permission.objects.filter(content_type=content_type)
+>>> [p.codename for p in student_permissions]
+>>> for permission in student_permissions:
+    user.user_permissions.add(permission)
+>>> user.has_perm('app.add_permission')
+>>> user.has_perm('app.can_eat_pizzas')
+>>> user.has_perms(('app.add_student', 'app.can_deliver_pizzas'))
+"""
+###########
 
