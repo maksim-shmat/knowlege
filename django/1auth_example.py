@@ -80,4 +80,12 @@ def my_view(request):
         # Return an 'invalid login' error message.
         ...
 ##########
+# log a user out
+from django.contrib.auth import logout
+
+def logout_view(request):
+    logout(request)
+    # Redirect to a success page.
+
+###########
 
