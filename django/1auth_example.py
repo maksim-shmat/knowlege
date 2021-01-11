@@ -138,4 +138,32 @@ class MyView(LoginRequiredMixin, View):
     redirect_field_name = 'redirect_to'
 
 ###########
+# limiting access to logged-in users that pass a test
+from django.shortcuts import redirect
+
+def my_view(request):
+    if not request.user.email.endswith('@example.com'):
+        return redirect('/login/?next=%s' % request.path)
+    # ...
+
+###
+# user_passes_test as a shortcut
+from django.contrib.auth.decorators import user_passes_test
+
+def email_check(user):
+    return user.email.endswith('@example.com')
+
+@user_passes_test(email_check)
+def my_view(request):
+    ...
+
+###
+# UserPassesTestMixin ans test_func() or get_test_func()
+from django.contrib.auth.mixins import UserPassesTestMixin
+
+class MyView(UserPassesTestMixin, View):
+    def test_func(self):
+        return self.request.user.email.endswith('@example.com')
+
+############
 
