@@ -189,4 +189,16 @@ def my_view(request):
     ...
 
 ##############
+# session invalidation on password change
+from django.contrib.auth import update_session_auth_hach
+
+def password_change(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+    else:
+        ...
+##############
 
