@@ -130,4 +130,12 @@ from django.contrib.auth import views as auth_views
 path('accounts/login/', auth_views.LoginViewf.as_view()),
 
 ##############
+# use LoginRequired mixin
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+class MyView(LoginRequiredMixin, View):
+    login_url = '/login/'
+    redirect_field_name = 'redirect_to'
+
+###########
 
