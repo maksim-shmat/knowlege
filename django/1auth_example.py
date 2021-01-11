@@ -166,4 +166,27 @@ class MyView(UserPassesTestMixin, View):
         return self.request.user.email.endswith('@example.com')
 
 ############
+# use permission_required decorator
+from django.contrib.auth.decorators import permission_required
+
+@permission_required('polls.add_choice')
+def my_view(request):
+    ...
+
+###
+from django.contib.auth.decorators import permission_required
+
+@permission_required('polls.add_choice', login_url='/loginpage/')
+def my_view(request):
+    ...
+
+###
+from django.contrib.auth.decorators import login_required, permission_required
+
+@login_required
+@permission_required('polls.add_choice', raise_exception=True)
+def my_view(request):
+    ...
+
+##############
 
