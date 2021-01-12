@@ -407,4 +407,14 @@ def user_model_swapped(**kwargs):
         some_module.UserModel = get_user_model()
 
 ###########
+# custom users and the built-in auth forms
+from django.contrib.auth.forms import UserCreationForm
+from myapp.models import CustomUser
+
+class CustomUserCreationForm(UserCreationForm):
+
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = UserCreationForm.Meta.field + ('custom_field',)
+###
 
