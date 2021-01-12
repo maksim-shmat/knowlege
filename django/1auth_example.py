@@ -220,3 +220,51 @@ class PickyAuthenticationForm(AuthenticationForm):
                     _("Sorry, accounts starting with 'b' aren't welcome here."), code='no_b_users',
             )
 #########
+# password upgrading without requiring a login
+# if you have an existing database with an older, weak hash such as MD5 or
+# SHA1, you might want to upgrade those hashes youseld indstead of waiting for
+# the upgrade to happen when a user logs in.
+# account/hashers.py
+from django.contrib.auth.hashers import(
+        PBKDF2PasswordHasher, SHA1PasswordHasher,
+)
+
+class PBKDF2WrappedSHA1PasswordHasher(PBKDF2PasswordHasher):
+    algorithm = 'pbkdf2_wrapped_sha1'
+
+    def encode_sha1_hash(self.sha1_hash, salt, iterations=None):
+        return super().encode(sha1_hash, salt, iterations)
+
+    def encode(self, password, salt, iterations=None):
+        _, _, sha1_hash = SHA1PasswordHasher().encode(password, salt).split('$', 2)
+        return self.encode_sha1_hash(sha1_hash, salt, iterations)
+
+### account/migrations/0002_migrate_sha1_passwords.py
+from django.db import migrations
+from ..hashers import PBKDF2WrappedSHA1PasswordHasher
+
+def forwards_func(apps, schema_editor):
+    User = apps.get_model('auth', 'User')
+    user = User.objects.filter(password__startswith='sha1$')
+    hasher = PBKDF2WrappedSHA1PasswordHasher()
+    for user in users:
+        algorithm, salt, sha1_hash = user.password.split('$', 2)
+        user.password = hasher.encode_sha1_hash(sha1_hash, salt)
+        user.save(update_fields=['password'])
+
+class Migration(migrations.Migration):
+    dependancies = [
+            ('accounts', '0001_initial'),
+            # replace this with the latest migration in contrib.auth
+            ('auth', '###_migration_name'),
+    ]
+
+    operations = [
+            migrations.RunPython(forwards_func),
+    ]
+### mysite/settings.py
+PASSWORD_HASHERS = [
+        'django.contrib.auth.hashers.PBKDF2PasswordHasher',
+        'accounts.hashers.PBKDR2WrappedSHA1PasswordHasher',
+]
+#############
