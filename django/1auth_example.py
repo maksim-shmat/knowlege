@@ -374,4 +374,37 @@ admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 
 #############
+# referencing the User model
+from django.conf import settings
+from django.db import models
+
+class Article(models.Model):
+    author = models.ForeignKey(
+            settings.AUTH_USER_MODEL,
+            on_delete=models.CASCADE,
+    )
+###
+from django.conf import settings
+from django.db.models.signals import post_save
+
+def post_save_receiver(sender, instance, created, **kwargs):
+    pass
+
+post_save.connect(post_save_receiver, sender=settings.AUTH_USER_MODEL)
+
+###
+
+from django.apps import apps
+from django.contrib.auth import get_user_model
+from django.core.signals import setting_changed
+from django.dispatch import receiver
+
+@receiver(setting_changed)
+def user_model_swapped(**kwargs):
+    if kwargs['setting'] == 'AUTH_USER_MODEL':
+        apps.clear_cache()
+        from myapp import some_module
+        some_module.UserModel = get_user_model()
+
+###########
 
