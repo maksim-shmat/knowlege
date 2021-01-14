@@ -36,4 +36,13 @@ from django.views.decorators.cache import cache_page
 def my_view(request):
 
 ##########
+# use key_prefix and special_cache
+@cache_page(60 * 15, cache="special_cache")
+def my_view(request):
+    ...
 
+@cache_page(60 * 15, key_prefix="site1")
+def my_view(request):
+    ...
+
+###########
