@@ -46,3 +46,11 @@ def my_view(request):
     ...
 
 ###########
+# specifying per-view cache in the URLconf
+from django.views.decorators.cache import cache_page
+
+urlpatterns = [
+        path('foo/<int:code>/', cache_page(60 * 15)(my_view)),
+]
+##########
+
