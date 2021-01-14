@@ -29,3 +29,11 @@ class CacheRouter:
             return db == 'cache_primary'
         return None
 ########
+# automatically cache the view's response
+from django.views.decorators.cache import cache_page
+
+@cache_page(60 * 15)
+def my_view(request):
+
+##########
+
