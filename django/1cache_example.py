@@ -53,4 +53,8 @@ urlpatterns = [
         path('foo/<int:code>/', cache_page(60 * 15)(my_view)),
 ]
 ##########
+# cache key transformation
+def make_key, key_prefix, version):
+    return '%s:%s:%s' % (key_prefix, version, key)
 
+##########
