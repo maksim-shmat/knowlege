@@ -58,3 +58,36 @@ def make_key, key_prefix, version):
     return '%s:%s:%s' % (key_prefix, version, key)
 
 ##########
+# using Vary headers
+from django.views.decorators.vary import vary_on_headers
+
+@vary_on_headers('User-Agent')
+def my_view(request):
+    ...
+
+###
+@vary_on_headers('User-Agent', 'Cookie')
+def my_view(request):
+    ...
+
+### both equivalent
+@vary_on_cookie
+def my_view(request):
+    ...
+
+@vary_on_headers('Cookie')
+def my_view(request):
+    ...
+
+###
+from django.shortcuts import render
+from django.utils.cache import patch_vary_headers
+
+def my_view(request):
+    ...
+    response = render(request, 'template_name', context)
+    patch_vary_headers(response, ['Cookie'])
+    return response
+
+###########
+
