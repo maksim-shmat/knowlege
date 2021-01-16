@@ -90,4 +90,39 @@ def my_view(request):
     return response
 
 ###########
+# chache control
+from django.views.decorators.cache import cache_control
+
+@cache_control(private=True)
+def my_view(request):
+    ...
+
+###
+from django.views.decorators.cache import patch_cache_control
+from django.views.decorators.vary import vary_on_cookie
+
+@vary_on_cookie
+def list_blog_entries_view(request):
+    if request.user.is_anonymous:
+        response = render_only_public_entries()
+        patch_cache_control(response, public=True)
+    else:
+        response = render_private_and_public_entries(request.user)
+        patch_cache_control(response, private=True)
+    return response
+
+###
+from django.views.decorators.cache import cache_control
+
+@cache_control(max_age=3600)
+def my_view(request):
+    ...
+
+###
+from django.views.decorators.cache import never_cache
+
+@never_cache
+def myview(request):
+    ...
+##############
 
