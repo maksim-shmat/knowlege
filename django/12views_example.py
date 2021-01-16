@@ -853,5 +853,55 @@ from django.views.decorators.http import condition
 def front_page(request, blog_id):
     ...
 #############
+# shortcuts for only computing one value
+etag(etag_func)
+last_modified(last_modified_func)
 
+### 
+@last_modified(latest_entry)
+def front_page(request, blog_id):
+    ...
+### or
+def front_page(request, blog_id):
+    ...
+front_page = last_modified(latest_entry)(front_page)
+############
+# both conditions
+# bad code. Don't do this!
+@etag(etag_func)
+@last_modified(last_modified_func)
+def my_view(request):
+    ...
+##############
+# sending email
+from django.core.mail import send_mail
+
+send_mail(
+        'Subject here',
+        'Here is the message.',
+        'from@example.com',
+        ['to@example.com'],
+        fail_silently=False,
+)
+
+### preventing header injection
+from django.core.mail import BadHeaderError, send_mail
+from django.http import HttpResponse, HttpResponseRedirect
+
+def send_email(request):
+    subject = request.POST.get('subject', '')
+    message = request.POST.get('message', '')
+    from_email = request.POST.get('from_email', '')
+    if subject and message and from_email:
+        try:
+            send_mail(subject, message, from_email, ['admin@example.com'])
+        except BadHeaderError:
+            return HttpResponse('Invalid header found.')
+        return HttpResponseRedirect('/contact/thanks/')
+    else:
+        # In reality we'd use a form class
+        # to get proper validation errors.
+        return HttpResponse('Make sure all fields are entered and valid.')
+
+###########
 
