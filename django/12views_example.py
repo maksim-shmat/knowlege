@@ -827,5 +827,31 @@ class HybridDetailView(JSONResponseMixin, SingleObjectTemplateResponseMixin,
         else:
             return super().render_to_response(context)
 ##########
+# conditional view processing
+# the condition decorator
+condition(etag_func=None, last_modified_func=None)
+
+###
+import datetime
+from django.db import models
+
+class Blog(models.Model):
+    ...
+
+class Entry(model.Model):
+    blog = models.ForeignKey(Blog, on_delete=models.CASCADE)
+    published = models.DateTimeField(default=datetime.datetime.now)
+    ...
+###
+def latest_entry(request, blog_id):
+    return Entry.objects.filter(blog=blog_id).latest("published").published
+
+###
+from django.views.decorators.http import condition
+
+@condition(last_modified_func=latest_entry)
+def front_page(request, blog_id):
+    ...
+#############
 
 
