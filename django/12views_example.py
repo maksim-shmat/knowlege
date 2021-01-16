@@ -980,4 +980,38 @@ connection.send_messages([email2, email3])
 connection.close()
 
 #############
+# internationalization in python code
+from django.http import HttpResponse
+from django.utils.translation import gettext as _
+
+def my_view(request):
+    output = _("Welcome to my site.")
+    return HttpResponse(output)
+
+###
+from django.http import HttpResponse
+from django.utils.translation import gettext
+
+def my_view(request):
+    output = gettext("Welcome to my site.")
+    return HttpResponse(output)
+
+###
+def my_view(request):
+    words = ['Welcome', 'to', 'my', 'site.']
+    output = _(' '.join(words))
+    return HttpResponse(output)
+
+###
+def my_view(request):
+    sentence = 'Welcome to my site.'
+    output = _(sentence)
+    return HttpResponse(output)
+
+###
+def my_view(request, m, d):
+    output = _('Today is %(month)s %(day)s.') % {'month': m, 'day': d}
+    return HttpResponse(output)
+
+##############
 
