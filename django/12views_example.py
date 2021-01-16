@@ -1014,4 +1014,47 @@ def my_view(request, m, d):
     return HttpResponse(output)
 
 ##############
+# Pluralization
+from django.http import HttpResponse
+from django.utils.translation import ngettext
+
+def hello_world(request, count):
+    page = ngettext(
+            'there is %(count)d object',
+            'there are %(count)d object',
+            count,
+    ) % {
+            'count': count,
+    }
+    return HttpResponse(page)
+
+###
+from django.utils.translation import ngettext
+from myapp.models import Report
+
+count = Report.objects.count()
+if count == 1:
+    name = Report._meta.verbose_name
+else:
+    name = Report._meta.verbose_name_plural
+
+text = ngettext(
+        'There is %(count)d %(name)s available.',
+        'There are %(count)d %(name)s available.',
+        count,
+) % {
+        'count': count,
+        'name': name
+}
+
+###
+text = ngettext(
+        'There is %(count)d %(name)s object available.',
+        'There are %(count)d %(name)s object available.',
+        count,
+) % {
+        'count': count,
+        'name': Report._meta.verbose_name,
+}
+##############
 
