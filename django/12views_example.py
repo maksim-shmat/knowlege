@@ -920,4 +920,18 @@ msg.content_subtype = "html" # Main content is now text/html
 msg.send()
 
 #############
+# email backends
+from django.core import mail
+
+with mail.get_connection()as connection:
+    mail.EmailMessage(
+            subject1, body1, from1, [to1],
+            connection=connection,
+    ).send()
+    mail.EmailMessage(
+            subject2, body2, from2, [to2],
+            connection=connection,
+    ).send()
+
+##############
 
