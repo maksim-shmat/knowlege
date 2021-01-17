@@ -1057,4 +1057,18 @@ text = ngettext(
         'name': Report._meta.verbose_name,
 }
 ##############
+# contextual markers
+from django.utils.translation import pgettext
+
+month = pgttext("month name", "May")
+
+###
+from django.db import models
+from django.utils.translation import pgettext_lazy
+
+class MyThing(models.Model):
+    name = models.CharField(help_text=pgttext_lazy(
+        'help text for MyThing model', 'This is the help text'))
+
+#######
 
