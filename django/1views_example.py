@@ -373,4 +373,28 @@ def page(request, num=1):
     ...
 
 ##########
+# language prefix in URL patterns
+from django.conf.urls.i18n import i18n_patterns
+from django.urls import include, path
+
+from about import views as about_views
+from news import views as news_views
+from sitemap.views import sitemap
+
+urlpatterns = [
+        path('sitemap.xml', sitemap, name='sitemap-xml'),
+]
+
+news_patterns = ([
+    path('', news_views.index, name='index'),
+    path('category/<slug:slug>/', news_views.category, name='category'),
+    path('<slug:slug>/', news_views.details, name='detail'),
+], 'news')
+
+urlpatterns += i18n_patterns(
+        path('about/', about_views.main, name='about'),
+        path('news/', include(news_patterns, namespace='news')),
+)
+
+#############
 
