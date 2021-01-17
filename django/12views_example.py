@@ -1071,4 +1071,21 @@ class MyThing(models.Model):
         'help text for MyThing model', 'This is the help text'))
 
 #######
+# lazy translation
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class MyThing(models.Model):
+    name = models.CharField(help_text=_('This is the help text'))
+
+###
+class MyThing(models.Model):
+    kind = models.ForeignKey(
+            ThingKind,
+            on_delete=models.CASCADE,
+            related_name='kinds',
+            verbose_name=_('kind'),
+    )
+
+############
 
