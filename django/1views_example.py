@@ -397,4 +397,28 @@ urlpatterns += i18n_patterns(
 )
 
 #############
+# translating URL patterns
+from django.conf.urls.i18n import i18n_patterns
+from django.urls import include, path
+from django.utils.translation import gettext_lazy as _
+
+from about import views as about_views
+from news import views as news_views
+from sitemaps.views import sitemap
+
+urlpatterns = [
+        path('sitemap.xml', sitemap, name='sitemap-xml'),
+]
+
+news_patterns = ([
+    path('', news_views.index, name='index'),
+    path(_('category/<slug:slug>/'), news_views.category, name='category'),
+    path('<slug:slug>/', news_views.details, name='detail'),
+], 'news')
+
+urlpatterns += i18n_patterns(
+        path(_('about/'), about_views.main, name='about'),
+        path(_('news/'), include(news_patterns, namespace='news')),
+)
+##############
 
