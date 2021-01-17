@@ -1087,5 +1087,83 @@ class MyThing(models.Model):
             verbose_name=_('kind'),
     )
 
-############
+### model verbose names values
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class MyTing(models.Model):
+    name = models.CharField(_('name'), help_text=_('This is the help text'))
+
+    class Meta:
+        verbose_name = _('my thing')
+        verbose_name_plural = _('my things')
+
+###
+# model methods short_description attribute values
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class MyThing(models.Model):
+    kind = models.ForeignKey(
+            ThingKind,
+            on_delete=models.CASCADE,
+            related_name='kinds',
+            verbose_name=_('kind'),
+    )
+
+    def is_mouse(self):
+        return self.kind.type == MOUSE_TYPE
+    is_mouse.short_description = _('Is it a mouse?')
+
+#############
+# Working with lazy translation objects
+# The fresult of a gettext_lazy() call can be used wherever you would use a
+# string(a str object) in other Django code, but it may not work with
+# arbitrary Python code. For example, the following won't work because the
+# requests library doesn't handle gettext_lazy objects:
+body = gettext_lazy("I \u2764 Django") # (Unicode :heart:)
+requests.post('https://example.com/send', data={'body': body})
+
+### you can avoid such problims by casting gettext_lazy() objects to text
+# strings before passing them to non-Django code:
+requests.post('https://example.com/send', data={'body': str(body)})
+
+### if you don't like the long gettext_lazy name, you can alias it
+# as _(underscore), like so:
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class MyThing(models.Model):
+    name = models.CharField(help_text=_('This is the help text'))
+
+##############
+# lazy translation and plural
+from django import forms
+from django.core.exceptions import ValidationError
+from django.utils.translation import ngettext_lazy
+
+class MyForm(forms.Form):
+    error_message = ngettext_lazy("You only provided %(num)d argument",
+            "You only provided %(num)d arguments", 'num')
+    
+    def clean(self):
+        # ...
+        if error:
+            raise ValidationError(self.error_message % {'num': number})
+
+### if the string contains exactly unnamed placeholder, you can interpolate
+# directly with the number argument:
+class MyForm(forms.Form):
+    error_message = ngettext_lazy(
+            "You provided %d argument",
+            "You provided %d arguments",
+    )
+    
+    def clean(self):
+        # ...
+        if error:
+            raise ValidationError(self.error_message % number)
+
+#############
+
 
