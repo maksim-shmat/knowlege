@@ -125,4 +125,30 @@ from django.views.decorators.cache import never_cache
 def myview(request):
     ...
 ##############
+# JavaScript/JSONi18n for caching
+from django.views.decorators.cache import cache_page
+from django.views.i18n import JavaScriptCatalog
+
+# The value returned by get_version() must change when translations change.
+urlpatterns = [
+        path('jsi18n/',
+            cache_page(86400, key_prefix='js18n-%s' % get_version())
+(JavaScriptCatalog.as_view()),
+name='javascript-catalog'),
+]
+
+###
+from django.utils import timezone
+from django.views.decorators.http import last_modified
+from django.views.i18n import JavaScriptCatalog
+
+last_modified_date = timezone.now()
+
+urlpatterns = [
+        path('jsi18n/',
+            last_modified(lambda req, **kw: last_modified_date)
+(JavaScriptCatalog.as_view()),
+name='javascript-catalog'),
+]
+##########
 
