@@ -451,4 +451,24 @@ class Command(makemessages.Command):
         super().handle(*args, **options)
 
 ###########
+# using translations outside views and templates
+from django.utils import translation
+
+def welcome_translated(language):
+    cur_language = translation.get_language()
+    try:
+        translation.activate(language)
+        text = translation.gettext('welcome')
+    finally:
+        translation.activate(cur_language)
+    return text
+
+###
+from django.utils import translation
+
+def welcome_translated(language):
+    with translation.override(language):
+        return translation.gettext('welcome')
+
+############
 
