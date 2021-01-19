@@ -471,4 +471,47 @@ def welcome_translated(language):
         return translation.gettext('welcome')
 
 ############
+# selecting the current time zone
+import pytz
 
+from django.utils import timezone
+
+class TimezoneMiddleware:
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        tzname = request.session.get('django_timezone')
+        if tzname:
+            timezone.activate(pytz.timezone(tzname))
+        else:
+            timezone.deactivate()
+        return self.get_response(request)
+
+### create a view that can set the current timezone
+
+from django.shortcuts import redirect, render
+
+def set_timezone(request):
+    if request.method == 'POST':
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/')
+    else:
+        return render(request, 'template.html', {'timezones':
+            pytz.common_timezones})
+
+### include a form in template.html that will POST to this view
+{% load tz %}
+{% get_current_timezone as TIME_ZONE %}
+<form action="{% url 'set_timezone' %}" method="POST">
+    {% csrf_token %}
+    <label for="timezone">Time zone:</label>
+    <select name="timezone">
+        {% for tz in timezones %}
+        <option value="{{ tz }}"{% if tz == TIME_ZONE %} selected{% endif %}>{{ tz }}</option>
+        {% endfor %}
+    </select>
+    <input type="submit" value="Set">
+</form>
+
+##############
