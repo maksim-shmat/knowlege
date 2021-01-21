@@ -135,3 +135,11 @@ LOGGING = {
 
 }
 
+########## disables Django's logging configuration and then manually configures logging
+# settings.py
+LOGGING_CONFIG = None
+
+import logging.config
+logging.config.dictConfig(...)
+
+#####3
