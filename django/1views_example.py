@@ -539,3 +539,37 @@ def skip_unreadable_post(record):
     return True
 
 #######
+# paginating a ListView
+from django.view.generic import ListView
+from myapp.models import Contact
+
+class ContactList(ListView):
+    paginate_by = 2
+    model = Contact
+
+###
+{% for cantact in page_obj %}
+  {{ contact.full_name|upper }}<br>
+  ...
+{% endfor %}
+
+<div class="pagination">
+  <span class="step-links">
+    {% if page_obj.has_previous %}
+      <a href="?page=1">&laquo; first</a>
+      <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+    {% endif %}
+
+    <span class="current">
+      Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+    </span>
+
+    {% if page_obj.has_next %}
+      <a href="?page={{ page_obj.next_page_number }}">next</a>
+      <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+    {% endif %}
+  </span>
+</div>
+
+###########
+
