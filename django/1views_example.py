@@ -587,4 +587,13 @@ def listing(request):
     return render(request, 'list.html', {'page_obj': page_obj})
 
 ###########
+# serializing data
+from django.core import serializers
+data = serializers.serialize("xml", SomeModel.objects.all())
+
+###
+with open("file.xml", "w") as out:
+    xml_serializer.serialize(SomeModel.objects.all(), stream=out)
+
+###########
 
