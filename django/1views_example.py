@@ -595,5 +595,25 @@ data = serializers.serialize("xml", SomeModel.objects.all())
 with open("file.xml", "w") as out:
     xml_serializer.serialize(SomeModel.objects.all(), stream=out)
 
+### subset of fields
+from django.core import serializers
+data = serializers.serialize('xml', SomeModel.objects.all(), fields=
+        ('name', 'size'))
+
 ###########
+# custom json encoder
+from django.core.serializers.json import DjangoJSONEncoder
+
+class LazyEncoder(DjangoJSONEncoder):
+    def default(self, obj):
+        if isinstance(obj, YourCustomType):
+            return str(obj)
+        return super().default(obj)
+
+###
+from django.core.serializers import serialize
+
+serialize('json', SomeModel.objects.all(), cls=LazyEncoder)
+
+############
 
