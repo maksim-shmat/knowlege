@@ -517,3 +517,22 @@ INSTALLED_APPS = [
         "tests",
 ]
 ##########
+# writing own system checks
+from django.core.checks import Error, register
+
+@register()
+def example_check(app_configs, **kwargs):
+    errors = []
+    # ...your check logic here
+    if check_failed:
+        errors.append(
+                Error(
+                    'an error',
+                    hint='A hint.',
+                    obj=checked_object,
+                    id='myapp.E001',
+                )
+        )
+    return errors
+
+##########
