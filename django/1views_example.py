@@ -711,3 +711,9 @@ def my_handler(sender, **kwargs):
     ...
 
 ############
+# preventing duplicate signals
+from django.core.signals import request_finished
+
+request_finished.connect(my_callback, dispatch_uid="my_unique_identifier")
+
+############
