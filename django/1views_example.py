@@ -672,4 +672,19 @@ for obj in objs_with_deferred_fields:
     obj.save_deferred_fields()
 
 ##############
+# dependecies durring serialization
+
+class Book(models.Model):
+    name = models.CharField(max_length=100)
+    author = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+    def natural_key(self):
+        return (self.name,) + self.author.natural_key()
+
+###
+def natural_key(self):
+    return (self.name,) + self.author.natural_key()
+natural_key.dependencies = ['example_app.person']
+
+#############
 
