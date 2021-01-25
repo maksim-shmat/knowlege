@@ -687,4 +687,18 @@ def natural_key(self):
 natural_key.dependencies = ['example_app.person']
 
 #############
+# connecting receiver functions
+from django.core.signals import request_finished
+
+request_finished.connect(my_callback)
+
+### use receiver() decorator
+from django.core.signals import request_finished
+from django.dispatch import receiver
+
+@receiver(request_finished)
+def my_callback(sender, **kwargs):
+    print("Request finished!")
+
+############
 
