@@ -646,4 +646,30 @@ class PersonManager(models.Manager):
         unique_together = [['first_name', 'last_name']]
 
 ###########
+# serialization of natural keys
+class Person(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    birthdate = models.DateField()
+
+    objects = PersonManager()
+
+    class Meta:
+        unique_together = [['first_name', 'last_name']]
+
+    def natural_key(self):
+        return (self.first_name, self.last_name)
+
+### natural keys and forward references
+objs_with_deferred_fields = []
+
+for obj in serializers.deserialize('xml', data, handle_forward_references=True):
+    obj.save()
+    if obj.deferred_fields is not None:
+        objs_with_deferred_fields.append(obj)
+
+for obj in objs_with_deferred_fields:
+    obj.save_deferred_fields()
+
+##############
 
