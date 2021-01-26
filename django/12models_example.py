@@ -418,5 +418,46 @@ example.hand = new_hand
 example.save()
 
 #############
+# writing a field subclass
+from django.db import models
 
+class HandField(models.Field):
+    description = "A hand of cards (bridge style)"
+
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = 104
+        super().__init__(*args, **kwargs)
+
+### field deconstruction
+from django.db import models
+
+class HandFiled(models.Field):
+
+    def __init__(self, *args, **kwargs):
+        kwargs['max_length'] = 104
+        super().__init__(*args, **kwargs)
+
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+        del kwargs["max_length"]
+        return name, path, args, kwargs
+
+###
+from django.db import models
+
+class CommaSepField(models.Field):
+    "Implements comma-separated storage of lists"
+
+    def __init__(self, separator=",", *args, **kwargs):
+        self.separator = separator
+        super().__init__(*args, **kwargs)
+
+    def deconstruct(self):
+        name, path, args, kwargs = super().deconstruct()
+        # Only include kwargs if it's not the default
+        if self.separator != ",":
+            kwargs['separator'] = self.separator
+        return name, path, args, kwargs
+
+############
 
