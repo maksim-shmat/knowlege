@@ -536,3 +536,23 @@ def example_check(app_configs, **kwargs):
     return errors
 
 ##########
+# registering and labeling checks
+from django.core.checks import register, Tags
+
+@register(Tags.compatibility)
+def my_check(app_configs, **kwargs):
+    # ... perform compatibility checks and collect errors
+    return errors
+
+###
+@register(Tags.security, deploy=True)
+def my_check(app_configs, **kwargs):
+    ...
+
+###
+def my_check(app_configs, **kwargs):
+    ...
+register(my_check, Tags.security, deploy=True)
+
+##########
+
