@@ -627,3 +627,27 @@ def _get_blog(pk):
 get_blog = sync_to_async(_get_blog, thread_sensitive=True)
 
 ###########
+# asinc adapter function
+# async_to_sync()
+from asgiref.sync import async_to_sync
+
+async def get_data(...):
+    ...
+sync_get_data = async_to_sync(get_data)
+@async_to_sync
+async def get_other_data(...):
+    ...
+
+###
+# sync_to_async()
+from asgiref.sync import sync_to_async
+
+async_function = sync_to_async(sync_function, thread_sensitive=False)
+async_function = sync_to_async(sensitive_sync_function, thread_sensitive=True)
+
+@sync_to_async
+def sync_function(...):
+    ...
+
+#############
+
