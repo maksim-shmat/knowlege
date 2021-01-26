@@ -613,3 +613,17 @@ expected_errors = [
 self.assertEqual(errors, expected_errors)
 
 ############
+# sync to async
+from asgiref.sync import sync_to_async
+
+results = await sync_to_async(Blog.objects.get, thread_sensitive=True)(pk=123)
+
+###
+from asgiref.sync import sync_to_async
+
+def _get_blog(pk):
+    return Blog.objects.select_related('author').get(pk=pk)
+
+get_blog = sync_to_async(_get_blog, thread_sensitive=True)
+
+###########
