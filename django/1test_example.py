@@ -555,4 +555,48 @@ def my_check(app_configs, **kwargs):
 register(my_check, Tags.security, deploy=True)
 
 ##########
+# field, model, manager, and database checks
+from django.core import checks
+from django.db import models
+
+class RangedIntegerField(models.IntegerField):
+    def __init__(self, min=None, max=None, **kwargs):
+        super().__init__(**kwargs)
+        self.min = min
+        self.max = max
+
+    def check(self, **kwargs):
+        # Call the superclass
+        errors = super().check(**kwargs)
+
+        # Do some custom checks and add messages to 'errors':
+        errors.extend(self._check_min_max_values(**kwargs))
+
+        # Return all errors and warnings
+        return errors
+
+    def _check_min_max_values(self, **kwargs):
+        if (self.min is not None and
+                self.max is not None and
+                self.min > self.max):
+            return [
+                    checks.Error(
+                        'min greater than max.',
+                        hint='Decrease min or increase max.',
+                        obj=self,
+                        id='myapp.E001',
+                    )
+            ]
+        # When no error, return an empty list
+        return []
+
+###
+class MyModel(models.Model):
+    @classmethod
+    def check(cls, ** kwargs):
+        errors = super().check(**kwargs)
+        # ... your own checks ...
+        return errors
+
+############
 
