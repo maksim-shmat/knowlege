@@ -740,4 +740,68 @@ from django.db.models import Field
 class NotEqualLookup(Lookup):
     # ...
 
-##########
+### writing an efficient abs__lt lookup
+from django.db.models import Lookup
+
+class AbsoluteValueLessThan(Lookup):
+    lookup_name = 'lt'
+
+    def as_sql(self, compiler, connection):
+        lhs, lhs_params = compiler.compile(self.lhs.lhs)
+        rhs, rhs_params = self.process_rhs(compiler, connection)
+        params = lhs_params + rhs_params + lhs_params + rhs_params
+        return '%s < %s AND %s > -%s' % (lhs, rhs, lhs, rhs), params
+
+AbsoluteValue.register_lookup(AbsoluteValueLessThan)
+
+#############
+# custom template backend
+from django.template import TemplateDoesNotExist, TemplateSyntaxError
+from django.template.backends.base import BaseEngine
+from django.template.backends.utils import csrf_input_lazy, csrf_token_lazy
+
+import foobar
+
+class FooBar(BaseEngine):
+    # Name of the subdirectory containing the templates for this engine
+    # inside an installed application.
+    app_dirname = 'foobar'
+
+    def __init__(self, params):
+        params = params.copy()
+        options = params.pop('OPTIONS').copy()
+        super().__init__(params)
+
+        self.engine = foobar.Engine(**options)
+
+    def from_string(self, template_code):
+        try:
+            return Template(self.engine.from_string(template_code))
+        except foobar.TemplateCompilationFailed as exc:
+            raise TemplateSyntaxError(exc.args)
+
+    def get_template(self, template_name):
+        try:
+            return Template(self.engine.get_template(template_name))
+        except foobar.TemplateNotFound as exc:
+            raise TemplateDoesNotExist(exc.args, backend=self)
+        except foobar.TemplateCompilationFailed as exc:
+            raise TemplateSyntaxError(exc.args)
+
+
+class Tamplate:
+    
+    def __init__(self, template):
+        self.template = template
+
+    def render(self, context=None, request=None):
+        if context is None:
+            context = {}
+        if request is not None:
+            context['request'] = request
+            context['csrf_input'] = csrf_input_lazy(request)
+            context['csrf_token'] = csrf_token_lazy(request)
+        return self.template.render(context)
+
+###############
+
