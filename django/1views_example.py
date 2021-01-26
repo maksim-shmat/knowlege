@@ -717,3 +717,27 @@ from django.core.signals import request_finished
 request_finished.connect(my_callback, dispatch_uid="my_unique_identifier")
 
 ############
+# custom lookups
+from django.db.models import Lookup
+
+class NotEqual(Lookup):
+    lookup_name = 'ne'
+
+    def as_sql(self, compiler, connection):
+        lhs, lhs_params = self.process_lhs(compiler, connection)
+        rhs, rhs_params = self.process_rhs(compiler, connection)
+        params = lhs_params + rhs_params
+        return '%s <> %s' % (lhs, rhs), params
+
+###
+from django.db.models import Field
+Field.register_lookup(NotEqual)
+
+###
+from django.db.models import Field
+
+@Field.register_lookup
+class NotEqualLookup(Lookup):
+    # ...
+
+##########
