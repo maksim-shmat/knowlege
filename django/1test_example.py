@@ -599,4 +599,17 @@ class MyModel(models.Model):
         return errors
 
 ############
+# checks and tests
+from django.core.checks import Error
+errors = checked_object.check()
+expected_errors = [
+        Error(
+            'an error',
+            hint='A hint.',
+            obj=checked_object,
+            id='myapp.E001',
+        )
+]
+self.assertEqual(errors, expected_errors)
 
+############
