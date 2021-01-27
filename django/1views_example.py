@@ -1009,6 +1009,3 @@ class CurrentTimeNode3(template.Node):
                         "%r tag's argument should be in quotes" % tag_name
             return CurrentTimeNode3(format_string[1:-1], var_name)
 
-#############
-
-
