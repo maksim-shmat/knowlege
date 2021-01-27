@@ -881,4 +881,46 @@ class CurrentTimeNode(template.Node):
         return datetime.datetime.now().strftime(self.format_string)
 
 ############
+# thread-safety consideration
+{% for o in some_list %}
+  <tr class="{% cycle 'row1' 'row2' %}">
+    ...
+  </tr>
+{% endfor %}
+
+###
+import itertools
+from django import template
+
+class CycleNode(template.Node):
+    def __init__(self, cyclevars):
+        self.cycle_iter = itertools.cycle(cyclevars)
+
+    def render(self, context):
+        return next(self.cycle_iter)
+
+###
+class CycleNode(template.Node):
+    def __init__(self, cyclevars):
+        self.cyclevars = cyclevars
+
+    def render(self, context):
+        if self not in context.render_context:
+            context.render_context[self] = itertools.cycle(self.cyclevars)
+        cycle_iter = context.render_context[self]
+        return next(cycle_iter)
+
+######## register the tag
+register.tag('current_time', do_current_time)
+###
+@register.tag(name="current_time")
+def do_current_time(parser, token):
+    ...
+
+@register.tag
+def shout(parser, token):
+    ...
+
+##########
+
 
