@@ -869,5 +869,16 @@ def do_current_time(parser, token):
     return CurrentTimeNode(format_string[1:-1])
 
 ##########
+# writing the renderer
+import datetime
+from django import template
 
+class CurrentTimeNode(template.Node):
+    def __init__(self, format_string):
+        self.format_string = format_string
+
+    def render(self, context):
+        return datetime.datetime.now().strftime(self.format_string)
+
+############
 
