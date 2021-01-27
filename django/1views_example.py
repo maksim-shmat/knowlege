@@ -957,5 +957,58 @@ class FormatTimeNode(template.Node):
             return ''
 
 #############
+# setting a variable in the context
+import datetime
+from django import template
+
+class CurrentTimeNode2(template.Node):
+    def __init__(self, format_string):
+        self.format_string = format_string
+
+    def render(self, context):
+        context['current_time'] =
+        datetime.datetime.now().strftime(self.format_string)
+        return ''
+
+###
+{% current_time "%Y-%m-%d %I:%M %p" %}<p>The time is {{ current_time }}.</p>
+
+###
+{% current_time "%Y-%m-%d %I:%M %p" as my_current_time %}
+<p>The current time is {{ my_current_time }}.</p>
+
+###
+import re
+
+class CurrentTimeNode3(template.Node):
+    def __init__(self, format_string, var_name):
+        self.format_string = format_string
+        self.var_name = var_name
+
+    def render(self, context):
+        context[self.var_name] =
+        datetime.datetime.now().strftime(self.format_string)
+        return ''
+
+    def do_current_time(parser, token):
+        # This version uses a regular expression to parse tag contents.
+        try:
+            # Splitting by None == splitting by spaces.
+            tag_name, arg = token.contents.split(None, 1)
+        except ValueError:
+            raise template.TemplateSyntaxError(
+                    "%r tag requires arguments" % token.contents.split()[0]
+            )
+        m = re.search(r'(.*?) as (\w+)', arg)
+        if not m:
+            raise template.TeplateSyntaxError("%r tag had invalid arguments" %
+                    tag_name)
+            format_string, var_name = m.groups()
+            if not (format_string[0] == format_string[-1] and format_string[0] in ('"', "'")):
+                raise template.TemplateSyntaxError(
+                        "%r tag's argument should be in quotes" % tag_name
+            return CurrentTimeNode3(format_string[1:-1], var_name)
+
+#############
 
 
