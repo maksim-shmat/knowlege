@@ -277,4 +277,61 @@ class Migration(migrations.Migration):
         dependencies.append(('old_app', '0001_initial'))
 
 ###########
+# changing a ManyToManyField to use a through model
+from django.db import migrations, models
+import django.db.models.deletion
+
+class Migration(migrations.Migration):
+    dependencies = [
+            ('core', '0001_initial'),
+    ]
+    operations = [
+            migrations.SeparatDatabaseAndState(
+                database_operations=[
+                    # Old table name from checking with sqlmigrate, new table
+                    # name from AuthotBook._meta.db_table.
+                    migtations.RunSQL(
+                        sql='ALTER TABLE core_book_authors RENAME TO
+                        core_authorbook',
+                        reverse_sql='ALTER TABLE core_authorbook RENAME TO
+                        core_book_authors',
+                    ),
+                ],
+                state_operations=[
+                    migrations.CreateModel(
+                        name='AuthorBook',
+                        fields=[
+                            (
+                                'id',
+                                models.AutoField(
+                                    auto_created=True,
+                                    primary_key=True,
+                                    serialize=False,
+                                    verbose_name='ID',
+                                ),
+                            ),
+                            (
+                                'author',
+                                model.ForeignKey(
+                                    on_delete=django.db.models.deletion.DO_NOTHING,
+                                    to='core.Author',
+                                ),
+                            ),
+                            (
+                                'book',
+                                models.ForeignKey(
+                                    on_delete=django.db.models.deletion.DO_NOTHING,
+                                    to='core.Book',
+                                ),
+                            ),
+                        ],
+                    ),
+                    migrations.AddField(
+                        model_name='authorbook',
+                        name='is_primary',
+                        field=models.BooleanField(default=False),
+                    ),
+                ]
+
+################
 
