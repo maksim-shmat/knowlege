@@ -109,5 +109,48 @@ def some_view(request):
     return FileResponse(buffer, as_attachment=True, filename='hello.pdf')
 
 ##########
+# writing database migrations
+from django.db import migrations
 
+def forwards(apps, schema_editor):
+    if schema_editor.connection.alias != 'default':
+        return
+    # Your migration code goes here
+
+class Migration(migrations.Migration):
+    
+    dependencies = [
+            # Dependencies to other migrations
+    ]
+
+    operations = [
+            migrations.RunPython(forwards),
+    ]
+
+###
+class MyRouter:
+    
+    def allow_migrate(self, db, app_label, model_name=None, **hints):
+        if 'target_db' in hints:
+            return db == hints['target_db']
+        return True
+
+###
+from django.db import migrations
+
+def forwards(apps, schema_editor):
+    # Your migration code goes here
+    ...
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+            # Dependencies to other migrations
+    ]
+
+    operations = [
+            migrations.RunPython(forwards, hints={'target_db': 'default'}),
+    ]
+
+### migra
 
