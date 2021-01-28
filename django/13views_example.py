@@ -58,4 +58,30 @@ def some_streaming_csv_view(request):
     return response
 
 ############
+# using the template system
+from django.http import HttpResponse
+from django.template import loader
+
+def some_view(request):
+    # Create the HttpResponse object with the appropriate csv header.
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="somefilename.csv"'
+    # The data is hard-coded here, but you could load it from a database or
+    # some other source.
+    csv_data = (
+            ('First row', 'Foo', 'Bar', 'Bar'),
+            ('Second row', 'A', 'B', 'C', '"Testing"', "Here's a quote"),
+    )
+    t = loader.get_template('my_template_name.txt')
+    c = {'data': csv_data}
+    response.write(t.render(c))
+    return response
+
+### then, create the template my_template_name.txt
+{% for row in data %}"{{ row.0|addslashes }}", "{{ row.1|addslashes }}", "{{
+row.2|addslashes }}", "{{row.3|addslashes }}", "{{ row.4|addslashes }}"
+{% endfor %}
+
+###############
+
 
