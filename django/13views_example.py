@@ -152,5 +152,56 @@ class Migration(migrations.Migration):
             migrations.RunPython(forwards, hints={'target_db': 'default'}),
     ]
 
-### migra
+### migrations that add unique fields
+from django.db import migrations, models
+import uuid
 
+class Migration(migrations.Migration):
+
+    dependencies = [
+            ('myapp', '0005_populate_uuid_values'),
+    ]
+
+    operations = [
+            migrations.AlterField(
+                model_name='mymodel',
+                name='uuid',
+                field=models.UUIDField(default=uuid.uuid4, unique=True),
+            ),
+    ]
+
+###
+class Migration(migrations.Migration):
+
+    dependencies = [
+            ('myapp', '0003_auto_20150129_1705'),
+    ]
+    operations = [
+            migrations.AddField(
+                model_name='mymodel',
+                name='uuid',
+                field=models.UUIDField(default=uuid.uuid4, unique=True),
+            ),
+    ]
+
+###
+from django.db import migrations
+import uuid
+
+def get_uuid(apps, schema_editor):
+    MyModel = apps.get_model('myapp', 'MyModel')
+    for row in MyModel.objects.all():
+        row.uuid = uuid.uuid4()
+        row.save(update_fields=['uuid'])
+
+class Migration(migrations.Migration):
+    dependencies = [
+            ('myapp', '0004_app_uuid_field'),
+    ]
+    operations = [
+            # omit reverse_code=... if you don't want the migration to be 
+            # reversible.
+            migrations.RunPython(gen_uuid, reverse_code=migrations.RunPython.noop),
+    ]
+
+### not atomic migrations
