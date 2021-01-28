@@ -230,4 +230,20 @@ class Migration(migrations.Migration):
     ]
 
 ##############
+# controlling the order of migrations
+from django.db import migrations
 
+class Migration(migrations.Migration):
+
+    dependencies = [
+            ('myapp', '0123_the_previous_migtation'),
+    ]
+
+###
+class Migration(migrations.Migration):
+    ...
+    run_before = [
+            ('third_party_app', '0001_do_awesome'),
+    ]
+
+##############
