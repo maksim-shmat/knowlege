@@ -247,3 +247,34 @@ class Migration(migrations.Migration):
     ]
 
 ##############
+# migrating data between third-party apps
+from django.apps import apps as global_apps
+from django.db import migrations
+
+def forwards(apps, schema_editor):
+    try:
+        OldModel = apps.get_model('old_app', 'OldModel')
+    except LookupError:
+        # The old app isn't installed.
+        return
+
+    NewModel = apps.get_model('new_app', 'NewModel')
+    NewModel.objects.bulk_create(
+            NewModel(new_attribute=old_object.old_attribute)
+            for old_object in OldModel.objects.all()
+    )
+
+class Migration(migrations.Migration):
+    operations = [
+            migrations.RunPython(forwards, migrations.RunPython.noop),
+    ]
+    dependencies = [
+            ('myapp', '0123_the_previous_migration'),
+            ('new_app', '0001_initial'),
+    ]
+
+    if global_apps.is_installed('old_app'):
+        dependencies.append(('old_app', '0001_initial'))
+
+###########
+
