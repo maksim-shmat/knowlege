@@ -620,6 +620,46 @@ urlpatterns = [
     {% endfor %}
 </div>
 
-##############
+############## MonthArchiveView
+# myapp/views.py
+from django.views.generic.dates import MonthArchiveView
+from myapp.models import Article
 
+class ArticleMonthArchiveView(MonthArchiveView):
+    queryset = Article.objects.all()
+    date_field = "pub_date"
+    allow_future = True
+
+### myapp/urls.py
+from django.urls import path
+from myapp.views import ArticleMonthArchiveView
+
+urlpatterns = [
+        # Example: /2012/08/
+        path('<int:year>/<int:month>/',
+            ArticleMonthArchiveView.as_view(month_format='%m'),
+            name="archive_month_numeric"),
+        # Example: /2012/aug/
+        path('<int:year>/<srt:month>/',
+            ArticleMonthArchiveView.as_view(),
+            name='archive_month'),
+]
+
+### myapp/article_archive_month.html
+<ul>
+    {% for article in object_list %}
+        <li>{{ article.pub_date|date:"F j, Y" }}: {{ article.title }}</li>
+    {% endfor %}
+</ul>
+
+<p> 
+    {% if previous_month %}
+        Previous Month: {{ previous_month|date:"F Y" }}
+    {% endif %}
+    {% if next_month %}
+        Next Month: {{ next_month|date:"F Y" }}
+    {% endif %}
+</p>
+
+###############
 
