@@ -662,4 +662,44 @@ urlpatterns = [
 </p>
 
 ###############
+# WeekArchiveView
+# myapp/views.py
+from django.views.generic.dates import WeekArchiveView
+from myapp.models import Article
 
+class ArticleWeekArchiveView(WeekArchiveView):
+    queryset = Article.objects.all()
+    date_field = "pub_date"
+    week_format = "%W"
+    allow_future = True
+
+### myapp/urls.py
+from django.urls import path
+from myapp.views import ArticleWeekArchiveView
+
+urlpatterns = [
+        # Example: /2012/week/23/
+        path('<int:year>/week/<int:week>/'
+            ArticleWeekArchiveView.as_view(),
+            name="archive_week"),
+]
+
+### myapp/article_archive_week.html
+<h1>Week {{ week|date:'W' }}</h1>
+<ul>
+    {% for article in object_list %}
+        <li>{{ article.pub_date|date:"F j, Y" }}: {{ article.title }}</li>
+    {% endfor %}
+</ul>
+
+<p>
+    {% if previous_week %}
+        Previous Week: {{ previous_week|date:"W" }} of year {{
+            previous_week|date:"Y" }}
+    {% endif %}
+    {% if previous_week and next_week %}--{% endif %}
+    {% if next_week %}
+        Next week: {{ next_week|date:"W" }} of year {{ next_week|date:"Y" }}
+    {% endif %}
+</p>
+############
