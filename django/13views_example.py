@@ -703,3 +703,45 @@ urlpatterns = [
     {% endif %}
 </p>
 ############
+# DayArchiveView
+# myapp/views.py
+from django.views.generic.dates import DayArchiveView
+from myapp.models import Article
+
+class ArticleDayArchiveView(DayArchiveView):
+    queryset = Article.objects.all()
+    date_field = "pub_date"
+    allow_future = True
+
+### myapp/urls.py
+from django.urls import path
+from myapp.views import ArticleDayArchiveView
+
+urlpatterns = [
+        # Example: /2012/nov/10/
+        path('<int:year>/<str:month>/<int:day>/',
+            ArticleDayArchiveView.as_view(),
+            name="archive_day"),
+]
+
+### myapp/article_archive_day.html
+<h1>{{ day }}</h1>
+
+<ul>
+    {% for article in object_list %}
+        <li>{{ article.pub_date|date:"F j, Y" }}: {{ article.title }}</li>
+    {% endfor %}
+</ul>
+
+<p>
+    {% if previous_day %}
+        Previous Day: {{ previous_day }}
+    {% endif %}
+    {% if previous_day and next_day %}--{% endif %}
+    {% if next_day %}
+        Next Day: {{ next_day }}
+    {% endif %}
+</p>
+
+###############
+
