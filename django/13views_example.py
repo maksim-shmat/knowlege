@@ -521,4 +521,20 @@ class AuthorCreate(CreateView):
 </form>
 
 ##############
+# update view
+from django.views.generic.edit import UpdateView
+from myapp.models import Author
+
+class AuthorUpdate(UpdateView):
+    model = Author
+    fields = ['name']
+    template_name_suffix = '_update_form'
+
+### myapp/author_update_form.html
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Update">
+</form>
+
+##############
 
