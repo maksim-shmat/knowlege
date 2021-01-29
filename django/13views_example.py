@@ -401,4 +401,33 @@ RedirectView.as_view(url='https://djangoproject.com'), name='go-to-django'),
 ]
 
 ###############
+# detail view
+from django.utils import timezone
+from django.views.generic.detail import DetailView
+from articles.models import Article
+
+class ArticleDetailView(DetailView):
+    model = Article
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
+
+### urls.py
+from django.urls import path
+from article.views import ArticleDetailView
+
+urlpatterns = [
+        path('<slug:slug>/', ArticleDetailView.as_view(), name='article-detail'),
+]
+
+### example myapp/article_detail.html
+<h1>{{ object.headline }}</h1>
+<p>{{ object.content }}</p>
+<p>Reporter: {{ object.reporter }}</p>
+<p>Published: {{ object.pub_date|date }}</p>
+<p>Date: {{ now|date }}</p>
+
+###############
 
