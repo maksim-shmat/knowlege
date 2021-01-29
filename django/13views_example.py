@@ -506,4 +506,19 @@ class ContactView(FormView):
 </form>
 
 ###############
+# create view
+from django.views.generic.edit import CreateView
+from myapp.models import Author
+
+class AuthorCreate(CreateView):
+    model = Author
+    fields = ['name']
+
+### myapp/author_form.html
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+
+##############
 
