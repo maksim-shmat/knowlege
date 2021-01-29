@@ -296,6 +296,7 @@ class Migration(migrations.Migration):
                         reverse_sql='ALTER TABLE core_authorbook RENAME TO
                         core_book_authors',
                     ),
+                ),
                 ],
                 state_operations=[
                     migrations.CreateModel(
@@ -334,4 +335,21 @@ class Migration(migrations.Migration):
                 ]
 
 ################
+# tipycal view and urls.py
+from django.http import HttpResponse
+from django.views import View
+
+class MyView(View):
+
+    def get(self, request, *args, **kwargs):
+        return HttpResponse('Hello, World!')
+
+### urls.py
+from django.urls import path
+from myapp.views import MyView
+
+urlpatterns = [
+        path('mine/', MyView.as_view(), name='my-view'),
+]
+############
 
