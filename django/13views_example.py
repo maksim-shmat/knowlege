@@ -744,4 +744,25 @@ urlpatterns = [
 </p>
 
 ###############
+# TodayArchiveView
+# myapp/views.py
+from django.views.generic.dates import TodayArchiveView
+from myapp.models import Article
+
+class ArticleTodayArchiveView(TodayArchiveView):
+    queryset = Article.object.all()
+    date_field = "pub_date"
+    allow_future = True
+
+### myapp/urls.py
+from django.urls import path
+from myapp.views import ArticleTodayArchiveView
+
+urlpatterns = [
+        path('today/',
+            ArticleTodayArchiveView.as_view(),
+            name="archive_today"),
+]
+
+###################
 
