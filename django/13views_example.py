@@ -583,6 +583,43 @@ urlpatterns = [
     {% endfor %}
 </ul>
 
+############## YearArchiveView
+# myapp/view.py
+from django.viws.generic.dates import YearArchiveView
+from myapp.models import Article
+
+class ArticleYearArchiveView(YearArchiveView):
+    queryset = Article.objects.all()
+    date_field = "pub_date"
+    make_object_list = True
+    allow_future = True
+
+### myapp/urls.py
+from django.urls import path
+from myapp.views import ArticleYearArchiveView
+
+urlpatterns = [
+        path('<int:year>/',
+            ArticleYearArchiveView.as_view(),
+            name="article_year_archive"),
+]
+
+### myapp/article_archive_year.html
+<ul>
+    {% for date in date_list %}
+        <li>{{ date|date }}</li>
+    {% endfor %}
+</ul>
+
+<div>
+    <h1>All Articles for {{ year|date:"Y" }}</h1>
+    {% for obj in object_list %}
+        <p>
+            {{ obj.title }} - {{ obj.pub_date|date:"F j, Y" }}
+        </p>
+    {% endfor %}
+</div>
+
 ##############
 
 
