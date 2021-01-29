@@ -765,4 +765,19 @@ urlpatterns = [
 ]
 
 ###################
+# DateDetailView
+# myapp/urls.py
+from django.urls import path
+from django.views.generic.dates import DateDetailView
+
+urlpatterns = [
+        path('<int:year>/<str:month>/<int:day>/<int:pk>/',
+            DateDetailView.as_view(model=Article, date_field="pub_date"),
+            name="archive_detail"),
+]
+
+### myapp/article_detail.html
+<h1>{{ object.title }}</h1>
+
+#############
 
