@@ -537,4 +537,20 @@ class AuthorUpdate(UpdateView):
 </form>
 
 ##############
+# delete view
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
+from myapp.models import Author
+
+class AuthorDelete(DeleteView):
+    model = Author
+    success_url = reverse_lazy('author-list')
+
+### myapp/author_confirm_delete.html
+<form method="post">{% csrf_token %}
+    <p>Are you sure you want to delete "{{ object }}"?</p>
+    <input type="submit" value="Confirm">
+</form>
+
+############
 
