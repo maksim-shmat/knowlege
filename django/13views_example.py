@@ -463,4 +463,47 @@ urlpatterns = [
 </ul>
 
 ##############
+# model for next examples
+from django.db import models
+from django.urls import reverse
+
+class Author(models.Model):
+    name = models.CharField(max_length=200)
+
+    def get_absolute_url(self):
+        return reverse('author-detail', kwargs={'pk': self.pk})
+
+### form view
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField()
+    message = forms.CharField(widget=forms.Textarea)
+
+    def send_email(self):
+        # send email using the self.cleaned_data dictionary
+        pass
+
+### myapp/views.py
+from myapp.forms import ContactForm
+from django.views.generic.edit import FormatView
+
+class ContactView(FormView):
+    template_name = 'contact.html'
+    form_class = ContactForm
+    success_url = '/thanks/'
+
+    def form_valid(self, form):
+        # This method is called when valid form data has been POSTed.
+        # It should return an HttpResponse.
+        form.send_email()
+        return super().form_valid(form)
+
+### myapp/contact.html
+<form method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Send message">
+</form>
+
+###############
 
