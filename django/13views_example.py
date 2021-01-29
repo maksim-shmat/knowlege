@@ -553,4 +553,36 @@ class AuthorDelete(DeleteView):
 </form>
 
 ############
+# model for next examples
+from django.db import models
+from django.urls import reverse
+
+class Article(models.Model):
+    title = models.CharField(max_length=200)
+    pub_date = models.DateField()
+
+    def get_absolute_url(self):
+        return reverse('article-detail', kwargs={'pk': self.pk})
+
+### ArchiveIndexView
+# myapp/urls.py
+from django.urls import path
+from django.views.generic.dates import ArchiveIndexView
+from myapp.models import Article
+
+urlpatterns = [
+        path('archive/',
+            ArchiveIndexView.as_view(model=Article, date_field="pub_date"),
+            name="article_archive"),
+]
+
+### myapp/article_archive.html
+<ul>
+    {% for article in latest %}
+        <li>{{ article.pub_date }}: {{ article.title }}</li>
+    {% endfor %}
+</ul>
+
+##############
+
 
