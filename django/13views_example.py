@@ -430,4 +430,37 @@ urlpatterns = [
 <p>Date: {{ now|date }}</p>
 
 ###############
+# list view
+from django.utils import timezone
+from django.views.generic.list import ListView
+from articles.models import Article
+
+class ArticleListView(ListView):
+    model = Article
+    paginate_by = 100 # if pagination is desired
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['now'] = timezone.now()
+        return context
+
+### myapp/urls.py
+from django.urls import path
+from aricle.views import ArticleListView
+
+urlpatterns = [
+        path('', ArticleListView.as_view(), name='article-list'),
+]
+
+### myapp/article_list.html
+<h1>Articles</h1>
+<ul>
+{% for article in object_list %}
+    <li>{{ article.pub_date|date }} = {{ article.headline }}</li>
+{% empty %}
+    <li>No articles yet.</li>
+{% endfor %}
+</ul>
+
+##############
 
