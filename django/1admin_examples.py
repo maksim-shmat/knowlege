@@ -125,4 +125,21 @@ class AuthorAdmin(admin.ModelAdmin):
 
     view_birth_date.empty_value_display = '???'
 
-##########
+########## ModelAdmin.exclude
+from django.db import models
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+    title = models.CharField(max_length=3)
+    birth_date = models.DateField(blank=True, null=True)
+
+###
+from django.contrib import admin
+
+class AuthorAdmin(admin.ModelAdmin):
+    fields = ('name', 'title')
+
+class AuthorAdmin(admin.ModelAdmin):
+    exclude = ('birth_date',)
+
+############
