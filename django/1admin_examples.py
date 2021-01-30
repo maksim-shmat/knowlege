@@ -173,4 +173,155 @@ class MyModelAdmin(admin.ModelAdmin):
             models.TextField: {'widget': RichTextEditorWidget},
     }
 
-############
+############ ModelAdmin.list_display
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name')
+
+###
+def upper_case_name(obj):
+    return ("%s %s" % (obj.first_name, obj.last_name)).upper()
+upper_case_name.short_description = 'Name'
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = (upper_case_name,)
+
+###
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('upper_case_name',)
+
+    def upper_case_name(self, obj):
+        return ("%s %s" % (obj.first_name, obj.last_name)).upper()
+    upper_case_name.short_description = 'Name'
+
+###
+from django.contrib import admin
+from django.db import models
+
+class Person(models.Model):
+    name = models.CharField(max_length=50)
+    birthday = models.DateField()
+
+    def decade_born_in(self):
+        return '%d`s' % (self.birthday.year // 10 * 10)
+    decade_born_in.short_description = 'Birth decade'
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('name', 'decade_born_in')
+
+###
+from django.contrib import admin
+from django.db import models
+from django.utils.html import format_html
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    color_code = models.CharField(max_length=6)
+
+    def colored_name(self):
+        return format_html(
+                '<span style="color: %{}:">{} {}</span>',
+                self.color_code,
+                self.first_name,
+                self.last_name,
+        )
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'colored_name')
+
+###
+from django.contrib import admin
+
+admin.site.empty_value_display = '(None)'
+
+###
+class PersonAdmin(admin.ModelAdmin):
+    empty_value_display = 'unknown'
+
+###
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('name', 'birth_date_view')
+
+    def birth_date_view(self, obj):
+        return obj.birth_date
+
+    birth_date_view.empty_value_display = 'unknown'
+
+###
+from django.contrib import admin
+from django.db import models
+
+class Person(models.Model):
+    first_name = models.CharField(max_lenght=50)
+    birthday = models.DateField()
+
+    def born_in_fifties(self):
+        return 1950 <= self.birthday.year < 1960
+    born_in_fifties.boolean = True
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('name', 'born_in_fifties')
+
+###
+from django.contrib import admin
+from django.db import models
+from django.utils.html import format_html
+
+class Person(models.Model):
+    first_name = models.CharField(max_lenght=50)
+    color_code = models.CharField(max_lenght=6)
+
+    def colored_first_name(self):
+        return format_html(
+                '<span style="color: #{};">{}</span>',
+                self.color_code,
+                self.first_name,
+        )
+
+    colored_first_name.admin_order_field = 'first_name'
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'colored_first_name')
+
+###
+class Blog(model.Model):
+    title = models.CharField(max_length=255)
+    author = models.ForeignKey(Person, on_delete=models.CASCADE)
+
+class BlogAdmin(admin.ModelAdmin):
+    list_display = ('title', 'author', 'author_first_name')
+
+    def author_first_name(self, obj):
+        return obj.author.first_name
+
+    author_first_name.admin_order_field = 'author__first_name'
+
+###
+from django.db.models import Value
+from django.db.models.functions import Concat
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+
+    def full_name(self):
+        return self.first_name + ' ' + self.last_name
+    full_name.admin_order_field = Concat('first_name', Value(' '),
+            'last_name')
+
+###
+class Person(model.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+
+    def my_property(self):
+        return self.first_name + ' ' + self.last_name
+    my_property.short_description = "Full name of the person"
+    my_property.admin_order_field = 'last_name'
+
+    full_name = property(my_property)
+
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('full_name',)
+
+###
