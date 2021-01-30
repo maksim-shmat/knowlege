@@ -324,4 +324,114 @@ class Person(model.Model):
 class PersonAdmin(admin.ModelAdmin):
     list_display = ('full_name',)
 
+############# ModelAdmin.list_display_links
+class PersonAdmin(admin.ModelAdmin):
+    list_display = ('first_name', 'last_name', 'birthday')
+    list_display_links = ('first_name', 'last_name')
+
 ###
+class AuditEntryAdmin(admin.ModelAdmin):
+    list_display = ('timestamp', 'message')
+    list_display_links = None
+
+############# ModelAdmin.list_filter
+class PersonAdmin(admin.ModelAdmin):
+    list_filter = ('is_staff', 'company')
+
+###
+class PersonAdmin(admin.UserAdmin):
+    list_filter = ('company__name',)
+
+###
+from datetime import date
+from django.contrib import admin
+from django.utils.translation import gettext_lazy as _
+
+class DecadeBornListFilter(admin.SimpleListFilter):
+    # Human-readable title which will be displayed in the
+    # right admin sidebar just above the filter options.
+    title = _('decade born')
+
+    # Parameter for the filter that will be used in the URL query.
+    parameter_name = 'decade'
+
+    def lookups(self, request, model_admin):
+        """
+        Returns a list of tuples. The first element in each
+        tuple is the coded value for the option that will
+        appear in the URL query. The second element is the
+        human-readable name for the option that will appear
+        in the right sidebar.
+        """
+        return (
+                ('80s', _('in the eighties')),
+                ('90s', _('in the nineties')),
+        )
+
+    def queryset(self, request, queryset):
+        """
+        Return the filtered queryset based on the value
+        provided in the query string and retrievable via
+        'self.value()'.
+        """
+        # Compare the requested value (either '80s' or '90s')
+        # to decide how to filter the queryset.
+        if self.value() == '80s':
+            return queryset.filter(birthday__gte=date(1980, 1, 1),
+                                   birthday__lte=date(1989, 12, 31))
+        if self.value() == '90s':
+            return queryset.filter(birthday__gte=date(1990, 1, 1),
+                                   birthday__lte=date(1999, 12, 31))
+
+class PersonAdmin(admin.ModelAdmin):
+    list_filter = (DecadeBornListFilter,)
+
+###
+class AuthDecadeBornListFilter(DecadeBornListFilter):
+    
+    def lookups(self, request, model_admin):
+        if request.user.is_superuser:
+            return super().lookups(request, model_admin)
+
+    def queryset(self, request, queryset):
+        if request.user.is_superuser:
+            return super().queryset(request, queryset)
+
+###
+class AdvancedDecadeBornListFilter(DecadeBornListFilter):
+    def lookups(self, request, model_admin):
+        """
+        Only show the lookups if there actually is
+        anyone born in the corresponding decades.
+        """
+        qs = model_admin.get_queryset(request)
+        if qs.filter(birthday__gte=date(1980, 1, 1),
+                birthday__lte=date(1980, 12, 31)).exists():
+            yield ('80s', _('in the eighties'))
+        if qs.filter(birthday__gte=date(1990, 1, 1),
+                birthday__lte=date(1999, 12, 31)).exists():
+            yield ('90s', _('in the nineties'))
+
+###
+class PersonAdmin(admin.ModelAdmin):
+    list_filter = (
+            ('is_staff', admin.BooleanFieldListFilter),
+    )
+
+###
+class BookAdmin(admin.ModelAdmin):
+    list_filter = (
+            ('author', admin.RelatedOnlyFieldFilter),
+    )
+
+###
+class BookAdmin(admin.ModelAdmin):
+    list_filter = (
+            ('title', admin.EmptyFieldListFilter),
+    )
+
+###
+class FilterWithCustomTemplate(admin.SimpleListFilter):
+    template = "custom_template.html"
+
+###########
