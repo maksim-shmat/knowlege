@@ -85,4 +85,21 @@ from myproject.myapp.models import Author
 
 admin.site.register(Author)
 
+### the register decorator
+from django.contrib import admin
+from .models import Author
+
+@admin.register(Author)
+class AuthorAdmin(admin.ModelAdmin):
+    pass
+
+###
+from django.contrib import admin
+from .models import Author, Editor, Reader
+from myproject.admin_site import custom_admin_site
+
+@admin.register(Author, Reader, Editor, site=custom_admim_site)
+class PersonAdmin(admin.ModelAdmin):
+    pass
+
 ###
