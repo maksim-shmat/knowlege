@@ -780,4 +780,24 @@ urlpatterns = [
 <h1>{{ object.title }}</h1>
 
 #############
+# ContextMixin
+from django.views.generic import TemplateView
+TemplateView.as_view(extra_context={'title': 'Custom Title'})
 
+###
+def get_context_data(self, **kwargs):
+    context = super().get_context_data(**kwargs)
+    context['number'] = random.randrange(1, 100)
+    return context
+
+#############
+# clickjacking protection
+# setting X-Frame-Options for all responses
+from django.http import HttpResponse
+from django.views.decorators.clickjacking import xframe_options_exempt
+
+@xframe_options_exempt
+def ok_to_load_in_a_frame(request):
+    return HttpResponse("This page is safe to load in a frame on any site.")
+
+###
