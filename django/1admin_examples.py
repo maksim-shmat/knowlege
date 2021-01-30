@@ -142,4 +142,35 @@ class AuthorAdmin(admin.ModelAdmin):
 class AuthorAdmin(admin.ModelAdmin):
     exclude = ('birth_date',)
 
+############ ModelAdmin.fields
+class FlatPageAdmin(admin.ModelAdmin):
+    fields = ('url', 'title', 'content')
+
+########### ModelAdmin.fieldsets
+from django.contrib import admin
+
+class FlatPageAdmin(admin.ModelAdmin):
+    fieldsets = (
+            (None, {
+                'fields': ('url', 'title', 'content', 'sites')
+            }),
+            ('Advanced options', {
+                'classes': ('collapse',),
+                'fields': ('registration_required', 'template_name'),
+            }),
+    )
+
+############# ModelAdmin.formfield_overrides
+from django.contrib import admin
+from django.db import models
+
+# Import out custom widget and out model from where they're defined
+from myapp.models import MyModel
+from myapp.widgets import RichTextEditorWidget
+
+class MyModelAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+            models.TextField: {'widget': RichTextEditorWidget},
+    }
+
 ############
