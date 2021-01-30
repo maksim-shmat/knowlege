@@ -102,4 +102,27 @@ from myproject.admin_site import custom_admin_site
 class PersonAdmin(admin.ModelAdmin):
     pass
 
+######### model admin options
+from django.contrib import admin
+
+class AuthorAdmin(admin.ModelAdmin):
+    date_hierarchy = 'pub_date'
+
+### ModelAdmin.empty_value_display
+from django.contrib import admin
+
+class AuthorAdmin(admin.ModelAdmin):
+    empty_value_display = '-empty-'
+
 ###
+from django.contrib import admin
+
+class AuthorAdmin(admin.ModelAdmin):
+    fields = ('name', 'title', 'view_birth_date')
+
+    def view_birth_date(self, obj):
+        return obj.birth_date
+
+    view_birth_date.empty_value_display = '???'
+
+##########
