@@ -434,4 +434,26 @@ class BookAdmin(admin.ModelAdmin):
 class FilterWithCustomTemplate(admin.SimpleListFilter):
     template = "custom_template.html"
 
-###########
+########### ModelAdmin.readonly_fields
+from django.contrib import admin
+from django.utils.html import format_html_join
+from django.utils.safestring import mark_safe
+
+class PersonAdmin(admin.ModelAdmin):
+    readonly_fields = ('address_report',)
+
+    def address_report(self, instance):
+        # assuming get_full_address() returns a list of strings
+        # for each line of the address and you want to separate each
+        # line by a linebreak
+        return format_html_join(
+                mark_safe("<br>"),
+                '{}',
+                ((line,) for line in instance.get_full_address()),
+                ) or mark_safe("<span class='errors'>I can't determine this
+                address.
+                </span>")
+        # short_description functions like a model field's verbose_name
+        address_report.short_description = "Address"
+
+#############
