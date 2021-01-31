@@ -504,5 +504,12 @@ class PersonAdmin(admin.ModelAdmin):
     def get_sortable_by(self, request):
         return {*self.get_list_display(request)} - {'rank'}
 
+### ModelAdmin.get_inline_instances(request, obj=None)
+class MyModelAdmin(admin.ModelAdmin):
+    inlines = (MyInline,)
+
+    def get_inline_instances(self, request, obj=None):
+        return [inline(self.model, self.admin_site) for inline in self.inlines]
+    
 ###
 
