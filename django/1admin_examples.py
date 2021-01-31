@@ -464,4 +464,15 @@ class ArticleAdmin(admin.ModelAdmin):
         obj.user = request.user
         super().save_model(request, obj, form, change)
 
+### ModelAdmin.save_formset(request, form, formset, change)
+class ArticleAdmin(admin.ModelAdmin):
+    def save_formset(self, request, form, formset, change):
+        instances = formset.save(commit=False)
+        for obj in formset.deleted_objects:
+            obj.delete()
+        for instance in instances:
+            instance.user = request.user
+            instance.save()
+        formset.save_m2m()
+
 ###
