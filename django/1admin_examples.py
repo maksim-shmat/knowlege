@@ -534,5 +534,46 @@ class MyModelAdmin(admin.ModelAdmin):
         )
         return TemplateResponse(request, "sometemplate.html", context)
 
-############
+###
+class MyModeAdmin(admin.ModelAdmin):
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+                path('my_view/', self.admin_site.admin_view(self.my_view))
+        ]
+        return my_urls + urls
 
+###
+class MyModeAdmin(admin.ModelAdmin):
+    def get_form(self, request, obj=None, **kwargs):
+        if request.user.is_superuser:
+            kwargs['form'] = MySuperuserForm
+        return super().get_form(request, obj, **kwargs)
+
+###
+class MuModelAdmin(admin.ModelAdmin):
+    inlines = [MyInline, SomeOtherInline]
+
+    def get_formsets_with_inlines(self, request, obj=None):
+        form inline in self.get_inline_instances(request, obj):
+            # hide MyInline in the add view
+            if not isinstance(inline, MyInline) or obj is not None:
+                yield inline.get_formset(request, obj), inline
+
+###
+class MyModeAdmin(admin.ModelAdmin):
+    def formfield_for_foreignkey(self, db_field, request, **kwargs):
+        if db_field.name == "car":
+            kwargs["queryset"] = Car.objects.filter(owner=request.user)
+        return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+###
+class CountryAdminForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['capital'].queryset = self.instance.cities.all()
+
+class CountryAdmin(admin.ModelAdmin):
+    form = CountryAdminForm
+
+###########
