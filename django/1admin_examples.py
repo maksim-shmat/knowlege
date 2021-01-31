@@ -456,4 +456,12 @@ class PersonAdmin(admin.ModelAdmin):
         # short_description functions like a model field's verbose_name
         address_report.short_description = "Address"
 
-#############
+############# ModelAdmin.save_model
+from django.contrib import admin
+
+class ArticleAdmin(admin.ModelAdmin):
+    def save_model(self, request, obj, form, change):
+        obj.user = request.user
+        super().save_model(request, obj, form, change)
+
+###
