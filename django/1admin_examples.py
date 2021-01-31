@@ -511,5 +511,28 @@ class MyModelAdmin(admin.ModelAdmin):
     def get_inline_instances(self, request, obj=None):
         return [inline(self.model, self.admin_site) for inline in self.inlines]
     
-###
+######### ModelAdmin.get_urls()
+from django.contrib import admin
+from django.template.response import TemplateResponse
+from django.urls import path
+
+class MyModelAdmin(admin.ModelAdmin):
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+                path('my_view/', self.my_view),
+        ]
+        return my_urls + urls
+
+    def my_view(self, request):
+        # ...
+        context = dict(
+                # Include common variables for rendering the admin template.
+                self.admin_site.each_context(request),
+                # Anything else you want in the  context...
+                key=value,
+        )
+        return TemplateResponse(request, "sometemplate.html", context)
+
+############
 
