@@ -595,4 +595,15 @@ class MyModelAdmin(admin.ModelAdmin):
                 kwargs['choices'] += (('ready', 'Ready for deployment'),)
         return super().formfield_for_choice_field(db_field, request, **kwargs)
 
-###########
+########### Model.Admin.get_changelist_formset(request, **kwargs)
+from django.forms import BaseModelFormSet
+
+class MyAdminFormSet(BaseModelFormSet):
+    pass
+
+class MyModelAdmin(admin.ModelAdmin):
+    def get_changelist_formset(self, request, **kwargs):
+        kwargs['formset'] = MyAdminFormSet
+        return super().get_changelist_formset(request, **kwargs)
+
+##########
