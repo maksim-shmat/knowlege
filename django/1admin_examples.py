@@ -499,5 +499,10 @@ class PersonAdmin(admin.ModelAdmin):
             queryset |= self.model.objects.filter(age=search_term_as_int)
         return queryset, use_distinct
 
+### ModelAdmin.get_sortable_by(request)
+class PersonAdmin(admin.ModelAdmin):
+    def get_sortable_by(self, request):
+        return {*self.get_list_display(request)} - {'rank'}
+
 ###
 
