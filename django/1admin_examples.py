@@ -475,4 +475,13 @@ class ArticleAdmin(admin.ModelAdmin):
             instance.save()
         formset.save_m2m()
 
+### ModelAdmin.get_ordering(request)
+class PersonAdmin(admin.ModelAdmin):
+    def get_ordering(self, request):
+        if request.user.is_superuser:
+            return ['name', 'rank']
+        else:
+            return ['name']
+
 ###
+
