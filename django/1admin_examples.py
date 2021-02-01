@@ -898,6 +898,56 @@ def export_selected_objects(modeladmim, request, queryset):
         ','.join(str(pk) for pk in selected),
     ))
 
-##########
+########## disabling actions
+# Globally disable delete selected
+admin.site.disabe_action('delete_selected')
+
+# This ModeAdmin will not have delete_selected available
+class SomeModelAdmin(admin.ModelAdmin):
+    actions = ['some_other_action']
+    ...
+
+# This one will
+class AnotherModelAdmin(admin.ModelAdmin):
+    actions = ['delete_selected', 'a_third_action']
+    ...
+
+### disabling all actions for a particular ModelAdmin
+class MyModelAdmin(admin.ModelAdmin):
+    actions = None
+
+### conditionally enabling or disabling actions
+class MyModelAdmin(admin.ModelAdmin):
+    ...
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+        if request.user.username[0].upper() != 'J':
+            if 'delete_selected' in actions:
+                del actions['delete_selected']
+        return actions
+
+### setting permissions for actions
+def make_published(modeladmin, request, queryset):
+    queryset.update(status='p')
+make_published.allowed_permissions = ('change',)
+
+###
+from django.contrib import admin
+from django.contrib.auth import get_permission_codename
+
+class ArticleAdmin(admin.ModelAdmin):
+    actions = ['make_published']
+
+    def make_published(self, request, queryset):
+        queryset.update(status='p')
+    make_published.allowed_permissions = ('publish',)
+
+    def has_publish_permission(self, request):
+        """Does the user have the publish permission?"""
+        opts = self.opts
+        codename = get_permission_codename('publish', opts)
+        return request.user.has_perm('%s.%s' % (opts.app_label, codename))
+
+#############
 
 
