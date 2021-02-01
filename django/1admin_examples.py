@@ -948,6 +948,45 @@ class ArticleAdmin(admin.ModelAdmin):
         codename = get_permission_codename('publish', opts)
         return request.user.has_perm('%s.%s' % (opts.app_label, codename))
 
-#############
+############# admin documentation generator
+class BlogEntry(models.Model):
+    """
+    Stores a single blog entry, related to :model: 'blog.Blog' and
+    :model: 'auth.User'.
+    """
+    slug = models.SlugField(help_text="A short label, generally used in URLs.")
+    author = models.ForeignKey(
+            User,
+            models.SET_NULL,
+            blank=True, null=True,
+    )
+    blog = models.ForeignKey(Blog, models.CASCADE)
+    ...
+
+    def publish(self):
+        """Makes the blog entry live on the site."""
+        ...
+
+### view reference
+from django.shortcuts import render
+from myapp.models import MyModel
+
+def my_view(request, slug):
+    """
+    Display an individual :model: `myapp.MyModel`.
+
+    **Context**
+
+    ``mymodel``
+        An instance of :model:`myapp.MyModel`.
+
+    **Template:**
+
+    :template:`myapp/my_template.html`
+    """
+    context = {'mymodel': MyModel.objects.get(slug=slug)}
+    return render(request, 'myapp/my_template.html', context)
+
+###########
 
 
