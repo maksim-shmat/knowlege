@@ -806,5 +806,53 @@ from django.contrib.admin.views.decorators import staff_member_required
 def my_view(request):
     ...
 
-##########
+########## writing action function for admin site
+from django.db import models
+
+STATUS_CHOICES = [
+        ('d', 'Draft'),
+        ('p', 'Published')
+        ('w', 'Withdrawn'),
+]
+
+class Article(models.Model):
+    title = models.CharField(max_length=100)
+    body = models.TextField()
+    status = models.CharField(max_length=1, choices=STATUS_CHOICES)
+
+    def __str__(self):
+        return self.title
+
+###
+def make_published(modeladmin, request, queryset):
+    queryset.update(status='p')
+
+
+###
+for obj in queryset:
+    do_something_with(obj)
+
+###
+def make_published(modeladmin, request, queryset):
+    queryset.update(status='p')
+make_published.short_description = "Mark selected stories as published"
+
+### adding action to the ModelAdmin
+from django.contrib import admin
+from myapp.models import Article
+
+def make_published(modeladmin, request, queryset):
+    queryset.update(status='p')
+make_published.short_description = "Mark selected stories as published"
+
+
+class ArticleAdmin(admin.ModelAdmin):
+    list_display = ['title', 'status']
+    ordering = ['title']
+    actions = [make_published]
+
+admin.site.register(Article, ArticleAdmin)
+
+###########
+
 
