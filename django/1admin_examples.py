@@ -877,6 +877,27 @@ class ArticleAdmin(admin.ModelAdmin):
             updated,
         ) % updated, messages.SUCCESS)
 
-##############
+############## action that provide intermediate pages
+from django.core import serializers
+from django.http import HttpResponse
+
+def export_as_json(modeladmin, request, queryset):
+    response = HttpResponse(content_type="application/json")
+    serializers.serialize("json", queryset, stream=response)
+    return response
+
+###
+from django.contrib.contenttypes.models import ContentType
+from django.http import HttpResponseRedirect
+
+def export_selected_objects(modeladmim, request, queryset):
+    selected = queryset.values_list('pk', flat=True)
+    ct = ContentType.objects.get_for_model(queryset.model)
+    return HttpResponseRedirect('/export/?ct=%s&ids=%s' % (
+        ct.pk,
+        ','.join(str(pk) for pk in selected),
+    ))
+
+##########
 
 
