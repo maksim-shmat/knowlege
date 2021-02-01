@@ -746,6 +746,35 @@ urlpatterns = [
         path('admin/', admin.site.urls),
 ]
 
-###
+############## customaizing th AdminSite class
+# myapp/admin.py
+from django.contrib.admin import AdminSite
+from .models import MyModel
+
+class MyAdminSite(AdminSite):
+    site_header = 'Monty Python administration'
+
+admin_site = MyAdminSite(name='myadmin')
+admin_site.register(MyModel)
+
+# myproject/urls.py
+from django.urls import path
+from myapp.admin import admin_site
+
+urlpatterns = [
+        path('myadmin/', admin_site.urls),
+]
+
+############## multiple admin sites in the same URLconf
+# urls.py
+from django.urls import path
+from myproject.admin import advanced_site, basic_site
+
+urlpatterns = [
+        path('basic-admin/', basic_site.urls),
+        path('advanced-admin/', advanced_site.urls),
+]
+
+###########
 
 
