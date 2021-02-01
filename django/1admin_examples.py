@@ -799,6 +799,12 @@ path(
         name='password_reset_complete',
 ),
 
-##############
+############## the staff_member_required decorator
+from django.contrib.admin.views.decorators import staff_member_required
 
+@staff_member_required
+def my_view(request):
+    ...
+
+##########
 
