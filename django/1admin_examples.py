@@ -606,4 +606,146 @@ class MyModelAdmin(admin.ModelAdmin):
         kwargs['formset'] = MyAdminFormSet
         return super().get_changelist_formset(request, **kwargs)
 
-##########
+########## InlineModelAdmin objects
+from django.db import models
+
+class Author(models.Model):
+    name = models.CharField(max_length=100)
+
+class Book(models.Model):
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+
+###
+from django.contrib import admin
+
+class BookInline(admin.TabularInline):
+    model = Book
+
+class AuthorAdmin(admin.ModelAdmin):
+    inlines = [
+            BookInline,
+    ]
+
+###
+class BookInline(admin.TabularInline):
+    model = Book
+    raw_id_fields = ("pages",)
+
+###
+class BinaryTreeAdmin(admin.TabularInline):
+    model = BinaryTree
+
+    def get_extra(self, request, obj=None, **kwargs):
+        extra = 2
+        if obj:
+            return extra - obj.binarytree_set.count()
+        return extra
+
+###
+class BinaryTreeAdmin(admin.TabularInline):
+    model = BinaryTree
+
+    def get_max_num(self, request, obj=None, **kwargs):
+        max_num = 10
+        if obj and obj.parent:
+            return max_num - 5
+        return max_num
+
+########## two or more foreign keys to the same parent model
+from django.db import models
+
+class Friendship(models.Model):
+    to_person = models.ForeignKey(Person, on_delete=models.CASCADE,
+            related_name="friends")
+    from_person = models.ForeignKey(Person, on_delete=models.CASCADE,
+            related_name="from_friends")
+
+###
+from django.contrib import admin
+from myapp.models import Friendship
+
+class FriendshipInline(admin.TabularInline):
+    model = Friendship
+    fk_name = "to_person"
+
+
+class PersonAdmin(admin.ModelAdmin):
+    inlines = [
+            FriendshipInline,
+    ]
+
+######## working with many-to-many models
+
+from django.db import models
+
+class Person(models.Model):
+    name = models.CharField(max_length=128)
+    members = models.ManyToManyField(Person, related_name='groups')
+
+###
+from django.contrib import admin
+
+class MembershipInline(admin.TabularInline):
+    model = Group.members.through
+
+
+class PersonAdmin(admin.ModelAdmin):
+    inlines = [
+            MembershipInline,
+    ]
+
+
+class GroupAdmin(admin.ModelAdmin):
+    inlines = [
+            MembershipInline,
+    ]
+    exclude = ('members',)
+
+############ working with many-to-many intermediary models
+
+from django.db import models
+
+class Person(models.Model):
+    name = models.CharField(max_length=128)
+
+
+class Group(models.Model):
+    name = models.CharField(max_length=128)
+    members = models.ManyToManyField(Person, through='Membership')
+
+
+class Membership(models.Model):
+    person = models.ForeignKey(Person, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
+    date_joined = models.DateField()
+    invite_reason = models.CharField(max_length=64)
+
+###
+class MembershipInline(admin.TabularInline):
+    model = Membership
+    extra = 1
+
+###
+class PersonAdmin(admin.ModelAdmin):
+    inlines = (MembershipInline,)
+
+class GroupAdmin(admin.ModelAdmin):
+    inlines = (MembershipInline,)
+
+### finally, register your Person and Group models with the admin site
+admin.site.register(Person, PersonAdmin)
+admin.site.register(Group, GroupAdmin)
+
+############### hooking AdminSite instances into your URLconf
+# urls.py
+from django.dontrib import admin
+from django.urls import path
+
+urlpatterns = [
+        path('admin/', admin.site.urls),
+]
+
+###
+
+
