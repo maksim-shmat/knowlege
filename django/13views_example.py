@@ -814,4 +814,17 @@ def view_one(request):
 def view_two(request):
     return HttpResponse("Display in a frame if it's from the same origin as me.")
 
+############ generic relations
+from django.contrib.contenttypes.field import GenericForeignKey
+from django.contrib.contenttypes.models import ContentType
+
+class TaggedItem(models.Model):
+    tag = models.SlugField()
+    content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
+    object_id = models.PositiveIntegerField()
+    content_object = GenericForeignKey('content_type', 'object_id')
+
+    def __str__(self):
+        return self.tag
+
 ############
