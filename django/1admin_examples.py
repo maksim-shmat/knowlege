@@ -987,6 +987,46 @@ def my_view(request, slug):
     context = {'mymodel': MyModel.objects.get(slug=slug)}
     return render(request, 'myapp/my_template.html', context)
 
-###########
+############ js castomization in the admin
+{% extends 'admin/change_form.html' %}
+{% load static %}
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+<script src="{% static 'app/formset_handlers.js' %}"></script>
+{% endblock %}
+
+### app/static/app/formset_handlers.js
+(function($) {
+    $(document).on('formset:added', function(event, $row, formsetName) {
+        if (formsetName == 'author_set') {
+            // Do something
+        }
+    });
+
+    $(document).on('formset:removed', function(event, $row, formsetName) {
+        // Row removed
+    });
+})(django.jQuery);
+
+### 
+{% extends 'admin/change_form.html' %}
+{% load static %}
+
+{% block admin_change_form_document_ready %}
+{{ block.super }}
+<script src="{% static 'app/unregistered_handlers.js' %}"></script>
+{% endblock %}
+
+### app/static/app/unregistered_handlers.js
+django.jQuery(document).on('formset:added', function(event, $row, formsetName) {
+    // Row added
+});
+
+django.jQuery(document).on('formset:removed', function(event, $row, formsetName) {
+    // Row removed
+});
+
+###############
 
 
