@@ -853,6 +853,30 @@ class ArticleAdmin(admin.ModelAdmin):
 
 admin.site.register(Article, ArticleAdmin)
 
-###########
+########### for code design better
+class ArticleAdmin(admin.ModelAdmin):
+    ...
+    actions = ['make_published']
+
+    def make_published(self, request, queryset):
+        queryset.update(status='p')
+    make_published.short_description = "Mark selected stories as published"
+
+###
+from django.contrib import messages
+from djano.utils.translation import ngettext
+
+class ArticleAdmin(admin.ModelAdmin):
+    ...
+    
+    def make_published(self, request, queryset):
+        updated = queryset.update(status='p')
+        self.message_user(request, ngettext(
+            '%d story was successfully marked as published.',
+            '%d stories were successfully marked as published.',
+            updated,
+        ) % updated, messages.SUCCESS)
+
+##############
 
 
