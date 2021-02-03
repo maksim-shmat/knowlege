@@ -51,4 +51,48 @@ def run(verbose=True):
             transform=False)
     lm.save(strict=True, verbose=verbose)
 
-#############
+############# automate LayerMapping with the orginspect
+# this is an auto-generated Django model module crated by ogrinspect.
+from django.contrib.gis.db import models
+
+class WorldBorder(models.Model):
+    fips = models.CharField(max_length=2)
+    iso2 = models.CharField(max_length=2)
+    iso3 = models.CharField(max_length=3)
+    un = models.CharField()
+    name = models.CharField(max_length=50)
+    area = models.IntegerField()
+    pop2005 = models.IntegerField()
+    region = models.IntegerField()
+    subregion = models.IntegerField()
+    lon = models.FloatField()
+    lat = models.FloatField()
+    geom = models.MultiPolygonField(srid=4326)
+
+# auto-generated 'LayerMapping' dictionary for WorldBorder model
+worldborders_mapping = {
+        'fips': 'FIPS',
+        'iso2': 'ISO2',
+        'iso3': 'ISO3',
+        'un': 'UN',
+        'name': 'NAME',
+        'area': 'AREA',
+        'pop2005': 'POP2005',
+        'region': 'REGION',
+        'subregion': 'SUBREGION',
+        'lon': 'LAT',
+        'geom': 'MULTIPOLYGON',
+}
+
+############## raw queries
+from django.db import connection
+# or if you're querying a non-default database:
+from django.db import connections
+connection = connections['your_gis_db_alias']
+
+City.objects.raw('SELECT id, name, %s as point from myapp_city' %
+        (connection.ops.select % 'point'))
+
+##############
+
+
