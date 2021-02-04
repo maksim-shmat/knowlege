@@ -28,4 +28,41 @@ class Reservation(models.Model):
                 ),
         ]
 
-##############
+############## case using two fields
+from django.contrib.postgres.constraints import ExclusionConstraint
+from django.contrib.postgres.field import (
+        DateTimeRangeField,
+        RangeBoundary,
+        RangeOperators,
+)
+from django.db import models
+from django.db.models import Func, Q
+
+
+class TsTzRange(Func):
+    function = 'TSTZRANGE'
+    output_field = DateTimeRangeField()
+
+
+class Reservation(models.Model):
+    room = models.ForeignKey('Room', on_delete=models.CASCADE)
+    start = models.DateTimeField()
+    end = models.DateTimeField()
+    cancelled = models.BooleanField(default=False)
+
+    
+    class Meta:
+        constraints = [
+                ExclusionConstraint(
+                    name='exclude_overlapping_reservations',
+                    expressions=(
+                        (TsTzRange('start', 'end', RangeBoundary()),
+                            RangeOperators.OVERLAPS),
+                        ('room', RangeOperators.EQUAL),
+                    ),
+                    condition=Q(cancelled=False),
+                ),
+        ]
+
+#############
+
