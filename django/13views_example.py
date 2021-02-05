@@ -856,4 +856,38 @@ class Article(models.Model):
     # ...
     site = models.ForeignKey(Site, on_delete=models.CASCADE)
 
-### 
+### hooking into the current site from views
+from django.conf import settings
+
+def my_view(request):
+    if settings.SITE_ID == 3:
+        # Do something.
+        pass
+    else:
+        # Do something else.
+        pass
+
+###
+from django.contrib.sites.shortcuts import get_current_site
+
+def my_view(request):
+    current_site = get_current_site(request)
+    if current_site.domain == 'foo.com':
+        # Do something
+        pass
+    else:
+        # Do something else.
+        pass
+### equivalent previous one
+from django.contrib.sites.models import Site
+
+def my_function_without_request():
+    current_site = Site.objects.get_current()
+    if current_site.domain == 'foo.com':
+        # Do something
+        pass
+    else:
+        # Do something else.
+        pass
+
+############
