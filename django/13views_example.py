@@ -827,4 +827,33 @@ class TaggedItem(models.Model):
     def __str__(self):
         return self.tag
 
-############
+############ associating content with multiple sites
+from django.contrib.sites.models import Site
+from django.db import models
+
+class Article(models.Model):
+    headline = models.CharField(max_length=200)
+    # ...
+    sites = models.ManyToManyField(Site)
+
+###
+from django.contrib.sites.shortcuts import get_current_site
+
+def article_detail(request, article_id):
+    try:
+        a = Article.objects.get(id=article_id,
+                sites__id=get_current_site(request).id)
+    except Article.DoesNotExist:
+        raise Http404("Article does not exist on this site")
+    # ...
+
+### associating content with a single site
+from django.contrib.sites.models import Site
+from django.db import models
+
+class Article(models.Model):
+    headline = models.CharField(max_length=200)
+    # ...
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+
+### 
