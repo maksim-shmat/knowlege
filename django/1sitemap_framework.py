@@ -42,4 +42,38 @@ urlpatterns = [
             name='django.contrib.sitemaps.views.sitemap'),
 ]
 
-############# 
+############# sitemap for static views
+# sitemaps.py
+from django.contrib import sitemaps
+from django.urls import reverse
+
+class StaticViewSitemap(sitemaps.Sitemap):
+    priority = 0.5
+    changefreq = 'daily'
+
+    def items(self):
+        return ['main', 'about', 'license']
+
+    def location(self, item):
+        return reverse(item)
+
+# urls.py
+from django.contrib.sitemaps.views import sitemap
+from django.urls import path
+
+from .sitemaps import StaticViewSitemap
+from . import views
+
+sitemaps = {
+        'static': StaticViewSitemap,
+}
+
+urlpatterns = [
+        path('', views.main, name='main'),
+        path('about/' views.about, name='about')
+        # ...
+        path('sitemap.xml', sitemap, {'sitemaps': sitemaps},
+            name='django.contrib.sitemaps.views.sitemap')
+]
+
+#############
