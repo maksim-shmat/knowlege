@@ -76,4 +76,40 @@ urlpatterns = [
             name='django.contrib.sitemaps.views.sitemap')
 ]
 
-#############
+### creating a sitemap index
+from django.contrib.sitemaps import views
+
+urlpatterns = [
+        path('sitemap.xml', views.index, {'sitemaps': sitemaps}),
+        path('sitemap-<section>.xml', views.sitemap, {'sitemaps': sitemaps},
+            name='django.contrib.sitemaps.views.sitemap'),
+]
+
+### and more
+from django.contrib.sitemaps import views as sitemaps_views
+from django.views.decorators.cache import cache_page
+
+urlpatterns = [
+        path('sitemap.xml',
+            cache_page(86400)(sitemaps_views.index),
+            {'sitemaps': sitemaps, 'sitemap_url_name': 'sitemaps'}),
+        path('sitemap-<section>.xml',
+            cache_page(86400)(sitemaps_views.sitemap),
+            {'sitemaps': sitemaps}, name='sitemaps'),
+]
+
+############ template customization
+from django.contrib.sitemaps import views
+
+urlpatterns = [
+        path('custom-sitemap.xml', views.index, {
+            'sitemaps': sitemaps,
+            'template_name': 'custom_sitemap.html'
+        }),
+        path('custom-sitemap-<section>.xml', views.sitemap, {
+            'sitemaps': sitemaps,
+            'template_name': 'custom_sitemap.html'
+        }, name='django.contrib.sitemaps.views.sitemap'),
+]
+
+############
