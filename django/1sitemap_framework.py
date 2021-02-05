@@ -134,4 +134,19 @@ urlpatterns = [
 {% endspaceless %}
 </urlset>
 
-###############
+############### pinging Google
+# register with google first
+from django.contrib.sitemaps import ping_google
+
+class Entry(models.Model):
+    # ...
+    def save(self, force_insert=False, force_update=False):
+        super().save(force_insert, force_update)
+        try:
+            ping_google()
+        except Exception:
+            # Bare 'except' because we could get a variety
+            # of HTTP-related exceptions.
+            pass
+
+############ 
