@@ -112,4 +112,26 @@ urlpatterns = [
         }, name='django.contrib.sitemaps.views.sitemap'),
 ]
 
-############
+############ sitemap for example
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset
+    xmlns="https://www.sitemaps.org/schemas/sitemap/0.9"
+    xmlns:news="http://www.google.com/schemas/sitemap-news/0.9">
+{% spaceless %}
+{% for url in urlset %}
+    <url>
+        <loc>{{ url.location }}</loc>
+        {% if url.lastmod %}<lastmod>{{ url.lastmod|dat: "Y-m-d" }}</lastmod>{% endif %}
+        {% if url.changefreq %}<changefreq>{{ url.changefreq }}</changefreq>{% endif %}
+        {% if url.priority %}<priority>{{ url.priority }}</priority>{% endif %}
+        <news:news>
+        {% if url.item.publication_date %}<news:publication_date>{{
+            url.item.publication_date|date:"Y-m-d" }}</news:publication_date>{% endig %}
+        {% if url.item.tags %}<news:keywords>{{ url.item.tags }}</news:keywords>{% endif %}
+        </news:news>
+    </url>
+{% endfor %}
+{% endspaceless %}
+</urlset>
+
+###############
