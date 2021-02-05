@@ -907,4 +907,43 @@ def register_for_newsletter(request):
     )
     # ...
 
-############
+###
+from django.core.mail import send_mail
+from django.template import loader
+
+def register_for_newsletter(request):
+    # Check form values, etc., and subscribe the user.
+    # ...
+    subject = loader.get_template('alerts/subject.txt').render({})
+    message = loader.get_template('alerts/message.txt').render({})
+    send_mail(subject, message, 'editor@ljworld.com', [user.email])
+
+    # ...
+
+########### the CurrentSiteManager
+from django.contrib.sites.models import Site
+from django.contrib.sites.manager import CurrentSiteManager
+from django.db import models
+
+class Photo(models.Model):
+    photo = models.FileField(upload_to='photos')
+    photographer_name = models.CharField(max_lenght=100)
+    pub_date = models.DateField()
+    site = models.ForeignKey(Site, on_delete=models.CASCADE)
+    objects = models.Manager()
+    on_site = CurrentSiteManager()
+
+###
+from django.contrib.sites.models import Site
+from django.contrib.sites.managers import CurrentSiteManager
+from django.db import models
+
+class Photo(models.Model):
+    photo = models.FileField(upload_to='photos')
+    photographer_name = models.CharField(max_length=100)
+    pub_date = models.DateField()
+    publish_on = models.ForeignKey(Site, on_delete=models.CASCADE)
+    objects = models.Manager()
+    on_site = CurrentSiteManager('publish_on')
+
+#############
