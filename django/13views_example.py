@@ -890,4 +890,21 @@ def my_function_without_request():
         # Do something else.
         pass
 
+############ getting the current domain for display
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import send_mail
+
+def register_for_newsletter(request):
+    # Check form values, etc., and subscribe the user.
+    # ...
+
+    current_site = get_current_site(request)
+    send_mail(
+            'Thanks for subscribing to %s alerts' % current_site.name,
+            'Thanks for your subscription. We appreciate it. \n\n-The %s team.' % ( current_site.name,),
+            'editor@%s' % current_site.domain,
+            [user.email],
+    )
+    # ...
+
 ############
