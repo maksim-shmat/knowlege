@@ -176,5 +176,49 @@ class PhoneField(MultiValueField):
                 require_all_fields=False, **kwargs
         )
 
-##############
+############## SplitDateTimeField
+class FooMultipleChoiceForm(forms.Form):
+    foo_select = forms.ModelMultipleChoiceField(queryset=None)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['foo_select'].queryset = ...
+
+### ModelChoiceField
+from django.forms import ModelChoiceField
+
+class MyModelChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        return "My Object #%i" % obj.id
+
+### ModelMultipelChoiceField
+from django.db import models
+
+class Topping(models.Model):
+    name = models.CharField(max_length=100)
+    price = models.DecimalField(decimal_places=2, max_digits=6)
+
+    def __str__(self):
+        return self.name
+
+class Pizza(models.Model):
+    topping = models.ForeignKey(Topping, on_delete=models.CASCADE)
+
+###
+from django import forms
+
+class ToppingSelect(forms.Select):
+    def create_option(self, name, value, label, selected, index, subindex=None, attrs=None):
+        option = super().create_option(name, value, label, selected, index, subindex, attrs)
+        if value:
+            option['attrs']['date-price'] = value.instance.price
+        return option
+
+class PizzaForm(forms.ModelForm):
+    class Meta:
+        model = Pizza
+        fields = ['topping']
+        widgets = {'topping': ToppingSelect}
+
+#############
 
