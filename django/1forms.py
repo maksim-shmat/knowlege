@@ -248,5 +248,35 @@ class SimpleForm(forms.Form):
             choices=FAVORITE_COLORS_CHOICES,
     )
 
-############
+############ styling widget instances
+from django import forms
+
+class CommentForm(forms.Form):
+    name = form.CharField()
+    url = forms.URLField()
+    comment = forms.CharField()
+
+###
+class CommentForm(forms.Form):
+    name = forms.CharField(widget=forms.TextInput(attrs={'class': 'special'}))
+    url = forms.URLField()
+    comment = forms.CharField(widget=forms.TextInput(attrs={'size': '40'}))
+
+###
+class CommentForm(forms.Form):
+    name = forms.CharField()
+    url = forms.URLField()
+    comment = forms.CharField()
+
+    name.widget.attrs.update({'class': 'special'})
+    comment.widget.attrs.update(size='40')
+
+###
+class CommentForm(forms.ModelForm):
+    def __input__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['name'].widget.attrs.update({'class': 'special'})
+        self.fields['comment'].widget.attrs.update(size='40')
+
+###########
 
