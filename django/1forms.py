@@ -366,5 +366,48 @@ class ContactForm(forms.Form):
         # this method did't change it.
         return data
 
-############
+############ cleaning and validating fields that depend on each other
+from django import forms
+from django.core.exceptions import ValidationError
 
+class ContactForm(forms.Form):
+    # Everything as before.
+    ...
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cc_myself = cleaned_data.get("cc_myself")
+        subject = cleaned_data.get("subject")
+
+        if cc_myself and subject:
+            # Only do something if both fields are valid so far.
+            if "help" not in subject:
+                raise ValidationError(
+                        "Did not send for 'help' in the subject despite "
+                        "CC`ing yourself."
+                        )
+
+###
+def clean(self):
+    super().clean()
+    cc_myself = self.cleaned_data.get("cc_myself")
+    ...
+
+###
+from django import forms
+
+class ContactForm(forms.Form):
+    # Everything as before.
+    ...
+
+    def clean(self):
+        cleaned_data = super().clean()
+        cc_myself = cleaned_data.get("cc_myself")
+        subject = cleaned_data.get("subject")
+
+        if cc_myself and subject and "help" not in subject:
+            msg = "Must put 'help' in subject when cc'ing yourself."
+            self.add_error('cc_myself', msg)
+            slef.add_error('subject', msg)
+
+##############
