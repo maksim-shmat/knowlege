@@ -113,4 +113,39 @@ class Migration(migrations.Migration):
             migrations.RunPython(forwards_func, reverse_func),
     ]
 
-############
+############ SeparateDatabaseAndState
+from django.db.migrations.operations.base import Operation
+
+class MyCustomOperation(Operation):
+    # If this is False, it means that this operation will be ignored by
+    # sqlmigrate; if true, it will be run and the SQL collected for its output
+    reduces_to_sql = False
+
+    # If this is False, Django will refuse to reverse past this operation.
+    reversible = False
+
+    def __init__(self, arg1, arg2):
+        # Operations are usually instantiated with arguments in migration
+        # files. Store the values of them on self for later use.
+        pass
+
+    def state_forwards(self, app_label, state):
+        # The Operation should take the 'state' parameter (an instance of
+        # django.db.migrations.state.ProjectState) and mutate it to match
+        # any schema changes that have occurred.
+        pass
+
+    def database_forwards(self, app_label, schema_editor, from_state, to_state):
+        # The Operation should use schema_editor to apply any changes it
+        # wants to make to the database.
+        pass
+
+    def database_backwards(self, app_label, schema_editor, from_state, to_state):
+        # If reversible is True, this is called when the operation is reversed.
+        pass
+
+    def describe(self):
+        # This is used to describe what the operation does in console output.
+        return "Custom Operation"
+
+#############
