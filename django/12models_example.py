@@ -485,4 +485,39 @@ class Student(models.Model):
     def is_upperclass(self):
         return self.year_in_school in {self.JUNIOR, self.SENIOR}
 
-#########
+######### enumerated types
+from django.urils.translation import gettext_lazy as _
+
+class Student(models.Model):
+
+    class YearInSchool(models.TextChoices):
+        FRESHMAN = 'FR', _('Freshman')
+        SOPHOMORE = 'SO', _('Sophomore')
+        JUNIOR = 'JR', _('Junior')
+        SENIOR = 'SR', _('Senior')
+        GRADUATE = 'GR', _('Graduate')
+
+    year_in_school = models.CharField(
+            max_length=2,
+            choices=YearInSchool.choices,
+            default=YearInSchool.FRESHMAN,
+    )
+
+    def is_upperclass(self):
+        return self.year_in_school in {
+                self.YearInSchool.JUNIOR,
+                self.YearInSchool.SENIOR,
+        }
+
+############ IntegerChoices class
+class Card(models.Model):
+
+    class Suit(models.IntegerChoices):
+        DIAMOND = 1
+        SPADE = 2
+        HEART = 3
+        CLUB = 4
+
+    suit = models.IntegerField(choices=Suit.choices)
+
+###############
