@@ -342,5 +342,29 @@ class MultiEmailField(forms.Field):
         for email in value:
             validate_email(email)
 
+###
+class ContactForm(forms.Form):
+    subject = forms.CharField(max_length=100)
+    message = forms.CharField()
+    sender = forms.EmailField()
+    recipients = MultiEmailField()
+    cc_myself = forms.BooleanField(required=False)
+
+############## cleaning a specific field attribute
+from django import forms
+from django.core.exceptions import ValidationError
+
+class ContactForm(forms.Form):
+    # Everything as before.
+    ...
+
+    def clean_recipients(self):
+        data = self.cleaned_data['recipients']
+        if "fred@example.com" not in data:
+            raise ValidationError("You have forgotten about Fred!")
+        # Always return a value to use as the new cleaned data, even if
+        # this method did't change it.
+        return data
+
 ############
 
