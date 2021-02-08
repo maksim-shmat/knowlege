@@ -594,4 +594,32 @@ class Customer(models.Model):
 name='age_gte_18'),
         ]
 
-################
+################ rather than overriding __init__
+from django.db import models
+
+class Book(models.Model):
+    title = models.CharField(max_length=100)
+
+    @classmethod
+    def create(cls, title):
+        book = cls(title=title)
+        # do something with the book
+        return book
+
+    book = Book.create("Pride and Prejudice")
+
+###
+class BookManager(models.Manager):
+    def create_book(self, title):
+        book = self.create(title=title)
+        # do something with the book
+        return book
+
+class Book(bodels.Model):
+    title = models.CharField(max_length=100)
+
+    objects = BookManager()
+
+book = Book.objects.create_book("Pride and Prejudice")
+
+############
