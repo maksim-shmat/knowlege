@@ -622,4 +622,33 @@ class Book(bodels.Model):
 
 book = Book.objects.create_book("Pride and Prejudice")
 
+############ customizing model loading
+from django.db.models import DEFERRED
+
+@classmethod
+def from_db(cls, db, field_names, values):
+    # Default implementation of from_db() (subject to change and could
+    # be replaced with super()).
+    if len(values) != len(cls._meta.concrete_fields):
+        values.reverse()
+        values = [
+                values.pop() if f.attname in field_names else DEFERRED
+                for f in cls._meta.concrete_fields
+        ]
+    instance = cls(*values)
+    instance._state.adding = False
+    instance._state.db = db
+    # customization to store the original field values on the instance
+    instance._loaded_values = dict(zip(field_names, values))
+    return instance
+
+def save(self, *args, **kwargs):
+    # Check how the current values differ from ._loaded_values. For example,
+    # prevent changing the creator_id of the model. (This example doesn't
+    # support cases where 'creator_id' is deferred).
+    if not self._state.adding and(
+            self.creator_id != self._loaded_values['creator_id']):
+        raise ValueError("Updating the value of creator isn't allowed")
+    super().save(*args, **kwargs)
+
 ############
