@@ -752,4 +752,31 @@ class Person(models.Model):
     def __str__(self):
         return '%s %s' % (self.first_name, self.last_name)
 
-###
+### __eq__()
+from django.db import models
+
+class MyModel(models.Model):
+    id = models.AutoField(primary_key=True)
+
+
+class MyProxyModel(MyModel):
+    class Meta:
+        proxy = True
+
+class MultitableInherited(MyModel):
+    pass
+
+# Primary keys compared
+MyModel(id=1) == MyModel(id=1)
+MyModel(id=1) != MyModel(id=2)
+# Primary keys are None
+MyModel(id=None) != MyModel(id=None)
+# Same instance
+instance = MyModel(id=None)
+instance == instance
+# Proxy model
+MyModel(id=1) == MyProxyModel(id=1)
+# Multi-table inheritance
+MyModel(id=1) != MultitableInherited(id=1)
+
+############
