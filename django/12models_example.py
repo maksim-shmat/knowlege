@@ -675,4 +675,71 @@ class ExampleModel(models.Model):
                 fields = fields.union(deferred_fields)
         super().refresh_from_db(using, fields, **kwargs)
 
+############ validating objects
+from django.core.exception import ValidationError
+try:
+    article.full_clean()
+except ValidationError as e:
+    # Do something based on the errors contained in e.message_dict.
+    # Display them to a user, or handle them programmatically.
+    pass
+
+### Model.clean()
+import datetime
+from django.core.exceptions import ValidationError
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+class Article(models.Model):
+    ...
+    def clean(self):
+        # Don't allow draft entries to have a pub_date.
+        if self.status == 'draft' and self.pub_date is not None:
+            raise ValidationError(_('Draft entries may not have a publication
+            date.'))
+            # Set the pub_date for published items if it hasn't been set already.
+            if self.status == 'published' and self.pub_date is None:
+                self.pub_date = datetime.date.today()
+
+### 
+from django.core.exceptions import NON_FIELD_ERRORS, ValidationError
+try:
+    article.full_clean()
+except ValidationError as e:
+    non_field_errors = e.message_dict[NON_FIELD_ERRORS]
+
+###
+class Article(models.Model):
+    ...
+    def clean(self):
+        # Don't allow draft entries to have a pub_date.
+        if self.status == 'draft' and self.pub_date is not None:
+            raise ValidationError({'pub_date': _('Draft entries may not have a
+            publication date.')})
+            ...
+
+###
+raise ValidationError({
+    'title': ValidationError(_('Missing title.'), code='required'),
+    'pub_date': ValidationError(_('Invalid date.'), code='invalid'),
+})
+
+###
+class Article(models.Model):
+    ...
+    def clean_fields(self, exclude=None):
+        super().clean_fields(exclude=exclude)
+        if self.status == 'draft' and self.pub_date is not None:
+            if exlude and 'status' in exlude:
+                raise ValidationError(
+                        _('Draft entries may not have a publication date.')
+                )
+            else:
+                raise ValidationError({
+                    'status': _(
+                        'Set status to draft if there is not a '
+                        'publication date.'
+                    ),
+                })
+
 ############
