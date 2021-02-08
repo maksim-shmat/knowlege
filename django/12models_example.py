@@ -582,4 +582,16 @@ class Customer(models.Model):
                 models.Index(fields=['first_name'], name='first_name_idx'),
         ]
 
-############
+############ constraints to define on the model
+from django.db import models
+
+class Customer(models.Model):
+    age = models.IntegerField()
+
+    class Meta:
+        constraints = [
+                models.CheckConstraint(check=models.Q(age__gte=18),
+name='age_gte_18'),
+        ]
+
+################
