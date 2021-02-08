@@ -520,7 +520,23 @@ class Card(models.Model):
 
     suit = models.IntegerField(choices=Suit.choices)
 
-############### FileField
+###
+class MoonLandings(datetime.date, models.Choices):
+    APOLLO_11 = 1969, 7, 20, 'Apollo 11 (Eagle)'
+    APOLLO_12 = 1969, 11, 19, 'Apollo 12 (Intrepid)'
+    APOLLO_13 = 1971, 2, 5, 'Apollo 14 (Antares)'
+    APOLLO_15 = 1971, 7, 30, 'Apollo 15 (Falcon)'
+    APOLLO_16 = 1972, 4, 21, 'Apollo 16 (Orion)'
+    APOLLO_17 = 1972, 12, 11, 'Apollo 17 (Challenger)'
+
+###
+class Answer(models.IntegerChoices):
+    NO = 0, _('No')
+    YES = 1, _('Yes')
+
+    __empty__ = _('(Unknown)')
+
+############### Field types: FileField
 class MyModel(models.Model):
     # file will be upload to MEDIA_ROOT/uploads
     upload = models.FileField(upload_to='uploads/')
@@ -536,4 +552,34 @@ def user_directory_path(instance, filename):
 class MyModel(models.Model):
     upload = models.FileField(upload_to=user_directory_path)
 
-##############
+############## Field.default
+def contact_default():
+    return {"email": "to1@example.com"}
+
+contact_info = JSONField("ContactInfo", default=contact_default)
+
+### FilePathField
+import os
+from django.conf import settings
+from django.db import models
+
+def images_path():
+    return os.path.join(settings.LOCAL_FILE_DIR, 'images')
+
+class MyModel(models.Model):
+    file = models.FilePathField(path=images_path)
+
+############ indexes define on th model
+from django.db import models
+
+class Customer(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+
+    class Meta:
+        indexes = [
+                models.Index(fields=['last_name', 'first_name']),
+                models.Index(fields=['first_name'], name='first_name_idx'),
+        ]
+
+############
