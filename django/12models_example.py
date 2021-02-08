@@ -520,4 +520,20 @@ class Card(models.Model):
 
     suit = models.IntegerField(choices=Suit.choices)
 
-###############
+############### FileField
+class MyModel(models.Model):
+    # file will be upload to MEDIA_ROOT/uploads
+    upload = models.FileField(upload_to='uploads/')
+    # or...
+    # file will be saved to MEDIA_ROOT/uploads/2015/01/30
+    upload = models.FileField(upload_to='uploads/%Y/%m/%d/')
+
+###
+def user_directory_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return 'user_{0}/{1}'.format(instance.user.id, filename)
+
+class MyModel(models.Model):
+    upload = models.FileField(upload_to=user_directory_path)
+
+##############
