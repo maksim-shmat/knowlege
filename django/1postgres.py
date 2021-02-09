@@ -169,4 +169,24 @@ class LoadEctension(Operation):
     def describe(self):
         return "Creates extension %s" % self.name
 
-###############
+############### both ot these models use the same underlying db table
+class CommonlyUseModel(models.Model):
+    f1 = models.CharField(max_length=10)
+
+    class Meta:
+        managed = False
+        db_table = 'app_largetable'
+
+
+class ManagedModel(models.Model):
+    f1 = models.CharField(max_length=10)
+    f2 = models.CharField(max_length=10)
+
+    class Meta:
+        db_table = 'app_largetable'
+
+# Two equivalent QuerySets:
+CommonlyUsedModel.objects.all()
+ManagedModel.objects.all().defer('f2')
+
+###########
