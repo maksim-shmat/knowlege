@@ -189,4 +189,20 @@ class ManagedModel(models.Model):
 CommonlyUsedModel.objects.all()
 ManagedModel.objects.all().defer('f2')
 
-###########
+########### creating your own Aggregate Functions
+from django.db.models import Aggregate
+
+class Sum(Aggregate):
+    # Supports SUM(ALL field).
+    function = 'SUM'
+    template = '%(function)s(%(all_values)s%(expressions)s)'
+    allow_distinct = False
+
+    def __init__(self, expression, all_values=False, **extra):
+        super().__init__(
+                expression,
+                all_values='All ' all_values else '',
+                **extra
+        )
+
+##########
