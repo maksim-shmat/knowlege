@@ -212,7 +212,6 @@ def relabeled_clone(self, change_map):
     return clone
 
 ### writing your own Query Expressions
-# bad example for SQL-injection
 import copy
 from django.db.models import Expression
 
@@ -228,7 +227,7 @@ class Coalesce(Expression):
                 raise TypeError('%r is not an Expression' % expression)
         self.expressions = expressions
 
-### better example
+###
 def resolve_expression(self, query=None, allow_joins=True, reuse=None,
         summerize=False, for_save=False):
     c = self.copy()
@@ -255,5 +254,25 @@ def as_oracle(self, compiler, connection):
     Let's make the function name lowercase.
     """
     return self.as_sql(compiler, connection, template='coalesce( %(expressions)s )')
+
+########### avoiding SQL injection
+# bad example
+from django.db.models import Func
+
+class Position(Func):
+    function = 'POSITION'
+    template = "%(function)s('%(substring)s' in %(expressions)s)"
+
+    def __init__(self, expression,substring):
+        # substring=substring is an SQL injection vulnerability!
+        super().__init__(expression, substring=substring)
+
+# better example
+class Position(Func):
+    function = 'POSITION'
+    arg_joiner = ' IN '
+
+    def __init__(self, expression, substring):
+        super().__init__(substing, expression)
 
 ###########
