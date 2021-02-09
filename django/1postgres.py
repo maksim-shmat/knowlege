@@ -212,3 +212,48 @@ def relabeled_clone(self, change_map):
     return clone
 
 ### writing your own Query Expressions
+# bad example for SQL-injection
+import copy
+from django.db.models import Expression
+
+class Coalesce(Expression):
+    template = 'COALESCE( %(expression)s )'
+
+    def __init__(self, expressions, output_field):
+        super().__init__(output_field=output_field)
+        if len(expressions) < 2:
+            raise ValueError('expressions must have at least 2 elements')
+        for expression in expressions:
+            if not hasattr(expression, 'resolve_expression'):
+                raise TypeError('%r is not an Expression' % expression)
+        self.expressions = expressions
+
+### better example
+def resolve_expression(self, query=None, allow_joins=True, reuse=None,
+        summerize=False, for_save=False):
+    c = self.copy()
+    c.is_summary = summarize
+    for pos, expression in enumerate(self.expressions):
+        c.expressions[pos] = expression.resolve_expression(query, allow_joins,
+                reuse, summerize, for_save)
+        return c
+
+###
+def as_sql(self, compiler, connection, template=None):
+    sql_expressions, sql_params = [], []
+    for expression in self.expressions:
+        sql, params = compiler.compile(expression)
+        sql_expressions.append(sql)
+        sql_params.extend(params)
+    template = template or self.template
+    data = {'expressions': ','.join(sql_expressions)}
+    return template % data, sql_params
+
+def as_oracle(self, compiler, connection):
+    """
+    Example of vendor specific handling (Oracle in this case).
+    Let's make the function name lowercase.
+    """
+    return self.as_sql(compiler, connection, template='coalesce( %(expressions)s )')
+
+###########
