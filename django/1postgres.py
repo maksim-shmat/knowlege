@@ -205,4 +205,10 @@ class Sum(Aggregate):
                 **extra
         )
 
-##########
+########## Expression API
+def relabeled_clone(self, change_map):
+    clone = copy.copy(self)
+    clone.expression = self.expression.relabeled_clone(change_map)
+    return clone
+
+### writing your own Query Expressions
