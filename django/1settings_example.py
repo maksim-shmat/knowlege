@@ -142,4 +142,12 @@ LOGGING_CONFIG = None
 import logging.config
 logging.config.dictConfig(...)
 
-#####3
+##### languages
+from django.utils.translation import gettext_lazy as _
+
+LANGUAGES = [
+        ('de', _('German')),
+        ('en', _('English')),
+]
+
+#########
