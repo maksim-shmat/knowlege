@@ -27,5 +27,29 @@ of code like:
 {% endfor %}
 {% endblock %}
 
-##########
+########## template tags
+# for 
+<ul>
+{% for athlete in athlete_list %}
+  <li>{{ athlete.name }}</li>
+{% endfor %}
+</ul>
+
+### if, elif, else
+{% if athlete_list %}
+  Number of athletes: {{ athlete_list|length }}
+{% elif athlete_in_locker_room_list %}
+  Athletes should be out of the locker room soon!
+{% else %}
+  No athletes.
+{% endif %}
+
+###
+{% if athlete_list|length > 1 %}
+  Team: {% for athlete in athlete_list %} ... {% endfor %}
+{% else %}
+  Athlete: {{ athlete_list.0.name }}
+{% endif %}
+
+###########
 
