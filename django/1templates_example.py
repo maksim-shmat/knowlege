@@ -51,5 +51,67 @@ of code like:
   Athlete: {{ athlete_list.0.name }}
 {% endif %}
 
-###########
+########### template inheritance
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+  <title>{% block title %}My amazing site{% endblock %}</title>
+</head>
+
+<body>
+  <div id="sidebar">
+    {% block sidebar %}
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/blog/">Blog</a></li>
+    </ul>
+    {% endblock %}
+  </div>
+
+  <div id="content".
+    {% block content %}{% endblock %}
+  </div>
+</body>
+</html>
+
+###
+{% extends "base.html" %}
+
+{% block title %}My amazing blog{% endblock %}
+
+{% block content %}
+{% for entry in blog_entries %}
+  <h2>{{ entry.title }}</h2>
+  <p>{{ entry.body }}</p>
+{% endfor %}
+{% endblock %}
+
+###
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="style.css">
+  <title>My amazing blog</title>
+</head>
+
+<body>
+  <div id="sidebar">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/blog/">Blog</a></li>
+    </ul>
+  </div>
+
+  <div id="content">
+    <h2>Entry one</h2>
+    <p>This is my first entry.</p>
+
+    <h2>Entry two</h2>
+    <p>This is my second entry.</p>
+  </div>
+</body>
+</html>
+
+#############
 
