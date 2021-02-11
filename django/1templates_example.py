@@ -113,5 +113,67 @@ of code like:
 </body>
 </html>
 
-#############
+############# template cycle
+{% for o in some_list %}
+  <tr class="{% cycle 'row1' 'row2' %}">
+    ...
+  </tr>
+{% endfor %}
+
+###
+{% for o in some_list %}
+  <tr class="{% cycle rowvalue1 rowvalue2 %}">
+    ...
+  </tr>
+{% endfor %}
+
+###
+{% for o in some_list %}
+  <tr class="{% autoescape of %{% cycle rowvalue1 rowvalue2 %}{%
+  endautoescape %}">
+    ...
+  </tr>
+{% endfor %}
+
+###
+{% for o in some_list %}
+  <tr class="{% cycle 'row1' rowvalue2 'row3' %}">
+    ...
+  </tr>
+{% endfor %}
+
+###
+{% cycle 'row1' 'row2' as rowcolors %}
+
+###
+<tr>
+  <td class="{% cycle 'row1' 'row2' as rowcolors %}">...</td>
+  <td class="{{ rowcolors }}">...</td>
+</tr>
+<tr>
+  <td class="{% cycle rowcolors %}">...</td>
+  <td class="{{ rowcolors }}">...</td>
+</tr>
+
+###
+<tr>
+  <td class="row1">...</td>
+  <td class="row1">...</td>
+</tr>
+<tr>
+  <td class="row2">...</td>
+  <td class="row2">...</td>
+</tr>
+
+###
+{% for obj in some_list %}
+  {% cycle 'row1' 'row2' as rowcolors silent %}
+  <tr class ="{{ rowcolors }}">{% include "subtemplate.html" %}</tr>
+{% endfor %}
+
+###
+{% cycle 'row1' 'row2' as rowcolors silent %}
+{% cycle rowcolors %}
+
+###########
 
