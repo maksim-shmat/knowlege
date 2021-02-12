@@ -684,3 +684,15 @@ class Command(BaseCommand):
             self.stdout.write(self.style.SUCCESS('Successfully closed poll "%s"' % poll_id))
 
 ###########
+class ContextTest(unittest.TestCase):
+    def test_against_dictionary(self):
+        c1 = Context()
+        c1['update'] = 'value'
+        self.assertEqual(cq.flatten(), {
+            'True': True,
+            'None': None,
+            'False': False,
+            'update': 'value',
+        })
+
+###########
