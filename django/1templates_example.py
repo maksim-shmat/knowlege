@@ -175,5 +175,16 @@ of code like:
 {% cycle 'row1' 'row2' as rowcolors silent %}
 {% cycle rowcolors %}
 
-###########
+########### template for 
+<ul>
+{% for athlete in athlete_list %}
+  <li>{{ athlete.name }}</li>
+{% endfor %}
+</ul>
 
+###
+{% for x, y in points %}
+  There is a point at {{ x }}, {{ y }}
+{% endfor %}
+
+##########
