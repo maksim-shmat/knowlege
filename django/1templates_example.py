@@ -260,4 +260,24 @@ of code like:
 {% endfor %}
 </ul>
 
-###########
+########### template resetcycle
+{% for coach in coach_list %}
+  <h1>{{ coach.name }}</h1>
+  {% for athlete in coach.athlete_set.all %}
+    <p class="{% cycle 'odd' 'even' %}">{{ athlete.name }}</p>
+  {% endfor %}
+  {% resetcycle %}
+{% endfor %}
+
+###
+{% for item in list %}
+  <p class="{% cycle 'odd' 'even' as stripe %} {% cycle 'major' 'minor' 'minor' 'minor' 'minor' as tick %}">
+    {{ item.data }}
+  </p>
+  {% ifchanged item.category %}
+    <h1>{{ item.category }}</h1>
+    {% if not forloop.first %}{% resetcycle tick %}{% endif %}
+  {% endifchanged %}
+{% endfor %}
+
+##########
