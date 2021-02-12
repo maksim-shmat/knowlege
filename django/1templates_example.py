@@ -187,4 +187,23 @@ of code like:
   There is a point at {{ x }}, {{ y }}
 {% endfor %}
 
+########## template for ... empty
+<ul>
+{% for athlete in athlete_list %}
+  <li>{{ athlete.name }}</li>
+{% empty %}
+  <li>Sorry, no athletes in this list.</li>
+{% endfor %}
+</ul>
+
+###
+<ul>
+  {% if athlete_list %}
+    {% for athlete in athlete_list %}
+      <li>{{ athlete.name }}</li>
+    {% else %}
+      <li>Sorry,no athletes in this list.</li>
+    {% endif %}
+</ul>
+
 ##########
