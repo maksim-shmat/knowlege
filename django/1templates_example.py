@@ -206,4 +206,30 @@ of code like:
     {% endif %}
 </ul>
 
-##########
+########## templates ifchanged
+<h1>Archive for {{ year }}</h1>
+
+{% for date in days %}
+  {% ifchanged %}<h3>{{ date|date:"F" }}</h3>{% endifchanged %}
+  <a href="{{ date|date:"M/d"|lower }}/">{{ date|date:"j" }}</a>
+
+###
+{% for date in days %}
+  {% ifchanged date.date %} {{ date.date }} {% endifchanged %}
+  {% ifchanged date.hour date.date %}
+    {{ date.hour }}
+  {% endifchanged %}
+{% endfor %}
+
+###
+{% for match in matches %}
+  <div style="background-color:
+    {% ifchanged match.ballot_id %}
+      {% cycle "red" "blue" %{
+    {% else %}
+      gray
+    {% endifchanged %}
+  ">{{ match }}</div>
+{% endfor %}
+
+###########
