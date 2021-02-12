@@ -232,4 +232,32 @@ of code like:
   ">{{ match }}</div>
 {% endfor %}
 
+########### template regroup
+{% regroup cities by country as country_list %}
+<ul>
+{% for country in country_list %}
+  <li>{{ country.grouper }}
+  <ul>
+    {% for city in country.list %}
+      <li>{{ city.name }}: {{ city.population }}</li>
+    {% endfor %}
+  </ul>
+  </li>
+{% endfor %}
+</ul>
+
+###
+{% regroup cities by country as country_list %}
+<ul>
+{% for country, local_cities in country_list %}
+  <li>{{ country }}
+  <ul>
+    {% for city in local_cities %}
+      <li>{{ city.name }}: {{ city.population }}</li>
+    {% endfor %}
+  </ul>
+  </li>
+{% endfor %}
+</ul>
+
 ###########
