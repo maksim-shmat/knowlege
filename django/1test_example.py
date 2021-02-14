@@ -695,4 +695,82 @@ class ContextTest(unittest.TestCase):
             'update': 'value',
         })
 
-###########
+########### registered isolation model
+from django.apps.registry
+import Apps
+from django.db import models
+from django.test import SimpleTestCase
+
+
+class TestModelDefinition(SimpleTestCase):
+    def test_model_definition(self):
+        test_apps = Apps(['app_label'])
+
+
+        class TestModel(models.Model):
+
+            class Meta:
+                apps = test_apps
+                ...
+### tests/app_label/tests.py
+from django.db import models
+from django.test import SimpleTestCase
+from django.test.utils import isolate_apps
+
+
+class  TestModelDefinition(SimpleTestCase):
+    @isolate_apps('app_label', 'other_app_label')
+    def test_model_definition(self):
+        # This model automatically receives app_label='app_label'
+
+        class TestModel(models.Model):
+            pass
+
+        class OtherAppModel(models.Model):
+            
+            class Meta:
+                app_label = 'other_app_label'
+        ...
+
+### decorator with clases
+from django.db import models
+from django.test import SimpleTestCase
+from django.test.utils import isolate_apps
+
+@isolate_apps('app_label')
+class TestModelDefinition(SimpleTestCase):
+    def test_model_definition(self):
+        
+        class TestModel(models.Model):
+            pass
+        ...
+
+### attr_name
+from django.db import models
+from django.test import SimpleTestCase
+from django.test.utils import isolate_apps
+
+@isolate_apps('app_label', attr_name='apps')
+class TestModelDefinition(SimpleTestCase):
+    def test_model_definition(self):
+
+        class TestModel(models.Model):
+            pass
+        self.assertIs(self.apps.get_model('app_label', 'TestModel'),
+                TestModel)
+
+### kwargs_name
+from django.db import models
+from django.test import SimpleTestCase
+from django.test.utils import isolate_apps
+
+class TestModelDefinition(SimpleTestCase):
+    @isolate_apps('app_label', kwarg_name='apps')
+    def test_model_definition(self, apps):
+
+        class TestModel(models.Model):
+            pass
+        self.assertIs(apps.get_model('app_label', 'TestModel'),
+                TestModel)
+
+#############
