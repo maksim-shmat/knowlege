@@ -883,5 +883,19 @@ def test_invalid_form(self):
     form = WhatheverForm(data=data)
     self.assertFalse(form.is_valid())
 
-##########
+########## testing the API
+# pip install lxml
+# pip install defusedxml
+from tastypie.test import ResourceTestCase
 
+class EntryResourceTest(ResourceTestCase):
+
+    def test_get_api_json(self):
+        resp = self.api_client.get('/api/whatever/', format='json')
+        self.assertValidJSONResponse(resp)
+
+    def test_get_api_xml(self):
+        resp = self.api_client.get('/api/whatever/', format='xml')
+        self.assertValidXMLResponse(resp)
+
+############
