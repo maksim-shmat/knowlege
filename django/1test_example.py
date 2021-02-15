@@ -898,4 +898,23 @@ class EntryResourceTest(ResourceTestCase):
         resp = self.api_client.get('/api/whatever/', format='xml')
         self.assertValidXMLResponse(resp)
 
-############
+############ pip install model_mommy
+class Whatever(models.Model):
+    title = models.CharField(max_length=200)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.title
+
+###
+from model_mommy import mommy
+
+class WhateverTestMommy(TestCase):
+
+    def test_whatever_creation_mommy(self):
+        what = mommy.make(Whatever)
+        self.assertTrue(isinstance(what, Whatever))
+        self.assertEqual(what.__unicode__(), what.title)
+
+##########
