@@ -917,4 +917,66 @@ class WhateverTestMommy(TestCase):
         self.assertTrue(isinstance(what, Whatever))
         self.assertEqual(what.__unicode__(), what.title)
 
-##########
+########## python manage.py startapp whatevs
+# add Installed_Apps to the settings.py
+from django.db import models
+from django.contrib.auth.models import User
+from django.contrib import admin
+
+class Forum(models.Model):
+    title = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.title
+
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    created = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(User, blank=True, null=True)
+    forum = models.ForeignKey(Forum)
+    body = models.TextField(max_length=10000)
+
+    def __unicode__(self):
+        return unicode(self.creator) + " - " + self.title
+
+### whatevs/models: 87%
+from django.db import models
+from django.contrib.auth.models import User
+from django.contrib import admin
+
+class Forum(models.Model):
+    title = models.CharField(max_length=100)
+
+    def __unicode__(self):
+        return self.title
+
+class Post(models.Model):
+    title = models.CharField(max_length=100)
+    created = models.DateTimeField(auto_now_add=True)
+    creator = models.ForeignKey(User, blank=True, null=True)
+    forum = models.ForeignKey(Forum)
+    body = models.TextField(max_length=10000)
+
+    def __unicode__(self):
+        return unicode(self.creator) + " - " + self.title
+
+### add test
+from model_mommy import mommy
+from django.test import TestCase
+from whatevs.models import Forum, Thread
+
+class WhateverTestMommy(TestCase):
+
+    def test_forum_creation_mommy(self):
+        new_forum = mommy.make('whtevs.Forum')
+        new_thread = mommy.make('whatevs.Thread')
+        self.assertTrue(isinstance(new_forum, Forum))
+        self.assertTrue(isinstance(new_thread, Thread))
+        self.assettEqual(new_forum.__unicode__(), new_forum.title)
+        self.assertEqual(
+                new_thread.__unicode__(),
+                (str(new_thread.forum) + " - " + str(new_thread.title)))
+
+### coverage run manage.py test whatevs -v 2
+# coverage html
+
