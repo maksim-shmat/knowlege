@@ -870,5 +870,18 @@ if __name__ == '__main__':
 
 #pip install selenium
 
-###########
+########### testing Forms
+def test_valid_form(self):
+    w = Whathever.objects.create(title='Foo', body='Bar')
+    data = {'title': w.title, 'body': w.body,}
+    form = WhatheverForm(data=data)
+    self.assertTrue(form.is_valid())
+
+def test_invalid_form(self):
+    w = Whathever.objects.create(title='Foo', body='')
+    data = {'title': w.title, 'body': w.body,}
+    form = WhatheverForm(data=data)
+    self.assertFalse(form.is_valid())
+
+##########
 
