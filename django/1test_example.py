@@ -773,4 +773,38 @@ class TestModelDefinition(SimpleTestCase):
         self.assertIs(apps.get_model('app_label', 'TestModel'),
                 TestModel)
 
-#############
+############# pip install coverage
+$ coverage run manage.py test whathever -v 2
+#shell
+$ coverage html
+# testing models
+from django.db import models
+
+class Whatever(models.Model):
+    title = models.CharField(max_length=200)
+    body = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __unicode__(self):
+        return self.title
+
+### tests.py
+from django.test import TestCase
+from whatever.models import Whatever
+from django.utils import timezone
+from django.core.urlresolvers import reverse
+from whatever.forms import WhateverForm
+
+# models test
+class WhateverTest(TestCase):
+
+    def create_whatever(self, title="only a test", body="yes, this is only a test"):
+        return Whatever.objects.create(title=title, body=body, created_at=timezone.now())
+
+    def test_whatever_creation(self):
+        w = self.create_whatever()
+        self.assertTrue(isinstance(w, Whatever))
+        self.assertEqual(w.__unicode__(), w.title)
+
+#########
+
