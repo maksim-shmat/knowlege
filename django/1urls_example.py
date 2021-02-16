@@ -250,5 +250,12 @@ urlpatterns = [
         url(r'^$', TemplateView.as_view(template_name='homepage.html')),
 ]
 
-##########
+### template homepage.html
+<html>
+  <body>
+    <h4>Home page for Django</h4>
+  </body>
+</html
+
+############
 
