@@ -61,4 +61,42 @@ def receipt_json(request):
 
     return JsonResponse(results)
 
+### receipts/admin.py
+from django.contrib import admin
+from receipts.models import Receipt, Item
+
+@admin.register(Receipt)
+class ReceiptAdmin(admin.ModelAdmin):
+    pass
+
+@admin.register(Item)
+class ItemAdmin(admin.ModelAdmin):
+    pass
+
+### receipts/urls.py
+from django.urls import path
+from receipts import views
+
+urlpatterns = [
+        path("receipt_json/", views.receipt_json),
+]
+
+### run ./manage.py makemigrations receipts
+$ curl -sS http://127.0.0.1:8000/receipts/receipt_json/ | python3.8 -m json.tool
+
+### receipts/testing.py
+from decimal import Decimal
+from django.test import TestCase
+from receipts.models import Receipt
+
+class ReceiptTest(TestCase):
+    fixtures = ["receipts.json", ]
+
+    def test_receipt(self):
+        receipt = Reseipt.objects.get(id=1)
+        total = receipt.total()
+
+        expected = Decimal("37.55")
+        self.assertEqual(expected, total)
+
 ###
