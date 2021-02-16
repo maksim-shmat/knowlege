@@ -240,5 +240,15 @@ polls_patterns = ([
 urlpatterns = [
         path('polls/', include(polls_patterns)),
 ]
+########## django.url for home page to template
+from django.conf.urls import url
+from django.contrib import admin
+from django.views.generic import TemplateView
+
+urlpatterns = [
+        url(r'^admin/', admin.site.urls),
+        url(r'^$', TemplateView.as_view(template_name='homepage.html')),
+]
+
 ##########
 
