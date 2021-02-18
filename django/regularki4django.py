@@ -30,4 +30,37 @@ url(r'^stores/[\w]+/',...)  Word characters or dash  Matches: http://127.0.0.1/s
 
 url(r'^state/[A-Z]{2}/',...)  Two uppercase letters  Matches: http://127.0.0.1/CA/  Doesn`t match: http://127.0.0.1/Ca/
 
+### django url parameter definition for access in templates
+urlpatterns = [
+        url(r'^drinks/(?P<drink_name>/D+)/', TemplateView.as_view(template_name='drinks/index.
+        html')),
+]
 
+####### add extra options in the url
+url(r'^drinks/(?P<drink_name>/D+)', TemplateView.as_view(template_name='drinks/index.html'), {'onsale': True}),
+
+####### django url parameter definition for access in view methods in
+# main urls.py file
+# project main urls.py
+from coffeehouse.stores import views as stores_views
+
+urlpatterns = patterns[
+        url(r'^stores/(?P<store_id>\d+)/',stores_views.detail),
+]
+
+###### django view method in views.py to access url parameter
+from django.shortcuts import render
+
+def detail(request,store_id):
+    # Access store_id with 'store_id' variable
+    return render(request, 'stores/detail.html')
+
+###### django url with optional parameters leveraging the same view method
+from coffeehouse.stores import views as stores_views
+
+urlpatterns = patterns[
+        url(r'^stores/',stores_views.detail),
+        url(r'^stores/(?P<store_id>\d+)/',stores_views.detail),
+]
+
+###
