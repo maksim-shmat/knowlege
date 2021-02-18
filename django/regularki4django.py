@@ -70,4 +70,23 @@ def detail(request,store_id='1'):
     # Access store_id with 'store_id' variable
     return render(request,'stores/detail.html')
 
-######
+# extra options from url definition
+def detail(request,store_id='1',location=None):
+###
+url(r'^stores/',stores_view.detail,{'location': 'headquarters'})
+
+###### django.view method extracting url parameters with request.GET
+from django.shortcuts import render
+
+def detail(request,store_id='1',location=None):
+    # Access store_id param with 'store_id' variable and location param
+    # with 'location' variable
+    # Extract 'hours' or 'map' value appended to url as
+    # ?hours=sunday&map=flash
+    hours = request.GET.get('hours', '')
+    map = request.GET.get('map', '')
+    # 'hours' has value 'sunday' or '' if hours not in url
+    # 'map' has value 'flash' or '' if map not in url
+    return render(request, 'stores/detail.html')
+
+#######
