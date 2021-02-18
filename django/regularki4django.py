@@ -277,4 +277,35 @@ def method(request):
 <a href="{% url 'tea-banners:indes' %}">Tea banners</a>
 <a href="{% url 'food-banners:index' %}">Food banners</a>
 
-######
+###### django redirect that leverages app_name to determine url
+# Main urls.py
+from django.conf.urls import include, url
+
+urlpatterns = [
+        url(r'^$',TemplateView.as_view(template_name='homepage.html'),name="homepage"),
+        url(r'^coffeebanners/',include('coffeehouse.banners.urls',namespace="coffee-banners")),
+        url(r'^teabanners/',include('coffeehouse.banners.urls',namespace="tea-banners")),
+        url(r'^foodbanners/',include('coffeehouse.banners.urls',namespace="food-banners")),
+]
+
+# Banners urls.py
+from django.conf.urls import url
+from . import views
+
+app_name = 'banners_adverts'
+urlpatterns = [
+        url(r'^$',views.index,name="index"),
+]
+
+# Logic inside Banners app
+from django.http import HttpResponsePermanentRedirect
+from django.core.urlresolvers import reverse
+
+def method(request):
+    ...
+    try:
+        ...
+    except:
+        return HttpResponsePermanentRedirect(reverse('banners_adverts:index'))
+
+##########
