@@ -177,4 +177,41 @@ def method(request):
 
 <a href="{% url 'drink' 'latte' %}">Drink on sale</a>
 
+###### django urls.py with namespace attribute
+# Main urls.py
+from django.conf.urls import include, url
+
+urlpatterns = [
+        url(r'^$',TemplateView.as_view(template_name='homepage.html'),name="homepage"),
+        url(r'^about/',include('coffeehouse.about.urls',namespace="about")),
+        url(r'^stores/',include('coffeehouse.stores.urls',namespace="stores")),
+]
+
+# About urls.py
+from . import views
+
+urlpatterns = [
+        url(r'^$',views.index,name="index"),
+        url(r'^contact/$',views.contact,name="contact"),
+]
+
+# Stores urls.py
+from . import views
+
+urlpatterns = [
+        url(r'^$',views.index,name="index"),
+        url(r'^(?P<store_id>\d+)/$',views.detail,name="detail"),
+)
+
+# definition in view method
+from django.http import HttpResponsePernamnentRedirect
+from django.core.urlresolvers import reverse
+
+def method(request):
+    ...
+    return HttpResponsePermanentRedirect(reverse('about:index'))
+
+# definition in template
+<a href="{% url 'stores:index' %}">Back to stores index</a>
+
 ######
