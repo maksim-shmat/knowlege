@@ -214,4 +214,33 @@ def method(request):
 # definition in template
 <a href="{% url 'stores:index' %}">Back to stores index</a>
 
-######
+###### django urls.py with nested namespace attribute
+# Main urls.py
+from django.conf.urls import include, url
+from django.views.generic import  TemplateView
+
+urlpatterns = [
+        url(r'^$',TemplateView.as_view(template_name='homepage.html'),name="homepage"),
+        url(r'^(?P<store_id>\d+)/$', views.detail,name="detail"),
+        url(r'^(?P<store_id>\d+)/about/',include('coffeehouse.about.urls',namespace="about")),
+]
+# About urls.py
+from . import views
+
+urlpatterns = [
+        url(r'^$',views.index,name="index"),
+        url(r'^contact/$',views.contact,name="contact"),
+]
+
+# definition in view method
+from django.http import HttpResponsePermanentRedirect
+from django.core.urlresolvers import reverse
+
+def method(request):
+    ...
+    return HttpResponsePermanentRedirect(reverse('stores:about:index', args=(store.id,)))
+
+# definition in template
+<a href="{% url 'stores:about:index' store.id %}">See about for {{store.name}}</a>
+
+#########
