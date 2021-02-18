@@ -145,4 +145,36 @@ urlpatterns = [
         url(r'^stores/',include(store_patterns),{'location':'headquarters'}),
 ]
 
+###### django url using name
+# definition in urls.py
+url(r'^$', TemplateView.as_view(template_name='homepage.html'),name="homepage")
+
+# definition in view method
+from django.http import HttpResponsePermanentRedirect
+from django.core.urlresolvers import reverse
+
+def method(request):
+    ...
+    return HttpResponsePermanentRedirect(reverse('homepage'))
+
+# definition in template
+<a href="{% url 'homepage' %}">Back to home page</a>
+
+### django url with arguments using name
+# definition in urls.py
+url(r'^drinks/(?P<drink_name>\D+)/',TemplateView.as_view(template_name='drinks/index.html'),name="drink"),
+
+# definition in view method
+from django.http import HttpResponsePermanentRedirect
+from django.core.urlresolvers import reverse
+
+def method(request):
+    ...
+    return HttpResponsePermanentRedirect(reverse('drink', args=(drink.name,)))
+
+# definition in template
+<a href="{% url 'drink' drink.name %}">Drink in sale</a>
+
+<a href="{% url 'drink' 'latte' %}">Drink on sale</a>
+
 ######
