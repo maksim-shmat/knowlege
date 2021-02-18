@@ -113,4 +113,36 @@ urlpatterns = [
         url(r'^stores/',include('coffeehouse.stores.urls'),{'location':'headquarters'}),
 ]
 
-#######
+####### django /coffeehouse/about/urls.py loaded via include
+from django.conf.urls import url
+from . import views
+
+urlpatterns = [
+        url(r'^$',views.index),
+        url(r'^contact/$',views.contact),
+]
+
+### django urls.py with inline include statements
+from django.conf.urls import include, url
+from django.views.generic import TemplateView
+
+from coffeehouse.about import views as about_views
+from coffeehouse.stores import views as stores_views
+
+store_patterns = [
+        url(r'^$',stores_views.index),
+        url(r'^(?P<store_id>\d+)/$',stores_views.detail),
+]
+
+about_patterns = [
+        url(r'^$',about_views.index),
+        url(r'^contact/$',about_views.contact),
+]
+
+urlpatterns = [
+        url(r'^$',TemplateView.as_view(template_name='homepage.html')),
+        url(r'^about/',include(about_patterns)),
+        url(r'^stores/',include(store_patterns),{'location':'headquarters'}),
+]
+
+######
