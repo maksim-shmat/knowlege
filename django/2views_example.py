@@ -132,4 +132,13 @@ MESSAGE_LEVEL = message_constants.DEBUG
 from django.contrib.messages import constants as message_constants
 MESSAGE_LEVEL = message_constants.WARNING
 
-######
+###### set default Django message level on a request basis
+# Reduce threshold to DEBUG level per request
+from django.contrib import messages
+messages.set_level(request, messages.DEBUG)
+
+# Increase threshold to WARNING level per request
+from django.contrib import messages
+messages.set_level(request, messages.WARNING)
+
+#########
