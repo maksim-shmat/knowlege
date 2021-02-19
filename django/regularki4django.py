@@ -308,4 +308,8 @@ def method(request):
     except:
         return HttpResponsePermanentRedirect(reverse('banners_adverts:index'))
 
+########## django template link that leverages app_name to determine url
+# template banners/index.html
+<a href="{% url 'banners_adverts:index' %}">{^ url'banners_adverts:index' %}</a>
+
 ##########
