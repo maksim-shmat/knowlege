@@ -67,4 +67,16 @@ def perission_denied(request):
     values_for_template = {}
     return render(request, '403.html', values_for_template, status=403)
 
+###### HttpResponse with template and custom CSV file download
+from django.http import HttpRespnse
+from django.utils import timezone
+from django.template import loader, Context
+
+response = HttpResponse(content_type='text/csv')
+response['Content-Disposition'] = 'attachment; filename=Users_%s.csv' %(timezone.now().today())
+t = loader.get_template('dashboard/users_csvexport.html')
+c = Context({'users': sorted_user,})
+response.write(t.render(c))
+return response
+
 ######
