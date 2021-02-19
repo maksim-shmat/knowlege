@@ -44,4 +44,27 @@ return render(request, 'custom/internalerror.html',status=500)
 # NOTE: Django has a built-in shortcut JSON response, described in the next section
 return render(request, 'stores/menu.json', values_for_template, content_type='application/json')
 
+###### custom views to override built-in HTTP view method
+from django.shortcuts import render
+
+def page_not_found(request):
+    # Dict to pass to template, data could come from DB query
+    values_for_template = {}
+    return render(request, '404.html', values_for_template, status=404)
+
+def server_error(request):
+    # Dict to pass to template, data could come from DB query
+    values_for_template = {}
+    return render(request, '500.html', values_for_template, status=500)
+
+def bad_request(request):
+    # Dict to pass to template, data could come from DB query
+    values_fot_template = {}
+    return render(request, '400.html', values_for_template, status=400)
+
+def perission_denied(request):
+    # Dict to pass to template, data could come from DB query
+    values_for_template = {}
+    return render(request, '403.html', values_for_template, status=403)
+
 ######
