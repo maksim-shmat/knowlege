@@ -26,4 +26,22 @@ def detail(request, store_id='1', location=None):
     c = Context(values_for_template)
     return response.write(t.render(c))
 
+###### HTTP content-type and HTTP status for view method responses
+from django.shortcuts import render
+# No method body(s) and only render() example provided for simplicity
+# Returns content type text/plain, with default HTTP 200
+return render(request, 'stores/menu.csv', values_for_template, content_type='text/plain')
+
+# Return HTTP 404, with detault text/html
+# NOTE: Django has a built-in shortcut & template 404 response, described in the next section
+return render(request, 'custom/notfound.html', status=404)
+
+# Return HTTP 500, with default text/html
+# NOTE: Django has a built-in shortcut & template 500 response, described in the next section
+return render(request, 'custom/internalerror.html',status=500)
+
+# Return content type application/json, with default HTTP 200
+# NOTE: Django has a built-in shortcut JSON response, described in the next section
+return render(request, 'stores/menu.json', values_for_template, content_type='application/json')
+
 ######
