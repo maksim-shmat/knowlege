@@ -150,4 +150,17 @@ messages.add_message(request, messages.INFO, 'All items on this page have free s
 # Shortcut level method, with fail_silently=True
 messages.info(request, 'All items on this page have free shipping.',fail_silently=True)
 
-########
+######## boilerplate code to use template for flash msg
+{% if messages %}
+<ul class="messages">
+  {% for msg in messages %}
+  <li>
+    <div class="alert alert-{{msg.level_tag}}" rele="alert">
+    {{msg.message}}
+    </div>
+  </li>
+  {% endfor %}
+</ul>
+{% endif %}
+
+#########
