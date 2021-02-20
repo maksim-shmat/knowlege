@@ -141,4 +141,13 @@ messages.set_level(request, messages.DEBUG)
 from django.contrib import messages
 messages.set_level(request, messages.WARNING)
 
-#########
+######### use of the fail_silently=True attribute to ignore errors
+from django.contrib import messages
+
+# Generic add_message method, with fail_silently=True
+messages.add_message(request, messages.INFO, 'All items on this page have free shipping.',fail_silently=True)
+
+# Shortcut level method, with fail_silently=True
+messages.info(request, 'All items on this page have free shipping.',fail_silently=True)
+
+########
