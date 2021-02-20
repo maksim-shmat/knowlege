@@ -163,4 +163,11 @@ messages.info(request, 'All items on this page have free shipping.',fail_silentl
 </ul>
 {% endif %}
 
+######### use the get_messages() method to access falash messages
+from django.contrib import messages
+
+the_req_messages = messages.get_messages(request)
+for msg in the_req_messages:
+    do_something_with_the_flash_message(msg)
+
 #########
