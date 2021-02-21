@@ -250,6 +250,22 @@ def coffee(value,arg="muted"):
     '''Defaults to CSS class 'muted' from Bootstrap'''
     return '<span class="%s">%s</span>' % (arg,value)
 
-#########
+######### django custom filter that detects autoescape setting
+from django import template
+from django.utils.html import escape
+from django.utils.safestring import mark_safe
+
+register = template.Library()
+
+@register.filter(needs_autoescape=True)
+def smartcoffee(value, autoescape=True):
+    '''Returns input wrapped in HTML tags'''
+    '''and also detects surrounding autoescape on filter (if any) and escapes '''
+    if autoescape:
+        value = escape(value)
+    result = '<b>%s</b>' % value
+    return mark_safe(result)
+
+########
 
 
