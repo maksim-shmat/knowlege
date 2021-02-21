@@ -26,4 +26,20 @@ TEMPLATES = [
         },
 ]
 
-###########
+########### jinja disable auto-escaping in django
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.jinja2.Jinja2',
+            'DIRS': ['%s/jinjatemplates/'% (PROJECT_DIR),],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'autoescape': False
+            },
+        }
+]
+
+########
