@@ -223,4 +223,33 @@ def onsale(request):
     sale_items = {'Monday': 'Mocha 2x1', 'Tuesday': 'Latte 2x1'}
     return {'SALE_ITEMS': sale_items}
 
+### template context processor definition in context_processors in OPTIONS of TEMPLATES
+'OPTIONS': {
+        'context_processors': [
+            'coffeehouse.stores.processors.onsale',
+            'django.template.context_processors.debug',
+            'django.template.context_processors.request',
+            'django.contrib.auth.context_processors.auth',
+            'django.contrib.messages.context_processors.messages',
+        ],
+}
+
+######## django custom filter with no arguments
+from django import template
+register = template.Library()
+
+@register.filter()
+def boldcoffee(value):
+    '''Returns input wrapped in HTML tags'''
+    return '<b>%s</b>' % value
+
+### django custom filter with arguments
+@register.filter()
+def coffee(value,arg="muted"):
+    '''Returns input wrapped in HTML tags with a CSS class'''
+    '''Defaults to CSS class 'muted' from Bootstrap'''
+    return '<span class="%s">%s</span>' % (arg,value)
+
 #########
+
+
