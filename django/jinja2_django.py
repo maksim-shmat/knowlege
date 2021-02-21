@@ -42,4 +42,22 @@ TEMPLATES = [
         }
 ]
 
+######## generate error for invalid variables in Jinja with jinja2.StructUndefined
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+import jinja2
+
+TEMPLATES = [
+        {
+            'BACKEND':'django.template.backends.jinja2.Jinja2',
+            'DIRS': ['%s/jinjatemplates/'% (PROJECT_DIR),],
+            'APP_DIRS': True,
+            'OPTIONS':{
+                'undefined':jinja2.StrictUndefined
+            },
+        }
+]
+
 ########
