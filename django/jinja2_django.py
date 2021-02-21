@@ -69,4 +69,8 @@ TEMPLATES = [
     <meta name="description" content="{% block metadescription %}{%endblock metadescription %}">
     <meta name="keywords" content="{% block metakeywords %}{% endblock metakeywords %}">
 
-##########
+########## jinja template with {% extends %} and {% block %} tag
+{% if user %}{% extends "base.html" %}{% else %}{% extends "signup_base.html" %}{% endif %}
+{% block title %}Coffeehouse home page{% endblock %}
+
+#########
