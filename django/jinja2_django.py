@@ -73,4 +73,16 @@ TEMPLATES = [
 {% if user %}{% extends "base.html" %}{% else %}{% extends "signup_base.html" %}{% endif %}
 {% block title %}Coffeehouse home page{% endblock %}
 
+######### jinja templates use of super() with reusable templates
+# base.html template
+<p>{% block breadcrumb %}Home{% endblock %}</p>
+
+# index.html template
+{% extends "base.html" %}
+{% block breadcrumb %}Main{% endblock %}
+
+# detail.html template
+{% extends "index.html" %}
+{% block breadcrumb %} {{super()}} : Detail {% endblock %}
+
 #########
