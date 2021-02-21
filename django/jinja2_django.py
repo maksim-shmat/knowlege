@@ -60,4 +60,13 @@ TEMPLATES = [
         }
 ]
 
-########
+######## jinja template with {% block %} tags
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>{% block title %}Default title{% endblock title %}</title>
+    <meta name="description" content="{% block metadescription %}{%endblock metadescription %}">
+    <meta name="keywords" content="{% block metakeywords %}{% endblock metakeywords %}">
+
+##########
