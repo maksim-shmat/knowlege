@@ -85,4 +85,58 @@ TEMPLATES = [
 {% extends "index.html" %}
 {% block breadcrumb %} {{super()}} : Detail {% endblock %}
 
-#########
+######### jinja {% macro %} definition and use of {% import %}
+# base.html template
+{% macro coffeestore(name, id='', address='', city='San Diego', state='CA', email=None) %}
+  <a in="{{id}}"></a>
+  <h4>{{name}}</h4>
+  <p>{{address}} {{city}},{{state}}</p>
+  {% if email %}<p><a href='mailto:{{email}}'>{{email}}</a></p>{% endif %}{% endmacro %}
+
+# index.html template calls inherited macro directly
+{% extends "base.html" %}
+{{coffeestore('Downtown',1,'Horton Plaza','San Diego','CA','downtown@coffeehouse.com')}}
+
+# detail.html template with no extends, uses {% import %} to access macroin base.html
+{% import 'base.html' as base %}
+{{base.coffeestore('Downtown',1,'Horton Plaza','San Diego','CA','downtown@coffeehouse.com')}}
+
+# otherdetail.html template with no extends, uses {% from import %} to access macro in base.html
+{% from 'base.html' import coffeestore as mycoffeestoremacro %}
+{{mycoffeestoremacro('Downtown',1,'Horton Plaza','San Diego','CA', 'downtown@coffeehouse.com')}}
+
+########## jinja {% call %}and{% macro %} use
+# macro definition
+{% macro contentlist(adcolumn_with=3,contentcolumn_with=6) %}
+  <div class="col-md-{{adcolumn_width}}">
+    Sidebar ads
+  </div>
+  <div class="col-md-{{contentcolumn_width}}">
+    {{ caller() }}
+  </div>
+  <div class="col-md-{{adcolumn_width}}">
+    Sidebar ads
+  </div>
+{% endmacro %}
+
+# macro call/invocation
+{% call contentlist() %}
+  <ul>
+    <li>This is my list</li>
+  </ul>
+{% endcall %}
+
+# rendering
+<div class="col-md-3">
+  Sidebar ads
+</div>
+<div class="col-md-6">
+  <ul>
+    <li>This is my list</li>
+  </ul>
+</div>
+<div class="col-md-3">
+  Sidebar ads
+</div>
+
+##############
