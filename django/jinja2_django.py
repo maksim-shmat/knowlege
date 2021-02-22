@@ -410,4 +410,32 @@ Coffeehouse
 started as a
 small store
 
-##########
+########## django xmlattr filter
+# Variable definition
+{% set stores = [
+    {'id': 123, 'name': 'Downtown', 'street': '385 Main Street', 'city': 'San Diego'},
+    {'id': 243, 'name': 'Uptown', 'street': '231 Highland Avenue', 'city': 'San Diego'},
+    {'id': 357, 'name': 'Midtown', 'street': '85 Balboa Street', 'city': 'San Diego'},
+    {'id': 478, 'name': 'Downtown', 'street': '639 Spring Street', 'city': 'Los Angeles'},
+    {'id': 529, 'name': 'Midtown', 'street': '1407 Broadway Street', 'city': 'Los Angeles'},
+    {'id': 653, 'name': 'Downtown', 'street': '50 1st Street', 'city': 'San Francisco'},
+] %}
+
+# Template definition
+<ul>
+{% for store in stores %}
+  <li {{ {'id':'%d'|format(store.id),'class':'%s'|format(store.city|lower|replace(' ','-'))}|xmlattr }}> {{store.city}} {{store.name}}</li>
+{% endfor %}
+</ul>
+
+# Output
+<ul>
+  <li id="123" class="san-diego"> San Diego Downtown</li>
+  <li id="243" class="san-diego"> San Diego Uptown</li>
+  <li id="357" class="san-diego"> San Diego Midtown</li>
+  <li id="478" class="los-angeles"> Los Angeles Downtown</li>
+  <li id="529" class="los-angeles"> Los Angeles Midtown</li>
+  <li id="653" class="san-francisco"> San Francisco Downtown</li>
+</ul>
+
+###########
