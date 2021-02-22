@@ -352,4 +352,50 @@ User: username / alias
   variable is not definde
 {% endif %}
 
+########### jinja groupby filter
+# Dictionary definition
+stores = [
+        {'name': 'Downtown', 'street': '385 Main Street', 'city': 'San Diego'},
+        {'name': 'Uptown', 'street': '231 Highland Avenue', 'city': 'San Diego'},
+        {'name': 'Midtown', 'street': '85 Balboa Street', 'city': 'San Diego'},
+        {'name': 'Downtown', 'street': '1407 Broadway Street', 'city': 'Los Angeles'},
+        {'name': 'Downtown', 'street': '50 1st Street', 'city': 'San Francisco'},
+]
+
+<ul>
+{% for group in stores|groupby('city') %}
+  <li>{{ group.grouper }}
+  <ul>
+    {% for item in group.list %}
+      <li>{{ item.name }}: {{ itme.street }}</li>
+    {% endfor %}
+  </ul>
+  </li>
+{% endfor % }
+</ul>
+
+# Output
+Los Angeles
+  Downtown: 639 Spring Street
+  Midtown: 1407 Broadway Street
+San Diego
+  Downtown: 385 Main Street
+  Uptown: 231 Highland Avenue
+  Midtown: 85 Balboa Street
+San Francisco
+  Downtown: 50 1st Street
+
+# Alternate shortcut syntax, produces same output
+<ul>
+{% for grouper, list in stores|groupby('city') %}
+  <li>{{ grouper }}
+  <ul>
+    {% for item in list %}
+      <li>{{ item.name }}: {{ item.street }}</li>
+    {% endfor %}
+  </ul>
+  </li>
+{% endfor %}
+</ul>
+
 ###########
