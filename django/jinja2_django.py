@@ -278,4 +278,26 @@ espresso
   <li class="white">Othe item 2</li>
 </ul>
 
-##########
+########## jinja joiner function
+{% set slash_joiner = joiner("/ ") %}
+
+User: {% if username %} {{ slash_joiner() }}
+  {{username}}
+{% endif %}
+{% if alias %} {{ slash_joiner() }}
+  {{alias}}
+{% endif %}
+{% if nickname %} {{ slach_joiner() }}
+  {{nickname}}
+{% endif %}
+
+# Output
+# If all variables are defined
+User: username / alias / nickname
+# If only nickname is defined
+User: nickname
+# If only username and alias is defined
+User: username / alias
+# Etc, the joiner function avoids any unnecessary preceding slash because it doesn't print anything the first time its called
+
+########
