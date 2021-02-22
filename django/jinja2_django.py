@@ -455,4 +455,16 @@ def startswithvowel(value):
     else:
         return False
 
-############
+############ custom jinja environment with custom filters and tests
+from jinja2.environment import Environment
+from coffeehouse.jinja.filters import customcoffee, squarerootintext, strtswithvowel
+
+class JinjaEnvironment(Environment):
+    def __init__(self, **kwargs):
+        super(JinjaEnvironment, self).__init__(**kwargs)
+        self.filters['customcoffee'] = customcoffee
+        self.filters['squarerootintext'] = squarerootintext
+        self.filters['startswithvowel'] = startswithvowel
+        self.tests['startswithvowel'] = startwithvowel
+
+###########
