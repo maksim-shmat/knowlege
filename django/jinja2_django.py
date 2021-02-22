@@ -139,4 +139,55 @@ TEMPLATES = [
   Sidebar ads
 </div>
 
-##############
+############## jinja {% call %} and {% macro %} recursive calls
+# macro definition
+{% macro contentlist(itemlist,adcolumn_width=3,contentcolumn_width=6) %}
+  <div class="col-md-{{adcolumn_width}}">
+    Sidebar ads
+  </div>
+  <div class="col-md={{contentcolumn_width}}">
+    {% for item in itemlist %}
+      {{ caller(item) }}
+    {% endfor %}
+  </div>
+  <div class="col-md-{{adcolumn_width}}">
+    Sidebar ads
+  </div>
+{% endmacro %}
+
+# variable definition
+{% set coffeestores=[{'id':0,'name':'Corporate','address':'624 Broadway','city':'San Diego','state':'CA','email':'corporate@coffeehouse.com'},{'id':1,'name':'Downtown','address':'Horton Plaza','city':'San Diego','state':'CA','email':'downtown@coffeehouse.com'},{'id':2,'name':'Uptown','address':'1240 University Ave','city':'San Diego','state':'CA','email':'uptown@coffeehouse.com'},{'id':3,'name':'Midtown','address':'784 W Washington St','city':'San Diego','state':'CA','email':'midtown@coffeehouse.com'}] %}
+
+# macro call/invocation
+{% call(item) contentlist(coffeestores) %}
+  <a id="{{item.id}}"></a>
+  <h4>{{item.name}}</h4>
+  <p>{{item.address}} {{item.city}},{{item.state}}</p>
+  {% if item.email %}<p><a href='mailto:{{item.email}}'>{{item.email}}</a></p>{% endif %}
+{% endcall %}
+
+# rendering
+<div class="col-md-3">
+  Sidebar ads
+</div>
+<div class="col-md-6">
+  <a id="O"></a>
+  <h4>Corporate</h4>
+  <p>624 Broadway San Diego,CA</p>
+  <p><a href="mailto:corporate@coffeehouse.com">corporate@coffeehouse.com</a></p>
+
+  <a id="1"></a>
+  <h4>Downtown</h4>
+  <p>Horton Plaza San Diego,CA</p>
+  <p><a href="mailto:downtown@coffeehouse.com">downtown@coffeehouse.com</a></p>
+
+  <a id="2"></a>
+  <h4>Midtown</h4>
+  <p>784 W Washington St San Diego,CA</p>
+  <p><a href="mailto:midtown@coffeehouse.com">midtown@coffeeouse.com</a></p>
+</div>
+<div class="col-md-3">
+  Sidebar ads
+</div>
+
+############
