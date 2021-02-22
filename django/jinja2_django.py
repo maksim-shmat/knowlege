@@ -345,4 +345,11 @@ User: username / alias
 
 <div>  {% if drinks_on_sale %} Drinks on sale! {% endif %}
 
-##########
+########## jinja defined test
+{% if variable is defined %}
+  value of variable: {{ variable }}
+{% else %}
+  variable is not definde
+{% endif %}
+
+###########
