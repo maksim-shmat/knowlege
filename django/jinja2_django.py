@@ -224,4 +224,36 @@ TEMPLATES = [
 {% endfor %}
 </ul>
 
-###
+########## jinja {% for %} statement with recursive keyword
+# Dictionary definition
+coffees={
+        'espresso':{'nothing else': 'Espresso',
+                    'water': 'Americano',
+                    'steamed milk': {'more steamed milk than milk foam':'Latte',
+                                     'chocolate syrup': {'Whipped cream': 'Mocha'}
+                    },
+                    'more milk foam steamed milk': 'Capuccino'
+                    }
+        }
+
+# Template definition with for and recursive
+{% for ingredient,result in coffees.iteritems() recursive %}
+  <li>{{ ingredient }}
+  {% if result is mapping %}
+    <ul>{{ loop(result.iteritems()) }}</ul>
+  {% else %}
+    YOU GET: {{ result }}
+  {% endif %}</li>
+{% endfor %}
+
+# Output
+espresso
+  water YOU GET: Americano
+  steamed milk
+    more steamed milk than milk foam YOU GET: Latte
+    chocolate syrup
+      Whipped cream YOU GET: Mocha
+  more milk foam than steamed milk YOU GET: Capuccino
+  nothing else YOU GET: Espresso
+
+#############
