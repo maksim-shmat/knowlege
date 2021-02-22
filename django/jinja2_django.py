@@ -256,4 +256,26 @@ espresso
   more milk foam than steamed milk YOU GET: Capuccino
   nothing else YOU GET: Espresso
 
-#############
+############# jinja cycler function
+{% set row_class = cycler('white', 'lightgrey','grey') %}
+
+<ul>
+{% for item in items %}
+  <li class="{{ row_class.next() }}">{{ item }}</li>
+{% endfor %}
+{% for otheritem in moreitems %}
+  <li class="{{ row_class.next() }}">{{ otheritem }}</li>
+{% endfor %}
+
+# Output
+<ul>
+  <li class="white">Item 1</li>
+  <li class="lightgrey">Item 2</li>
+  <li class="grey">Item 3</li>
+  <li class="white">Item 4</li>
+  <li class="lightgrey">Item 5</li>
+  <li class="grey">Other item 1</li>
+  <li class="white">Othe item 2</li>
+</ul>
+
+##########
