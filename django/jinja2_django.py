@@ -213,4 +213,15 @@ TEMPLATES = [
             },
 ]
 
-#########
+######### define a reference variable with {% set %} before entering the
+# child loop to gain access to the parent loop
+<ul>
+{% for chapter in chapters %}
+  {% set chapterloop = loop %}
+  {% for section in chapter %}
+    <li>"{{ chapterloop.index }}.{{ loop.index }}">{{ section }}</li>
+  {% endfor %}
+{% endfor %}
+</ul>
+
+###
