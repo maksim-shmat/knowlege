@@ -300,4 +300,49 @@ User: nickname
 User: username / alias
 # Etc, the joiner function avoids any unnecessary preceding slash because it doesn't print anything the first time its called
 
-########
+######## spacing and special characters
+# default space rendering in jinja template
+<div>
+  {% for drink in drinks %}
+    {{drink}}
+  {% endfor %}
+</div>
+
+<div>  {% if drinks_on_sale %} Drinks on sale! {% endif %}
+
+### space rendering in jinja template with single -
+<div>
+  {% for drink in drinks -%}
+    {{drinks}}
+</div>
+
+<div>  {% if drinks_on_sale -%} Drinks on sale! {% endif %}
+
+### space rendering in jinja template with double -
+<div>
+  {% for drink in drinks -%}
+    {{drink}}
+  {%- endfor %}
+</div>
+
+<div>  {% if drinks_on_sale -%} Drinks on sale! {%- endif %}
+
+### space rendering in jinja template with trim_blocks
+<div>
+  {% for drink in drinks %}
+    {{drink}}
+  {% endfor %}
+</div>
+
+<div>  {% if drinks_on_sale %} Drinks on sale! {% endif %}
+
+### space rendering in jinja template with both trim_blocks and lstrip_blocks set to True
+<div>
+  {% for drink in drinks %}
+    {{drink}}
+  {% endfor %}
+</div>
+
+<div>  {% if drinks_on_sale %} Drinks on sale! {% endif %}
+
+##########
