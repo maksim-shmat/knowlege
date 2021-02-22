@@ -201,4 +201,16 @@ class JinjaEnvironment(Environment):
         self.globals['static'] = staticfiles_storage.url
         self.globals['reverse'] = reverse
 
-##########
+########## configure custom jinja env in django settings.py
+TEMPLATES = [
+        {
+            'BACKEND':'django.template.backends.jinja2.Jinja2',
+            'DIRS': ['%s/templates/'% (PROJECT_DIR),],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'environment': 'coffeehouse.jinja.env.JinjaEnvironment'
+                }
+            },
+]
+
+#########
