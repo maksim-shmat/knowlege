@@ -398,4 +398,16 @@ San Francisco
 {% endfor %}
 </ul>
 
-###########
+########### jinja wordwrap filter
+# Variable definition
+Coffeehouse started as a smaoo store
+
+# Template definition with wordwrap filter for every 12 characters
+{{variable|wordwrap(12)}}
+
+# Output
+Coffeehouse
+started as a
+small store
+
+##########
