@@ -294,5 +294,17 @@ def client_ip_view(request):
     }, [ip_address_processor])
     return HttpResponse(template.render(context))
 
-##########
+########## django {% static %} tag to reference static resources
+{% load static %}
+
+# For static resource at about/img/logo.png
+<img src="{% static 'about/img/logo.gif' %}">
+
+# For static resource at bootstrap/bootstrap.css
+<link href="{% static 'bootstrap/bootstrap.css' %}" rel="stylesheet">
+
+# For static resource at jquery/jquery.min.js
+<script src="{% static 'jquery/jquery.min.js' %}"></script>
+
+########
 
