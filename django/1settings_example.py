@@ -238,3 +238,19 @@ if DJANGO_HOST == 'production':
 else:
     # No cache for all other hosts
     pass
+
+######## python configparser sample file production.cfg
+[general]
+DEBUG: false
+STATIC_URL: http://static.coffeehouse.com/
+
+[databases]
+NAME: housecoffee
+ENGINE: django.db.backends.mysql
+USER: coffee
+PASSWORD: secretpass
+
+[securirty]
+SECRET_KEY: %%ea)cjy@v9(7!b(20gl+4-6iur28dyb=tciuou00ye9wr
+
+#########
