@@ -467,4 +467,32 @@ class JinjaEnvironment(Environment):
         self.filters['startswithvowel'] = startswithvowel
         self.tests['startswithvowel'] = startwithvowel
 
-###########
+########### configure custom jinja environment in Django settings.py
+TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.jinja2.Jinja2',
+            'DIRS': ['%s/templates/'% (PROJECT_DIR),],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'environment': 'coffeehouse.jinja.env.JinjaEnvironment'
+                }
+            },
+]
+
+######### jinja extension configuration in Django
+TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.jinja2.Jinja2',
+            'DIRS': ['%s/templates/'% (PROJECT_DIR),],
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'extensions': [
+                    'jinja2.ext.loopcontrols',
+                    'jdj_tags.extensions.DjangoCompat',
+                    'coffeehouse.jinja.extensions.DjangoNow',
+                    ],
+            }
+        }
+]
+
+##########
