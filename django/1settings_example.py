@@ -162,4 +162,17 @@ TEMPLATES = [
 }
 ]
 
+######### django settings.py with dynamically determined absolute path
+import os
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Other configuration variables omitted for brevity
+TEMPLATES = [
+{
+'BACKEND': 'django.template.backends.django.DjangoTemplates',
+'DIRS': ['%s/templates/'% (PROJECT_DIR),],
+}
+]
+
 #########
