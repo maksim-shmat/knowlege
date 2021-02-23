@@ -525,4 +525,13 @@ class DjangoNow(Extension):
         else:
             return nodes.Output([call], lineno=lineno)
 
-###########
+########### custom jinja environvent with policies
+from jinja2.environment import Environment
+from coffeehouse.jinja.filters import customcoffee, squarerootintext, startswithvowel
+
+class JinjaEnvironvent(Environment):
+    def __init__(self, **kwargs):
+        super(JinjaEnvironment, self).__init__(**kwargs)
+        self.policies['truncate.leeway'] = 0
+
+##########
