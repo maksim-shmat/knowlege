@@ -253,4 +253,43 @@ PASSWORD: secretpass
 [securirty]
 SECRET_KEY: %%ea)cjy@v9(7!b(20gl+4-6iur28dyb=tciuou00ye9wr
 
-#########
+######### django settings.py with configparser import
+import os
+
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROJECT_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Access configparser to load variable values
+from django.utils.six.moves import configparser
+config = configparser.SafeConfigParser(allow_no_value=True)
+
+# Import socket to read host name
+import socket
+
+# If the host name starts with 'live', load configparser from "production.cfg"
+if socket.gethostname().startswith('live'):
+    config.read('%s/production.cfg' % (PROJECT_DIR))
+
+# Else if host name starts with 'test', load configparser from "testing.cfg"
+elif socket.gethostname().startswith('test'):
+    config.read('%s/testing.cfg' % (PROJECT_DIR))
+
+else:
+# If host doesn't match, assume it's a development server, load configparser from "development.cfg"
+    config.read('%s/development.cfg' % (PROJECT_DIR))
+
+DEBUG = config.get('general', 'DEBUG')
+STATIC_URL = config.get('general', 'STATIC_URL')
+
+DATABASES = {
+    'default': {
+        'NAME': config.get('databases', 'NAME'),
+        'ENGINE': config.get('databases', 'ENGINE'),
+        'USER': config.get('databases', 'USER'),
+        'PASSWORD': config.get('databases', 'PASSWORD')
+    }
+}
+
+SECRET_KEY = config.get('security', 'SECRET_KEY')
+
+############
