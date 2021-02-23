@@ -292,4 +292,22 @@ DATABASES = {
 
 SECRET_KEY = config.get('security', 'SECRET_KEY')
 
-############
+############ override DJANGO_SETTINGS_MODULE to load application variables
+# from a file called testing.py and not the default settings.py
+$ export DJANGO_SETTINGS_MODULE=coffeehouse.load_testing
+$ python manage.py runserver
+Validation models...
+
+0 errors found
+Django version 1.11, using settings 'coffeehouse.load_testing'
+Development server is running at http://127.0.0.1:8000/
+Quit the server with CONTROL-C
+############ Django STATICFILES_DIR definition with namespaces in settings.py
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+STATICFILES_DIRS = ('%s/website-static-default/'% (BASE_DIR),
+                   ('bootstrap', '%s/bootstrap-3.1.1-dist/'% (BASE_DIR)),
+                   ('jquery', '%s/jquery-1-11-1-dist/'% (BASE_DIR)),
+                   ('jquery-ui', '%s/jquery-ui-1.10.4/'% (BASE_DIR)),)
+
+###########
