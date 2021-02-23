@@ -150,4 +150,16 @@ LANGUAGES = [
         ('en', _('English')),
 ]
 
+######### django settings.py with absolute path values
+# Other configuration variables omitted for brevity
+STATIC_ROOT = '/www/STORE/coffeestatic/'
+
+# Other configuration variables omitted for brevity
+TEMPLATES = [
+{
+'BACKEND': 'django.template.backends.django.DjangoTemplates',
+'DIRS': ['/www/STORE/coffeehouse/templates/',],
+}
+]
+
 #########
