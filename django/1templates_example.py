@@ -306,5 +306,27 @@ def client_ip_view(request):
 # For static resource at jquery/jquery.min.js
 <script src="{% static 'jquery/jquery.min.js' %}"></script>
 
-########
+######## django collectstatic command to copy all static resources
+[user@coffeehouse ~]$ python manage.py collectstatic
 
+You have requested to collect static files at the destination
+location as specified in your settings:
+
+    /www/STORE/coffeestatic
+
+This will overwrite existing files!
+Are you sure you want to do this?
+
+Type 'yes' to continue, or 'no' to cancel: yes
+yes
+Copying '/www/STORE/website-static-default/sitemap.xml'
+Copying '/www/STORE/website-static-default/robots.txt'
+Copying '/www/STORE/website-static-default/favicon.ico'
+...
+...
+...
+Copying '/www/STORE/coffeehouse/about/static/css/custom.css'
+
+732 static files copied to '/www/STORE/coffeestatic'.
+
+#############
