@@ -55,4 +55,13 @@ msg = EmailMultiAlternatives(subject=subject, body=text_content, from_email=from
 msg.attach_alternative(html_content, "text/html")
 msg.send()
 
-##############
+############## send HTML emails with EmailMessage class
+subject, from_email, to = 'Important support message', 'support@coffeehouse.com', 'ceo@coffeehouse.com'
+html_content = '
+This is an important message.
+'
+msg = EmailMessage(subject=subject, body=html_content, from_email=from_email, to=[to])
+msg.content_subtype = "html" # Main content is now text/html
+msg.send()
+
+############
