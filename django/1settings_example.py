@@ -365,4 +365,17 @@ EMAIL_HOST_USER='username@gmail.com/OR/username@coffeehouse.com'
 EMAIL_HOST_PASSWORD='password'
 EMAIL_USE_TLS=True
 
-###########
+########### django email configuration for Amazon.com SES
+EMAIL_BACKEND = 'django_ses.SESBackend'
+AWS_ACCESS_KEY_ID = '***************'
+AWS_SECRET_ACCESS_KEY = '***********************'
+
+########## django email configuration for SparkPost
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBacken'
+EMAIL_HOST = 'smtp.sparkpostmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'SMTP_Injection'
+EMAIL_HOST_PASSWORD = '<sparkpost_api_key>'
+EMAIL_USE_TLS = True
+
+#########
