@@ -357,4 +357,12 @@ LOGGING = {
         }
     }
 
-##########
+########## django email conf for Gmail or Google Apps account
+EMAIL_BACKENG='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.gmail.com'
+EMAIL_PORT=587
+EMAIL_HOST_USER='username@gmail.com/OR/username@coffeehouse.com'
+EMAIL_HOST_PASSWORD='password'
+EMAIL_USE_TLS=True
+
+###########
