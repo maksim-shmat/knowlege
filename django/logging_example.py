@@ -120,4 +120,27 @@ LOGGING = {
             }
     }
 
-############
+############ django project configuration to communicate with Sentry via Raven
+INSALLED_APPS = [
+        ...
+        'raven.contrib.django.raven_compat',
+        ...
+]
+
+RAVEN_CONFIG = {
+        'dsn': '<your_dsn_value>@sentry.io/<your_dsn_value>',
+}
+
+########### django logging handler for Sentry/Raven
+LOGGING = {
+        ...
+        'handlers': {
+            ...
+            'sentry': {
+                'level': 'ERROR',
+                'class': 'raven.contrib.django.handlers.SentryHandler',
+            },
+            ...
+    }
+
+###########
