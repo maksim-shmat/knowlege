@@ -43,4 +43,16 @@ connection.send_messages([email, email2])
 # We need to manually close the connection.
 connection.close()
 
-############
+############ send HTML(w/text) emsil with EmailMiltiAlternatives, a subclass of the EmailMessage class
+from django.core.mail import EmailMultiAlternatives
+
+subject, from_email, to = 'Important support message', 'support@coffeehouse.com', 'ceo@coffeehouse.com'
+text_content = 'This is an important message.'
+html_content ='
+This is an important message.
+'
+msg = EmailMultiAlternatives(subject=subject, body=text_content, from_email=from_email, to=[to])
+msg.attach_alternative(html_content, "text/html")
+msg.send()
+
+##############
