@@ -444,4 +444,23 @@ def contact(request):
 <input type="submit" value="Submit form">
 </form>
 
-#########
+######### django view method that sends and processes Django form
+from django.shortcuts import render
+from django.http import HttpResponseRedirect
+from .forms import ContactForm
+
+def contact(request):
+    if request.method == 'POST':
+        # POST, generate form with data from the request
+        form = ContactForm(request.POST)
+        # check if it's valid:
+        if form.is_valid():
+            # process data, insert into DB, generate email, etc
+            # redirect to a new URL:
+            return HttpResponseRedirect('/about/contact/thankyou')
+        else:
+            # GET, generate blank form
+            form = ContactForm()
+        return render(request, 'about/contact.html',{'form':form})
+
+###########
