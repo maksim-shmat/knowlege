@@ -308,6 +308,22 @@ class Command(BaseCommand):
         #          'verbosity': 1, 'traceback': False, 'no_color': False,
         #          'delete': False}
 
+########## django management automation with call_command()
+from django.core import management
+
+# Option 1, no arguments
+management.call_command('sendtestemails')
+
+# Option 2, no pause to wait for input
+management.call_command('collectstatic', interactive=False)
+
+# Option 3, command input with Command()
+from django.core.management.commands import loaddata
+management.call_command(loaddata.Command(), 'stores', verbosity=0)
+
+# Option 4, positional and named command arguments
+management.call_command('cleanupdatastores', 1, delete=True)
+
 ##########
 
 
