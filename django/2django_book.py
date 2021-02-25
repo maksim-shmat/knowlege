@@ -64,4 +64,21 @@ msg = EmailMessage(subject=subject, body=html_content, from_email=from_email, to
 msg.content_subtype = "html" # Main content is now text/html
 msg.send()
 
-############
+############ send email with PDF attachment with EmailMessage class
+from django.core.mail.message import EmailMessage
+
+# Built message
+email = EmailMessage(subject='Coffeehouse sales report', body='Attached is sales report...', from_email='stores@coffeehouse.com',
+        to=['ceo@coffeehouse.com', 'marketing@coffeehouse.com']
+        headers = {'Replay-To': 'sales@coffeehouse.com'})
+
+# Open PDF file
+attachment = open('SalesReport.pdf', 'rb')
+
+# Attach PDf file
+email.attach('SalesReport.pdf',attachment.read(),'application/pdf')
+
+# Send message with built-in send() method
+email.send()
+
+##########
