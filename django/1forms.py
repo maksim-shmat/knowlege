@@ -434,4 +434,14 @@ def contact(request):
 <tr><th><label for="id_comment">Comment:</label></th><td><textarea cols="40" id="id_comment" required name="comment" row="10">
 </textarea></td></tr>
 
-##########
+########## django form template declaration for functional web form
+<form method="POST">
+  {% csrf_token %}
+
+<table>
+{{form.as_table}}
+</table>
+<input type="submit" value="Submit form">
+</form>
+
+#########
