@@ -324,6 +324,28 @@ management.call_command(loaddata.Command(), 'stores', verbosity=0)
 # Option 4, positional and named command arguments
 management.call_command('cleanupdatastores', 1, delete=True)
 
-##########
+########## django form class with backing processing view method
+from django import forms
+from django.shortcuts import render
+
+class ContactForm(forms.Form):
+    name = form.CharField(required=False)
+    email = forms.EmailField(label='Your email')
+    comment = forms.CharField(widget=forms.Textarea)
+
+def contact(request):
+    if request.method == 'POST':
+        # POST, generate form with data from the request
+        form = ContactForm(request.POST)
+        # Reference is now a bound instance with user data sent in POST
+        # process data, insert into DB, generate email, redirect to a newURL, etc
+    else:
+        # GET, generate blank form
+        form = ContactForm()
+        # Reference is now an unbound (empty) form
+    # Reference form instance (bound/unbound) is sent to template for rendering
+    return render(request,'about/contact.html',{'form':form})
+
+#########
 
 
