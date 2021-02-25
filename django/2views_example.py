@@ -346,6 +346,69 @@ def contact(request):
     # Reference form instance (bound/unbound) is sent to template for rendering
     return render(request,'about/contact.html',{'form':form})
 
-#########
+######### django form instance with initial argument declared in view method
+def contact(request):
+    ...
+    ...
+    else:
+        # GET, generate blank form
+        form = ContactForm(initial={'email':'johndoe@coffeehouse.com','name':'John Doe'})
+        # Form is now initialized for first presentation to display thesevalues
+# Reference form instance (bound/unbound) is sent to template for rendering
+    return render(request, 'about/contact.html',{'form':form})
 
+########## django form fields with initial argument
+from django import forms
 
+class ContactForm(forms.Form):
+    name = form.CharField(required=False,initial='Please provide your name')
+    email = forms.EmailField(label='Your email',initial='We need your email')
+    comment = forms.CharField(widget=forms.Textarea)
+
+def contact(request):
+    ...
+    ...
+    else:
+        # GET, generate blank form
+        form = ContactForm()
+        # Form is now initialized for first presentation and is filled with initial values in form definition
+    # Reference form instance (bound/unbound) is sent to template for rendering
+    return render(request, 'about/contact.html', {'form': form})
+
+######### django form initialized with __init__ method
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(required=False)
+    email = froms.EmailField(label='Your email')
+    comment = forms.CharField(widget=forms.Textarea)
+
+    def __init__(self, *args, **kwargs):
+        # Get 'initial' argument if any
+        initial_arguments = kwargs.get('initial', None)
+        updated_initial = {}
+        if initial_arguments:
+            # We have initial arguments, fetch 'user' placeholder variable if any
+            user = initial_arguments.get('user',None)
+            # Now update the form's initial value if user
+            if user:
+                updated_initial['name'] = getattr(user, 'first_name', None)
+                updated_initial['email'] = getattr(user, 'email', None)
+        # You can also initialize form field with hardcoded values
+        # of perform complex DB logic here to then perform initialization
+        updated_initial['comment'] = 'Please provide a comment'
+        # Finally update the kwargs initial reference
+        kwargs.update(initial=updated_initial)
+        super(ContactForm, self).__init__(*args, **kwargs)
+
+def contact(request):
+    ...
+    ...
+    else:
+        # GET, generate blank form
+        form = ContactForm(initial={'user':request.user,'otherstuff':'othrstuff'})
+        # Form is now initialized via the form's __init__ method
+    # Reference form instance (bound/unbound) is sent to template for rendering
+    return render(request, 'about/contact.html', {'form':form})
+
+##########
