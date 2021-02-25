@@ -284,6 +284,30 @@ class Command(BaseCommand):
             except Exception:
                 raise CommandError('Failed to send test email')
 
+########## django management task class with arguments
+from django.core.management.base import BaseCommand, CommandError
+from django.conf import settings
+
+class Command(BaseCommand):
+    help = 'Clean up stores'
+
+    def add_arguments(self, parser):
+        # Positional argument are standalone name
+        parser.add_argument('store_id')
+
+        # Named (optional) arguments start with --
+        parser.add_argument(
+                '--delete',
+                default=False,
+                help='Delete store instead of cleaning it up',
+        )
+
+    def handle(self, *args, **options):
+        # Access arguments inside **options dictionary
+        # options={'store_id': '1', 'settings': None, 'pythonpath': None,
+        #          'verbosity': 1, 'traceback': False, 'no_color': False,
+        #          'delete': False}
+
 ##########
 
 
