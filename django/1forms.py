@@ -463,4 +463,16 @@ def contact(request):
             form = ContactForm()
         return render(request, 'about/contact.html',{'form':form})
 
+########### django form with automatic ids(default auto_id=True option) and no automatic ids auto_id=False option
+<!-- Option 1, default auto_id=True -->
+<tr><th><label for="id_name">Name:</label></th><td><input id="id_name" name="name" type="text" /></td></tr>
+<tr><th><label for="id_email">Your email:</label></th><td><input id="id_email" name="email" type="email" /></td></tr>
+<tr><th><label for="id_comment">Comment:</label></th><td><textarea cols="40" id="id_comment" name="comment" rows="10">
+</textarea></td></tr>
+
+<!-- Option 2 auto_id=False -->
+<tr><th>Name:</th><td><input name="email" type="email" /></td></tr>
+<tr><th>Comment:</th><td><textarea cols="40" name="comment" rows="10">\r\n</textarea>
+</td></tr>
+
 ###########
