@@ -71,3 +71,22 @@ CSRF следует включить и использовать: будьте �
 Составьте план резервного копирования и восстановления: благодаря Мерфи вы можете
 на случай неизбежного нападения, катастрофы или любого другого простоя.
 Убедитесь, что вы часто делаете резервные копии, чтобы минимизировать потерю данных.
+
+### django view method decorated with @csrf_exempt() to bypass CSRF enforcement
+from django.views.decorators.csrf import csrf_exempt
+
+@csrf_exempt
+def contact(request):
+    # Any POST-processing inside view method
+    # ignores if there is or isn't a CSRF token
+
+### django view method decorated with @csrf_protect() to enforce CSRF when CSRF is disabled at the project level
+from django.views.decorators.csrf import csrf_protect
+
+@csrf_protect
+def contact(request):
+    # Any POST processing inside view method
+    # checks for the presence of a CSRF token
+    # even when CsrfViewMiddleware is removed
+
+###########
