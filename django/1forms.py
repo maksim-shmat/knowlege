@@ -410,4 +410,28 @@ class ContactForm(forms.Form):
             self.add_error('cc_myself', msg)
             slef.add_error('subject', msg)
 
-##############
+############## django form class definition
+# forms.py in app named 'contact'
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(required=False)
+    email = forms.EmailField(label='Your email')
+    comment = forms.CharField(widget=forms.Textarea)
+
+########### django view method that uses a django form
+# views.py in app named 'contact'
+from django.shortcuts import render
+from .forms import ContactForm
+
+def contact(request):
+    form = ContactForm()
+    return render(request, 'about/contact.html',{'form':form})
+
+### django form instance rendered in template as HTML
+<tr><th><label for="id_name">Name:</label></th><td><input id="id_name" name="name" type="text" /></td></tr>
+<tr><th><label for="id_email"><Your email:</label></th><td><input id="id_email" required name="email" type="email" /></td></tr>
+<tr><th><label for="id_comment">Comment:</label></th><td><textarea cols="40" id="id_comment" required name="comment" row="10">
+</textarea></td></tr>
+
+##########
