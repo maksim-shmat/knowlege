@@ -572,4 +572,31 @@ class ContactForm(forms.Form):
             # Name is not in email, raise an error
             raise forms.ValidationError("Please provide an email that contains your name, or viceversa")
 
-##########
+########## django form field error assignment with add_error() in clean() method
+def clean(self):
+    # Call clean() method to ensure base class validation
+    super(ContactForm, self).clean()
+
+    # Get the field values from cleaned_data dict
+    name = self.cleaned_data.get('name','')
+    
+    # Check if the name is part of the email
+    if name.lower() not in email:
+        # Name is not in email, raise an error
+        message = "Please provide an email that contains your name, or viceversa"
+        self.add_error('name', message)
+        self.add_error('email', forms.ValidationError(message))
+        self.add_error(None, message)
+
+########### django form ValidationError instance creation
+from django import forms
+
+# Placed inside def clean_email(self):
+raise forms.ValidationError("Please don't use a hotmail email, we simply don't like it",code='hotmail')
+
+# Placed inside def clean(self):
+raise forms.ValidationError([
+    forms.ValidationError("Please provide an email that matches your name, or viceversa",code='custom'),
+    forms.ValidationError("Please provide your professional email, %(value)s doesn't look professional ",code='required',params={'value':self.cleaned_data.get('email') })
+
+########
