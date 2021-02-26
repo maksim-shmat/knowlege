@@ -509,4 +509,18 @@ def contact(request):
     # Reference form instance (bound/unboun) is sent to template for rendering
     return render(request,'about/contact.html',{'form':form})
 
-##########
+########## django form field validators option with custom validator method for form processing
+from django import forms
+import re
+
+def validate_commit_word_count(value):
+    count = len(value.split())
+    if count < 30:
+        raise forms.ValidationError(('Please provide at least a 30 word message, %(count)s words is not descriptive enough'), params={'count': count},)
+
+class ContactForm(forms.Form):
+    name = forms.CharField(required=False)
+    email = forms.EmailField(label='Your email')
+    comment = forms.CharField(widget=forms.Textarea,validators=[validate_comment_word_count])
+
+###########
