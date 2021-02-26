@@ -670,4 +670,20 @@ raise forms.ValidationError([
   <li><label for="id_comment">Comment:</label> <textarea cols="40" id="id_comment" name="comment" rows="10" required>\r\n</textarea>
 </li>
 
-########
+######## django form {% for %} loop over all fields
+
+{% for field in form %}
+  <div class="row">
+    <div class="col-md-2">
+    {{ field.label_tag }}
+    {% if field.help_text %}
+      <sup>{{ field.help_text }}</sup>
+    {% endif %}
+    {{ field.errors }}
+    </div><div class="col-md-10 pull-left">
+      {{ field }}
+    </div>
+  </div>
+{% endfor %}
+
+#######
