@@ -2,6 +2,7 @@
 
 # Set the fields attribute to the special value '__all__' to indicate that
 # all fields in the model should be used.
+
 from django.forms import ModelForm
 
 class AuthorForm(ModelForm):
@@ -18,7 +19,9 @@ class PartialAuthorForm(ModelForm):
         exlude = ['title']
 
 ###########
+
 # Overriding the default fields
+
 from django.form import ModelForm, Textarea
 from myapp.models import Author
 
@@ -31,6 +34,7 @@ class AuthorForm(ModelForm):
         }
 
 ###
+
 from django.utils.translation import gettext_lazy as _
 
 class AuthorForm(ModelForm):
@@ -49,6 +53,7 @@ class AuthorForm(ModelForm):
             },
         }
 ###
+
 from django.forms import ModelForm
 from myapp.models import Article
 
@@ -60,6 +65,7 @@ class ArticleForm(ModelForm):
                 'slug': MySlugFormField,
         }
 ###
+
 from django.forms import CharField, ModelForm
 from myapp.models import Article
 
@@ -72,6 +78,7 @@ class ArticleForm(ModelForm):
 
 ########
 # Using a custom queryset
+
 from django.forms import modelformset_factory
 from django.shortcuts import render
 from myapp.models import Author
@@ -94,6 +101,7 @@ return render(request, 'manage_authors.html', {'formset': formset})
 ############
 # Basic forms
 # forms.py
+
 from django import forms
 
 class ContactForm(forms.Form):
@@ -105,6 +113,7 @@ class ContactForm(forms.Form):
         pass
 # The view can be constructed using a FormView
 # views.py
+
 from myapp.forms import ContactForm
 from django.views.generic.edit import FormView
 
@@ -120,12 +129,14 @@ class ContactView(FormView):
         return super().form_valid(form)
 
 ########## configuring the rendering of a form's widgets
+
 from django import forms
 
 class MyForm(forms.Form):
     default_renderer = MyRenderer()
 
 ### customizing BoundField
+
 class GPSCoordinatesBoundField(BoundField):
     @property
     def country(self):
@@ -145,6 +156,7 @@ class GPSCoordinatesField(Field):
         return GPSCoordinatesBoundField(form, self, field_name)
 
 ### MultiValueField
+
 from django.core.validators import RegexValidator
 
 class PhoneField(MultiValueField):
@@ -177,6 +189,7 @@ class PhoneField(MultiValueField):
         )
 
 ############## SplitDateTimeField
+
 class FooMultipleChoiceForm(forms.Form):
     foo_select = forms.ModelMultipleChoiceField(queryset=None)
 
@@ -185,6 +198,7 @@ class FooMultipleChoiceForm(forms.Form):
         self.fields['foo_select'].queryset = ...
 
 ### ModelChoiceField
+
 from django.forms import ModelChoiceField
 
 class MyModelChoiceField(ModelChoiceField):
@@ -192,6 +206,7 @@ class MyModelChoiceField(ModelChoiceField):
         return "My Object #%i" % obj.id
 
 ### ModelMultipelChoiceField
+
 from django.db import models
 
 class Topping(models.Model):
@@ -205,6 +220,7 @@ class Pizza(models.Model):
     topping = models.ForeignKey(Topping, on_delete=models.CASCADE)
 
 ###
+
 from django import forms
 
 class ToppingSelect(forms.Select):
@@ -221,6 +237,7 @@ class PizzaForm(forms.ModelForm):
         widgets = {'topping': ToppingSelect}
 
 ############# specifying widgets
+
 from django import forms
 
 class CommentForm(forms.Form):
@@ -249,6 +266,7 @@ class SimpleForm(forms.Form):
     )
 
 ############ styling widget instances
+
 from django import forms
 
 class CommentForm(forms.Form):
@@ -280,6 +298,7 @@ class CommentForm(forms.ModelForm):
 
 ########### MultiWidget
 # decompress(value)
+
 from django.forms import MultiWidget
 
 class SplitDateTimeWidget(MultiWidget):
@@ -324,6 +343,7 @@ class DateSelectorWidget(forms.MultiWidget):
         return '{}-{}-{}'.format(year, month, day)
 
 ########### form field default cleaning
+
 from django import forms
 from django.core.validators import validate_email
 
@@ -351,6 +371,7 @@ class ContactForm(forms.Form):
     cc_myself = forms.BooleanField(required=False)
 
 ############## cleaning a specific field attribute
+
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -367,6 +388,7 @@ class ContactForm(forms.Form):
         return data
 
 ############ cleaning and validating fields that depend on each other
+
 from django import forms
 from django.core.exceptions import ValidationError
 
@@ -412,6 +434,7 @@ class ContactForm(forms.Form):
 
 ############## django form class definition
 # forms.py in app named 'contact'
+
 from django import forms
 
 class ContactForm(forms.Form):
@@ -421,6 +444,7 @@ class ContactForm(forms.Form):
 
 ########### django view method that uses a django form
 # views.py in app named 'contact'
+
 from django.shortcuts import render
 from .forms import ContactForm
 
@@ -435,6 +459,7 @@ def contact(request):
 </textarea></td></tr>
 
 ########## django form template declaration for functional web form
+
 <form method="POST">
   {% csrf_token %}
 
@@ -445,6 +470,7 @@ def contact(request):
 </form>
 
 ######### django view method that sends and processes Django form
+
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .forms import ContactForm
@@ -464,6 +490,7 @@ def contact(request):
         return render(request, 'about/contact.html',{'form':form})
 
 ########### django form with automatic ids(default auto_id=True option) and no automatic ids auto_id=False option
+
 <!-- Option 1, default auto_id=True -->
 <tr><th><label for="id_name">Name:</label></th><td><input id="id_name" name="name" type="text" /></td></tr>
 <tr><th><label for="id_email">Your email:</label></th><td><input id="id_email" name="email" type="email" /></td></tr>
@@ -476,6 +503,7 @@ def contact(request):
 </td></tr>
 
 ###########
+
 class ContactForm(forms.Form):
     name = forms.CharField(required=False)
     email = forms.EmailField(label='Your email')
@@ -483,6 +511,7 @@ class ContactForm(forms.Form):
     field_order = ['email','comment','name'] # Set order email,comment,name
 
 ########### django form is_valid() method for form processing
+
 from django.http import HttpResponseRedirect
 
 def contact(request):
@@ -510,6 +539,7 @@ def contact(request):
     return render(request,'about/contact.html',{'form':form})
 
 ########## django form field validators option with custom validator method for form processing
+
 from django import forms
 import re
 
@@ -524,6 +554,7 @@ class ContactForm(forms.Form):
     comment = forms.CharField(widget=forms.Textarea,validators=[validate_comment_word_count])
 
 ########### django form field validation with clean_<filed>() methods
+
 from django import forms
 
 class ContactForm(forms.Form):
@@ -573,6 +604,7 @@ class ContactForm(forms.Form):
             raise forms.ValidationError("Please provide an email that contains your name, or viceversa")
 
 ########## django form field error assignment with add_error() in clean() method
+
 def clean(self):
     # Call clean() method to ensure base class validation
     super(ContactForm, self).clean()
@@ -589,6 +621,7 @@ def clean(self):
         self.add_error(None, message)
 
 ########### django form ValidationError instance creation
+
 from django import forms
 
 # Placed inside def clean_email(self):
@@ -598,5 +631,43 @@ raise forms.ValidationError("Please don't use a hotmail email, we simply don't l
 raise forms.ValidationError([
     forms.ValidationError("Please provide an email that matches your name, or viceversa",code='custom'),
     forms.ValidationError("Please provide your professional email, %(value)s doesn't look professional ",code='required',params={'value':self.cleaned_data.get('email') })
+
+######## django form  output with form.as_table
+
+<tr>
+  <th><label for="id_name">Name:</label></th>
+  <td><input id="id_name" name="name" type="text" /></td>
+</tr>\n
+<tr>
+  <th><label for="id_email">Your email:</label></th>
+  <td><input id="id_email" name="email" type="email" required/></td>
+</tr>\n
+<tr>
+  <th><label for="id_comment">Comment:</label></th>
+  <td><textarea cols="40" id="id_comment" name="comment" rows="10" required>\r\n</textarea></td>
+</tr>
+
+####### djanago form output with form.as_p
+
+<p>
+  <label for="id_name">Name:</label> <input id="id_name" name="name" type="text" /></p>\n
+</p>
+<p>
+  <label for="id_email">Your email:</label> <input id="id_email" name="email" type="email" required/>
+</p>\n
+<p>
+  <label for="id_comment">Comment:</label> <textarea cols="40" id="id_comment" name="comment" rows="10" required>\r\n</textarea>
+</p>
+
+####### django form output with form.as_ul
+
+<li>
+  <label for="id_name">Name:</label> <input id="id_name" name="name" type="text" />
+</li>\n
+<li>
+  <label for="id_email">Your email:</label> <input id="id_email" name="email" type="email" required/>
+</li>\n
+  <li><label for="id_comment">Comment:</label> <textarea cols="40" id="id_comment" name="comment" rows="10" required>\r\n</textarea>
+</li>
 
 ########
