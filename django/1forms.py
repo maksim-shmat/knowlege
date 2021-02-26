@@ -523,4 +523,32 @@ class ContactForm(forms.Form):
     email = forms.EmailField(label='Your email')
     comment = forms.CharField(widget=forms.Textarea,validators=[validate_comment_word_count])
 
-###########
+########### django form field validation with clean_<filed>() methods
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(required=False)
+    email = forms.EmailField(label='Your email')
+    comment = forms.CharField(widget=forms.Textarea)
+    
+    def clean_name(self):
+        # Get the field value from cleaned_data dict
+        value = self.cleaned_data['name']
+        # Check if the value is all upper case
+        if value.isupper():
+            # Value is all upper case, raise an error
+            raise forms.ValidationError("Please don't use all upper case for your name, use lower case",code='uppercase')
+        # Always return value
+        return value
+
+    def clean_email(self):
+        # Get the field value from cleaned_data dict
+        value = self.cleaned_data['email']
+        # Check if the value end in @hotmail.com
+        if value.endswith('@hotmail.com'):
+            # Value ends in @hotmail.com, raise an error
+            raise forms.ValidationError("Please don't use a hotmail email, we simply don't like it",code='hotmail')
+        # Always return value
+        return value
+
+######
