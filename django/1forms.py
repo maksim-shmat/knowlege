@@ -551,4 +551,25 @@ class ContactForm(forms.Form):
         # Always return value
         return value
 
-######
+###### django form field validation with clean() method
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(required=False)
+    email = forms.EmailField(label='Your email')
+    comment = forms.CharField(widget=forms.Textarea)
+
+    def clean(self):
+        # Call clean() method to ensure base class validation
+        super(ContactForm, self).clean()
+
+        # Get the field values from cleaned_data dict
+        name = self.cleaned_data.get('name','')
+        email = self.cleaned_data.get('email','')
+
+        # Check if the name is part of the email
+        if name.lower() not in email:
+            # Name is not in email, raise an error
+            raise forms.ValidationError("Please provide an email that contains your name, or viceversa")
+
+##########
