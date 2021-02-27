@@ -779,4 +779,28 @@ value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html
 # django/forms/widgets/attrs.html
 {% for name, value in widget.attrs.items %}{% if value is not False %} {{ name }}{% if value is not True %}="{{ value }}"{% endif %}{% endif %}{% endfor %}
 
+###### Django form with field marked as hidden
+
+<form method="POST">
+  {% csrf_token %}
+    <div class="row">
+      <div class="col-md-2">
+        {{ form.comment.label_tag }}
+          {% if form.comment.help_text %}
+          <sup>{{ form.comment.help_text }}</sup>
+          {% endif %}
+          {% for error in form.comment.errors %}
+          <div class="row">
+          <div class="alert alert-danger">{{error}}</div>
+          </div>
+          {% endfor %}
+      </div><div class="col-md-10 pull-left">
+        {{ form.comment }}
+      </div>
+    </div>
+  {{form.name.as_hidden}}
+  {{form.email.as_hidden}}
+<input type="submit" value="Submit form" class="btn btn-primary">
+</form>
+
 ######
