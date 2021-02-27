@@ -858,4 +858,32 @@ $(document).ready(function() {
     });
 </script>
 
+###### Django view method to process Django form via AJAX
+# urls.py (Main)
+
+urlpatterns = [
+        url(r'^stores/',include('coffeehouse.stores.urls',namespace="stores"))
+]
+
+# urls.py (App stores)
+
+urlpatterns = [
+        url(r'^$',views.index,name="index"),
+        url(r'^feedback/$',views.feedback,name="feedback"),
+]
+
+# views.py (App stores)
+
+from django.http import HttpResponse, JsonResponse
+from coffeehouse.about.forms import ContactForm
+
+def feedback(request):
+    if request.POST:
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            return JsonResponse({'success':True})
+        else:
+            return JsonResponse({'error':form.errors})
+    return HttpResponse("Hello from feedback!")
+
 ######
