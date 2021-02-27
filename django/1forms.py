@@ -731,4 +731,24 @@ class ContactForm(forms.Form):
   </div>
 {% endfor %}
 
+###### django form.errors and form.non_field_errors with custom HTML output
+
+<!-- Field errors -->
+  {% if form.errors %}
+    <div class="row">
+      {% for field_with_error,error_message in form.errors.items %}
+        <div class="alert alert-danger">{{field_with_error}} {{error_messages}}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+<!-- Non-field errors -->
+  {% if form.non_field_errors %}
+    <div class="row">
+      {% for error in form.non_field_errors %}
+      <div class="alert alert-danger">{{error}}</div>
+      {% endfor %}
+    </div>
+    {% endif %}
+
 ######
