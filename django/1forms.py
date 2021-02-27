@@ -813,4 +813,49 @@ class ContactCommentOnlyForm(ContactForm):
         del self.fields['name']
         del self.fields['email']
 
+###### JavaScript logic to submit Django form via Ajax
+# NOTE: The following is only the Django (HTML) template with AJAX logic
+# See Listing 6-35 for AJAX processing views.py and urls.py
+<h4>Feedback</h4>
+<div class="row">
+  <div id="feedbackmessage"</div>
+</div>
+<form method="POST" id="feedbackform" action="{% url 'stores:feedback' %}">
+  {% csrf_token %}
+    <div class="row">
+      <div class="col-md-12 pull-left">
+        {{ form.comment }}
+      </div>
+    </div>
+    {{form.name.as_hidden}}
+    {{form.email.as_hidden}}
+<input type="submit" value="Submit feedback" class="btn btn-primary">
+</form>
+
+<script>
+$(document).ready(function() {
+    $("#feedbackform").submit(function(event) {
+        event.preventDefault();
+        $.ajax({ data: $(this).serialize(),
+                 type: $(this).attr('method'),
+                 url: $(this).attr('action'),
+                 success: function(response) {
+                     console.log(response);
+                     if(response['success']) {
+                         $("#feedbackmessage").html("<div class='alert alert-success'>
+                         Successfully sent feedback, thank you!</div>");
+                         $("#feedbackform").addClass("hidden");
+                     }
+                     if (response['error']) {
+                         $("#feedbackmessage").html("<div class='alert alert-danger'>" + response['error']['comment'] +"</div>");
+                     }
+                 },
+                 error: function (request, status, error) {
+                     console.log(request.responseText);
+                 }
+            });
+        });
+    });
+</script>
+
 ######
