@@ -803,4 +803,14 @@ value="{{ widget.value }}"{% endif %}{% include "django/forms/widgets/attrs.html
 <input type="submit" value="Submit form" class="btn btn-primary">
 </form>
 
+###### Django form subclass with removed parent fields
+
+from coffeehouse.about.forms import ContactForm
+
+class ContactCommentOnlyForm(ContactForm):
+    def __init__(self, *args, **kwargs):
+        super(ContactCommentOnlyForm, self).__init__(*args, **kwargs)
+        del self.fields['name']
+        del self.fields['email']
+
 ######
