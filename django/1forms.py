@@ -923,4 +923,29 @@ def index(request):
     <input type="submit" value="Submit photo" class="btn btn-primary">
 </form>
 
+###### Django form file processing with save procedure to MEDIA_ROOT
+# views.py
+
+from django.conf import settings
+
+def save_uploaded_file_to_media_root(f):
+    with open('%s%s' % (settings.MEDIA_ROOT,f.name), 'wb+') as destination:
+        for chunk in f.chunks():
+            destination.write(chunk)
+
+def index(request):
+    if request.methon == 'POST':
+        # POST, generate form with data from the request
+        form = SharingForm(request.POST,request.FILES)
+        # check if it's valid:
+        if form.is_valid():
+            for field in request.FILES.keys():
+                for formfile in request.FILES.getlist(field):
+                    save_uploaded_file_to_media_root(formfile)
+            return HttpResponseRedirect('/about/contact/thankyou')
+    else:
+        # GET, generate blank form
+        form = SharingForm()
+    return render(request,'social/index.html',{'form':form})
+
 ######
