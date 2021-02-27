@@ -886,4 +886,41 @@ def feedback(request):
             return JsonResponse({'error':form.errors})
     return HttpResponse("Hello from feedback!")
 
+###### Django form with file fields, corresponding view method, and template layout
+
+# forms.py
+from django import forms
+
+class SharingForm(forms.Form):
+    # NOTE: forms.PhotoField requieres Python PIL & other operating system libraries,
+    #       so generic FileField is used instead
+    video = forms.FileField()
+    photo = forms.FileField(widget=forms.ClearableFileInput(attrs={'multiple': True}))
+
+# views.py
+
+def index(request):
+    if request.method == 'POST':
+        # POST, generate form with data from the request
+        form = SharingForm(request.POST,request.FILES)
+        # check if it's valid:
+        if form.is_valid():
+            # Process file data in request.FILES
+            # Process data, insert into DB, generate email,etc
+            # redirect to a new URL:
+            return HttpResponseRedirect('/about/contact/thankyou')
+    else:
+        # GET, generate blank form
+        form = SharingForm()
+    return render(request,'social/index.html',{'form':form})
+
+# social/index.html
+<form method="post" enctype="myltipart/form-data">
+  {% csrf_token %}
+  <ul>
+    {{form.as_ul}}
+  </ul>
+    <input type="submit" value="Submit photo" class="btn btn-primary">
+</form>
+
 ######
