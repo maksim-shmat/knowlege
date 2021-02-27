@@ -713,4 +713,22 @@ class ContactForm(forms.Form):
     email = forms.EmailField(label='Your email', widget=forms.TextInput(attrs={'clss': 'myemailclass'}))
     comment = forms.CharField(widget=forms.Textarea)
 
+###### django loop over form.<field_name>.errors
+{% for field in form %}
+  <div class="row">
+    <div class="col-md-2">
+      {{ field.label_tag }}
+        <sup>{{ field.help_text }}</sup>
+        {% endif %}
+        {% for error in field.errors %}
+        <div class="row">
+          <div class="alert alert-danger">{{error}}</div>
+        </div>
+        {% endfor %}
+    </div><div class="col-md-10 pull-left">
+      {{ field }}
+    </div>
+  </div>
+{% endfor %}
+
 ######
