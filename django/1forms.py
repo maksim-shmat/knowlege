@@ -695,7 +695,7 @@ class ContactForm(forms.Form):
     comment = forms.CharField(widget=forms.Textarea)
     field_order = ['email','comment','name']
 
-### ### django form error_css_class and required_css_class fields to apply CSS formating from django import forms
+###### django form error_css_class and required_css_class fields to apply CSS formating from django import forms
 
 class ContactForm(forms.Form):
     name = forms.CharField(required=False)
@@ -704,4 +704,13 @@ class ContactForm(forms.Form):
     error_css_class = 'error'
     required_css_class = 'bold'
 
-### ### 
+###### django form with inline widget definition to add custom CSS class
+
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(required=False)
+    email = forms.EmailField(label='Your email', widget=forms.TextInput(attrs={'clss': 'myemailclass'}))
+    comment = forms.CharField(widget=forms.Textarea)
+
+######
