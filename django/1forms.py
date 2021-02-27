@@ -686,4 +686,13 @@ raise forms.ValidationError([
   </div>
 {% endfor %}
 
-#######
+####### django form field_order option to enforce field order
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(required=False)
+    email = forms.EmailField(label='Your email')
+    comment = forms.CharField(widget=forms.Textarea)
+    field_order = ['email','comment','name']
+
+### ###
