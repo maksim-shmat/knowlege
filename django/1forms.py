@@ -759,4 +759,15 @@ class GenderField(forms.ChoiceField):
         self.error_messages = {"required": "Please select a gender, it's required"}
         self.choices = ((None, 'Select gender'),('M', 'Male'), ('F', 'Female'))
 
+###### django custom form widget inherits behavior from forms.widgets.Input
+
+class PlaceholderInput(forms.widgets.Input):
+    template_name = 'about/placeholder.html'
+    input_type = 'text'
+    def get_context(self, name, value, attrs):
+        context = super(PlaceholderInput, self).get_context(name, value, attrs)
+        context['widget']['attrs']['maxlength'] = 50
+        context['widget']['attrs']['placeholder'] = name.title()
+        return context
+
 ######
