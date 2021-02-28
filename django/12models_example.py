@@ -779,4 +779,21 @@ MyModel(id=1) == MyProxyModel(id=1)
 # Multi-table inheritance
 MyModel(id=1) != MultitableInherited(id=1)
 
-############
+############ django model class definition in models.py
+
+from __future__ import unicode_literals
+from django.utils.encoding import python_2_unicode_compatible
+from django.db import models
+
+@python_2_unicode_compatible
+class Store(models.Model):
+    #id = models.AutoField(primary_key=True)  # Added by default, not required explicitly
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+    #objects = models.Manager()  # Added by default, to required explicitly
+    def __str__(self):
+        return "%s (%s,%s)" % (self.name, self.city, self.state)
+
+######
