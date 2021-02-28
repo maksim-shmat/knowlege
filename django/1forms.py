@@ -1046,4 +1046,20 @@ class BaseDrinkFormSet(BaseFormSet):
                 [name_size[1]],dict(DRINKS)[int(name_size[0])]))
             name_size_tuples.append(name_size)
 
+###### django custom formset to display non_form_errors
+
+<form method="post">
+    {% csrf_token %}
+  {{ formset.management_form }}
+  {% if formset.non_form_errors %}
+    <div class="alert alertdanger">{{formset.non_form_errors}}</div>
+  {% endif %}
+    {{ formset.management_form }}
+  <table>
+    {% for form in formset %}
+    <tr><td<>ul class="list-inline">{{ form.as_ul }}</ul></td></tr>
+    {% endfor %}
+  </table>
+</form>
+
 ######
