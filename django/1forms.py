@@ -948,4 +948,42 @@ def index(request):
         form = SharingForm()
     return render(request,'social/index.html',{'form':form})
 
-######
+###### django formset factory initialization and template layout
+# forms.py
+
+from django import forms
+
+DRINKS = ((None,'Please select a drink type'),(1,'Mocha'),(2,'Espresso'),(3,'Latte'))
+SIZES = ((None,'Please select a drink size'),('s','Small'),('m','Medium'),('l','Large'))
+
+class DrinkForm(forms.Form):
+    name = forms.ChoiceField(choices=DRINKS,initial=0)
+    size = forms.ChoiceField(choices=SIZES,initial=0)
+    amount = forms.ChoiceField(choices=[(None,'Amount of drinks')]+[(i,i) for i in range(1,10)])
+
+# views.py
+
+from django.forms import formset_factory
+
+def index(request):
+    DrinkFormSet = formset_factory(DrinkForm, extra=2, max_num=20)
+    if request.method == 'POST':
+        # TODO
+    else:
+        formset = DrinkFormSet(initial=[{'name':1,'size':'m','amount':1}])
+    return render(request,'online/index.html',{'formset':formset})
+
+# online/index.html
+
+<form method="post">
+    {% csrf_token %}
+  {{ formset.management_form }}
+  <table>
+    {% for form in formset %}
+    <tr><td><ul class="list-inline">{{ form.as_ul }}</ul></td></tr>
+    {% endfor %}
+  </table>
+  <input type="submit" value="Submit order" class="btn btn=primary">
+</form>
+
+########
