@@ -986,4 +986,47 @@ def index(request):
   <input type="submit" value="Submit order" class="btn btn=primary">
 </form>
 
-########
+######## django formset designed to add extra forms by user
+# view.py
+
+def index(request):
+    extra_forms = 2
+    DrinkFormSet = formset_factory(DrinkForm, extra=extra_forms, max_num=20)
+    if request.method == 'POST':
+        if 'additems' in request.POST and request.POST['additems'] == 'true':
+            formset_dictionary_copy = request.POST.copy()
+            formset_dictionary_copy['form-TOTAL_FORMS'] = int(formset_dictionary_copy
+            ['form-TOTAL_FORMS']) + extra_forms
+            formset = DrinkFormSet(formset_dictionary_copy)
+        else:
+            formset = DrinkFormSet(request.POST)
+            if formset.is_valid():
+                return HttpResponseRedirect('/about/contact/thankyou')
+    else:
+        formset = DrinkFormSet(initial=[{'name': 1, 'size': 'm', 'amount': 1}])
+    return render(request, 'online/index.html', {'formset': formset})
+
+# online/index.html
+
+<form method="post">
+    {% csrf_token %}
+  {{ formset.management_form }}
+  <table>
+    {% for form in formset %}
+    <tr><td>{{ form }}</td></tr>
+    {% endfor %}
+  </table>
+  <input type="hidden" value="false" name="additems" id="additems">
+  <button class="btn btn-primary" id="additemsbutton">Add items to order</button>
+  <input type="submit" value="Submit order" class="btn btn-primary">
+</form>
+
+<script>
+$(document).ready(function() {
+    $("#additemsbutton").on('click',function(event) {
+        $("#additems").val("true");
+    });
+});
+</script>
+
+######
