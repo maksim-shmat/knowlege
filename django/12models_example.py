@@ -796,4 +796,15 @@ class Store(models.Model):
     def __str__(self):
         return "%s (%s,%s)" % (self.name, self.city, self.state)
 
+###### django model default option use
+
+def default_city():
+    return "San Diego"
+
+clss Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30,default=default_city)
+    state = models.CharField(max_length=2,default='CA')
+
 ######
