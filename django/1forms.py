@@ -1029,4 +1029,21 @@ $(document).ready(function() {
 });
 </script>
 
+###### Django custom formset with custom validation
+
+from django.forms import BaseFormSet
+
+class BaseDrinkFormSet(BaseFormSet):
+    def clean(self):
+        # Check errors dictionary first, if there are any error, no point in validating further
+        if any(self.errors):
+            return
+        name_size_tuples = []
+        for form in self.forms:
+            name_size = (form.cleaned_data['name'],form.cleaned_data['size'])
+            if name_size in name_size_tuples:
+                raise forms.ValidationError("Ups! You have multiple %s %s items in your order, keep one and increase the amount" % (dict(SIZES)
+                [name_size[1]],dict(DRINKS)[int(name_size[0])]))
+            name_size_tuples.append(name_size)
+
 ######
