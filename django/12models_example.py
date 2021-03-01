@@ -946,4 +946,26 @@ Traceback (most recent call last):
     raise ValidationError(errors)
 ValidationError: {'name': {u'Ensure this value has at most 30 characters (it has 84).']}
 
+###### Django model use of validation clean() method
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30,unique=True)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+    def clean(self):
+        # Don't allow 'San Diego' city entries that have state different than 'CA'
+        it  self.city == 'San Diego' and self.state != 'CA':
+            raise ValidationError('Wait San Diego id CA!, are you sure there is another San Diego in %s ?' % self.state)
+
+# Create a model Store instance, that violates city/state rule
+store_corporate = Store(name='Corporate',address='624 Broadway',city='San Diego',state='AZ',email='corporate@coffeehouse.com')
+
+# To enforce more complex rules call the clean() method implemented on a model
+store_corporate.clean()
+Traceback (most recent call last):
+    raise ValidationError('Wait San Diego is in CA!, are you sure thereis another San Diego
+    in %s ?' % (self.state))
+ValidationError: [u'Wait San Diego is in CA!, are you sure there is another San Diego in AZ ?']
+
 ######
