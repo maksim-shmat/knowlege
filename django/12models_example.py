@@ -927,4 +927,23 @@ class Store(models.Model):
         # Run default save() method
         super(Store,self).save(*args, **kwargs)
 
+###### Django model use of validation clean_field() method
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30,unique=True)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+
+# Create a model Store instance, that violates the max_length rule
+store_corporate = Store(name='This is a very long name for the Corporate store that exceeds the 30 character limit',address='624 Broadway',city='San Diego',state='AZ',email='corporate@coffeehouse.com')
+
+# No error yet
+
+# You could call save() and let the database reject the instance...
+# But you can also validate at the Django/Python level with the clean_fields() method store_corporate.clean_fields()
+Traceback (most recent call last):
+    raise ValidationError(errors)
+ValidationError: {'name': {u'Ensure this value has at most 30 characters (it has 84).']}
+
 ######
