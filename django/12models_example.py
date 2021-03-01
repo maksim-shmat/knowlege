@@ -897,4 +897,21 @@ class Item(models.Model):
     size = models.CharField(choices=ITEM_SIZES,max_length=1)
     calories = models.IntegerField(validators=[calorie_watcher])
 
+###### Django model use of the save() method
+
+# Import Django model class
+from coffeehouse.stores.models import Store
+
+# Create a model Store instance
+store_corporate = Store(name='Corporate',address='624 Broadway',city='San Diego',state='CA',email='corporate@coffeehouse.com')
+
+#Invoke the save() method to create/save the record
+# No record id reference, so a create operation is made and the reference is updated with id store_corporate.save()
+
+# Change field on instance
+store_corporate.city='625 Broadway'
+
+# Invoke the save() method to update/save the record
+# Record has id reference from prior save() call, so operation is update store_corporate.save()
+
 ######
