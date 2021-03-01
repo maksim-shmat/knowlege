@@ -47,4 +47,13 @@ class Store(model.Model):
         latitude, longitude = geocoding_method(self.address, self.city,self.state)
         return latitude, longitude
 
+###### Django default model manager renamed
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+    mgr = models.Manager()
+
 ######
