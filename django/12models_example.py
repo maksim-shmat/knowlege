@@ -779,7 +779,7 @@ MyModel(id=1) == MyProxyModel(id=1)
 # Multi-table inheritance
 MyModel(id=1) != MultitableInherited(id=1)
 
-############ django model class definition in models.py
+############ Django model class definition in models.py
 
 from __future__ import unicode_literals
 from django.utils.encoding import python_2_unicode_compatible
@@ -796,7 +796,7 @@ class Store(models.Model):
     def __str__(self):
         return "%s (%s,%s)" % (self.name, self.city, self.state)
 
-###### django model default option use
+###### Django model default option use
 
 def default_city():
     return "San Diego"
@@ -806,5 +806,37 @@ clss Store(models.Model):
     address = models.CharField(max_length=30)
     city = models.CharField(max_length=30,default=default_city)
     state = models.CharField(max_length=2,default='CA')
+
+###### Django model default options for dates and times, as well as auto_now and auto_now_add use
+
+from datetime import date
+from django.utils import timezone
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    date = models.DateField(default=date.today)
+    datetime = models.DateTimeField(default=timezone.now)
+    date_lastupdated = models.DateField(auto_now=True)
+    date_added = models.DateField(auto_now_add=True)
+    timestamp_lastupdated = models.DateTimeField(auto_now=True)
+    timestamp_added = models.DateTimeField(auto_now_add=True)
+
+###### Django model choices option
+ITEM_SIZES = (
+             ('S','Small'),
+             ('M','Medium'),
+             ('L','Large'),
+             ('P','Portion'),
+             )
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+    size = models.CharField(choices=ITEM_SIZES,max_length=1)
 
 ######
