@@ -839,4 +839,62 @@ class Item(models.Model):
     description = models.CharField(max_length=100)
     size = models.CharField(choices=ITEM_SIZES,max_length=1)
 
+###### Django model help_text option
+
+ITEM_SIZES = (
+             ('S','Small'),
+             ('M','Medium'),
+             ('L','Large'),
+             ('P','Portion'),
+             )
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    discription = models.CharField(max_length=100,help_text="Ensure youprovide some description of the ingredients")
+    size = models.CharField(choices=ITEM_SIZES,max_length=1)
+    calories = models.IntegerField(help_text="Calorie count should reflect <b>size</b> of the item")
+
+###### Django model field validators option with built-in and custom validator
+
+ITEM_SIZES = (
+             ('S','Small'),
+             ('M','Medium'),
+             ('L','Large'),
+             ('P','Portion'),
+             )
+
+# Import built-in validator
+from django.core.validators import MinLengthValidator
+
+# Create custom validator
+from django.core.exceptions import ValidationError
+
+def calorie_watcher(value):
+    if value > 5000:
+        raise ValidationError(
+                ('Whoa! calories are %(value)s ? We try to serve healthy food, try something less than 5000!'),
+                parama={'value': value},
+        )
+    if value < 0:
+        raise ValidationError(
+                ('Strange calories are %(value)s ? This can\'t be, value must be greater than 0'),
+                params={'value': value},
+        )
+
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30,validators=[MinLengthValidator(5)])
+    description = models.CharField(max_length=100)
+    size = models.CharField(choices=ITEM_SIZES,max_length=1)
+    calories = models.IntegerField(validators=[calorie_watcher])
+
 ######
