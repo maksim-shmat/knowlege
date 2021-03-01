@@ -914,4 +914,17 @@ store_corporate.city='625 Broadway'
 # Invoke the save() method to update/save the record
 # Record has id reference from prior save() call, so operation is update store_corporate.save()
 
+###### Django model with custom save() method
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+
+    def save(self, *args, **kwargs):
+        # Do custom logic here (e.g. validation, logging, call third party service)
+        # Run default save() method
+        super(Store,self).save(*args, **kwargs)
+
 ######
