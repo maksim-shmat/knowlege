@@ -34,4 +34,17 @@ store_downtown_fv.validate_unique()
 Traceback (most recent call last):
     ValidationError: {'__all__': [u'Store with this Name and Email already exists.']}
 
+###### Django model with custom method
+
+class Store(model.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+
+    def latitude_longitude(self):
+        # Call remote service to get latitude & longitude
+        latitude, longitude = geocoding_method(self.address, self.city,self.state)
+        return latitude, longitude
+
 ######
