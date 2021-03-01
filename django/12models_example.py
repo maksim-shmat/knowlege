@@ -968,4 +968,28 @@ Traceback (most recent call last):
     in %s ?' % (self.state))
 ValidationError: [u'Wait San Diego is in CA!, are you sure there is another San Diego in AZ ?']
 
+###### Django model use of validation clean_unique() method with uique*field
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30,unique=True)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+
+# Create a model Store instance
+store_corporate = Store(name='Downtown',address='625 Broadway',city='San Diego',state='AZ',email='corporate@coffeehouse.com')
+
+# Save instance
+store_corporate.save()
+
+# Create another instance to violate uniqueness of address field
+store_uptown = Store(name='Uptown', address='624 Broadway', city='San Diego', state='CA')
+
+# You could call save() and let the database reject the instance...
+# But you can also validate at the Django/Python level with the validate_unique() method
+store_uptown.validate_unique()
+Traceback (most recent call last):
+    raise ValidationError(errors)
+ValidationError: {'address': [u'Store with this Address already exists.']}
+
 ######
