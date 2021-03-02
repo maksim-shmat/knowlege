@@ -95,4 +95,20 @@ class Item(models.Model):
     name = models.CharField(max_length=30)
     description = models.CharField(max_length=100)
 
+###### Many to many Django model relationship
+
+from django.db import models
+
+class Amenity(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+    email = models.EmailField()
+    amenities = models.ManyToManyField(Amenity,blank=True)
+
 ######
