@@ -111,4 +111,22 @@ class Store(models.Model):
     email = models.EmailField()
     amenities = models.ManyToManyField(Amenity,blank=True)
 
+###### One to one Django models relationship
+
+from django.db import models
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+    calories = models.IntegerField()
+    price = models.FloatField()
+
+class Drink(models.Model):
+    item = models.OneToField(Item,on_delete=models.CASCADE,primary_key=True)
+    caffeine = models.IntegerField()
+
 ######
