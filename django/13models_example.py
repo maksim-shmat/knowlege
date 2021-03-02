@@ -70,4 +70,29 @@ class Store(models.Model):
                 models.Index(fields=['city'],name='city_idx')
         ]
 
+###### Django model abstract option
+
+from django.db import models
+
+class Item(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+    class Meta:
+        abstract = True
+
+class Drink(Item):
+    mililiters = models.IntegerField()
+
+###### One to many Django model relationship
+
+from django.db import models
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+
 ######
