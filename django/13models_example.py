@@ -56,4 +56,18 @@ class Store(models.Model):
     state = models.CharField(max_length=2)
     mgr = models.Manager()
 
+###### Django model with meta class and index option
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+
+    class Meta:
+        indexes = [
+                models.Index(fields=['city','state']),
+                models.Index(fields=['city'],name='city_idx')
+        ]
+
 ######
