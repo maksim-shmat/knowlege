@@ -260,4 +260,28 @@ class Migration(migrations.Migration):
             migrations.RunPython(load_stores,delete_stores)<
     ]
 
+###### load initial data with SQL script in Django migration file
+
+from __future__ import unicode_literals
+from django.db import models, migrations
+
+def load_stores_from_sql():
+    from coffeehouse.settings import PROJECT_DIR
+    import os
+    sql_statements = open(os.path.join(PROJECT_DIR,'stores/sql/store.sql'), 'r').read()
+    return sql_statements
+
+def delete_stores_with_sql():
+    return 'DELETE from stores_store;'
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+            ('stores', '0001_initial'),
+    ]
+
+    operations = [
+            migrations.RunSQL(load_stores_from_sql(), delete_stores_with_sql()),
+    ]
+
 ######
