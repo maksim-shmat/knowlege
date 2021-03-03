@@ -308,4 +308,36 @@ class Migration(migrations.Migration):
     "pk":1
 }]
 
+###### Load initial data from Django fixture file in Django migration file
+
+from __future__ import unicode_litereals
+from django.db import models, migrations
+
+def load_stores_from_fixture(apps, schema_editor):
+    from django.core.management import call_command
+    call_command("loaddata", "store")
+
+def delete_stores(apps, schema_editor):
+    Store = apps.get_model("stores", "Store")
+    Store.objects.all().delete()
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+            ('stores', '0001_initial'),
+    ]
+
+    operations = [
+            migrations.RunPython(load_stores_from_fixture,delete_stores),
+    ]
+
+###### Basic syntax to listen for Django signals
+
+from django.dispath import receiver
+
+@receiver(<signal_to_listen_for_from_django_core_signals>,sender=<model_class_to_listen_to>)
+def method_with_logic_to_run_when_signal_is_emitted(sender, **kwargs):
+    # Logic when signal is emitted
+    # Access sender & kwargs to get info on medel that emitted signal
+
 ######
