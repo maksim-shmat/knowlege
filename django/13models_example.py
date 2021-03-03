@@ -190,4 +190,26 @@ def detail(request):
     data_operation_3()
     # Commit transaction if all operation successful
 
+###### Transactions with context managers
+
+from django.db import transaction
+
+def login(request):
+    # With AUTO_COMMIT=True and ATOMIC_REQUEST=False
+    # Data operation runs in its own transaction due to AUTO_COMMIT=True
+    data_operation_standalone()
+
+    # Open new transaction with context manager
+    with transaction.atomic():
+        # Start transaction.
+        # Failure of any operation, rollbacks other operations
+
+        data_operation_1()
+        data_operation_2()
+        data_operation_3()
+        # Commit transaction if all operation successful
+
+    # Data operation runs in its own transaction due to AUTO_COMMIT=True
+    data_operation_standalone2()
+
 ######
