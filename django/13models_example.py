@@ -139,4 +139,24 @@ class Category(models.Model):
 class Person(models.Model):
     relatives = models.ManyToManyField('self')
 
+###### One to many Django model relationship with reverse relationship references
+
+from django.db import models
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_lenght=100)
+    price = models.FloatField(blank=True,null=True)
+
+breakfast = Menu.objects.get(name='Breakfast')
+# Direct access
+all_items_with_breakfast_menu = Item.objects.filter(menu=breakfast)
+
+# Reverse access through instance
+same_all_items_with_breakfast_menu = breakfast.item_set.all()
+
 ######
