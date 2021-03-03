@@ -212,4 +212,52 @@ def login(request):
     # Data operation runs in its own transaction due to AUTO_COMMIT=True
     data_operation_standalone2()
 
+###### Load initial data with hard_coded data in Django migration file
+# _*_ coding: utf-8 _*_
+
+from __future__ import unicode_literals
+from django.db import models, migrations
+
+def load_stores(apps, schema_editor):
+    Store = apps.get_model("stores", "Store")
+    store_corporate = Store(id=0,name='Corporate',
+                            address='624 Broadway',
+                            city='San Diego',
+                            state='CA',
+                            email='corporate@coffeehouse.com')
+    stote_corporate.save()
+    store_downtown = Store(id=1,name='Downtown',
+                           address='Horton Plaza',
+                           city='San Diego',
+                           state='CA',
+                           email='downtown@coffeehouse.com')
+    store_downtown.save()
+    store_uptown = Store(id=2,name='Uptown',
+                         address='1240 University Ave',
+                         city='San Diego',
+                         state='CA',
+                         email='midtown@coffeehouse.com')
+    stote_uptown.save()
+    store_midtown = Store(id=3,name='Midtown',
+                          address='784 W Washington St',
+                          city='San Diego',
+                          state='CA',
+                          email='midtown@coffeehouse.com')
+    store_midtown.save()
+
+def delete_stores(apps, schema_editor):
+    Store = apps.get_model("stores", "Store")
+    Store.objects.all().delete()
+
+
+class Migration(migrations.Migration):
+
+    dependencies = [
+            ('stores', '0001_initial'),
+    ]
+
+    operations = [
+            migrations.RunPython(load_stores,delete_stores)<
+    ]
+
 ######
