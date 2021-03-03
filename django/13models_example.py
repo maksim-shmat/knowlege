@@ -159,4 +159,35 @@ all_items_with_breakfast_menu = Item.objects.filter(menu=breakfast)
 # Reverse access through instance
 same_all_items_with_breakfast_menu = breakfast.item_set.all()
 
+### One to many Django model relationship with reverse relationship queries
+# Direct access, Item records with price higher than 1
+Item.objects.filter(price__gt=1)
+
+# Reverse access query, Menu records with Item price higher than 1
+Menu.objects.filter(item__price__gt=1)
+
+###### Selectively activate and deactivate atomic requests with @non_atomic_requests and @ atomic 
+
+from django.db import transaction
+
+# When ATOMIC_REQUESTS=True you can individually disable atomic requests
+@transaction.non_atomic_requests
+def index(request):
+    # Data operations with transactions commit/rollback individually
+    # Failure of one operation does not influence other
+    data_operation_1()
+    data_operation_2()
+    data_operation_3()
+
+# When ATOMIC_REQUESTS=True you can individually disable atomic requests
+
+@transaction.atomic
+def detail(request):
+    # Start transaction.
+    # Failure of any operation, rollbacks other operations
+    data_operation_1()
+    data_operation_2()
+    data_operation_3()
+    # Commit transaction if all operation successful
+
 ######
