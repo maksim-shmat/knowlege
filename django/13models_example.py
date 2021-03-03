@@ -340,4 +340,19 @@ def method_with_logic_to_run_when_signal_is_emitted(sender, **kwargs):
     # Logic when signal is emitted
     # Access sender & kwargs to get info on medel that emitted signal
 
+###### Listen for Django pre_save signal on Item model in signals.py
+
+from django.dispatch import receiver
+from django.db.models.signals import pre_save
+from django.dispatch import receiver
+import logging
+
+stdlogger = logging.getLogger(__name__)
+
+@receiver(pre_save, sender='items.Item')
+def run_before_saving(sender, **kwargs):
+    stdlogger.info("Start pre_save Item in signals.py under items app")
+    stdlogger.info("sender %s" % (sender))
+    stdlogger.indo("kwargs %s" % str(kwargs))
+
 ######
