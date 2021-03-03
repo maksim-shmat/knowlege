@@ -129,4 +129,14 @@ class Drink(models.Model):
     item = models.OneToField(Item,on_delete=models.CASCADE,primary_key=True)
     caffeine = models.IntegerField()
 
+###### One to many Django model relationship with self-referencing model
+
+from django.db import models
+
+class Category(models.Model):
+    menu = models.ForeignKey('self')
+
+class Person(models.Model):
+    relatives = models.ManyToManyField('self')
+
 ######
