@@ -284,4 +284,28 @@ class Migration(migrations.Migration):
             migrations.RunSQL(load_stores_from_sql(), delete_stores_with_sql()),
     ]
 
+###### Django fixture file with JSON structure
+[{
+    "fields": {
+        "city": "San Diego",
+        "state": "CA",
+        "email": "corporate@coffeehouse.com",
+        "name": "Corporate",
+        "address": "624 Broadway"
+    },
+    "model": "stores.store",
+    "pk": 0
+},
+{
+    "fields": {
+        "city": "San Diego",
+        "state": "CA",
+        "email": "downtown@coffeehouse.com",
+        "name": "Downtown",
+        "address": "Horton Plaza"
+    },
+    "model": "stores.store",
+    "pk":1
+}]
+
 ######
