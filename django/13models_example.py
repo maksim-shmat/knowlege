@@ -355,4 +355,24 @@ def run_before_saving(sender, **kwargs):
     stdlogger.info("sender %s" % (sender))
     stdlogger.indo("kwargs %s" % str(kwargs))
 
+###### Emit custom signals in Django Model Signals
+
+from django.dispatch import Signal
+
+order_complete = Signal(providing_args=["customer","barista"])
+
+store_closed = Signal(providing_args=["employee"])
+
+### Django model emitting custom signal
+
+from django.db import models
+from coffeehouse.stores.signals import store_closed
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30,unique=True)
+    ...
+    def closing(self,employee):
+        store_closed.send(sender=self.__class__, employee=employee)
+
 ######
