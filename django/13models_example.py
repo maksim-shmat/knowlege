@@ -518,5 +518,16 @@ from coffeehouse.items.models import Item
 from django.db.models import f
 Item.objects.filter(id=3).update(stock=F('stock') +100)
 
-######
+###### Update or create model record with the update_or_create() method
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+
+values_to_update = {'email': 'downtown@coffeehouse.com'}
+
+# Update  for record with name='Downtown' and city='San Diego' is found, otherwise create record
+obj_store, created = Store.objects.update_or_create(
+        name='Downtown',city='San Diego', defaults=value_to_update)
+
+#######
     
