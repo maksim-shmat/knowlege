@@ -443,5 +443,30 @@ from coffeehouse.stores.models import Store
 store_corporate = Store.objects.create(name='Corporate',address='624 Broadway',city='San Diego',state='CA',email='corporate@coffeehouse') # Ifsuccessful, record reference has id
 store_corporate.id
 
+###### Read model record with get() method
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+
+# Get the store with the name "Downtown" or equivalent SQL: 'SELECT...WHERE
+name = "Downtown"
+downtown_store = Store.objects.get(name="Downtown")
+
+# Define uptown_email for the query
+uptown_email = "uptown@coffeehouse.com"
+# Get the store with the email value uptow_email or equivalent SQL: 'SELECT...WHERE
+email = "uptown@coffeehouse.com"
+uptown_email_store = Store.objects.get(email=uptown_email)
+
+# Once the get() method runs, you can access an object's attributes
+# either in logging statements, functions of templates
+downtown_store.address
+downtown_store.email
+
+# Note you can access the object without attributes.
+# If the Django model has a __str__ method definition, the output is based on this method
+# If the Django model has no __str__ method definition, the output is just <object>
+print(uptown_email_store)
+
 ######
     
