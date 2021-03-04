@@ -491,5 +491,22 @@ try:
     menu_target = Menu(name="Dinner")
     menu_target.save()
 
+###### Update model record with the save() method
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+
+# Get the store with the name "Downtown" or equivalent SQL: 'SELECT...WHERE name = "Downtown"
+
+downtown_store = Store.objects.get(name="Downtown")
+
+# Update the name value
+downtown_store.name = "Downtown (Madison)"
+
+# Call save() with the update_fields arg and a list of record fields to update selectively
+downtown_store.save(update_fields=['nam'])
+
+# Or you can call save() without any argument and all record fields are updated downtown_store.save()
+
 ######
     
