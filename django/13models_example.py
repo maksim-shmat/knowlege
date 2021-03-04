@@ -468,5 +468,28 @@ downtown_store.email
 # If the Django model has no __str__ method definition, the output is just <object>
 print(uptown_email_store)
 
+###### Read or create model record with get_or_create() method
+# Import Django model class
+
+from coffeehouse.items.models import Menu
+
+# Get or create a menu instance with name="Breakfast"
+menu_target, created = Menu.objects.get_or_create(name="Breakfast")
+
+###### Replicate get_or_create() method with explicit try/except block and save method
+
+from django.core.exceptions import ObjectDoesExist
+from coffeehouse.items.models import Menu
+
+try:
+    menu_target = Menu.objects.get(name="Dinner")
+    # If get() throws an error you need to handle it.
+    # You can use either the generic ObjectDoesNotExist or
+    # <model>.DoesNotExist which inherits from
+    # django.core.exceptions.ObjectDoesNotExist, so you can target multiple
+    # DoesNotExist: # or the generic "exception ObjectDoesNotExist:"
+    menu_target = Menu(name="Dinner")
+    menu_target.save()
+
 ######
     
