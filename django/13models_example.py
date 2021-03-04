@@ -529,5 +529,24 @@ values_to_update = {'email': 'downtown@coffeehouse.com'}
 obj_store, created = Store.objects.update_or_create(
         name='Downtown',city='San Diego', defaults=value_to_update)
 
-#######
+####### Update model record from database with the refresh_from_db() method
+
+from coffeehouse.stores.models import Store
+
+store_corporate = Store.objects.get(id=1)
+store_corporate.name = 'Not sure about this name'
+
+# Update from db again
+store_corporate.refresh_from_db() # Model record name now reflects value in database again
+store_corporate.name
+
+# Multiple edits
+store_corporate.name = 'New store name'
+store_corporate.email = 'newemail@coffeehouse.com' store_corporate.address = 'To be confirmed'
+
+# Update from db again, but only address field
+# so store name and email remain with local values
+store_corporate.refresh_from_db(fields=['address'])
+
+######
     
