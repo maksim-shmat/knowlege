@@ -434,5 +434,14 @@ store_corporate.city = 'San Diego'
 store_corporate.save() # If successful, record reference has id
 store_corporate.id
 
+###### Create a single record with create() method
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+
+# Create a model Store instance which is saved automatically
+store_corporate = Store.objects.create(name='Corporate',address='624 Broadway',city='San Diego',state='CA',email='corporate@coffeehouse') # Ifsuccessful, record reference has id
+store_corporate.id
+
 ######
     
