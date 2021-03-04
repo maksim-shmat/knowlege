@@ -421,5 +421,18 @@ def allow_migrate(self, db, app_label, model_name=None, **hints):
     # Otherwise no opinion, defer to other routers or default database
     return None
 
+###### Crate a single record with model save() method
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+
+# Create a model Store instance
+store_corporate = Store(name='Corporate',address='624 Broadway',state='CA',email='corporate@coffeehouse.com')
+# Assign attribute value to instance with Python dotted notation
+store_corporate.city = 'San Diego'
+# Invoke the save() method to create the record
+store_corporate.save() # If successful, record reference has id
+store_corporate.id
+
 ######
     
