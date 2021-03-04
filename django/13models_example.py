@@ -508,5 +508,15 @@ downtown_store.save(update_fields=['nam'])
 
 # Or you can call save() without any argument and all record fields are updated downtown_store.save()
 
+###### Update model record with the update() method
+
+from coffeehouse.stores.models import Store
+
+Store.objects.filter(id=1).update(name="Downtown (Madison)")
+
+from coffeehouse.items.models import Item
+from django.db.models import f
+Item.objects.filter(id=3).update(stock=F('stock') +100)
+
 ######
     
