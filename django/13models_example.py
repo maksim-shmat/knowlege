@@ -583,5 +583,37 @@ store_list = [store_corporate,store_downtown,store_uptown,store_midtown]
 # Call bulk_create to create records in a single call
 Store.objects.bulk_create(store_list)
 
+### Create multiple records with the save() method
+# Loop over each store and invoke save() on each entry # save() method called on each list member to create record
+
+for store in store_list:
+    store.save()
+
+###### Create multiple records with save() method in a single transaction
+# Import Django model and transaction class
+
+from coffeehouse.stores.models import Store
+from django.db import transaction
+
+first_store_list = [store_corporate,store_downtown]
+second_store_list = [store_uptown,store_midtown]
+
+# Trigger atomic transaction so long is executed in a single transaction with transaction.atomic():
+    # Loop over each store and invoke save() on each entry
+    for store in first_store_list:
+        # save() method called on each member to create record
+        store.save()
+
+# Mithod decorated with @transaction.atomic to ensure logic is executed in single transaction
+@transaction.atomic
+def bulk_store_creator(store_list):
+    # Loop over each store and invoke save() on each entry
+    for store in store_list:
+        # save() method called on each member to create record
+        store.save()
+
+# Call bulk_store_creator with Store list
+bulk_store_creator(second_store_list)
+
 ######
     
