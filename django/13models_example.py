@@ -548,5 +548,23 @@ store_corporate.email = 'newemail@coffeehouse.com' store_corporate.address = 'To
 # so store name and email remain with local values
 store_corporate.refresh_from_db(fields=['address'])
 
+###### Delete model record with the delete() method
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+
+# Get the store with the name "Downtown" or equivalent SQL: 'SELECT...WHERE
+name = "Downtown"
+
+downtown_store = Store.objects.get(name="Downtown")
+# Call delete() to delete the record in the database
+downtown_store.delete()
+
+###### Delete model record with the delete() method on query
+
+from coffeehouse.items.models import Menu
+
+Menu.objects.filter(id=1).delete()
+
 ######
     
