@@ -861,4 +861,19 @@ Item.objects.get(name='Whole-Grain Oatmeal').menu.name
 # Get Item elements that belong to the Menu with name 'Drinks'
 Item.objects.filter(menu__name='Drinks')
 
+###### One to many ForeignKey reverse query read operations with _set syntax
+
+from coffeehouse.items.models import Menu, Item
+
+breakfast_menu = Menu.objects.get(name='Breakfast')
+
+# Fetch all Item records for the Menu
+breakfast_menu.item_set.all()
+
+# Get the total Item count for the Menu
+breakfast_menu.item_set.count()
+
+# Fetch Item records that match a filter for the Menu
+breakfast_menu.item_set.filter(name__startswith='Whole')
+
 ######
