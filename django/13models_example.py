@@ -810,4 +810,33 @@ from django.db.models import F
 
 Item.objects.all().update(stock=F('stock') +100)
 
+###### Update multiple records with a Django model with the select_for_update() method
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+from django.db import transaction
+
+# Trigger atomic transaction so loop is executed in a single transaction 
+with transaction.atomic():
+
+    store_list = Store.objects.select_for_update().filter(state='CA')
+    # Loop over each store to update and invoke save() on each entry
+    for store in store_list:
+        # Add complex update logic here for each store
+        # save() method called on each member to update
+        store.save()
+
+# Method decorated with @transaction.atomic to ensure logic is executedin single transaction
+@transaction.atomic
+def bulk_store_update(store_list):
+    store_list = Store.objects.select_for_update().exlude(state='CA')
+    # Loop over each store and invoke save() on each entry
+    for store in store_list:
+        # Add complex update logic here for each store
+        # save() method called on each member to update
+        store.save()
+
+# Call bulk_store_update to update store records
+bulk_store_update(store_list_to_update)
+
 ######
