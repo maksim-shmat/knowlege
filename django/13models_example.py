@@ -950,4 +950,120 @@ midtown_store.amenities.create(name='Laptop Lock',description='Ask our baristas.
 # Get all Store elements that have amenity id=3
 Store.objects.filter(amenities__id=3)
 
+###### Many to many ManyToManyField reverse query create, read, update, and delete operations with _set syntax
+
+from coffeehouse.stores.models import Store, Amenity
+
+wifi_amenity = Amenity.objects.get(name='WiFi')
+
+# Fetch all Store records with Wifi Amenity
+wifi_amenity.store_set.count()
+
+# Get the total Store count for the Wifi Amenity
+wifi_amenity.store_set.count()
+
+# Fetch Store records that match a filter with the Wifi Amenity
+wifi_amenity.store_set.filter(city__startwith='San Diego')
+
+# Create a Store directly with the Wifi Amenity
+# NOTE: Django also supports the get_or_create() and update_or_create() operateions
+wifi_amenity.store_set.create(name='Uptown',address='1240 University Ave...')
+
+# Create a Store separately and then add the Wifi Amenity to it
+new_store = Store(name='Midtown',address='844 W Washington St...')
+new_store.save()
+wifi_amenity.store_set.add(new_store)
+
+# Create copy of breakfast items for later
+wifi_stores = [ws for ws in wifi_amenity.store_set.all()]
+
+# Clear all the Wifi amenity records in the junction table for all Store elements
+wifi_amenity.store_set.clear()
+
+# Verify Wifi count is now 0
+wifi_amenity.store_set.count()
+0
+
+# Reassingn Wifi set from copy of Store elements
+wifi_amenity.store_set.set(wifi_stores)
+
+# Verify Item count is now back to original count
+wifi_amenity.store_set.count()
+6
+
+# Reassign Store set from copy of wifi stores
+wifi_amenity.store_set.set(wifi_stores)
+
+# Clear the Wifi amenity record from the junction table for a certain Store element
+store_to_remove_amenity = Store.objects.get(name__startswith='844 W Washington St')
+wifi_amenity.store_set.remove(store_to_remove_amenity)
+
+# Delete the Wifi amenity element along with its associated junction table records for Store elements
+wifi_amenity.delete()
+
+###### One to one OneToOneField query operations
+
+from coffeehouse.items.models import Item
+
+class Drink(models.Model):
+    item = models.OneToOneField(Item,on_delete=models.CASCADE,primary_key=True)
+    caffeine = models.IntegerField()
+
+# Get Item instance named Mocha
+mocha_item = Item.objects.get(name='Mocha')
+
+# Access the Drink element and its fields through its base Item element
+mocha_item.drink.caffeine
+
+# Get Drink objects through Item with caffeine field less than 200
+Item.objects.filter(drink__caffeine__lt=200)
+
+# Delete the Item element and its associated Drink record
+# NOTE: This deletes the associated Drink record due to the on_delete=models.CASCADE in the OneToOneField definition
+mocha_item.delete()
+
+# Query a Drink through an Item property
+Drink.objects.get(item__name='Latte')
+
+###### Django model select_related syntax and generated SQL
+
+from coffeehouse.items.models import Item
+# Inefficient access to related model
+for item in Item.objects.all():
+    item.menu # Each call to menu creates an additional database hit
+
+# Efficient access to related model with selected related()
+for item in Item.objects.select_related('menu').all():
+    item.menu # All menu data references have been fetched on initial query
+
+# Raw SQL query with select_related
+print(Item.objects.select_related('menu').all().query)
+SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name", "items_item"."description", "items_item"."size", "items_item"."calories", "items_item"."price", "items_item"."stock", "items_menu"."id", "items_menu"."name" FROM "items_item" LEFT OUTER JOIN "items_menu" ON ("items_item"."menu_id" = "items_menu"."id")
+
+# Raw SQL query without select_related
+print(Item.objects.all().query)
+SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name", "items_item"."description", "items_item"."size", "items_item"."calories", "items_item"."price", "items_item"."stock" FROM "items_item"
+
+###### Django model prefetch_related syntax and generated SQL
+
+from coffeehouse.itms.models import Item
+from coffeehouse.stores.models import Store
+
+# Efficient access to related model with prefetch_related()
+for item in Item.objects.prefetch_related('menu').all():
+    item.menu # All menu data references have been fetched on initial query
+
+# Efficient access to many to many related model with prefetch_related()
+# NOTE: Store.objects.select_related('amenities').all() is invalid due to many to many model
+for store in Store.objects.prefetch_related('amenities').all():
+    store.amenities.all()
+
+# Raw SQL query with prefetch_related
+print(Item.objects.prefetch_related('menu').all().query)
+SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name", "items_item"."description", "items_item"."size", "item_item"."calories", "item_item"."price", "items_item"."stock" FROM "items_item"
+
+# Raw SQL query with prefetch_related
+print(Store.objects.prefetch_related('amenities').all().query)
+SELECT "stores_store"."id", "stotes_store"."name", "stores_store"."address", "stores_store"."city", "stores_store"."state", "stores_store"."email" FROM "stores_store"
+
 ######
