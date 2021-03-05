@@ -777,4 +777,26 @@ print(all_stores_flat)
 breakfast_items[0].price #ERROR
 # Outputs AttributeError: 'dict' object has no attribute 'price'
 
+###### Read performance with iterator(), exists(), and none()
+
+from cofeehouse.stores.models import Store
+
+# All Store with iterator()
+stores_on_iterator = Store.objects.all().iterator()
+
+print(stores_on_iterator)
+# Outputs: <generator object __iter__ at 0x4r2864db8fc0>
+
+# Advance through iterator with __next__()
+stores_on_iterator.__next__()
+# Outputs: <Store: Corporate (San Diego,CA)>
+
+# Check if Store object with id=5 exists
+Store.objects.filter(id=5).exists()
+# Outputs: False
+
+# Create empty QuerySet on Store model
+Store.objects.none()
+# Outputs: <QuerySet []>
+
 ######
