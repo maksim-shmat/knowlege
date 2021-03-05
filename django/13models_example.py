@@ -754,4 +754,27 @@ breakfast_items[0].price
 breakfast_items[0].size
 all_stores[1].email
 
+###### Read performance with values() and values_list() to selectively read record fields
+
+from coffeehouse.stores.models import Store
+from coffeehouse.item.models import Item
+
+# Item names on the breakfast menu
+breakfast_items = Item.objects.filter(menu__name='Breakfast').values('name')
+print(breakfast_items)
+# Outputs: <QuerySet[{'name': 'Whole-Grain Oatmeal'}, {'name': 'Bacon, Egg & Cheese Biscuit'}]>
+
+# All Store records with no email
+all_stores = Store.objects.values_list('email','name','city').all()
+print(all_stores)
+# Outputs: <QuerySet [('corporate@coffeehouse.com', 'Corporate', 'San Diego'), ('downtown@coffeehouse.com', 'Downtown', 'San Diego'), ('uptown@coffeehouse.com', 'Uptown', 'San Diego'), ('midtown@coffeehouse.com', 'Midtown', 'San Diego')]>
+
+all_stores_flat = Store.objects.values_list('email', flat=True).all()
+print(all_stores_flat)
+# Outputs: <QuerySet ['corporate@coffeehouse.com', 'downtown@coffeehouse.com', 'midtown@coffeehouse.com', 'uptown@coffeehouse.com']>
+
+# It isn't possible to access undeclared model field with values() and values_list()
+breakfast_items[0].price #ERROR
+# Outputs AttributeError: 'dict' object has no attribute 'price'
+
 ######
