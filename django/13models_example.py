@@ -876,4 +876,52 @@ breakfast_menu.item_set.count()
 # Fetch Item records that match a filter for the Menu
 breakfast_menu.item_set.filter(name__startswith='Whole')
 
+###### One to many ForeignKey reverse query create, update, delete operations with _set syntax
+
+from coffeehouse.items.models import Menu, Item
+
+breakfast_menu = Menu.objects.get(name='Breakfast')
+
+# Create an Item directly on the Menu
+# NOTE: Django also supports the get_or_create() and update_or_create() operations
+breakfast_menu.item_set.create(name='Bacon, Egg & Cheese Biscuit',description='A fresh buttermilk biscuit...',calories=450)
+
+# Create an Item separately and then add it to the Menu
+new_menu_item = Item(name='Grilled Cheese',description='Flat bread or whole wheat...',calories=500)
+# Add item to menu using add()
+# NOTE: bulk=False is necessary for new_menu_item to be saved by the Item model manager first
+# it isn't possible to call new_menu_item.save() directly because it lacks a menu instance
+breakfast_menu.item_set.add(new_menu_item,bulk=False)
+
+# Create copy of breakfast items for later
+breakfast_items = [bi for bi in breakfast_menu.item_set.all()]
+
+# Clear menu references from Item elements (i.e. reset the Item elements menu field to null)
+# NOTE: This requires the ForeignKey definition to have null=True
+# (e.g. models.ForeignKey(Menu, null=True)) so the key is allowed to beturned null
+# otherwise the error 'RelatedManager' object has no attribute 'clear' is thrown
+breakfast_menu.item_set.clear()
+
+# Verify Item count is now 0
+breakfast_menu.item_set.count()
+0
+
+# Reassign Item set from copy of breakfast items
+breakfast_menu.item_set.set(breakfast_items)
+
+# Verify Item count is now back to original count
+breakfast_menu.item_set.count()
+3
+
+# Clear men reference from single Item element (i.e. reset an Item element menu field to null)
+# NOTE: This requires the ForeignKey definition to have null=True
+# (e.g. models.ForeignKey(Menu, null=True)) so the key is allowed to be turned null
+# otherwise the error 'RelatedManager' object has no attribute 'remove' is thrown
+item_grilled_cheese = Item.objects.get(name='Grilled Cheese')
+breakfast_menu.item_set.remove(item_grilled_cheese)
+
+# Delete the Menu element along with its associated Item elements
+# NOTE: This requires the ForeignKey definition to have blank=True and on_delete=models.CASCADE (e.g. models.ForeignKey(Menu, blank=True, on_delete=models.CASCADE))
+breakfast_menu.delete()
+
 ######
