@@ -615,5 +615,143 @@ def bulk_store_creator(store_list):
 # Call bulk_store_creator with Store list
 bulk_store_creator(second_store_list)
 
+###### Read multiple records with all(), filter(), and exlude() methods
+# Import Django model class
+
+from coffehouse.stores.models import Store
+
+# Query with all() method or equivalent SQL: 'SELECT * FROM ...'
+all_stores = Store.objects.all()
+
+# Query with include() method or equivalent SQL: 'SELECT...WHERE city = "San Diego"'
+san_diego_stores = Store.objects.filter(city='San Diego')
+
+# Query with exlude() method or equivalent SQL: 'SELECT...WHERE NOT (city = "San Diego")'
+non_san_diego_stores = Store.objects.exclude(city='San Diego')
+
+# Query with include() and exlude() methods or equivalent SQL: 'SELECT...WHERE STATE='CA' AND NOT (city = "San Diego")'
+ca_stores_without_san_diego = Store.objects.filter(state='CA').exclude(city='San Diego')
+
+###### view the actual SQL
+
+from coffeehouse.stores.models import Store
+
+import logging
+stdlogger = logging.getLogger(__name__)
+
+# Get the Store records with city San Diego
+san_diego_stores = Store.objects.filter(city='San Diego')
+stdlogger.debug("Query %s" % str(san_diego_stores.query))
+# You can also use print(san_diego_stores.query)
+
+###### Read multiple records with in_bulk() method
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+
+# Query with in_bulk() all
+Store.objects.in_bulk()
+# Outputs: {1: <Store: Corporate (San Diego,CA)>, 2: <Store: Downtown (San Diego,CA)>, 3: <Store: Uptown (San Diego,CA)>, 4: <Store: Midtown (San Diego,CA)>}
+
+# Compare in_bulk query to all() that produces QuerySet
+Store.objects.all()
+
+# Outputs: <QuerySet {<Store: Corporate (San Diego,CA)>, <Store: Downtown (San Diego, CA)>, <Store: Uptown (San Diego,CA)>, <Store: Midtown (San Diego,CA)>]>
+
+# Query to get single Store by id
+Store.objects.in_bulk([1])
+# Outputs: {1: <Store: Corporate (San Diego, CA)>}
+
+# Query to get multiple Stores by id
+Store.objects.in_bulk([2,3])
+# Outputs: {2: <Store: Downtown (San Diego,CA)>, 3: <Store: Uptown (San Diego,CA)>}
+
+###### Chained model methods to illustrate concept of QuerySet lazy evaluation
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+
+# Query with all() method
+stores = Store.objects.all()
+# Chain filter() method on query
+stores = sotes.filter(state='CA')
+# Chain exlude() method on query
+stores = stores.exclude(city='San Diego')
+
+###### QuerySet caching behavior
+# Import Django model class
+
+from coffeehouse.stores.models import Store
+
+# CACHE USING SEQUENCE
+# Query awaiting evaluation
+lazy_stores = Store.objects.all()
+# Iteration triggers evaluation and hits database
+store_emails = [store.email for store in lazy_stores]
+# Uses QuerySet cache from lazy_stores, since lazy_stores is evaluated in previous line
+store_names = [store.name for store in lazy_stores]
+
+# NON-CACHE SEQUENCE
+# Iteration triggers evaluation and hits database
+heavy_store_emails = [store.email for store in Store.objects.all()]
+# Iteration triggers evaluation and hits database again, because it uses another QuerySet ref
+heavy_store_names = [store.name for store in Store.objects.all()]
+
+# CACHE USING SEQUENCE
+# Query wrapped as list() for immediate evaluation
+stores = list(Store.objects.all())
+# Uses QuerySet cache from stores
+first_store = stores[0]
+# Uses QuerySet cache from stores
+second_store = sotes[1]
+# Uses QuerySet cache from stores, set() is just used to eliminate duplicates
+store_states = set([store.state for store in stores])
+# Uses QuerySet cache from stores, set() is just used to eliminate duplicates
+store_cities = set([store.city for store in stores])
+
+# NON-CACHE SEQUENCE
+# Query awaiting evaluation
+all_stores = Store.objects.all()
+# list() triggers evaluation and hits database
+store_one = list(all_stores[0:1])
+# list() triggers evaluation and hits database again, because partially evaluating a QuerySet does not populate the cache
+store_one_again = list(all_stores[0:1])
+
+# CACHE USING SEQUENCE
+# Query awaiting evaluation
+coffee_stores = Store.objects.all()
+# Iteration triggers evaluation and hits database
+[store for store in coffee_stores]
+# Uses QuerySet cache from coffee_stores, because it's evaluated fully in previous line
+store_1 = coffee_stores[0]
+# Uses QuerySet cache from coffee_stores, because it's already evaluated in full
+store_1_again = coffee_stores[0]
+
+###### Read performance with defer() and only() to selectively read record fields
+
+from coffeehouse.stores.models import Store
+from coffeehouse.item.models import Item
+
+# Item names on the breakfast menu
+breakfast_item = Item.objects.filter(menu__name='Breakfast').only('name')
+# All Store records with no email
+all_stores = Store.objects.defer('email').all()
+
+# Confirm loaded fields on overall query
+breakfast_items.query.get_loaded_field_names()
+
+# Outputs: {<class 'coffeehouse.items.models.Item'>: {'id','name'}}
+all_stores.query.get_loaded_names()
+# Outputs: {<class 'coffeehouse.stores.models.Store'>: {'id','address','state','city','name'}}
+
+# Confirm deferred fields on individual model records breakfast_items[0].get_deferred_fields()
+# Outputs: {'calories','stock','price','menu_id','size','description'}
+all_stores[1].get_deferred_fields()
+#Outputs: {'email'}
+
+# Access deferred fields, note each call on a deferred field implies a database hit
+breakfast_items[0].price
+breakfast_items[0].size
+all_stores[1].email
+
 ######
-    
