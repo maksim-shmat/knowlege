@@ -839,4 +839,26 @@ def bulk_store_update(store_list):
 # Call bulk_store_update to update store records
 bulk_store_update(store_list_to_update)
 
+###### Delete model record with the delete() method
+
+from coffeehouse.stores.models import Store
+
+Store.objects.filter(city='San Diego').delete()
+
+###### One to many ForeignKey direct query read operations
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+
+# Get the Menu of a given Item
+Item.objects.get(name='Whole-Grain Oatmeal').menu.name
+
+# Get Item elements that belong to the Menu with name 'Drinks'
+Item.objects.filter(menu__name='Drinks')
+
 ######
