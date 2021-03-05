@@ -799,4 +799,15 @@ Store.objects.filter(id=5).exists()
 Store.objects.none()
 # Outputs: <QuerySet []>
 
+###### Update multiple records with the update() method
+
+from coffeehouse.stores.models import Store
+
+Store.objects.all().update(email="contact@coffeehouse.com")
+
+from coffeehouse.items.models import Item
+from django.db.models import F
+
+Item.objects.all().update(stock=F('stock') +100)
+
 ######
