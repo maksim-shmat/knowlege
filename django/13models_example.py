@@ -924,4 +924,30 @@ breakfast_menu.item_set.remove(item_grilled_cheese)
 # NOTE: This requires the ForeignKey definition to have blank=True and on_delete=models.CASCADE (e.g. models.ForeignKey(Menu, blank=True, on_delete=models.CASCADE))
 breakfast_menu.delete()
 
+###### Many to many ManyToManyField direct query read operations
+
+class Amenity(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30,unique=True)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+    email = models.EmailField()
+    amenities = models.ManyToManyField(Amenity,blank=True)
+
+# Get the Amenity elements of a given Store
+Store.objects.get(name='Downtown').amenities.all()
+
+# Fetch store named Midtown
+midtown_store = Store.objects.get(name='Midtown')
+
+# Create and add Amenity element to Store
+midtown_store.amenities.create(name='Laptop Lock',description='Ask our baristas..')
+
+# Get all Store elements that have amenity id=3
+Store.objects.filter(amenities__id=3)
+
 ######
