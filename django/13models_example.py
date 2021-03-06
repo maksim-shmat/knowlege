@@ -1271,4 +1271,14 @@ Order.objects.dates('created','month')
 Order.objects.datetimes('created','day')
 # Outputs: <QuerySet [datetime.datetime(2017, 6, 17, 3, 13, tzinfo=<UTC>)...]>
 
+###### Django ORDER queries
+
+from coffeehouse.stores.models import Store
+
+# Get Store records and order by city (ORDER BY city)
+Store.objects.all().order_by('city')
+
+# Get Store records, order name descending, email ascending (ORDER BY name DESC, email ASC)
+Store.objects.filter(city='San Diego').order_by('-name','email')
+
 ######
