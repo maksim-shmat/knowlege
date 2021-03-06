@@ -1308,4 +1308,19 @@ lunch_items = menu_sandwich_items | menu_salads_items
 
 # itertools.chain generates a Python list and can merge different QuerySet model types lunch_items_with_drinks = list(chain(menu_sandwich_items, drinks))
 
+###### Merge Django queries with union()
+
+from coffeehouse.items.models import Item
+
+menu_breakfast_items = Item.objects.filter(menu__name='Breakfast')
+menu_sandwich_items = Item.objects.filter(menu__name='Sandwiches')
+menu_salads_items = Item.objects.filter(menu__name='Salads')
+
+# All items merged with union()
+all_items = menu_breakfast_items.union(menu_sandwich_items,menu_salads_items)
+print(all_items.query)
+SELECT "items_item"."id", "items_item"."menu_id" ... WHERE "items_menu"."name" = Breakfast UNION
+SELECT "items_item"."id", "items_item"."menu_id" ... WHERE "items_menu"."name" = Sandwiches UNION
+SELECT "items_item"."id", "items_item"."menu_id" ... WHERE "items_menu"."name" = Salads
+
 ######
