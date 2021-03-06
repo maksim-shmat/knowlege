@@ -1292,4 +1292,20 @@ Item.objects.all()[5:10]
 # Get the first (LIMIT=1) Item object
 Item.objects.all()[0]
 
+###### Combine two Django queries with |(pipe) and itertools.chain
+
+from coffeehouse.items.models import Item, Drink
+from itertools import chain
+
+menu_sandwich_items = Item.objects.filter(menu__name='Sandwiches')
+menu_salads_items = Item.objects.filter(menu__name='Salads')
+drinks = Drink.objects.all()
+
+# A pipe applied to two QuerySets generates a larger QuerySet
+lunch_items = menu_sandwich_items | menu_salads_items
+
+# | can't be used to merge QuerySet's with different models # ERROR menu_sandwich_items | drinks
+
+# itertools.chain generates a Python list and can merge different QuerySet model types lunch_items_with_drinks = list(chain(menu_sandwich_items, drinks))
+
 ######
