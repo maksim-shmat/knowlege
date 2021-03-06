@@ -1194,4 +1194,47 @@ Item.objects.filter(stock__lt=100)
 # Get Item records with stock < or equal 50
 Item.objects.filter(stock__lte=50)
 
-######
+###### Django date and time queries with field lookups
+
+from coffeehouse.online.models import Order
+from django.utils.timezone import utc
+import datetime
+
+# Define custom dates
+start_date = datetime.datetime(2017, 5, 10).replace(tzinfo=utc)
+end_date = datetime.datetime(2017, 5, 21).replace(tzinfo=utc)
+
+# Get Order records from custom dates, starting May 10 2017 to May 21 2018
+Order.objects.filter(created__range=(start_date, end_date))
+
+# Get Order records with exact start date
+orders_2018 = Order.objects.filter(created__date=start_date)
+
+# Get Order records with year 2018
+Order.objects.filter(created__year=2018)
+
+# Get Order records with month January, values can be 1 through 12 (1=January, 12=December).
+Order.objects.filter(created_month=1)
+
+# Get Order records with day 1, where values can be 1 through 31.
+Order.objects.filter(created__day=1)
+
+# Get Order records from January 1 2018
+Order.objects.filter(created__year=2018,create__month=1,created__day=1)
+
+# Get Order records that fall on week number 24 of the yr, where values can be 1 to 53.
+Order.objects.filter(created__week=24)
+
+# Get Order records that fall on Monday, wher values can be 1 to 7 (1=Sunday, 7=Saturday).
+Order.objects.filter(created__time=datetime.time(14, 30))
+
+# Get Order records made at 10am, where values can be 0 to 23 (0=12am, 23=11pm).
+Order.objects.filter(date__hour=10)
+
+# Get Order records made at top of the hour, where values are 0 to 59.
+Order.objects.filter(date__minute=0)
+
+# Get Order records made the 30 second mark of every minute, where values are 0 to 59.
+Order.objects.filter(date__second=30)
+
+#######
