@@ -1164,4 +1164,34 @@ Store.objects.filter(city__startswith='San')
 # Get the Item records that end with 'e' in name (LIKE '%e')
 Drink.objects.filter(item__name__endswith='e')
 
+###### Django ILIKE queries
+
+from coffeehouse.stores.models import Store
+from coffeehouse.items.models import Item
+
+# Get the Store records that start contain 'a' in state anywhere case insensitive (ILIKE '%a%')
+Store.objects.filter(state__icontains='a')
+
+# Get the Store records that start with 'san' in city case insensitive (ILIKE 'san%')
+Store.objects.filter(name__iendewith='A')
+
+# Get the Store records that have state 'ca' case insensitive (ILIKE 'ca')
+Store.objects.filter(state__iexact='ca')
+
+###### Django GREATER THAN and LESSER THAN queries
+
+from coffeehouse.items.models import Item
+
+# Get Item records with stock > 5
+Item.objects.filter(stock__gte=10)
+
+# Get Item records with stock > or equal 10
+Item.objects.filter(stock__gte=10)
+
+# Get Item records with stock < 100
+Item.objects.filter(stock__lt=100)
+
+# Get Item records with stock < or equal 50
+Item.objects.filter(stock__lte=50)
+
 ######
