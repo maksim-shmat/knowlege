@@ -1323,4 +1323,17 @@ SELECT "items_item"."id", "items_item"."menu_id" ... WHERE "items_menu"."name" =
 SELECT "items_item"."id", "items_item"."menu_id" ... WHERE "items_menu"."name" = Sandwiches UNION
 SELECT "items_item"."id", "items_item"."menu_id" ... WHERE "items_menu"."name" = Salads
 
+###### Intersect (Common) Django query records with intersection()
+
+from coffeehouse.items.models import Item
+
+all_items = Item.objects.all()
+menu_breakfast_items = Item.objects.filter(menu__name='Breakfast')
+
+# Intersected (commmon) records merged with intersect()
+intersection_items = all_items.intersection(menu_breakfast_items)
+print(intersection_items.query)
+SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name" ... INTERSECT
+SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name" ... WHERE "items_menu"."name" = Breakfast
+
 ######
