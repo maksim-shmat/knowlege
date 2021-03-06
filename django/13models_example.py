@@ -1281,4 +1281,15 @@ Store.objects.all().order_by('city')
 # Get Store records, order name descending, email ascending (ORDER BY name DESC, email ASC)
 Store.objects.filter(city='San Diego').order_by('-name','email')
 
+###### Django LIMIT and OFFSET queries with Python slice syntax
+
+from coffeehouse.stores.models import Store
+from coffeehouse.items.models import Item
+
+# Get the second five (OFFSET=5, LIMIT=5) Item records (after the first 5)
+Item.objects.all()[5:10]
+
+# Get the first (LIMIT=1) Item object
+Item.objects.all()[0]
+
 ######
