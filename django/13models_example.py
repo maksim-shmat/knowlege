@@ -1237,4 +1237,22 @@ Order.objects.filter(date__minute=0)
 # Get Order records made the 30 second mark of every minute, where values are 0 to 59.
 Order.objects.filter(date__second=30)
 
-#######
+####### django DISTINCT queries with distinct()
+
+from coffeehouse.stores.models import Store
+
+# Get all Store records number
+Store.objects.all().count()
+4
+
+# Get all distinct Store record number
+Store.objects.distinct().count()
+4
+
+# Get distinct state Store record values
+Store.objects.values('state').distinct().count()
+1
+
+# ONLY for PostgreSQL, distinct() can accept model fields to create DISTINCT ON query Store.objects.distinct('state')
+
+######
