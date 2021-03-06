@@ -1255,4 +1255,20 @@ Store.objects.values('state').distinct().count()
 
 # ONLY for PostgreSQL, distinct() can accept model fields to create DISTINCT ON query Store.objects.distinct('state')
 
+###### django DISTINCT date and time queries with dates and datetimes() methods
+
+from coffeehouse.online.models import Order
+
+# Get distinct years (as datetime.date) for Order objects
+Order.objects.dates('created','year')
+# Outputs: <QuerySet [datetime.date(2017, 1, 1),datetime.date(2018, 1, 1)]>
+
+# Get distinct months (as datetime.date) for Order objects
+Order.objects.dates('created','month')
+# Outputs: <QuerySet [datetime.date(2017, 3, 1),datetime.date(2017, 6, 1),datetime.date(2018, 2, 1)]>
+
+# Get distinct days (as datetime.datetime) for Order objects
+Order.objects.datetimes('created','day')
+# Outputs: <QuerySet [datetime.datetime(2017, 6, 17, 3, 13, tzinfo=<UTC>)...]>
+
 ######
