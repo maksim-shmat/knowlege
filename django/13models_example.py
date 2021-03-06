@@ -1066,4 +1066,102 @@ SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name", "items_it
 print(Store.objects.prefetch_related('amenities').all().query)
 SELECT "stores_store"."id", "stotes_store"."name", "stores_store"."address", "stores_store"."city", "stores_store"."state", "stores_store"."email" FROM "stores_store"
 
+###### Django equality = or EQUAL query
+
+from coffeehouse.stores.models import Store
+from coffeehouse.items.models import Item
+
+# Get the Store object with id=1
+Store.objects.get(id__exact=1)
+
+# Get the Store object with id=1 (Short-handed version)
+Store.objects.get(id=1)
+
+# Get the Drink objects with name="Mocha"
+Item.objects.filter(name__exact="Mocha")
+
+# Get the Drink objects with name="Mocha" (Short-handed version)
+Item.objects.filter(name="Mocha")
+
+###### Django inequality!= or NOT EQUAL query with exlude() and Q objects
+
+from coffeehouse.stores.models import Store
+from coffeehouse.items.models import Item
+from django.db.models import Q
+
+# Get the Store records that don't have state 'CA'
+Store.objects.exlude(state='CA')
+
+# Get the Store records that don't have state 'CA', using Q
+Store.objects.filter(~Q(state="CA"))
+
+# Get the Item records and exlude items that have more than 100 calories
+Item.objects.exlude(calories__gt=100)
+
+# Get the Item records and exlude those with 100 or more calories, using Q
+Item.objects.filter(~Q(calories__gt=100))
+
+###### Django AND query
+
+from coffeehouse.stores.models import Store
+from django.db.models import Q
+
+# Get the Store records that have state 'CA' AND city 'San Diego'
+Store.objects.filter(state='CA', city='San Diego')
+
+# Get the Store records that have state 'CA' AND city not 'San Diego'
+Store.objects.filter(Q(state='CA') & ~Q(city='San Diego'))
+
+###### Django OR query
+
+from coffeehouse.stores.models import Store
+from coffeehouse.item.models import Item
+from django.db.models import Q
+
+# Get the Store records that have state 'CA' OR state='AZ'
+Store.objects.filter(Q(state='CA') | Q(state='AZ'))
+
+# Get the Item records with name "Mocha" or "Latte"
+Item.objects.filter(Q(name="Mocha") | Q(name='Latte'))
+
+###### Django IS and IS NOT queries
+
+from coffeehouse.stores.models import Store
+from coffeehouse.items.models import Drink
+from django.db.models import Q
+
+# Get the Store records that have email NULL
+Store.objects.filter(email=None)
+
+# Get the Store records that have email NULL
+Store.objects.filter(email__isnull=True)
+
+# Get the Store records that have email NOT NULL
+Store.objects.filter(email__isnull=False)
+
+###### Django IN queries
+
+from coffeehouse.stores.models import Store
+from coffeehouse.items.models import Drink
+
+# Get the Store records that have state 'CA' OR state='AZ'
+Store.objects.filter(state__in=['CA','AZ'])
+
+# Get the Item records with id 1,2 or 3
+Item.objects.filter(id__in=[1,2,3])
+
+###### Django LIKE queries
+
+from coffeehouse.stores models import Store
+from coffeehouse.items.models import Item, Drink
+
+# Get the Store records that contain a 'C' anywhere in state (LIKE '%C%')
+Store .objects.filter(state__contains='C')
+
+# Get the Store records that start with 'San' in city (LIKE 'Sa%')
+Store.objects.filter(city__startswith='San')
+
+# Get the Item records that end with 'e' in name (LIKE '%e')
+Drink.objects.filter(item__name__endswith='e')
+
 ######
