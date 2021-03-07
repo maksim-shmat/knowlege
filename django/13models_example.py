@@ -1336,4 +1336,22 @@ print(intersection_items.query)
 SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name" ... INTERSECT
 SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name" ... WHERE "items_menu"."name" = Breakfast
 
+###### Except Django query records with difference()
+
+from coffeehouse.items.models import Item
+
+all_items = Item.objects.all()
+menu_breakfast_items = Item.objects.filter(menu__name='Breakfast')
+menu_sandwich_items = Item.objects.filter(menu__name='Sandwiches')
+menu_salads_items = Item.objects.filter(menu__name='Salads')
+
+# Extract records in all_items, except those in:
+#     menu_breakfast_items, menu_sandwich_items & menu_salads_items
+ex_items = all_items.difference(menu_breakfast_items, menu_sandwich_items, menu_salads_items)
+print(ex_items.query)
+SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name"...EXCEPT
+SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name"... EXCEPT
+SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name" ... EXCEPT
+SELECT "items_item"."id", "items_item"."menu_id", "items_item"."name" ... WHERE "items_menu"."name" = Salads
+
 ######
