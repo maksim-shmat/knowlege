@@ -166,4 +166,20 @@ order_item_w_name[0].item
 order_items_w_name[0].item_name
 'Whole-Grain Oatmeal'
 
+###### Django Subquery expression with SQL subquery in WHERE statement
+
+from coffeehouse.online.models import Order
+from coffeehouse.items.models import Item
+from django.db.models import OuterRef, Subquery
+
+# Get Item records in lastest Order to replenish stock
+most_recent_items_on_order = Order.objects.latest('created').orderitem_set.all()
+
+# Get a list of Item records based on recent order using a sub-query
+items_to_replenish = Item.objects.filter(id__in=Subquery(
+    most_recent_items_on_order.values('item')))
+
+print(items_to_replenish.query)
+SELECT 'items_item'.'id', 'items_item'.'menu_id', 'items_item'.'name', 'items_item'.'description', 'items_item'.'size', 'items_item'.'calories', 'items_item'.'price', 'items_item'.'stock' FROM 'items_item' WHERE 'items_item'.'id' IN (SELECT U0.'item' FROM 'online_orderitem' U0 WHERE U0.'order_id' = 1)
+
 ######
