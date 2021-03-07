@@ -93,4 +93,14 @@ breakfast_items.update(stock=F('stock') - 1)
 # Increase all Item records stock by 20
 Item.objects.all().update(stock=F('stock') + 20)
 
+###### Django F() expression in read queries and aggregate queries
+
+from django.db.models import F, ExpressionWrapper, FloatField
+from coffeehouse.items.models import Drink, Item
+
+calories_dbl_caffeine_drinks = Drink.objects.filter(item__calories__gt=F('caffeine')*2)
+items_with_assets = Item.objects.annotate(
+        assets=ExpressionWrapper(F('stock')*F('price'),
+            output_field=FloatField()))
+
 ######
