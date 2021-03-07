@@ -103,4 +103,30 @@ items_with_assets = Item.objects.annotate(
         assets=ExpressionWrapper(F('stock')*F('price'),
             output_field=FloatField()))
 
+###### Django Func() expressions for SQL functions and Django SQL functions
+
+from django.db.models import F, Func, Value
+from django.db.models.functions import Upper, Concat
+from coffeehouse.stores.models import Store
+
+# SQL Upper function call via Func expression and F expression
+stores_w_upper_names = Store.objects.annotate(name_upper=Func(F('name'), function='Upper'))
+stores_w_upper_names[0].name_upper
+'CORPORATE'
+stores_w_upper_names[0].name
+'Corporate'
+
+# Equivalent SQL Upper function call directly with Django SQL Upper function
+stores_w_upper_names_function = Store.objects.annotate(name_upper=Upper('name'))
+stores_w_upper_name_function[0].name_upper
+'CORPORATE'
+
+# SQL Concat function called directly with Django SQL Concat function
+stores_w_full_address = Store.objects.annotate(full_address=
+        Concat('address',Value(' - '),'city',Value(' , '),'state'))
+stores_w_full_address[0].full_address
+'624 Broadway - San Diego, CA'
+stores_w_full_address[0].city
+'San Diego'
+
 ######
