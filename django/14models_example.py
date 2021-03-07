@@ -63,4 +63,34 @@ print(item_all_stock)
 item_statistics = Item.objects.aggregate(Variance('stock'), std_dev_stock=StdDev('stock'))
 {'std_dev_stock': 5.3748, 'stock__variance': 28.8888}
 
+###### Django F() expression update queries
+
+from coffeehouse.items.models import Item
+from django.db.models import F
+
+# Get single item
+egg_biscuit = Item.objects.get(id=2)
+# Check stock
+egg_biscuit.stock
+2
+# Add 10 to stock value with F() expression
+egg_biscuit.stock = F('stock') + 10
+# Trigger save() to apply F() expression
+egg_biscuit.save()
+# Check stock again
+egg_biscuit.stock
+<CombinedExpression: F(stock) + Value(10)>
+# Ups, need to re-read/refresh from DB
+egg_biscuit.refresh_from_db()
+# Check stock again
+egg_biscuit.stock
+12
+
+# Decrease stock value by 1 for Item records on the Breakfast menu
+breakfast_items = Item.objects.filter(menu__name='Breakfast')
+breakfast_items.update(stock=F('stock') - 1)
+
+# Increase all Item records stock by 20
+Item.objects.all().update(stock=F('stock') + 20)
+
 ######
