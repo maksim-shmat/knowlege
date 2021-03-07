@@ -129,4 +129,41 @@ stores_w_full_address[0].full_address
 stores_w_full_address[0].city
 'San Diego'
 
+###### Django Subquery expression with SQL subquery to get related model data
+
+from django.db.models import OuterRef, Subquery
+
+class Order(models.Model):
+    created = models.DateTimeField(auto_now_add=True)
+
+class OrderItem(models.Model):
+    item = models.IntegerField()
+    amount = models.IntegerField()
+    order = models.ForeignKey(Order)
+
+# Get Items in order number 1
+order_items = OrderItem.objects.filter(order__id=1)
+# Get item
+order_item[0].item
+1
+# Get item name ?
+
+# OrderItem item field is IntegerField, lacks Item relationship
+# Create sub-query to get Item records with id
+item_subquery = Item.objects.filter(id=(OuterRef('id')))
+
+# Annotate previous query with sub-query
+order_items_w_name = order_items.annotate(item_name=Subquery(item_subquery.values('name')[:1]))
+# Output SQL to verify
+print(order_items_w_name.query)
+SELECT 'online_orderitem'.'id', 'online_orderitem'.'item',
+'online_orderitem'.'amount', 'online_orderitem'.'order_id',
+(SELECT U0.'name' FROM 'item_item' U0 WHERE U0.'id' = (online_orderitem.'id') LIMIT 1)
+AS 'item_name' FROM 'online_orderitem' WHERE 'online_orderitem'.'order_it' = 1
+# Access item and item_name
+order_item_w_name[0].item
+1
+order_items_w_name[0].item_name
+'Whole-Grain Oatmeal'
+
 ######
