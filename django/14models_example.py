@@ -38,4 +38,29 @@ stores_with_amenities_count = Store.objects.annotate(Count('amenities'))
 stores_amenities_count_custom = Store.objects.annotate(amenities_per_store=Count('amenities'))
 store_amenities_count_custom[0].amenities_per_store
 
+###### Django MAX,MIN,AVG,VARIANCE and STDDEV queries with Max(),Min(),Sum(),Avg(),Variance() and StdDev() classes
+
+from coffeehouse.items.models import Item
+from django.db.models import Avg, Max, Min
+from django.db.models import Sum
+from django.db.models import Variance, StdDev
+
+# Get the average, maximum and minimum number of stock for all Item records
+avg_max_min_stock = Item.objects.aggregate(Avg('stock'), Max('stock'), Min('stock'))
+
+print(avg_max_min_stock)
+{'stock__avg': 29.0, 'stock__max': 36, 'stock__min': 27}
+
+# Get the total stock for all Items
+item_all_stock = Item.objects.aggregate(all_stock=Sum('stock'))
+print(item_all_stock)
+{'all_stock': 261}
+
+# Get the variance and standard deviation for all Item records
+# NOTE: Variance & StdDev returnd the population variance & standard deviation, respectively.
+#    But  it's also possible to return sample variance & standard deviation,
+#    using the sample=True argument
+item_statistics = Item.objects.aggregate(Variance('stock'), std_dev_stock=StdDev('stock'))
+{'std_dev_stock': 5.3748, 'stock__variance': 28.8888}
+
 ######
