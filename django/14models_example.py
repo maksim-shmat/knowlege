@@ -396,4 +396,134 @@ class ContactForm(forms.ModelForm):
         model = Contact
         fields = '__all__'
 
+###### Django model form processing
+# views.py method to process model form
+
+def contact(request):
+    if request.method == 'POST':
+        # POST, generate bound form with data from the request
+        form = ContactForm(request.POST)
+        # check if it's valid:
+        if form.id_valid():
+            # Insert into DB
+            form.save()
+            # redirect to a new URL:
+            return HttpResponseRedirect('/about/contact/thankyou')
+    else:
+        # GET, generate unbound (blank) form
+        form = ContactForm()
+    return render(request,'about/contact.html',{'form':form})
+
+###### Django model form with new and custom field
+
+from django import forms
+
+def faq_suggestions(value):
+    # Validate value and raise forms.ValidationError for invalid values
+    pass
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=50,blank=True)
+    email = models.EmailField()
+    comment = models.CharField()
+
+
+class ContactForm(forms.ModelForm):
+    age = forms.IntegerField()
+    comment = forms.CharField(widget=forms.Textarea,validators=[faq_suggestions])
+    class Meta:
+        model = Contact
+        fields = '__all__'
+
+###### Django model form with meta options to override default form field behavior
+
+from django import forms
+
+class Contact(models.Model):
+    name = models.CharField(max_length=50,blank=True)
+    email = models.EmailField()
+    comment = models.CharField()
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = '__all__'
+        widgets = {
+                'name': models.CharField(max_length=25),
+                'comment': form.Textarea(attrs={'cols': 100, 'rows': 40})
+        }
+        labels = {
+                'name': 'Full name',
+                'comment': 'Issue'
+        }
+        help_texts = {
+                'comment': 'Provide a detailed account of the issue to receive a quick answer'
+        }
+        error_messages = {
+                'name': { 'max_length': "Name can only be 25 characters in length"
+                }
+        }
+        field_classes = {
+                'email': EmailCoffeehouseFormField
+        },
+        localized_field = '__all__'
+
+###### Django model form and standard form with custom query for ModelChoiceField and ModelMultipleChoiceField form fields
+
+from django import forms
+from coffeehouse.stores.models import Amenity
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+    def __str__(self):
+        return "%s" % (self.name)
+
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+
+
+class ItemForm(forms.ModelForm):
+    menu = forms.ModelChoiceField(queryset=Menu.objects.filter(id=1))
+    class Meta:
+        model = Item
+        fields = '__all__'
+
+
+class StoreForm(forms.Form):
+    name = forms.CharField()
+    address = forms.CharField()
+    amenities = forms.ModelMultipleChoiceField(queryset=None)
+    def __init__(self, *args, **kwargs):
+        super(StoreForm, self).__init__(*args, **kwargs)
+        self.fields['amenities'].queryset = Amenity.objects.filter(name__contains='W')
+
+###### Django custom form field to customize <option> text for ModeChoiceField and ModelMultipleChoiceField form fields
+
+from django import forms
+from django.forms import ModelChoiceField
+
+class MenuModelChoiceField(ModelChoiceField):
+    def label_from_instance(self, obj):
+        return "Menu #%s) %s" % (obj.id,obj.name)
+
+class ItemForm(forms.ModelForm):
+    menu = MenuModelChoiceField(queryset=Menu.objects.all())
+    class Meta:
+        model = Item
+        fields = '__all__'
+
+# HTML menu form field output
+<select name="menu" id="id_menu" required>
+  <option value="" slected>-----------</option>
+  <option value="1">Menu #1) Breakfast</option>
+  <option value="2">Menu #2) Salads</options>
+  <option value="3">Menu #3) Sandwiches</option>
+  <option value="4">Menu #4) Drinks</option>
+</select>
+
 ######
