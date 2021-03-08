@@ -182,4 +182,24 @@ items_to_replenish = Item.objects.filter(id__in=Subquery(
 print(items_to_replenish.query)
 SELECT 'items_item'.'id', 'items_item'.'menu_id', 'items_item'.'name', 'items_item'.'description', 'items_item'.'size', 'items_item'.'calories', 'items_item'.'price', 'items_item'.'stock' FROM 'items_item' WHERE 'items_item'.'id' IN (SELECT U0.'item' FROM 'online_orderitem' U0 WHERE U0.'order_id' = 1)
 
+###### Django model manager raw() method
+
+from coffeehouse.items.models import Drink, Item
+
+# Get all drink
+all_drinks = Drink.objects.raw("SELECT * FROM items_drink")
+
+# Confirm type
+type(all_drinks)
+# Outputs: <class 'django.db.models.query.RawQuerySet'>
+
+# Get first drink with index 0
+first_drink.item.name
+
+# Use parameters to limit a raw SQL query
+caffeine_limit = 100
+
+# Create raw() query with params argument to pass dynamic arguments
+drinks_low_caffeine = Drink.object.raw("SELECT * FROM items_drink where caffeine < %s",params=[caffein_limit]);
+
 ######
