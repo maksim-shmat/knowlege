@@ -381,4 +381,19 @@ breakfast_menu.item_set(manager='reverseitems').all()
 # Call on_sale_items() custom manager method in CustomReverseManagerForItems
 breakfast_menu.item_set(manager='reverseitems').on_sale_items()
 
+###### Django model class and model form
+
+from django import forms
+
+class Contact(models.Model):
+    name = models.CharField(max_length=50,blank=True)
+    email = models.EmailField()
+    comment = models.CharField(max_length=1000)
+
+
+class ContactForm(forms.ModelForm):
+    class Meta:
+        model = Contact
+        fields = '__all__'
+
 ######
