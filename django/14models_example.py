@@ -346,4 +346,22 @@ Store.shops.all()
 Store.shops.sandiego()
 Store.shops.losangeles()
 
+###### Django custom model manager with custom QuerySet converted to manager
+
+class StoreQuerySet(models.QuerySet):
+    def sandiego(self):
+        return self.filter(city='San Diego')
+
+    def losangeles(self):
+        return self.filter(city='Los Angeles')
+
+
+class Store(models.Model):
+    name = models.Manager()
+    shops = StoreQuerySet.as_manager()
+
+Store.shops.all()
+Store.shops.sandiego()
+Store.shops.losangeles()
+
 ######
