@@ -202,4 +202,29 @@ caffeine_limit = 100
 # Create raw() query with params argument to pass dynamic arguments
 drinks_low_caffeine = Drink.object.raw("SELECT * FROM items_drink where caffeine < %s",params=[caffein_limit]);
 
+###### Django model manager raw() method with mapping, deferred fields, and aggregate queries
+# Map results from legacy table into Item model
+all_legacy_items = Item.objects.raw("SELECT product_name AS name, product_description AS description from coffeehouse_products")
+
+# Access legacy results as if they are standard Item model records
+all_legacy_items[0].name
+
+# Use expicit mapping argument instead of 'as' statements in SQL query
+legacy_mapping = {'product_name':'name','product_description':'description'}
+
+# Create raw() query with translations argument to map table results
+all_legacy_items_with_mapping = Item.objects.raw("SELECT * from coffeehouse_products", translations=legacy_mapping)
+
+# Deferred model field loading, get item one with limited fields
+item_one = Item.objects.raw("SELECT id,name from items_item where id=1")
+# Access model fields not referenced in the raw query, just like QuerySet defer()
+item_one[0].calories
+item_one[0].price
+
+# Raw SQL query with aggregate function added as extra model field
+items_with_inventory = Item.objects.raw("SELECT *, sum(price*stock) as
+        assets from items_item");
+# Access extra field directly as part of the model
+items_with_inventory[0].assets
+
 ######
