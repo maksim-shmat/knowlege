@@ -295,4 +295,24 @@ Item.menumgr.sandwich_items()
 # ERROR Item.objects.sandwich_items() # 'Manager' object has no attribute 'sandwich_items'
 Item.menumgr.all()
 
+###### Django custom model managers with custom get_queryset() method
+
+class SanDiegoManager(models.Manager):
+    def get_queryset(self):
+        return super(SanDiegoStoreManager, self).get_queryset().filter(city='San Diego')
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    ...
+    objects = models.Manager()
+    sandiego = SanDiegoStoreManager()
+    losangeles = LosAngelesStoreManager()
+
+# Call default manager all() query, backed by get_queryset() method
+Store.objects.all()
+# Call sandiego manager all(), backed by get_queryset() method
+Store.sandiego.all()
+# Call losangeles manager all(), backed by get_queryset() method
+Store.losangeles.all()
+
 ######
