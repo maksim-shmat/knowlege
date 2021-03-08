@@ -227,4 +227,33 @@ items_with_inventory = Item.objects.raw("SELECT *, sum(price*stock) as
 # Access extra field directly as part of the model
 items_with_inventory[0].assets
 
+###### Django raw SQL queries with connection() and low-level DB API methods
+
+from django.db import connection
+
+# Delete record
+target_id = 1
+with connection.cursor() as cursor:
+    cursor.execute("DELETE from items_item where id = %s", [target_id])
+
+# Select one record
+salad_item = None
+with connection.cursor() as cursor:
+    cursor.execute("SELECT * from items_item where name='Red Fruit Salad'")
+    salad_item = cursor.fetchone()
+
+# DB API fetchone produces a tuple, where elements are acessible by index
+salad_item[0] # id
+salad_item[1] # name
+salad_itme[2] # description
+
+# Select multiple records
+all_drinks = None
+with connection.cursor() as cursor:
+    cursor.execute("SELECT * from items_drink")
+    all_drinks = cursor.fetchall()
+
+DB API fetchall produces a list of tuple
+all_drinks[0][0] # first drink id
+
 ######
