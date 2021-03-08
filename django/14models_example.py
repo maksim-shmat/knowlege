@@ -256,4 +256,43 @@ with connection.cursor() as cursor:
 DB API fetchall produces a list of tuple
 all_drinks[0][0] # first drink id
 
+###### Django custom model manager with custom manager methods
+
+from django.db import models
+
+# Create custom model manager
+class ItemMenuManager(models.Manager):
+    def salad_items(self):
+        return self.filter(menu__name='Salads')
+
+    def sandwich_items(self):
+        return self.filter(menu__name='Sandwiches')
+
+# Option 1) Override default model manager
+class Item(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=model.CASCADE)
+    name = models.CharField(max_length=30)
+    ...
+    objects = ItemMenuManager()
+
+# Queries on default custom model manager
+Item.objects.all()
+Item.objects.salad_items()
+Item.objects.sandwich_items()
+
+# Option 2) Create new model manager field and leave default model manager as is
+menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+name = models.CharField(max_length=30)
+...
+objects = models.Manager()
+menumgr = ItemMenuManager()
+
+# Queries on default and custom model managers
+Item.objects.all()
+Item.menumgr.salad_items()
+Item.menumgr.sandwich_items()
+# ERROR Item.objects.salad_items() # 'Manager' object has no attribute 'salad_items'
+# ERROR Item.objects.sandwich_items() # 'Manager' object has no attribute 'sandwich_items'
+Item.menumgr.all()
+
 ######
