@@ -346,7 +346,7 @@ Store.shops.all()
 Store.shops.sandiego()
 Store.shops.losangeles()
 
-###### Django custom model manager with custom QuerySet converted to manager
+### Django custom model manager with custom QuerySet converted to manager
 
 class StoreQuerySet(models.QuerySet):
     def sandiego(self):
@@ -363,5 +363,22 @@ class Store(models.Model):
 Store.shops.all()
 Store.shops.sandiego()
 Store.shops.losangeles()
+
+###### Django custom model manager for reverse query operations
+
+from django.db import models
+
+class Item(models.Model):
+    ...
+    objects = models.Manager() # Default manager for direct queries
+    reverseitems = CustomReverseManagerForItems() # Custom Manager for reverse queries
+
+# Get Menu record named Breakfast
+breakfast_menu = Menu.objects.get(name='Breakfast')
+
+# Fetch all Item records in the Menu, using Item custom model manager for revrse queries
+breakfast_menu.item_set(manager='reverseitems').all()
+# Call on_sale_items() custom manager method in CustomReverseManagerForItems
+breakfast_menu.item_set(manager='reverseitems').on_sale_items()
 
 ######
