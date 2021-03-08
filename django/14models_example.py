@@ -315,4 +315,35 @@ Store.sandiego.all()
 # Call losangeles manager all(), backed by get_queryset() method
 Store.losangeles.all()
 
+###### Django custom model manager with custom QuerySet class and methods
+
+class StoreQuerySet(models.QuerySet):
+    def sandiego(self):
+        return self.filter(city='San Diego')
+
+    def losangeles(self):
+        return self.filter(city='Los Angeles')
+
+
+class StoreManager(models.Manager):
+    def get_queryset(self):
+        return StoreQuerySet(self.model, using=self._db)
+
+    def sandiego(self):
+        return self.get_queryset().sandiego()
+
+    def losangeles(self):
+        return self.get_queryset().losangeles()
+
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    ...
+    objects = models.Manager()
+    shops = StoreManager()
+
+Store.shops.all()
+Store.shops.sandiego()
+Store.shops.losangeles()
+
 ######
