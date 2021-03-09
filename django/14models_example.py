@@ -708,4 +708,28 @@ class ItemCreation(CreateView):
         form.fields['name'].widget = forms.wiegets.Textarea()
         return form
 
-#######
+####### Django class-based view with CreateView with form_valid() and form_invalid()
+# views.py
+
+from django.views.generic.edit import CreateView
+from django.http import HttpResponseRedirect
+from django.contrib import messages
+from .models import Item, ItemForm, Menu
+
+class ItemCreation(CreateView):
+    initial = {'size':'L'}
+    model = Item
+    form_class = ItemForm
+    success_url = reverse_lazy('items:index')
+    
+    def form_valid(self,form):
+        super(ItemCreation,self).form_valid(form)
+        # Add action to valid form phase
+        messages.success(self.request, 'Item created successfully!')
+        return HttpResponseRedirect(self.get_success_url())
+
+    def form_invalid(self,form):
+        # Add action to invalid form phase
+        return self.render_to_response(self.get_context_data(form=form))
+
+######
