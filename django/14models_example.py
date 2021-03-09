@@ -689,4 +689,23 @@ class ItemCreation(CreateView):
         initial_base['menu'] = Menu.objects.get(id=1)
         return initial_base
 
-######
+###### Django class-based view with CreateView with get_form()
+# view.py
+from django.views.generic.edit import CreateView
+from .models import Item, ItemForm, Menu
+
+class ItemCreation(CreateView):
+    initial = {'size':'L'}
+    model = Item
+    form_class = ItemForm
+    success_url = reverse_lazy('items:index')
+    
+    def get_form(self):
+        form = surer(ItemCreation, self).get_form()
+        initial_base = self.get_initial()
+        initial_base['menu'] = Menu.objects.get(id=1)
+        form.initial = initial_base
+        form.fields['name'].widget = forms.wiegets.Textarea()
+        return form
+
+#######
