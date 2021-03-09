@@ -774,4 +774,33 @@ class ItemCreation(CreateView):
         # Return class-based view form_invalid to generate form with errors
         return self.form_invalid(form)
 
-######
+###### Django class-based view with ListView to read list of records
+# views.py
+
+from django.views.generic.list import ListView
+from .models import Item
+
+class ItemList(ListView):
+    model = Item
+
+# urls.py
+from django.conf.urls import url
+from coffeehouse.items import views as items_views
+
+urlpatterns = [
+        url(r'^$',items_views.ItemList.as_view(),name="index"),
+]
+
+# templates/items/item_list.html
+  {% regroup object_list by menu as item_menu_list %}
+  {% for menu_selection in item_menu_list %}
+    <li>{{ menu_section.grouper }}
+      <ul>
+        {% for item in menu_section.list %}
+        <li>{{item.name|title}}</li>
+        {% endfor %}
+      </ul>
+      </li>
+  {% endfor %}
+
+###### 
