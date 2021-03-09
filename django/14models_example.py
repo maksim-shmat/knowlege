@@ -803,4 +803,31 @@ urlpatterns = [
       </li>
   {% endfor %}
 
-###### 
+###### Django class-based view with DetailView to read model record
+# views.py
+
+from django.views.generic import DetailView
+from .models import Item
+
+class ItemDetail(DetailView):
+    model = Item
+
+# urls.py
+from django.conf.urls import url
+from coffeehouse.items import views as items_views
+
+urlpatterns = [
+        url(r'^(?P<pk>\d+)/$',items_views.ItemDetail.as_view(),name="detail"),
+]
+
+# templates/items/item_detail.html
+<h4> {{item.name|title}}</h4>
+<p>{{item.description}}</p>
+<p>${{item.price}}</p>
+<p>For {{item.get_size_display}} size: Only {{item.calories}} calories
+{% if item.drink %}
+and {{item.drink.caffeine}} mg of caffeine.</p>
+{% endif %}
+</p>
+
+######
