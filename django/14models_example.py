@@ -526,4 +526,151 @@ class ItemForm(forms.ModelForm):
   <option value="4">Menu #4) Drinks</option>
 </select>
 
+###### Django model form initialization with initial and instance
+
+from coffeehouse.items.models import Item
+
+preloaded_item = Item.objects.get(id=1)
+
+form = ItemForm(instance=preloaded_item)
+
+# Unbound form set up with instance values
+form.as_p()
+  <p>
+    <label for="id_menu">Menu:</label>
+      <select name="menu" required id="id_menu">
+        <option value="">----------</option>
+        <option value="1" selected>Menu #1) Breakfast</option>
+        <option value="2">Menu #2) Salsds</option>
+        <option value="3">Menu #3) Sandwiches</option>
+        <option value="4">Menu #4) Drinks</option>
+    </select>
+  </p>
+
+  <p>
+    <label for="id_name">Name:</label>
+      <input type="text" name="name"
+        value="Whole-Grain Oatmeal" required maxlength="30" id="id_name" />
+  </p>
+  # Remaining fields committed for brevity
+
+# Model form initialize with instance and override with initial
+form2 = ItemForm(initial={'menu':3},instance=preloaded_item)
+
+# Unbound form set up with instance values, but overridden with initial form2.as_p()
+  <p>
+    <label for="id_menu">Menu:</label>
+      <select name="menu" required id="id_menu">
+        <option value="">-----------</option>
+        <option value="1">Menu #1) Breakfast</option>
+        <option value="2">Menu #2) Salads</option>
+        <option value="3" selected>Menu #3) Sandwiches</option
+        <option value="4">Menu #4) Drinks</option>
+      </select>
+  </p>
+  # Remaining fields committed for brevity
+
+###### Django model form with reduced form that requires model update before saving
+
+from django import forms
+from django.conf import settings
+
+class Contact(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, null=True, default=None)
+    name = models.CharField(max_length=50,blank=True)
+    email = models.EmailField()
+    comment = models.CharField()
+
+class ContactForm(form.ModelForm):
+    class Meta:
+        model = Contact
+        exlude = ['user']
+
+# Option 1) Form model processing with missing value assigned with instance
+        if form.is_valid():
+            # Check if user is available
+            if request.user.is_authenticated():
+                # Add missing user to model form
+                form.instance.user = request.user
+            # Insert into DB
+            form.save()
+
+# Option 2) Form model processing with missing value assigned after model form sequence
+        if form.is_valid():
+            # Saveinstance but don't commit until model instance is complete
+            # form.save() returns a materialized model instance that has yet to be saved
+            pending_contact = form.save(commit=False)
+            # Check if user is available
+            if request.user.is_authenticated():
+                # Add missing user to model form
+                pending_contact.user = request.user
+            # Insert into DB
+            pending_contact.save()
+
+###### Django class-based view with CreateView to create model records
+# views.py
+
+from django.views.generic.edit import CreateView
+from .models import Item, ItemForm
+from django.core.urlresolvers import reverse_lazy
+
+class ItemCreation(CreateView):
+    model = Item
+    form_class = ItemForm
+    success_url = reverse_lazy('items:index')
+
+# models.py
+from django import forms
+from django.db import models
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+        field = '__all__'
+        widgets = {
+                'description': forms.Textarea(),
+        }
+
+# urls.py
+from django.conf.urls import url
+from coffeehouse.items import views as items_views
+
+urlpatterns = [
+        url(r'^new/$', items_views.ItemCreation.as_view(), name='new'),
+]
+
+# templates/items/item_form.html
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Create</button>
+  </form>
+
+###### Django class-based view with CreateView with template_name, content_type, and get_context_data()
+#views.py
+
+from django.views.generic.edit import CreateView
+from .models import Item, ItemForm, Menu
+
+class ItemCreation(CreateView):
+    template_name = "items/item_form.html"
+    context_type = "text/html"
+    model = Item
+    form_class = ItemForm
+    success_url = reverse_lazy('items:index')
+    def get_context_data(self,**kwargs):
+        kwargs['special_context_variable'] = 'My special context variable!!!'
+        context = super(ItemCreation, self).get_context_data(**kwargs)
+        return context
+
 ######
