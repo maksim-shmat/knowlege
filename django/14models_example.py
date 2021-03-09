@@ -830,4 +830,15 @@ and {{item.drink.caffeine}} mg of caffeine.</p>
 {% endif %}
 </p>
 
+###### Django class-based view with ListView to reduce record list with queryset
+# views.py
+
+from django.views.generic.list import ListView
+from .models import Item
+
+class ItemList(ListView):
+    model = Item
+    queryset = Item.objects.filter(menu_id=1)
+    ordering = ['name']
+
 ######
