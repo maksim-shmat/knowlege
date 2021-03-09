@@ -732,4 +732,46 @@ class ItemCreation(CreateView):
         # Add action to invalid form phase
         return self.render_to_response(self.get_context_data(form=form))
 
+###### Django class-based view with CreateView with get() and post()
+# views.py
+
+from django.views.generic.edit import CreateView
+from django.shortcuts import render
+from django.contrib import messages
+
+class ItemCreation(CreateView):
+    initial = {'size':'L'}
+    model = Item
+    form_class = ItemForm
+    success_url = reverse_lazy('items:index')
+    template_name = "items/item_form.html"
+
+    def get(self,request, *args,**kwargs):
+        form = super(ItemCreation, self).get_form()
+        # Set initial values and custom widget
+        initial_base = self.get_initial()
+        initial_base['menu'] = Menu.objects.get(id=1)
+        form.initial = initial_base
+        form.fields['name'].widget = forms.widgets.Textarea()
+        # return response using standard render() method
+        return render(request,self.template_name,
+                {'form':form,
+                 'special_context_variable':'My special context variable!'})
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        # Verify form is valid
+        if form.is_valid():
+            # Call parent form_valid to create model record object
+            super(ItemCreation,self).form_valid(form)
+            # Add custom success message
+            messages.success(request, 'Item created successfully!')
+            # Redirect to success page
+            return HttpResponseRedirect(self.get_success_url())
+        # Form is invalid
+        # Set object to None, since class-based view expects model record object
+        self.object = None
+        # Return class-based view form_invalid to generate form with errors
+        return self.form_invalid(form)
+
 ######
