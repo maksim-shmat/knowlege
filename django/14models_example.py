@@ -841,4 +841,39 @@ class ItemList(ListView):
     queryset = Item.objects.filter(menu_id=1)
     ordering = ['name']
 
+###### Django class-based view with ListView to read list of records with pagination
+# views.py
+
+from django.views.generic.list import ListView
+from .models import Item
+
+class ItemList(ListView):
+    model = Item
+    paginate_by = 5
+
+# urls.py
+from django.conf.urls import url
+from coffeehouse.item import views as items_views
+
+urlpatterns = [
+        url(r'^$',items_views.ItemList.as_view(),name="index"),
+        url(r'^page/(?P<page>\d+)/$',items_views.ItemList.as_view(),name="page"),
+]
+
+# templates/items/item_list.html
+  {% regroup object_list by menu as item_menu_list %}
+{% for menu_section in item_menu_list %}
+  <li>{{ menu_section.grouper }}
+    <ul>
+      {% for item in menu_section.list %}
+      <li>{{item.name|title}}</li>
+      {% endfor %}
+    </ul>
+    </li>
+{% endfor %}
+
+  {% if is_paginated %}
+    {{page_obj}}
+  {% endif %}
+
 ######
