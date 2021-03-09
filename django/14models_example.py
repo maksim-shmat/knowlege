@@ -876,4 +876,22 @@ urlpatterns = [
     {{page_obj}}
   {% endif %}
 
+###### Django class-based view with DetailView and slug_field option
+# views.py
+
+from django.views.genric import DetailView
+from .models import Item
+
+class ItemDetail(DetailView):
+    model = Item
+    slug_field = 'name__iexact'
+
+# urls.py
+from django.conf.urls import url
+from coffeehouse.items import views as items_views
+
+urlpatterns = [
+        url(r'^(?P<slug>\w+)/$',items_views.ItemDetail.as_view(),name="detail"),
+]
+
 ######
