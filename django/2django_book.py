@@ -125,4 +125,36 @@ True
 >>> user.is_superuser
 False
 
+###### Manage Django user through shell
+
+[user@coffeehouse ~]$ python manage.py shell
+Python 2.7.3 (default, Apr 10 2013, 06:20:15)
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+
+>>> from django.contrib.auth.models import User
+>>> user = User.objects.get(id=1)
+>>> user.username = 'superadmin'
+>>> user.save()
+>>> userbig = User.objects.get(username='bigboss')
+>>> userbig.is_superuser
+True
+>>> userbig.superuser = False
+>>> userbig.first_name = 'Big'
+>>> userbig.last_name = 'Boss'
+>>> userbig.save()
+>>> userbig.is_superuser
+False
+>>> userbig.get_full_name()
+u'Big Boss'
+>>> userbarista = User.objects.get(email='downtownbarista@coffeehouse.com')
+>>> userbarista.email = 'barista@coffeehouse.com'
+>>> userbarista.save()
+>>> userbarista.set_password('mynewpass')
+>>> userbarista.check_password('oldpass')
+False
+>>> userbarista.check_password('mynewpass')
+True
+
 ######
