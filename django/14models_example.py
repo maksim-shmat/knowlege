@@ -971,4 +971,20 @@ class Store(models.Model):
         default_permissions = ('add',)
         permissions = (('give_refund','Can refund customers'),('can_hire', 'Can hire employees'))
 
+###### Permission check in view methods with internal checks and @login_required
+# Internal check to see if user is anonymous or not
+
+def homepage(request):
+    if request.user.is_anonymous():
+        # Logic for AnonymousUser
+    else:
+        # Logic for User
+
+# Method check to see if user is logged in or not (i.e. a User)
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def profile(request):
+    # Logic for profile
+
 ######
