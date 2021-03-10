@@ -107,4 +107,22 @@ Type "help", "copyright", "credits" or "license" for more information.
         password='seedfunding')
 >>>
 
+###### Create regular Django user through shell
+
+[user@coffeehouse ~]$ python manage.py shell
+Python 2.7.3 (default, Apr 10 2013, 06:20:15)
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.contrib.auth.models import User
+>>> user = User.objects.create_user(username='downtownbarista',
+        email='downtownbarista@coffeehouse.com',
+        password='cappuccino')
+>>> user.is_staff
+False
+>>> user.is_active
+True
+>>> user.is_superuser
+False
+
 ######
