@@ -960,4 +960,15 @@ class ItemCreation(SuccessMessageMixin,CreateView):
     success_url = reverse_lazy('items:index')
     success_message = "Item %(name)s created successfully"
 
+###### Customize a Django model's permissions with default_permissions and permissions
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30,unique=True)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+    class Meta:
+        default_permissions = ('add',)
+        permissions = (('give_refund','Can refund customers'),('can_hire', 'Can hire employees'))
+
 ######
