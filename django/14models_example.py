@@ -894,4 +894,70 @@ urlpatterns = [
         url(r'^(?P<slug>\w+)/$',items_views.ItemDetail.as_view(),name="detail"),
 ]
 
+###### Django class-based view with UpdateView to edit a record
+# views.py
+
+from django.views.generic import UpdateView
+from .models import Item
+
+class ItemUpdate(UpdateView):
+    model = Item
+    form_class = ItemForm
+    success_url = reverse_lazy('items:index')
+
+# urls.py
+from django.conf.urls import url
+from coffeehouse.items import views as items_views
+
+urlpatterns = [
+        url(r'^edit/(?P<pk>\d+)/$', items_views.ItemUpdate.as_view(), name='edit'),
+]
+
+# templates/items/item_form.html
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn btn-primary">
+    {% if object == None %}Create{% else %}Update{% endif %}
+  </button>
+</form>
+
+###### Django class-based view with DeleteView to delete record
+# views.py
+
+from django.views.generic.edit import DeleteView
+from .models import Item
+
+class ItemDelete(UpdateView):
+    model = Item
+    success_url = reverse_lazy('items:index')
+
+# urls.py
+from django.conf.urls import url
+from coffeehouse.items import views as items_views
+
+urlpatterns = [
+        url(r'^delete/(?P<pk>\d+)/$', items_views.ItemDelete.as_view(), name='delete'),
+]
+
+# templates/items/item_confirm_delete.html
+  <form method="post">
+    {% csrf_token %}
+    Do you really want to delete "{{ object }}"?
+    <button class="btn btn-primary" type="submit">Yes, remove it!</button>
+  </form>
+
+###### Django class-based view with CreateView and mixin class
+# views.py
+
+from django.views.generic.edit import CreateView
+from django.contrib.messages.views import SuccessMessageMixin
+from .models import Item, ItemForm
+
+class ItemCreation(SuccessMessageMixin,CreateView):
+    model = Item
+    form_class = ItemForm
+    success_url = reverse_lazy('items:index')
+    success_message = "Item %(name)s created successfully"
+
 ######
