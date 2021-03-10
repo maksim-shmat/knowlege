@@ -81,4 +81,30 @@ email.attach('SalesReport.pdf',attachment.read(),'application/pdf')
 # Send message with built-in send() method
 email.send()
 
-##########
+########## Create Django superuser
+
+[user@coffeehouse ~]$ python manage.py createsuperuser
+Username (leave blank to use 'admin'):
+Email address: admin@coffeehouse.com
+Password:
+Password (again):
+Superuser crated successfully
+
+[user@coffeehouse ~]$ python manage.py createsuperuser --usename=bigboss
+                     --email=bigboss@coffeehouse.com
+Password:
+Password (again):
+Superuser created successfully.
+
+[user@coffeehouse ~]$ python manage.py shell
+Python 2.7.3 (default, Apr 10 2013, 06:20:15)
+[GCC 4.6.3] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from django.contrib.auth.models import User
+>>> user = User.objects.create_superuser(username='angelinvestor',
+        email='angelinvestor@coffeehouse.com',
+        password='seedfunding')
+>>>
+
+######
