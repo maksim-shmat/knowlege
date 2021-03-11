@@ -329,4 +329,20 @@ Copying '/www/STORE/coffeehouse/about/static/css/custom.css'
 
 732 static files copied to '/www/STORE/coffeestatic'.
 
-#############
+############# Permission checks in templates
+
+{% if user.is_authenticated %}
+  {# Content for authenticated users #}
+{% endif %}
+
+{% if perms.stores.add_store %}
+  {# Content for users that can add stores #}
+{% endif %}
+
+{% for group in user.groups.all %}
+  {% if group.name == 'Baristas' %}
+    {# Content for users with 'Baristas' group #}
+  {% endif %}
+{% endfor %}
+
+######
