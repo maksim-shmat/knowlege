@@ -257,5 +257,24 @@ urlpatterns = [
   </body>
 </html
 
-############
+############ Permission checks in urls.py for static templates
+
+from django.conf.urls import include, url
+from django.views.generic import TemplateView
+
+from django.contrib.auth.decorators import login_required,permission_required,user_passes_test
+from django.contrib.auth.models import Group
+
+urlpatterns = [
+        url(r'^online/baristas/',
+            user_passes_test(lambda u: Group.objects.get(name='Baristas') in u.groups.all())
+            (TemplateViw.as_view(template_name='online/baristas.html')),name="onlinebaristas"),
+        url(r'^online/dashboard/',
+            permission_required('stores.add_store')
+            (TemplateView.as_view(template_name='online/dashboard.html')),name="onlinedashboard"),
+        url(r'^online/',
+            login_required(TemplateView.as_view(template_name='online/index.html')),name='online'),
+]
+
+######
 
