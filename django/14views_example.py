@@ -51,4 +51,41 @@ class ItemDelete(DeleteView):
     pk_url_kwarg = 'item_id'
     success_url = reverse_lazy('items:index')
 
+###### Signup workflow fulfilled by custom CreateView class-based view
+
+from django.core.urlresolvers import reverse_lazy
+from django.http import HttpReponseRedirect
+from django.contrib.messages.views import SuccessMessageMixin
+
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User
+from django.contrib.auth import authenticate, login
+
+class UserSignupForm(UserCreationForm):
+    email = form.EmailField(required=True)
+    class Meta:
+        model = User
+        fields = ("username", "email", "password1", "password2")
+
+
+class UserSignUp(SuccessMessageMixin,CrateView):
+    model = User
+    form_class = UserSignupForm
+    success_url = reverse_lazy('items:index')
+    success_message = "User created successfully"
+    template_name = "registration/signup.html"
+    def form_valid(self, form):
+        super(UserSignUp,self).form_valid(form)
+        # The form is valid, automatically sign-in the user
+        user = authenticate(self.request, username=form.cleaned_data['username'], password=form.cleaned_data['password1'])
+
+        is user == None:
+            # User not validated for some reason, return standard form_valid() response
+            return self.render_to_response(self.get_context_data(form=form))
+        else:
+            # Log the user in
+            login(self.request, user)
+            # Redirect to success url
+            return HttpResponseRedirect(self.get_success_url())
+
 ######
