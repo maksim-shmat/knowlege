@@ -32,4 +32,14 @@ def user_of_stores(user):
     def store_creator(request):
         # Logic for store_creator
 
+###### Model with extra user fields related to default Django user model
+
+from django.contrib.auth.models import User
+from django.db import models
+
+class UserExtra(models.Model):
+    user = models.ForeignKey(User)
+    age = models.IntegerField(blank=True,null=True)
+    telephone = models.CharField(max_length=15,blank=True,null=True)
+
 ######
