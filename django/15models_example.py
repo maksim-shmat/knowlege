@@ -42,4 +42,28 @@ class UserExtra(models.Model):
     age = models.IntegerField(blank=True,null=True)
     telephone = models.CharField(max_length=15,blank=True,null=True)
 
+###### Custom User model to override default Djnago User model
+# models.py (app registration)
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+
+class CoffeehouseUser(AbstractUser):
+    age = models.IntegerField(blank=True,null=True)
+    telephone = models.CharField(max_length=15,blank=True,null=True)
+
+# admin.py (app registration)
+from django.contrib import admin
+from .models import CoffeehouseUser
+
+
+class CoffeehouseUserAdmin(admin.ModelAdmin):
+    pass
+
+admin.site.register(CoffeehouseUser, CoffeehouseUserAdmin)
+
+# settings.py
+AUTH_USER_MODEL = 'registration.CoffeehouseUser'
+
 ######
