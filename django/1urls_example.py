@@ -276,5 +276,55 @@ urlpatterns = [
             login_required(TemplateView.as_view(template_name='online/index.html')),name='online'),
 ]
 
+###### Permission checks in urls.py for include() definitions
+
+from django.conf.urls import include, url
+from django.core.urlresolvers import RegexURLResolver, RegexURLPattern
+
+class DecoratedURLPattern(RegexURLPattern):
+    def resolve(self, *args, **kwargs):
+        result = super(DecoratedURLPattern, self).resolve(*args, **kwargs)
+        if result:
+            result.func = self._decorate_with(result.func)
+        return result
+
+
+class DecoratedRegexURLResolver(RegexURLResolver):
+    def resolve(self, *args, **kwargs):
+        result = super(DecoratedRegexURLResolver, self).resolve(*args, **kwargs)
+        if result:
+            result.func = self._decorate_with(result.func)
+        return result
+
+def decorated_includes(func, includes, *args, **kwargs):
+    urlconf_module, app_name, namespace = includes
+    patterns = getattr(urlconf_module, 'urlpatterns', urlconf_module)
+    for item in patterns:
+        if isinstance(item, RegexURLPattern):
+            item.__class__ = DecoratedURLPattern
+            item._decorate_with = func
+
+        elif isinstance(item, RegexURLResolver):
+            item.__class__ = DecoratedRegexURLResolver
+            item._decorate_with = func
+
+    return urlconf_module, app_name, namespace
+
+from django.contrib.auth.decorators import login_required, permission_required, user_passes_test
+from django.contrib.auth.models import Group
+
+from coffeehouse.items.urls import urlpatterns as drinks_url_patterns
+
+urlpatterns = [
+        url(r'^items/',
+            decoratd_includes(login_required,include(items_url_patterns,namespace="items"))),
+        url(r'^stores/',
+            decorated_includes(permission_required('stores.add_store'),
+            include('coffeehouse.stores.urls',namespace="stores"))),
+        url(r'^social/',
+            decorated_includes(user_passes_test(lambda u: Group.objects.get(name='Baristas') in u.groups.all()),
+            include('coffeehouse.social.urls',namespace="social")))<
+]
+
 ######
 
