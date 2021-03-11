@@ -351,4 +351,16 @@ urlpatterns = [
         url(r'^accounts/reset/done/$', views.PasswordResetCompleteViw.as_view(), name='password_reset_complete'),
 ]
 
+###### Configure url for user up workflow
+# urls.py main
+
+from django.conf.urls import url
+from django.contrib.auth import views
+from coffeehouse.registration import views as registration_views
+
+urlpatterns = [
+        url(r'^accounts/', include('django.contrib.auth.urls')),
+        url(r'^accounts/signup/$',registration_views.UserSignUp.as_view(),name="signup"),
+]
+
 ######
