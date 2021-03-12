@@ -29,4 +29,43 @@ class StoreAdmin(admin.ModelAdmin):
 
 admin.site.register(Store, StoreAdmin)
 
+###### Django admin list_display option with callables
+
+from django.contrib import admin
+from coffeehouse.stores.models import Store
+
+# Option 1
+# admin.py
+def upper_case_state(obj):
+    return ("%s %s" % (obj.sity, obj.state)).upper()
+upper_case_city_state.short_description = 'City/State'
+
+
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name','address','upper_case_city_state']
+
+# Option 2
+# admin.py
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name','address','upper_case_city_state']
+    def upper_case_city_state(self, obj):
+        return ("%s %s" % (obj.city, obj.state)).upper()
+    upper_case_city_state.short_description = 'City/State'
+
+# Option 3
+# models.py
+from django.db import models
+
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    email = models.EmailField()
+    def email_domain(self):
+        return self.email.split("@")[-1]
+    email_domain.short_description = 'Email domain'
+
+# admin.py
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name', 'email_domain']
+
 ######
