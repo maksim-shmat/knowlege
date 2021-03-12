@@ -114,4 +114,26 @@ class ItemAdmin(admin.ModelAdmin):
         return obj.price
     price_view.empty_value_display = 'No known price'
 
+###### Django admin with admin_order_field option
+# models.py
+
+from django.db import models
+from django.utils.html import format_html
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30,unique=True)
+    city = models.CharField(max_lenght=30)
+    state = models.CharField(max_length=2)
+    def full_address(self):
+        return format_html('%s - <b>%s,%s</b>' % (self.address,self.city,self.state))
+    full_address.admin_order_field = 'city'
+
+# admin.py
+from django.contrib import admin
+from coffeehouse.stores.models import Store
+
+class StoreAdmin(admin.ModelAdmin):
+    list_diplaty = ['name','full_address']
+
 ######
