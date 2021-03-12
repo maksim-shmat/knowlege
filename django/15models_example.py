@@ -66,4 +66,31 @@ admin.site.register(CoffeehouseUser, CoffeehouseUserAdmin)
 # settings.py
 AUTH_USER_MODEL = 'registration.CoffeehouseUser'
 
+###### Custom authentication back end to support authentication with email
+# models.py (registration app)
+
+from django.contrib.auth import get_user_model
+
+class EmailBackend(object):
+    def authenticate(self, request, username=None, password=None, **kwargs):
+        User = get_user_model()
+        try:
+            user = User.objects.get(email=username)
+        except User.DoesNotExist:
+            return None
+        else:
+            if getattr(user, 'is_active', False) and user.check_password(password):
+                return user
+        return None
+
+    def get_user(self, user_id):
+        User = get_user_model()
+        try:
+            return User.objects.get(pk=user_id)
+        except User.DoesExist:
+            return None
+
+# setting.py
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend', 'coffeehouse.registration.models.EmailBackend']
+
 ######
