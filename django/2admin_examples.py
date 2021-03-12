@@ -184,4 +184,14 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Item, ItemAdmin)
 
+###### Django admin search_field option
+
+from django.contrib import admin
+from coffeehouse.stores.models import Store
+
+class StoreAdmin(admin.ModelAdmin):
+    search_field = ['city', 'state']
+
+admin.site.register(Store, StoreAdmin)
+
 ######
