@@ -89,4 +89,29 @@ from coffeehouse.stores.models import Store
 class StoreAdmin(admin.ModelAdmin):
     list_display = ['name','full_address']
 
+###### Django admin empty_value_display option global, class, or field-level configuration
+
+# Option 1 - Globally set empty values to ???
+# settings.py
+
+from django.contrib import admin
+admin.site.empty_value_display = '???'
+
+# Option 2 - Set all fields in a class to 'Unknown Item field'
+# admin.py to show "Unknown Item field" instead of '-' for NULL values in all Item fields
+# NOTE: Item model in items app
+
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['menu','name','price']
+    empty_value_display = 'Unknown Item field'
+
+admin.site.register(Item, ItemAdmin)
+
+# Option 3 - Set individual field in a class to 'No known price'
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['menu','name','price_view']
+    def price_view(self, obj):
+        return obj.price
+    price_view.empty_value_display = 'No known price'
+
 ######
