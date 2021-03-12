@@ -136,4 +136,28 @@ from coffeehouse.stores.models import Store
 class StoreAdmin(admin.ModelAdmin):
     list_diplaty = ['name','full_address']
 
+###### Django admin with list_display_links option
+
+# Sample 1)
+# admin.py
+from django.contrib import admin
+from coffeehouse.stores.models import Store
+
+class Store Admin(admin.ModelAdmin):
+    list_display = ['name','address','city','state']
+    list_display_links = None
+
+admin.site.register(Store, StoreAdmin)
+
+# Sample 2)
+# admin.py
+from django.contrib import admin
+from coffeehouse.items.models import Item
+
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['menu', 'name', 'price_view']
+    list_display_links = ['menu', 'name']
+
+admin.site.register(Item, ItemAdmin)
+
 ######
