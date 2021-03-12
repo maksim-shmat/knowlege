@@ -68,4 +68,25 @@ class Store(models.Model):
 class StoreAdmin(admin.ModelAdmin):
     list_display = ['name', 'email_domain']
 
+###### Django admin list_display option with callable and format_html
+# models.py
+
+from django.db import models
+from django.utils.html import format_html
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30,unique=True)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+    def full_address(self):
+        return format_html('%s - <b>%s,%s</b>' % (self.address,self.city,self.state))
+
+# admin.py
+from django.contrib import admin
+from coffeehouse.stores.models import Store
+
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name','full_address']
+
 ######
