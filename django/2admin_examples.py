@@ -172,4 +172,16 @@ class StoreAdmin(admin.ModelAdmin):
 
 admin.site.register(Store, StoreAdmin)
 
+###### Django admin with list_per_page option
+
+# admin.py
+from django.contrib import admin
+from coffeehouse.items.models import Item
+
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['menu', 'name', 'price']
+    list_per_page = 5
+
+admin.site.register(Item, ItemAdmin)
+
 ######
