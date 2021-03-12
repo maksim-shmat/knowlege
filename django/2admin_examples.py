@@ -19,4 +19,14 @@ admin.site.registr(Store,StoreAdmin)
 class StoreAdmin(admin.ModelAdmin):
     pass
 
+###### Django admin list_display option
+
+from django.contrib import  admin
+from coffeehouse.stores.models import Store
+
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name','address','city','state']
+
+admin.site.register(Store, StoreAdmin)
+
 ######
