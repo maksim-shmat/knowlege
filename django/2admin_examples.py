@@ -160,4 +160,16 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Item, ItemAdmin)
 
+###### Django admin with list_editable option
+
+# admin.py
+from django.contrib import admin
+from coffeehouse.stores.models import Store
+
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name', 'address', 'city', 'state']
+    list_editable = ['address', 'city', 'state']
+
+admin.site.register(Store, StoreAdmin)
+
 ######
