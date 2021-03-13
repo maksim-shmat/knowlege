@@ -299,4 +299,21 @@ class StoreAdmin(admin.ModelAdmin):
 
 admin.site.register(Store, StoreAdmin)
 
+###### Django admin fieldsets option for Django admin forms
+
+from django.utils.safestring import mark_safe
+
+class StoreAdmin(admin.ModelAdmin):
+    fieldsets = [
+            ['Store general information', {
+                'fields': ['name', 'email']
+            }],
+            ['Store location options', {
+                'classes': ['collapse'],
+                'fields': ['address',('city', 'state')],
+            }],
+    ]
+
+admin.site.register(Store, StoreAdmin)
+
 ######
