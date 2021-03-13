@@ -272,4 +272,11 @@ class StoreAdmin(admin.ModelAdmin):
         return ("%s" % ','.join([amenity.name for amenity in obj.amenities.all()]))
     list_of_amenities.short_description = 'Store amenities'
 
+###### Django admin fields option for Django admin fields
+
+class StoreAdmin(admin.ModelAdmin):
+    fields = ['address','city','state','email']
+
+admin.site.register(Store, StoreAdmin)
+
 ######
