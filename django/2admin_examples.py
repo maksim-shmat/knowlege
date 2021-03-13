@@ -262,4 +262,14 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Item, ItemAdmin)
 
+###### Django admin list_filter option with admin.RelatedOnlyFieldListFilter
+# admin.py
+
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name','address','city','state','list_of_amenities']
+    list_filter = [['amenities',admin.RelatedOnlyFieldListFilter]]
+    def list_of_amenities(self, obj):
+        return ("%s" % ','.join([amenity.name for amenity in obj.amenities.all()]))
+    list_of_amenities.short_description = 'Store amenities'
+
 ######
