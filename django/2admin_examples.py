@@ -328,4 +328,16 @@ class MenuAdmin(admin.ModelAdmin):
 
 admin.site.register(Menu, MenuAdmin)
 
+###### Django admin formfield_overrides option for Django admin forms
+
+from django.contib import admin
+from coffeehouse.items.models import Menu
+
+class MenuAdmin(admin.ModelAdmin):
+    formfield_overrides = {
+            models.CharField: {'widget': forms.Textarea}
+    }
+
+admin.site.register(Menu, MenuAdmin)
+
 ######
