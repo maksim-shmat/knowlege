@@ -235,4 +235,31 @@ class StoreAdmin(admin.ModelAdmin):
 
 admin.site.register(Store, StoreAdmin)
 
+###### Django admin admin_order_field option with ForeignKey field
+# model.py
+
+class Menu(models.Model):
+    name = modes.CharField(max_length=30)
+    creator = models.CharField(max_length=100,default='Coffeehouse Chef')
+    def __str__(self):
+        return u"%s" % (self.name)
+
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu)
+    name = models.CharField(max_length=30)
+
+# admin.py
+from django.contrib import admin
+from coffeehouse.stores.models import Store
+
+
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['menu', 'name', 'menu_creator']
+    def menu_creator(self, obj):
+        return obj.menu.creator
+    menu_creator.admin_order_field = 'menu__creator'
+
+admin.site.register(Item, ItemAdmin)
+
 ######
