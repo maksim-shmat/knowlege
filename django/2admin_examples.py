@@ -279,4 +279,11 @@ class StoreAdmin(admin.ModelAdmin):
 
 admin.site.register(Store, StoreAdmin)
 
+###### Django admin readonly_fields option for Django admin forms
+
+class StoreAdmin(admin.ModelAdmin):
+    readonly_fields = ['name','amenities']
+
+admin.site.register(Store, StoreAdmin)
+
 ######
