@@ -286,4 +286,17 @@ class StoreAdmin(admin.ModelAdmin):
 
 admin.site.register(Store, StoreAdmin)
 
+###### Django admin readonly_fields option with callable for Django admin forms
+
+from django.utils.safestring import mark_safe
+
+class StoreAdmin(admin.ModelAdmin):
+    fields = ['name','address',('city','state'),'email','custom_amenities_display']
+    readonly_fields = ['name','custom_aminities_display']
+    def custom_amenities_display(self, obj):
+        return mark_safe("Amenities can only by modified by special request, please contact the ctore manager at %s to create a request" % (obj.email,obj.email))
+    custom_amenities_display.short_description = "Amenities"
+
+admin.site.register(Store, StoreAdmin)
+
 ######
