@@ -205,4 +205,34 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Item, ItemAdmin)
 
+###### Django admin list_display option with ManyToManyField field
+# models.py
+
+from django.db import models
+
+class Amenity(models.Model):
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+
+
+class Store(models.Model):
+    name = models.CharField(max_length=30)
+    address = models.CharField(max_length=30)
+    city = models.CharField(max_length=30)
+    state = models.CharField(max_length=2)
+    email = models.EmailField()
+    amenities = models.ManyToManyField(Amenity,blank=True)
+
+# admin.py
+from django.contrib import admin
+from coffeehouse.stores.models import Store
+
+class StoreAdmin(admin.ModelAdmin):
+    list_display = ['name', 'address', 'city', 'state', 'list_of_amenities']
+    def list_of_amenities(self, obj):
+        return ("%s" % ', '.join([amenity.name for amenity in obj.amenities.all()]))
+    list_of_amenities.short_discription = 'Store amenities'
+
+admin.site.register(Store, StoreAdmin)
+
 ######
