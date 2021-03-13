@@ -194,4 +194,15 @@ class StoreAdmin(admin.ModelAdmin):
 
 admin.site.register(Store, StoreAdmin)
 
+###### Django admin list_filter option
+
+from django.contrib import admin
+from coffeehouse.items.models import Item
+
+class ItemAdmin(admin.ModelAdmin):
+    list_display = ['menu', 'name', 'price']
+    list_filter = ['menu', 'price']
+
+admin.site.register(Item, ItemAdmin)
+
 ######
