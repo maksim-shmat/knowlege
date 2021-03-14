@@ -340,4 +340,72 @@ class MenuAdmin(admin.ModelAdmin):
 
 admin.site.register(Menu, MenuAdmin)
 
+###### Django admin radio_fields opton for ForeignKey field
+
+from django.contrib import admin
+from coffeehouse.items.models import Item
+
+# Option 1 (Hourizontal)
+
+class ItemAdmin(admin.ModelAdmin):
+    radio_fields = {"menu": admin.HORIZONTAL}
+
+admin.site.register(Item, ItemAdmin)
+
+# Option 2 (Vertical)
+
+class ItemAdmin(admin.ModelAdmin):
+    radio_fields = {"menu": admin.VERTICAL}
+
+admin.site.register(Item, ItemAdmin)
+
+###### Django admin inlines option for ForeignKey and ManyToManyField field
+# admin.py (ForeignKey)
+
+from django.contrib import admin
+from coffeehouse.items.models import Item, Menu
+
+class ItemInline(admin.TabularInline):
+    model = Item
+
+
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ['name']
+    inlines = [
+            ItemInline,
+    ]
+
+admin.site.register(Menu, MenuAdmin)
+
+# admin.py (ManyToManyField)
+
+from django.contrib import admin
+from coffeehouse.stores.models import Store, Amenity
+
+class StoreInline(admin.StackedInline):
+    model = Store.amenities.through
+
+
+class AmenityAdmin(admin.ModelAdmin):
+    inlines = [
+            StoreInline,
+    ]
+
+admin.site.register(Amenity, AmenityAdmin)
+
+###### Djnago admin django.contrib.admin.site object to customize fields
+
+from django.conf.urls import url
+from django.contrib import admin
+
+admin.site.site_header = 'Coffeehouse admin'
+admin.site.site_titlej = 'Coffeehouse admin'
+admin.site.site_url = 'http://coffeehouse.com/'
+admin.site.index_title = 'Coffeehouse administration'
+admin.empty_value_display = '**Emply**'
+
+urlpatterns = [
+        url(r'^admin/', admin.site.urls),
+]
+
 ######
