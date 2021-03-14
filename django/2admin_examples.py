@@ -527,4 +527,34 @@ class ProviderAdminSite(AdminSite):
     site_header = 'Coffeehouse Provider admin'
     provideradmin = ProviderAdminSite(name='provideradmin')
 
+###### Django admin class registration on multiple Django admin sites
+
+# admin.py (stores app)
+from django.contrib import admin
+from coffeehouse.stores.models import Store,Amenity
+
+class StoreAdmin(admin.ModelAdmin):
+    search_fields = ['city','state']
+
+# Default model registration on main Django admin
+admin.site.register(Store, StoreAdmin)
+
+# Model registration on custom Django admin named provideradmin
+from coffeehouse.admin import provideradmin
+provideradmin.register(Store, StoreAdmin)
+
+# admin.py (items app)
+from django.contrib import admin
+from coffeehouse.items.models import Menu
+
+class MenuAdmin(admin.ModelAdmin):
+    list_display = ['name','creator']
+
+# Default model registration on main Django admin
+admin.site.register(Menu, MenuAdmin)
+
+# Model registration on custom Django admin named provideradmin
+from coffeehouse.admin import eployeeadmin
+employeeadmin.register(Menu, MenuAdmin)
+
 ######
