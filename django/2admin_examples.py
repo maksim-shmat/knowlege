@@ -460,4 +460,41 @@ class StoreAdmin(admin.ModelAdmin):
 
 admin.site.register(Store, StoreAdmin)
 
+###### Django model with custom read permission and Django admin class enforcing read permission
+# models.py
+
+from django.db import models
+
+class Menu(models.Model):
+    name = models.CharField(max_length=30)
+    creator = models.CharField(max_length=100,default='Coffeehouse Chef')
+
+
+class Item(models.Model):
+    menu = models.ForeignKey(Menu, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+    description = models.CharField(max_length=100)
+    class Meta:
+        permissions = (
+                ('read_item','Can read item'),
+        )
+
+# admin.py
+from django.contrib import admin
+
+from coffeehouse.items.models import Item
+
+class ItemAdmin(admin.ModelAdmin):
+    list_per_page = 5
+    list_display = ['menu','name','menu_creator']
+    
+    def get_readonly_fields(self, request, obj=None):
+        if not request.user.is_superuser and request.user.has_perm('items.read_item'):
+            return [f.name for f in self.model._meta.fields]
+    return super(ItemAdmin, self).get_readonly_fields(
+            request, obj=obj
+    )
+
+admin.site.register(Item, ItemAdmin)
+
 ######
