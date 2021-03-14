@@ -15,4 +15,23 @@ class StoreSerializer(serializers.Serializer):
     name = serializers.CharField(max_length=200)
     email = serializers.EmailField()
 
+###### Django view method decorated with Django REST framework
+
+from coffeehouse.stores.models import Store
+from coffeehouse.stores.serializers import StoreSerializer
+
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+@api_view(['GET','POST','DELETE'])
+def rest_store(request):
+    if request.method == 'GET':
+        stores = Store.objects.all()
+        serializer = StoreSerializer(stores, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        ... # logic for HTTP POST operation
+    elid request.method == 'DELETE':
+        ... # logic for HTTP DELETE operation
+
 ######
