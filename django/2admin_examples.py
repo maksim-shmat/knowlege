@@ -497,4 +497,34 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Item, ItemAdmin)
 
+###### Django admin multiple sites accessible on different urls
+
+# urls.py (Main directory)
+from django.conf.urls import include, url
+from django.views.generic import TemplateView
+
+from django.contrib import admin
+admin.site.site_header = 'Coffeehouse general admin'
+
+from coffeehouse.admin import employeeadmin, provideradmin
+
+urlpatterns = [
+        url(r'^$',TemplateView.as_view(template_name='homepage.html'),name="homepage"),
+        url(r'^admin/',admin.site.urls),
+        url(r'^employeeadmin/',employeeadmin.urls),
+        url(r'^provideradmin/',provideradmin.urls),
+]
+
+# admin.py (Main directory)
+from django.contrib.admin import AdminSite
+
+class EmployeeAdminSite(AdminSite):
+    site_header = 'Coffeehouse Employee admin'
+    employeeadmin = EmployeeAdminSite(name='employeeadmin')
+
+
+class ProviderAdminSite(AdminSite):
+    site_header = 'Coffeehouse Provider admin'
+    provideradmin = ProviderAdminSite(name='provideradmin')
+
 ######
