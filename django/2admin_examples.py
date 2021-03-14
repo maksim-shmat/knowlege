@@ -423,4 +423,41 @@ class ItemAdmin(admin.ModelAdmin):
 
 admin.site.register(Item, ItemAdmin)
 
+###
+(function($) {
+    // Custom JavaScript logic leveraging the Django admin built-in jQuery libray
+    $(document).ready(function() {
+        $('.deletelink').on('click',function() {
+            if( !cunfirm('Are you sure you want to delete this record ?')) {
+                return false;
+            }
+        });
+    });
+})(django.jQuery); // <-- Note wrapping namespace
+
+###### Django admin class with custom changelist_view() and delete_view() methods
+
+from coffeehouse.stores.models import Store
+
+class StoreAdmin(admin.ModelAdmin):
+    search_fields = ['city','state']
+    def changelist_view(self, request, extra_context=None):
+        # Add extra context data to pass to change list template
+        extra_context = extra_context or {}
+        extra_context['my_store_data'] = {'onsale':['Item 1','Item 2']}
+        # Execute default logic from parent class changelist_view()
+        return super(StoreAdmin, self).changelist_view(
+                request, extra_context=extra_context
+        )
+
+    def delete_view(self, request, object_id, extra_context=None):
+        # Add custom audit logic here
+        #
+        # Execute default logic from parent class delete_view()
+        return super(StoreAdmin, self).delete_view(
+                request, object_id, extra_context=extra_context
+        )
+
+admin.site.register(Store, StoreAdmin)
+
 ######
