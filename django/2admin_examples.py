@@ -408,4 +408,19 @@ urlpatterns = [
         url(r'^admin/', admin.site.urls),
 ]
 
+###### Django admin class with Media class to define custom static resources
+
+from django.contrib import admin
+from coffeehouse.items.models Item
+
+class ItemAdmin(admin.ModelAdmin):
+    list_per_page = 5
+    class Media:
+        css = {
+                "screen": ("css/items/items.css",)
+        }
+        js = ("js/items/items.js",)
+
+admin.site.register(Item, ItemAdmin)
+
 ######
