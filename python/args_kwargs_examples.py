@@ -27,4 +27,26 @@ address_with_default('San Diego','CA')
 address_with_default('Vancouver','BC','CA')
 address_with_default(**{'state':'CA','city':'San Diego'})
 
-#####
+##### Python method positional argument
+
+def vowels(*args):
+    print("*args is %s" % type(args))
+    print("Arguments %s " % ', '.join(args))
+
+vowels('a')
+vowels('a','e')
+vowels('a','e','i')
+vowels('a','e','i','o')
+vowels('a','e','i','o','u')
+
+###### Python method with standard and positional argument
+
+def address_with_zipcode(zipcode, *args):
+    print(zipcode)
+    print("*args is %s" % type(args))
+    print("Arguments %s " % ', '.join(args))
+
+address_with_zipcode(92101,'100 Park Boulevard','San Diego','CA','US')
+address_with_zipcode('V6B 4Y8','777 Pacific Boulevard','Vancouver','BC','CA')
+
+######
