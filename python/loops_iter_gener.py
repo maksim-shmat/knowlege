@@ -137,4 +137,49 @@ for i in range(1,101):
 # Equivalent list comprehension
 one_to_onehundred_comp = [i for i in range(1,101)]
 
+### The last example an inefficient because list require more memory to store data
+
+###### Python generator expressions
+
+one_to_onehundred_genexpression = (i for i in range(1,101))
+print(type(one_to_onehundred_genexpression))
+one_to_onehundred_genexpression.next()
+one_to_onehundred_genexpression.next()
+
+first_fifty_even_numbers = (i for i in ange(2, 101, 2))
+first_fifty_even_numbers.next()
+first_fifty_even_numbers.next()
+
+first_fifty_odd_numbers = (i for i in range(1, 101, 2))
+first_fifty_odd_numbers.next()
+first_fifty_odd_numbers.next()
+
+###### Python map() and filter() examples
+
+country_codes = ['us', 'ca', 'mx', 'fr', 'ru']
+zipcodes = {90003: 'Los Angeles', 90802:'Long Beach', 91501:'Burbank',92101:'San Diego',92139:'San Diego',90071:'Los Angeles'}
+
+# List comprehension
+country_codes_upper_comp = [cc.upper() for cc in country_codes]
+
+# Helper function
+def country_to_upper(name):
+    return name.upper()
+
+# Map function
+country_codes_upper_map = map(country_to_upper,country_codes)
+
+# List comprehension
+zip_codes_la_comp =[zc for zc,city in zipcodes.items() if city == "Los Angeles"]
+
+# Helper function
+def only_la(dict_item):
+    if dict_item[1] == "Los Angeles":
+        return True
+
+# Filter function
+zip_codes_la_filter_dict_items = filter(only_la,zipcodes.items())
+print(zip_codes_la_filter_dict_items)
+zip_codes_la_filter = [tup[0] for tup in zip_codes_la_filter_dict_items]
+
 ######
