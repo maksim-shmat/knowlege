@@ -24,4 +24,20 @@ thedrink = Drink("small")
 print(thedrink)
 print("thedrink is %s " % thedrink.sizeinoz())
 
+###### Python subclass syntax and behavior
+
+class Coffee(Drink):
+    """Coffee class"""
+    beans = "arabica"
+    def __init__(self,*args,**kwargs):
+        Drink.__init__(self,*args)
+        self.temperature = kwargs['temperature']
+    # Used to display object instance
+    def __str__(self):
+        return 'Coffee: beans %s, size %s, temperature %s' % (self.beans,self.size,self.temperature)
+
+thecoffee = Coffee("large",temperature="cold")
+print(thecoffee)
+print("thecoffee is %s " % thecoffee.sizeinoz())
+
 ######
