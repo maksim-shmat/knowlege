@@ -49,4 +49,13 @@ def address_with_zipcode(zipcode, *args):
 address_with_zipcode(92101,'100 Park Boulevard','San Diego','CA','US')
 address_with_zipcode('V6B 4Y8','777 Pacific Boulevard','Vancouver','BC','CA')
 
+###### Python method with keyword argument
+
+def address_catcher(**kwargs):
+    print("**kwargs is %s" % type(kwargs))
+    print("Keyword arguments %s " % ', '.join(['%s = %s' % (k,v) for k,v in kwargs.items()]))
+
+address_catcher(zipcode=92101,street='100 Park Boulevard',city='San Diego',state='CA',country='US')
+address_catcher(postalcode='V6b 4Y8',street='777 Pacific Boulevard',city='Vancouver',province='BC',country='CA')
+
 ######
