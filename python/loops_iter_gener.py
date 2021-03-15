@@ -98,4 +98,43 @@ infinite_order_numbers = generate_infinite_order_numbers(1000)
 # >>> 1001
 # next() never reaches end due to infinite 'while True:' statement
 
+###### List Comprehensions, Generator Expressions, Maps, and Filters
+# Python list comprehensions
+
+country_codes = ['us','ca','mx','fr','ru']
+zipcodes = {90003:'Los Angeles',90802:'Long Beach',91501:'Burbank',92101:'San Diego',92139:'San Diego',90071:'Los Angeles'}
+
+# Regular syntax
+country_codes_upper_std = []
+for country_code in country_codes:
+    country_codes_upper_std.append(country_code.upper())
+
+# Equivalent list comprehension
+country_codes_upper_comp = [cc.upper() for cc in country_codes]
+
+# Regular syntax
+zip_codes = []
+for zipcode in zipcodes.keys():
+    zip_codes.append(zipcode)
+
+# Equivalent list comprehension
+zip_codes_comp = [zc for zc in zipcodes.keys()]
+
+# Regular syntax
+zip_codes_la = []
+for zipcode,city in zipcodes.items():
+    if city == "Los Angeles":
+        zip_codes_la.append(zipcode)
+
+# Equivalent list comprehension
+zip_codes_la_comp = [zc for zc,city i zipcodes.items() if city == "Los Angeles"]
+
+# Regular syntax
+one_to_onehundred = []
+for i in range(1,101):
+    one_to_onehundred.append(i)
+
+# Equivalent list comprehension
+one_to_onehundred_comp = [i for i in range(1,101)]
+
 ######
