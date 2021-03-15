@@ -58,4 +58,16 @@ def address_catcher(**kwargs):
 address_catcher(zipcode=92101,street='100 Park Boulevard',city='San Diego',state='CA',country='US')
 address_catcher(postalcode='V6b 4Y8',street='777 Pacific Boulevard',city='Vancouver',province='BC',country='CA')
 
+###### Python method with standard, positional and keyword argument
+
+def address_full(country,*args,**kwargs):
+    print(country)
+    print("*args is %s" % type(args))
+    print("Arguments %s " % ', '.join(args))
+    print("**kwargs is %s" % type(kwargs))
+    print("Keyword arguments %s " % ', '.join(['%s = %s' % (k,v) for k,v in kwargs.items()]))
+
+address_full('US','100 Park Boulevard', 'San Diego', state='CA',zipcode=92101)
+address_full('CA','777 Pacific Boulevard','Vancouver',province='BC',postalcode='V6B 4Y8')
+
 ######
