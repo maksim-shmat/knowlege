@@ -610,4 +610,36 @@ $ touch templates/registration/login.html
 ### settings.py
 LOGIN_REDIRECT_URL = 'home'
 
+###### update base.html and add auth
+# templates/base.html
+{% load static %}
+<html>
+  <head>
+    <title>Django blog</title>
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400"
+    rel="stylesheet">
+    <link href="{% static 'css/base.css' %}" rel="stylesheet">
+  </head>
+  <body>
+    <div>
+      <header>
+        <div class="nav-left">
+          <h1><a href="{% url 'home' %}">Django blog</a></h1>
+        </div>
+        <div class="nav-right">
+          <a href="{% url 'post_new' %}">+ New Blog Post</a>
+        </div>
+      </heder>
+      {% if user.is_authenticated %}
+        <p>Hi {{ user.username }}!</p>
+      {% else %}
+        <p>You are not logged in.</p>
+        <a href="{% url 'login' %}">Log In</a>
+      {% endif %}
+    {% block content %}
+    {% endblock content %}
+    </div>
+  </body>
+</html>
+
 ######
