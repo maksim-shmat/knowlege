@@ -579,5 +579,35 @@ admin.site.unregister(Group)
 ### settings.py
 AUTH_USER_MODEL = 'customauth.MyUser'
 
-############
+#Mar 18.21##### User Account
+# blog_project/urls.py
 
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('accounts/' include('django.contrib.auth.urls')), # new
+        path('', include('blog.urls')),
+]
+
+###
+$ mkdir templates/registration
+$ touch templates/registration/login.html
+
+# templates/registration/login.html
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Log In</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Log In</button>
+</form>
+{% endblock content %}
+
+### settings.py
+LOGIN_REDIRECT_URL = 'home'
+
+######

@@ -153,7 +153,7 @@ class BlogTests(TestCase):
     def test_post_list_view(self):
         response = self.client.get(reverse('home'))
         self.assertEqual(response.status_code, 200)
-        self.assertContents(response, 'Nice body content')
+        self.assertContains(response, 'Nice body content')
         self.assettTemplateUsed(response, 'home.html')
 
     def test_post_detail_view(self):
