@@ -701,4 +701,72 @@ class SignUpView(generic.CreateView):
 </form>
 {% endblock content %}
 
+###### Custom User Model
+
+- update settings.py
+- create a new CustomUser model
+- update the admin
+- create new forms for UserCreationForm and UserChangeForm
+
+### newspaper_project/settings.py
+INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'users.apps.UserConfig', # new
+]
+...
+AUTH_USER_MODEL = 'users.CustomUser' # new
+
+### userl/models.py
+
+from django.contrib.auth.models import AbstractUser
+from django.db import models
+
+class CustomUser(AbstractUser):
+    age = models.PositiveIntegerField(null=True, blank=True)
+
+### $ touch users/forms.py
+from django import forms
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
+from .models import CustomUser
+
+class CustomUserCreationForm(UserCreationForm):
+
+    class Meta(UserCreationForm.Meta):
+        model = CustomUser
+        fields = UserCreationForm.Meta.fields + ('age',)
+
+    
+    class CustomUserChangeForm(UserChangeForm):
+
+        class Meta:
+            model = CustomUser
+            fields = UserChangeForm.Meta.fields
+
+### user/admin.py
+from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
+
+from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .models import CustomUser
+
+class CustomUserAdmin(UserAdmin):
+    add_form = CustomUserCreationForm
+    form = CustomUserChangeForm
+    list_display = ['email', 'username', 'age', 'is_staff',] # new
+    model = CustomUser
+
+admin.site.register(CustomUser, CustomUserAdmin)
+
+###
+$ python manage.py makemigrations
+$ python manage.py migrate
+
+###
+$ python manage.py createsuperuser  # for test that auth work
+
 ######
