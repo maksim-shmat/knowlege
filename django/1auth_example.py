@@ -642,4 +642,17 @@ LOGIN_REDIRECT_URL = 'home'
   </body>
 </html>
 
+###### Log out link
+# templates/base.html
+
+{% if user.is_authenticated %}
+  <p>Hi {{ user.username }}!</p>
+  <p><a href="{% url 'logout' %}">Log out</a></p>
+{% else %}
+...
+
+### blog_project/settings.py
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home' # new
+
 ######
