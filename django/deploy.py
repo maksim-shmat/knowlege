@@ -53,3 +53,73 @@ $ heroku ps:scale web=1
 ====== # We're done!
 $ heroku open
 
+###### third time deploying an app
+- update Pipfile.lock
+- new Procfile
+- install gunicorn
+- update settings.py
+
+### Pipfile
+[requires]
+python_version = "3.6"
+
+$ pipenv lock
+
+$ touch Procfile
+
+web: gunicorn blog_project.wsgi --log-file -  # into a file Procfile
+
+### install gunicorn
+$ pipenv install gunicorn==19.9.0
+
+### blog_project/settings.py
+ALLOWED_HOSTS = ['*']
+
+### logged in to Heroku account
+$ heroku login
+$ heroku create dfb-blog  # it's name
+$ heroku git:remote -a dfb-blog
+$ pipenv install whitenoise  # for support static files
+
+### settings.py
+INSTALLED_APPS = [
+        'blog.apps.BlogConfig',
+        'accounts.apps.AccountsConfig',
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'whitenoise.runserver_nostatic', # new
+        'django.contrib.staticfiles',
+    ]
+
+MIDDLEWARE = [
+        'django.middleware.security.SecurityMiddleware',
+        'django.contrib.sessions.middleware.SessionMiddleware',
+        'whitenoise.middleware.WhiteNoiseMiddleware', # new
+        'django.middleware.common.CommonMiddleware',
+        'django.middleware.csrf.CsrfViewMiddleware',
+        'django.contrib.auth.middleware.AuthenticationMiddleware',
+        'django.contrib.messages.middleware.MessageMiddleware',
+        'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    ]
+
+...
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # new!
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+### commit your new changes
+$ git add -A
+$ git commit -m 'Heroku config'
+$ git push origin master
+
+$ git push heroku master
+$ heroku ps:scale web=1
+
+https://dfd-blog.herokuapp.com/
+
+######
