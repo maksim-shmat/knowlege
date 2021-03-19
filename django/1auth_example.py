@@ -655,4 +655,50 @@ LOGIN_REDIRECT_URL = 'home'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home' # new
 
+###### Sign up
+$ python manage.py startapp accounts
+
+### blog_project/settings.py
+INSTALLED_APPS = [
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'blog.apps.BlogConfig',
+        'accounts.apps.AccountsConfig', # new
+]
+
+### $ touch accounts/urls.py
+from django.urls import path
+
+from .views import SignUpView
+
+urlpatterns = [
+        path('signup/', SignUpView.as_view(), name='signup'),
+]
+
+### accounts/views.py
+from django.contrib.auth.forms import UserCreationForm
+from django.urls import reverse_lazy
+from django.views import generic
+
+class SignUpView(generic.CreateView):
+    form_class = UserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'signup.html'
+
+### $ touch templates/signup.html
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Sign up</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Sign up</button>
+</form>
+{% endblock content %}
+
 ######
