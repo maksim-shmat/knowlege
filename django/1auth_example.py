@@ -739,6 +739,7 @@ class CustomUserCreationForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         model = CustomUser
         fields = UserCreationForm.Meta.fields + ('age',)
+        # fields = ('username', 'email',) # new
 
     
     class CustomUserChangeForm(UserChangeForm):
@@ -746,6 +747,7 @@ class CustomUserCreationForm(UserCreationForm):
         class Meta:
             model = CustomUser
             fields = UserChangeForm.Meta.fields
+            # fields = ('username', 'email',) # new
 
 ### user/admin.py
 from django.contrib import admin
@@ -768,5 +770,121 @@ $ python manage.py migrate
 
 ###
 $ python manage.py createsuperuser  # for test that auth work
+
+###### User Authentication
+$ mkdir templates
+$ mkdir templates/registration
+
+### newspaper_project/settings.py
+TEMPLATES = [
+        {
+            ...
+            'DIRS': [os.path.join(BASE_DIR, 'templates')], # new
+            ...
+        }
+]
+
+### newspaper_project/settings.py
+LOGIN_REDIRECT_URL = 'home'
+
+LOGOUT_REDIRECT_URL = 'home'
+
+### create new templates
+$ touch templates/registration/login.html
+$ touch templates/base.html
+$ touch templates/home.html
+$ touch templates/signup.html
+
+### templates/base.html
+<! DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Newspaper App</title>
+</head>
+<body>
+  <main>
+    {% block content %}
+    {% endblock %}
+  </main>
+</body>
+</html>
+
+### templstes/home.html
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+{% if user.is_authenticated %}
+  Hi {{ user.username }}!
+  <p><a href="{% url 'logout' %}">Log Out</a></p>
+{% else %}
+  <p>You are not logged in</p>
+  <a href="{% url 'login' %}">Log In</a> |
+  <a href="{% url 'signup' %}">Sign Up</a>
+{% endif %}
+{% endblock content %}
+
+### templates/registration/login.html
+{% extends 'base.html' %}
+
+{% block title %}Log In{% endblock title %}
+
+{% block content %}
+<h2>Log In</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Log In</button>
+</form>
+{% endblock content %}
+
+### templates/signup.html
+{% extends 'base.html' %}
+
+{% block title %}Sign Up{% endblock title %}
+
+{% block content %}
+<h2>Sign Up</h2>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">Sign Up</button>
+</form>
+{% endblock content %}
+
+###### URLs
+### newspaper_project/urls.py
+from django.contrib import admin
+from django.urls import path, include # new
+from django.views.generic.base import TemplateView # new
+
+urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('users/', include('users.urls')), # new
+        path('users/', include('django.contrib.auth.urls')), # new
+        path('', TemplateView.as_view(template_name='home.html'),
+            name='home'), # new  # Second author move it to first str
+]
+
+###### $ touch users/urls.py
+from django.urls import path
+from .views import SignUpView  # or from . import views
+
+urlpatterns = [
+        path('signup/', views.SignUp.as_view(), name='signup'),
+]
+
+### users/views.py
+from django.urls import reverse_lazy
+from django.views.generic import CreateView  # or from django.views import generic
+
+from .forms import CustomUserCreationForm
+
+class SignUpView(CreateView):
+    form_class = CustomUserCreationForm
+    success_url = reverse_lazy('login')
+    template_name = 'signup.html'
 
 ######
