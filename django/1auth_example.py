@@ -887,4 +887,96 @@ class SignUpView(CreateView):
     success_url = reverse_lazy('login')
     template_name = 'signup.html'
 
+###### Password Change and Reset
+$ touch templates/registration/password_change_form.html
+$ touch templates/registration/password_change_done.html
+
+### templates/registration/password_change_form.html
+{% extends 'base.html' %}
+
+{% block title %}Password Change{% endblock title %}
+
+{% block content %}
+  <h1>Password change</h1>
+  <p>Please enter your old password, for security`s sake, and then enter your new password twice so we can verify you typed it in correctly.</p>
+  <form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-success" type="submit" value="Change my password">
+  </form>
+{% endblock content %}
+
+### templates/registration/password_change_done.html
+{% extends 'base.html' %}
+
+{% block title %}Password Change Successful{% endblock title %}
+
+{% block content %}
+  <h1>Password change successful</h1>
+  <p>Your password was changed.</p>
+{% endblock content %}
+
+### Password reset
+# newspaper_project/settings.py
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+### Custom Templates
+$ touch templates/registration/password_reset_form.html
+$ touch templates/registration/password_reset_done.html
+$ touch templates/registration/password_reset_confirm.html
+$ touch templates/registration/password_reset_complete.html
+
+### templates/registration/password_reset_form.html
+{% extends 'base.html' %}
+
+{% block title %}Forgot Your Password?{% endblock title %}
+
+{% block content %}
+<h1>Forgot your password?</h1>
+<p>Enter your email address below, and we`ll email instructions for setting a new one.</p>
+
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input class="btn btn-success" type="submit" value="Send me instructions!">
+</form>
+{% endblock content %}
+
+### templates/registration/password_reset_done.html
+{% extends 'base.html' %}
+
+{% block title %}Email Sent{% endblock title %}
+
+{% block content %}
+  <h1>Check your inbox.</h1>
+  <p>We`ve emailed you instructions for setting your password.
+  You should receive the email shortly!</p>
+{% endblock content %}
+
+### templates/registration/password_reset_confirm.html
+{% extends 'base.html' %}
+
+{% block title %}Eneter new password{% endblock title %}
+
+{% block content %}
+<h1>Set a new password!</h1>
+<form method="POST">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input class="btn btn-success" type="submit" value="Change my password">
+</form>
+{% endblock content %}
+
+### tmplates/registration/pasword_reset_complete.html
+{% extends 'base.html' %}
+
+{% block title %}Password reset complete{% endblock title %}
+
+{% block content %}
+<h1>Password reset complete</h1>
+<p>Your new password has been set. You can log in now on the
+<a href=
+"{% url 'login' %}">log in page</a>.</p>
+{% endblock content %}
+
 ######
