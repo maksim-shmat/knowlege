@@ -385,4 +385,131 @@ class ArticleDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView): # 
         obj = self.get_object()
         return obj.author == self.request.user
 
+###### Comments without add app
+# articles/models.py
+...
+class Comment(models.Model): # new
+    article = models.ForeignKey(Article, on_delete=models.CASCADE)
+    comment = models.CharField(max_length=140)
+    author = models.ForeignKey(
+            get_user_model(),
+            on_delete=model.CASCADE,
+    )
+
+    def __str__(self):
+        return self.comment
+
+    def get_absolute_url(self):
+        return reverse('article_list')
+
+###### makemigrations
+$ python manage.py makemigrations articles
+$ python manage.py migrate
+
+###### add comments to Admin
+# articles/admin.py
+from django.contrib import admin
+
+from .models import Article, Comment  # or from . import models
+
+admin.site.register(Article)
+admin.site.register(Comment) # new
+
+### see all comment models
+# articles/admin.py
+from django.contrib import admin
+from .models import Article, Comment
+
+class CommentInline(admin.StackedInline): # new
+    model = Comment
+
+class ArticleAdmin(admin.ModelAdmin): # new
+    inlines = [
+            CommentInline,
+    ]
+
+admin.site.register(Article, ArticleAdmin) # new
+admin.site.register(Comment)
+
+### change CommentInline from admin.StackedInline to admin.TabularInline
+# articles/admin.py
+...
+class CommentInline(admin.StackedInline):
+    model = Comment
+    extra = 0 # new
+
+### articles/admin.py
+from django.contrib import admin
+
+from .models import Article, Comment
+
+class CommentInline(admin.TabularInline): # new
+    model = Comment
+
+class ArticleAdmin(admin.ModelAdmin):
+    inlines = [
+            CommentInline,
+    ]
+
+admin.site.register(Article, ArticleAdmin)
+admin.site.register(Comment)
+
+###### template and comment
+# articles/models.py
+...
+class Comment(models.Model):
+    article = models.ForeignKey(
+            Article,
+            on_delete=models.CASCADE,
+            related_name='comments', # new
+    )
+    comment = models.CharField(max_length=140)
+    author = models.ForeignKey(
+            get_user_model(),
+            on_delete=models.CASCADE,
+    )
+
+    def __str__(self):
+        return self.comment
+
+    def get_absolute_url(self):
+        return reverse('article_list')
+
+### mirtate it
+$ python manage.py makemigrations articles
+$ python manage.py migrate
+$ python manage.py runserver
+
+### template/article_list.html
+{% extends 'base.html' %}
+
+{% block title %}Articles{% endblock title %}
+
+{% block content %}
+  {% for article in object_list %}
+    <div class="card">
+      <div class="card'header">
+        <span class="font-weight-bold">{{article.title }}</span> &middot;
+        <span class="text-muted">by {{ article.author }} |
+        {{ article.date }}</span>
+      </div>
+      <div class="card-body">
+        <p>{{ article.body }}</p>
+      #  <!-- Change start here! -->
+        <a href="{% url 'article_edit' article.pk %}">Edit</a> |
+        <a href="{% url 'article_delete' article.pk %}">Delete</a>
+      </div>
+      <div class="card-footer">
+        {% for comment in article.comments.all %}
+          <p>
+            <span class="font-weight-bold">{{ comment.author }} &middot;</span>
+            {{ comment }}
+          </p>
+        {% endfor %}
+      </div>
+    </div>
+    <br />
+  {% endfor %}
+{% endblock content %}
+
 ######
