@@ -251,4 +251,39 @@ def test(a, b, c=True, d=False, *e, **f):
 import inspect
 inspect.getargspec(test)
 
+### check default values
+def get_default(func):
+    arts, varargs, varkwargs, defaults = inspect.getargspec(func)
+    index = len(args) - len(defaults) # Index of the first optionsl argument
+    return dict(zip(args[index:], defaults))
+
+get_defaults(test)
+# {'c': True, 'd': False}
+
+###### Tracking Subclasses
+
+class SubclassTracker(type):
+    def __init__(cls, name, bases, attrs):
+        try:
+            if TrackedClass not in bases:
+                return
+        except NameError:
+            return
+        TrackedClass._registry.append(cls)
+
+class TrackedClass(metaclass=SubclassTracker):
+    _registry = []
+
+class ClassOne(TrackedClass):
+    pass
+
+TrackedClass._registry
+# [<class '__main__.ClassOne'>]
+
+class ClassTwo(TrackedClass):
+    pass
+
+TrackedClass._registry
+# [<class '__main__.ClassOne'>, <class '__main__.ClassTwo'>]
+
 ######
