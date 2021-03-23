@@ -243,4 +243,12 @@ isinstance(my_dict, dict)
 
 isinstance(my_dict, CustomDict)
 
+###### Inspecting functions
+
+def test(a, b, c=True, d=False, *e, **f):
+    pass
+
+import inspect
+inspect.getargspec(test)
+
 ######
