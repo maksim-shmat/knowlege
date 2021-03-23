@@ -228,4 +228,19 @@ test = TestObject()
 test.attr = 6
 test.attr
 
-###
+###### Checking for Specific Types
+
+class CustomDict(dict):
+    pass    # Pretend there's something more useful here
+
+issubclass(CustomDict, dict)
+
+issubclass(CustomDict, CustomDict)
+
+my_dict = CustomDict()
+
+isinstance(my_dict, dict)
+
+isinstance(my_dict, CustomDict)
+
+######
