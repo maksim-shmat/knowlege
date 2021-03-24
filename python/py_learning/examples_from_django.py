@@ -369,4 +369,37 @@ for password in ('pass', 'password', 'p@ssword!'):
 # Passwords must contain at least one special character.
 # Checking 'p@ssword!'... valid!
 
+###### Field Definition
+
+from django.utils.text import capfirst
+
+def get_values(instance):
+    for field in instance._meta.fields:
+        name = capfirst(field.verbose_name)
+        value = getattr(instance, field.name)
+        print('%s: %s' % (name, value))
+
+### _meta.get_fied()
+
+class Product(models.Model):
+    sku = models.CharField(max_length=8, verbose_name='SKU')
+    name = models.CharField(max_length=255)
+    price = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __unicode__(self):
+        return self.name
+
+###
+from django.utils.text import capfirst
+for field in Product.__meta.fields:
+    print('%s: %s' % (capfirst(field.verbose_name), field.__class__))
+
+# ID: <class 'django.db.models.fields.AutoField'>
+# SKU: <class 'django.db.models.fields.CharField'>
+# Name: <class 'django.db.models.fields.CharField'>
+# Price: <class 'django.db.models.fields.DecimalField'>
+
+Product._meta.get_field('name').__class__
+# <class 'django.db.models.fields.CharField'>
+
 ######
