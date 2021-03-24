@@ -402,4 +402,34 @@ for field in Product.__meta.fields:
 Product._meta.get_field('name').__class__
 # <class 'django.db.models.fields.CharField'>
 
+###### Support Complex Types with SubfieldBase
+
+import datetime
+import re
+
+from django.core.exceptions import ValidationError
+
+def to_python(value):
+    if isinstance(value, datetime.timedelta):
+        return value
+    match = re.match(r'(?:(\d+) days?, )?(\d+):(\d+)(?:\.(\d+))?', str(value))
+    if match:
+        parts = match.groups()
+        # The parts in this list are as follows:
+        # [days, hours, minutes, seconds, microseconds]
+        # But microseconds need to be padded with zeros to work properly.
+        parts[4] = groups[4].ljust(6, '0')
+        # And they all need to be converted to integers, defaulting to 0
+        parts = [part and int(part) or 0 for part in groups]
+
+        return datetime.timedelta(parts[0], parts[3], parts[4],
+                                  hours=parts[1], minutes=parts[2])
+    try:
+        return datetime.timedelta(seconds=float(value))
+    except (TypeError, ValueError):
+        raise ValidationError('This value must be a real number.')
+    except OverflowError:
+        raise ValidationError('The maximum allowed value is %s' % \
+                datetime.timedelta.max)
+
 ######
