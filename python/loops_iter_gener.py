@@ -210,4 +210,20 @@ zip_codes_la_filter_dict_items = filter(only_la,zipcodes.items())
 print(zip_codes_la_filter_dict_items)
 zip_codes_la_filter = [tup[0] for tup in zip_codes_la_filter_dict_items]
 
+###### Lambda Keyword for Anonymous Methods
+# lambda x: <logic_on_x> is sensual equals def anon_method(xa0: <logic_on_x>
+
+# Python lambda examples
+
+country_codes = ['us','ca','mx','fr','ru']
+zipcodes = {90003:'Los Angeles',90802:'Long Beach',91501:'Burbank',92101:'San Diego',92139:'San Diego',90071:'Los Angeles'}
+
+# Map function with lambda
+country_codes_upper_map = map(lambda x: x.upper(),country_codes)
+
+# Filter function with lambda
+zip_codes_la_filter_lambda_dict_items = filter(lambda (zipcode,city): city == "Los Angeles",zipcodes.items())
+print(zip_codes_la_filter_lambda_dict_items)
+zip_codes_la_filter = [tup[0] for tup in zip_codes_la_filter_lambda_dict_items]
+
 ######

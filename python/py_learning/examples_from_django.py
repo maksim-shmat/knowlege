@@ -432,4 +432,13 @@ def to_python(value):
         raise ValidationError('The maximum allowed value is %s' % \
                 datetime.timedelta.max)
 
+###
+from django.db import models
+from django.db.models.fields.subclassing import SubfieldBase
+
+class DurationField(models.DecimalField, metaclass=SubfieldBase):
+    pass
+
+# Field logic then continues here
+
 ######
