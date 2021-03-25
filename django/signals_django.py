@@ -81,4 +81,33 @@ def app_report(app, created_models, verbosity, **kwargs):
 
 signals.post_syncdb.connect(app_report)
 
+###### Storing Raw Data
+
+from django.db import models
+
+class PickleField(midels.TextField):
+
+    def get_attname(self):
+        return '%s_pickled' % self.name
+
+### pickling and unpickling data
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
+
+###
+class PickleField(models.TextField):
+    def pickle(self, obj):
+        return pickle.dumps(obj)
+
+    def unpickle(self, data):
+        return pickle.loads(str(data))
+
+    def get_attname(self):
+        return '%s_pickled' % self.name
+
+    def get_db_prep_lookup(self, lookup_type, value):
+        raise ValueError("Can't make comparisons against pickled data.")
+
 ######
