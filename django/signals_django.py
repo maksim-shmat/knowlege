@@ -38,4 +38,17 @@ post_init.connect(sender=Article)
 article = Article(title=u'Testing')
 # Instanitated <Article: Testing>
 
+###### pre_save and post_save
+
+from django.db.models import signals
+from news.models import Article
+
+def before(instance, **kwargs):
+    print('About to save %s' % instance)
+
+signals.post_save.connect(after, sender=Article)
+Article.objects.create(title='New article!')
+# About to save New article!
+# New Article! was just created<Article: New article!>
+
 ######
