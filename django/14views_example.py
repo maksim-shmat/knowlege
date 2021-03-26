@@ -136,4 +136,40 @@ def rest_store(request,store_id=None):
         serialized_stores = serializers.serialize('json',store_list)
         return HttpResponse(serialized_stores, content_type='application/json')
 
+###### CORS Decorator
+
+@cross_origin(allow_origin=['*'])
+def public_data(request):
+    # Data retrieval goes here
+
+def cross_origin(allow_credentials=False, allow_headers=None,
+                 allow_methods=None, allow_headers=None,
+                 allow_origin=None, expose_headers=None, max_age=None):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(request, *args, **kwargs):
+            headers = {}
+
+            if access_control_allow_credentials:
+                headers['Allow_Credentials'] = allow_credentials
+            if access_control_allow_headers:
+                headers['Allow-Headers'] = ', '.join(allow_headers)
+            if access_control_allow_methods:
+                headers['Allow-Methods'] = ', '.join(allow_methods)
+            if access_control_allow_origin:
+                headers['Allow-Origin'] = ' '.join(allow_origin)
+            if access_control_expose_headers:
+                headers['Expose-Headers'] = ', '.join(expose_headers)
+            if access_control_max_age:
+                headers['Max-Age'] = self.max_age
+
+            response = func(request, *args, **kwargs)
+
+            for name, value in headers:
+                response.headers['Access-Control-%s' % name] = value
+
+            return response
+        return wrapper
+    return decorator
+
 ######
