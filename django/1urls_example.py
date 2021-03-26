@@ -390,4 +390,11 @@ class Article(models.Model):
                 (), {'object_id': self.id})
     get_absolute_url = models.permalink(get_absolute_url)
 
+###### Positional vs keyword arguments
+# for example, in th URL pattern was defined as r'^articles/(d+)/$'
+
+The permalink decorator => return ('library_articles_detail', (self.id,), {})
+The url template tag => {% url library_article_detail article.id %}
+The reverse() function => reverse('library_article_detail', args=(1,))
+
 ######
