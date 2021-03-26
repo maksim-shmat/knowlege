@@ -440,4 +440,87 @@ urlpatterns = patterns(''
         (r'^private/special/$', login_required(special_view)),
 )
 
+###### Writing a View Decorator
+
+from django.utils.functional import wraps
+
+def set_test_cookie(view):
+    """
+    Automatically sets the test cookie on all anonymous users, 
+    so that they can be logged in more easily, without having
+    to hit a separate login page.
+    """
+    def wrapper(request, *args, **kwargs):
+        if request.user.is_anonymous():
+            request.session.set_test_cookie()
+        return view(request, *args, **kwargs)
+    return wraps(view)(wrapper)
+
+### extract code form the beginning or end of a set of views
+
+from django.utils.functional import wraps
+from django.shortcuts import get_object_or_404
+
+from news.models import Article
+
+def get_article_from_id(view):
+    """
+    Retrieves a specific article, passing it to the view directly
+    """
+    def wrapper(request, id, *args, **kwargs):
+        article = get_object_or_404(Article, id=int(id))
+        return view(request, article=article, *args, **kwargs)
+    return wraps(view)(wrapper)
+
+### 
+from django.utils.functional import wraps
+from mylogapp.models import Entry
+
+def logged(view):
+    """
+    Logs any errors that occurred during the view
+    in a special model design for app-specific errors
+    """
+    def wrapper(request, *args, **kwargs):
+        try:
+            return view(request, *args, **kwargs)
+        except Exception as e:
+            # Log the entry using the application's Entry model
+            Entry.objects.create(path=request.path,
+                                 type='View exception',
+                                 description=str(e))
+            # Re-raise it so standard error handling still applies
+            raise
+    return wraps(view)(wrapper)
+
+###### Individual View Methods
+
+def view(request, template_name='form.html'):
+    if request.method == 'POST':
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process the form here
+            return redirect('success')
+        else:
+            return render(request, template_name, {'form': form})
+        else:
+            form = ExampleForm() # no data gets passed in 
+            return render(request, template_name, {'form': form})
+
+### and class-based view instead
+class FormView(View):
+    template_name = 'form.html'
+
+    def get(self, request):
+        form = ExampleForm()
+        return render(request, self.template_name, {'form': form})
+
+    def post(self, request):
+        form = ExampleForm(request.POST)
+        if form.is_valid():
+            # Process the form here
+            return redirect('success')
+        else:
+            return render(request, self.template_name, {'form': form})
+
 ######
