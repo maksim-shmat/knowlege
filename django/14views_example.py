@@ -172,4 +172,50 @@ def cross_origin(allow_credentials=False, allow_headers=None,
         return wrapper
     return decorator
 
+###### CORS Mixin
+
+class PublicData(View, CrossOrigin):
+    access_control_allow_origin = ['*']
+
+    def get(self, request):
+        # Data retrieval goes here
+
+class CrossOrigin(object):
+    """
+    A view mixin that provides basic functionality necessary to add the necessary
+    headers for Cross-Origin Resource Sharing
+    """
+    access_control_allow_credentials = False
+    access_control_allow_headers = None
+    access_control_allow_methods = None
+    access_control_allow_origin = None
+    access_control_expose_headers = None
+    access_control_max_age = None
+
+    def get_access_control_headers(self, request):
+        headers = {}
+
+        if self.access_control_allow_credentials:
+            headers['Allow-Credentials'] = self.access_control_allow_credentials
+        if self.access_control_allow_headers:
+            headers['Allow-Headers'] = ', '.join(self.access_control_allow_headers)
+        if self.access_control_allow_methods:
+            headers['Allow-Methods'] = ' '.join(self.access_control_allow_methods)
+        if self.access_control_allow_origin:
+            headers['Allow-Origin'] = ' '.join(self.access_control_allow_origin)
+        if self.access_control_expose_headers:
+            headers['Expose-Headers'] = ', '.join(self.access_control_expose_headers)
+        if self.access_control_max_age:
+            headers['Max-Age'] = self.access_control_max_age
+
+        return headers
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super(CORSMixin, self).dispatch(request, *args, **kwargs)
+
+        for name, value in self.get_access_control_headers(request):
+            response.headers['Access-Control-%s' % name)] = value
+
+        return response
+
 ######
