@@ -397,4 +397,37 @@ The permalink decorator => return ('library_articles_detail', (self.id,), {})
 The url template tag => {% url library_article_detail article.id %}
 The reverse() function => reverse('library_article_detail', args=(1,))
 
+###### Use Lots of Arguments
+# simple for now
+
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
+from blog.models import Post
+
+def show_post(request, id):
+    post = Post.objects.get(id=id)
+    context = RequestContext(request, {'post': post})
+    return render_to_response('blog/detail.html', context)
+
+# better
+from django.shortcuts import render_to_response
+from django.template import RequestContext
+
+def show_object(request, id, model, template_name):
+    object = model._default_manager.get(pk=id)
+    context = RequestContext(request, {'object': object)})
+    return render_to_response(teplate_name, context)
+
+### url configuration
+from django.conf.urls.defaults import *
+from blog.models import Post
+
+urlpatterns = patterns('',
+        (r'^post/(?P<id>\d+)/$', 'blog.views.show_object', {
+            'model': Post,
+            'template_name': 'blog/detail.html',
+        }),
+)
+
 ######
