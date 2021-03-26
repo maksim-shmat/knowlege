@@ -430,4 +430,14 @@ urlpatterns = patterns('',
         }),
 )
 
+###### Applying View Decorators
+
+from django.conf.urls.defaults import *
+from django.contrib.auth.decorators import login_required
+from thirdpartyapp.views import special_view
+
+urlpatterns = patterns(''
+        (r'^private/special/$', login_required(special_view)),
+)
+
 ######
