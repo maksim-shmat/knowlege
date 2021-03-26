@@ -218,4 +218,63 @@ class CrossOrigin(object):
 
         return response
 
+###### Providing Both a Decorator and a Mixin
+
+def cors_headers(allow_credential=false, allow_headers=None, allow_method=None,
+                 allow_origin=None, expose_headers=None, max_age=None):
+    headers = {}
+
+    if allow_credentials:
+        headers['Access-Control-Allow-Credentials'] = allow_credentials
+    if allow_headers:
+        headers['Access-Control-Allow-Headers'] = ', '.join(allow_headers)
+    if allow_methods:
+        headers['Access-Control-Allow-Methods'] = ' '.join(allow_methods)
+    if allow_origin:
+        headers['Access-Control-Allow-Origin'] = ' '.join(allow_origin)
+    if expose_headers:
+        headers['Access-Control-Expose-Headers'] = ', '.join(expose_headers)
+    if max_age:
+        headers['Access-Control-Max-Age'] = self.max_age
+
+    return response
+
+def cross_origin(allow_credentials=False, allow_headers=None, allow_methods=None,
+                 allow_origin=None, expose_headers=None, max_age=None):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(request, *args, **kwargs):
+            response = func(request, *args, **kwargs)
+            headers = cors_headers(response, allow_credentials, allow_headers,
+                                   allow_methods, allow_origin, expose_headers, max_age)
+            response.headers.update(headers)
+            return response
+        return wrapper
+    return decorator
+
+class CrossOrigin(object):
+    """
+    A view mixin that provides basic functionality necessary to add the necessary
+    headers for Cross-Origin Resource Sharing
+    """
+    access_control_allow_credentials = False
+    access_control_allow_headers = None
+    access_control_allow_methods = None
+    access_control_allow_origin = None
+    access_control_expose_headers = None
+    access_control_max_age = None
+
+    def get_access_control_headers(self, request):
+        return cors_headers(self.access_control_allow_credentials,
+                            self.access_control_allow_headers,
+                            self.access_control_allow_methods,
+                            self.access_control_allow_origin,
+                            self.access_control_max_age):
+
+    def dispatch(self, request, *args, **kwargs):
+        response = super(CORSMixin, self).dispatch(request, *args, **kwargs)
+        headers = self.get_access_control_headers(request)
+        response.headers.update(headers)
+        return response
+
 ######
