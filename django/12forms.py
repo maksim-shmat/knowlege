@@ -265,4 +265,25 @@ class ContactForm(forms.Form):
             # Add a name field since the user doesn't have a name
             self.fields['name'] = forms.CharField(label='Full name')
 
+###### Binding to User Input
+
+from my_app.forms import MyForm
+
+def my_view(request):
+    if request.method == 'POST':
+        form = MyForm(request.POST)
+    else:
+        form = MyForm()
+    ...
+
+### for FILES
+from my_app.forms import MyForm
+
+def my_view(request):
+    if request.method == 'POST':
+        form = MyForm(request.POST, request.FILES)
+    else:
+        form = MyForm()
+    ...
+
 ######
