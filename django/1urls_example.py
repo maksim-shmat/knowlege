@@ -363,4 +363,31 @@ urlpatterns = [
         url(r'^accounts/signup/$',registration_views.UserSignUp.as_view(),name="signup"),
 ]
 
+###### The permalink Decorator example
+
+from django.conf.urls.defaults import *
+from django.views.generic.detail import DetailView
+from library.import models
+
+class LibraryDetail(DetailView):
+    queryset = models.Article.objects.all()
+
+urlpatterns = patterns('django.views.generic',
+        url(r'^articles/(?P<object_id>\d+)/$', LibraryDetail.as_view(),
+            name='library_article_detail'),
+)
+
+# a corresponding model (located in a library application) might look like this:
+from django.db import models
+
+class Article(models.Model):
+    title = models.CharField(max_length=255)
+    slug = models.SlugField()
+    pub_date = models.DateTimeField()
+
+    def get_absolute_url(self):
+        return ('library_article_detail',
+                (), {'object_id': self.id})
+    get_absolute_url = models.permalink(get_absolute_url)
+
 ######
