@@ -254,4 +254,15 @@ urlpatterns = [
         path('', BlogListView.as_view(), name='home'),
 ]
 
+###### Declaring and Identifying Fields
+
+from django import forms
+
+class ContactForm(forms.Form):
+    def __init__(self, user, *args, **kwargs):
+        super(ContactForm, self).__init__(*args, **kwargs)
+        if not user.is_authenticated():
+            # Add a name field since the user doesn't have a name
+            self.fields['name'] = forms.CharField(label='Full name')
+
 ######
