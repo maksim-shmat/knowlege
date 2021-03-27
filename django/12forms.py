@@ -405,4 +405,39 @@ print ProductEntry()
 <tr><th><label for="id_price">Price:</label></th><td>$ <input type="text" name="price" id="id_price" /></td></tr>
 <tr><th><label for="id_tax">Tax:</label></th><td><input type="text" name="tax" id="id_tax" /> %</td></tr>
 """
+###### Spliting Data Across Multiple Widgets
+
+from django.forms import fields
+
+class LatLonField(fields.MultiValueField):
+
+    def __init__(self, *args, **kwargs):
+        filds = (LatitudeField(), LongitudeField())
+        super(LatLonField, self).__init__(flds, *args, *kwargs)
+
+    def compress(self, data_list):
+        if data_list:
+            if data_list[0] in fields.EMPTY_VALUES:
+                raise fields.ValidationError(u'Enter a valid latitude.')
+            if data_list[1] in fields.EMPTY_VALUES:
+                raise fields.ValidationError(u'Enter a valid longitude.')
+            return tuple(data_list)
+        return None
+
+###
+from django.form import fields, widgets
+
+class LatLonWidget(widgets.MultiWidget):
+    def __init__(self, attrs=None):
+        wdgts = (widgets.TextInput(attrs), widgets.TextInput(attrs))
+        super(LatLonWidget, self).__init__(wdgts, attrs)
+
+    def decompress(self, value):
+        return value or (None, None)
+
+class LatLonField(fields.MultiValueField):
+    widget = LatLonWidget
+
+    # The rest of the code previously described
+
 ######
