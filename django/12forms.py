@@ -286,4 +286,70 @@ def my_view(request):
         form = MyForm()
     ...
 
+###### Validating Input
+
+def my_view(request):
+    if request.method == 'POST':
+        form = MyForm(request.POST, request.FILES)
+        if form.is_valid():
+            # Do mare work here, since the data is known to be good
+        else:
+            form = MyForm()
+        ...
+
+###### Using Class-Based Views
+
+from django.shortcuts import render, redirect
+
+def my_view(request):
+    if request.method == 'POST':
+        form = MyForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/success/')
+        return render(request, 'form.html', {'form': form})
+
+### better
+from django.shortcuts import render, redirect
+from django.views.generic.base import View
+
+class MyView(View):
+    def get(self, request):
+        form = MyForm()
+        return render(request, 'form.html', {'form': form})
+
+    def post(self, request):
+        form = MyForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('/success/')
+        return render(request, 'form.html', {'form': form})
+
+### better more
+from django.shortcuts import render, redirect
+from django.views.generic.edit import FormView
+
+class MyView(FormView):
+    form_class = MyForm
+    template_name = 'form.html'
+    success_url = '/success/'
+
+    def form_valid(self, form):
+        form.save()
+        return super(MyView, self).form_valid(form)
+
+### 
+from django.views.generic import edit
+from my_app.models import MyModel
+
+class CreateObject(edit.CreateView):
+    model = MyModel
+
+    class EditObject(edit.UpdateView):
+        model = MyModel
+
+    class DeleteObject(edit.DeleteView):
+        model = MyModel
+        success_url = '/'
+
 ######
