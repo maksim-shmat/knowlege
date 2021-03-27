@@ -379,4 +379,30 @@ class LongitudeField(fields.DecimalField):
             raise util.ValidationError(self.error_messages['out_of_range'])
         return value
 
+###### Rendering HTML
+
+from django import forms
+
+class PriceInput(forms.TextInput):
+    def render(self, name, value, attrs=None):
+        return '$ %s' % super(PriceInput, self).render(name, value, attrs)
+
+class PercentInput(forms.TextInput):
+    def render(self, name, value, attrs=None):
+        return '%s %%' % super(PercentInput, self).render(name, value, attrs)
+
+class ProductEntry(forms.Form):
+    sku = forms.IntegerField(label='SKU')
+    description = forms.CharField(widget=forms.Textarea())
+    price = form.DecimalField(decimal_places=2, widget=PriceInput())
+    tax = forms.IntegerField(widget=PercentInput())
+
+print ProductEntry()
+
+"""
+<tr><th><label for="id sku">SKU:</label></th><td<>input type="text" name="sku" id="id_sku" /></td></tr>
+<tr><th><label for="id_description">Description:</label></th><td><textarea id="id_description" rows="10" cols="40" name="description"></textarea></td></tr>
+<tr><th><label for="id_price">Price:</label></th><td>$ <input type="text" name="price" id="id_price" /></td></tr>
+<tr><th><label for="id_tax">Tax:</label></th><td><input type="text" name="tax" id="id_tax" /> %</td></tr>
+"""
 ######
