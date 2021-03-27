@@ -492,4 +492,13 @@ class PendForm(forms.Form):
             pended_form.data.get_or_create(name=name, value=self.data[name])
         return form_hash
 
+###### Reconstituting a Form
+
+@ classmethod
+def resume(cls, form_hash):
+    import_path = cls.get_import_path()
+    form = models.PendForm.objects.get(form_class=import_path, hash=form_hash)
+    data = dict((d.name, d.value) for d in form.data.all())
+    return cls(data)
+
 ######
