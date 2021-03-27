@@ -440,4 +440,16 @@ class LatLonField(fields.MultiValueField):
 
     # The rest of the code previously described
 
+###### Pending and Resuming Forms
+
+from django import forms
+from django_localflavor_us import forms as us_forms
+
+from pend_form.forms import PendForm
+
+class Offer(PendForm):
+    name = forms.CharField(max_length=255)
+    phone = us_forms.USPhoneNumberField()
+    price = forms.IntegerField()
+
 ######
