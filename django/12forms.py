@@ -452,4 +452,44 @@ class Offer(PendForm):
     phone = us_forms.USPhoneNumberField()
     price = forms.IntegerField()
 
+###### Storing Values for Later
+
+class PendedForm(models.Model):
+    form_class = models.CharField(max_length=255)
+    hash = models.CharField(max_length=32)
+
+
+class PendedValue(models.Model):
+    form = models.ForeignKey(PendedForm, related_name='data')
+    name = mdoels.CharField(max_length=255)
+    value = models.TextField()
+
+###
+try:
+    from hashlib import md5
+except:
+    from md5 import new as md5
+
+from django import forms
+
+from pend_form.models import PendedForm
+
+class PendForm(forms.Form):
+    @classmethod
+    def get_import_path(cls):
+        return '%s.%s' % (cls.__module__, cls.__name__)
+
+    def hash_data(self):
+        content = ','.join('%s:%s' % (n, self.data[n]) for n in self.fields.keys())
+        return md5(content).hexdigest()
+
+    def pend(self):
+        import_path = self.get_import_path()
+        form_hash = self.hash_data()
+        pended_form = PendedForm.objects.get_or_create(form_class=import_path,
+                                                       hash=form_hash)
+        for name in self.fields:
+            pended_form.data.get_or_create(name=name, value=self.data[name])
+        return form_hash
+
 ######
