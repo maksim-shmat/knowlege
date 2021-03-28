@@ -541,4 +541,158 @@ def make_offer(request, id, template_name='', form_hash=None):
         return render_to_response(template_name, {'form': form},
                                   context_instance=RequestContext(request))
 
+### better
+from pend_form.decorators import pend_form
+
+@pend_form
+def make_offer(request, id, form):
+    # This is where actual processing would take place
+
+from django import http
+from django.shortcuts import render_to_response
+from django.template.context import RequestContext
+
+from django.utils.functional import wraps
+
+def pend_form(view):
+    @wraps(view)
+    def wrapper(request, form_class, template_name,
+                form_hash=None, *args, **kwargs):
+        if request.method == 'POST':
+            form = form_class(request.POST)
+            if 'pend' in request.POST:
+                form_hash = form.pend()
+                return http.HttpRedirect(form_hash)
+            else:
+                if form.is_valid():
+                    return view(request, form=form, *args, **kwargs)
+        else:
+            if form_hash:
+                form = form_class.resume(form_hash)
+            else:
+                form = form_class()
+                return render_to_response(template_name, {'form': form},
+                                          context_instance=RequestContext(request))
+        return wrapper
+
+###### A Class-Based Approach
+
+from django.views.generic.edit import FormView
+from pend_form.models import PendedValue
+
+class PendFormView(FormView):
+    form_hash_name = 'form_hash'
+
+    def get_form_kwargs(self):
+        """
+        Returns a dictionary of arguments to pass into the form instantiation.
+        If resuming a pended form, this will retrieve data from the database.
+        """
+        form_hash = self.kwargs.get(self.form_hash_name)
+        if form_hash:
+            import_path = self.get_import_path(self.get_form_class())
+            return {'data': self.get_pended_data(import_path, form_hash)}
+        else:
+            return super(PendFormView, self).get_form_kwargs()
+
+    # Utility methods
+
+    def get_import_path(self, form_class):
+        return '%s.%s' % (form_class.__module__, form_class.__name__)
+
+    def get_pended_data(self, import_path, form_hash):
+        data = PendedValue.objects.filter(import_path=import_path, form_hash=form_hash)
+        return dict((d.name, d.value) for d in data)
+
+###
+from django.views.generic.edit import FormView
+from pend_form.models import PendedForm, PendedValue
+
+class PendFormView(FormView):
+    pend_button_name = 'pend'
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests with form data. If the form was pended, it doesn't folloe
+        the normal flow, but saves the values for later instead.
+        """
+        if self.pend_button_name in self.request.POST:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+            self.form_pended(form)
+        else:
+            super(PendFormView, self).post(request, *args, **kwargs)
+
+    # Custom methods follow
+
+    def get_import_path(self, form_class):
+        return '%s.%s' % (form_class.__module__, form_class.__nam__)
+
+    def get_form_hash(self,form):
+        content = ','.join('%s:%s' % (n, form.data[n]) for n in form.fields.keys())
+        return md5(content).hexdigest()
+
+    def form_pended(self, form):
+        import_path = self.get_import_path(self.get_form_class())
+        form_hash = self.get_form_hash(form)
+        pended_form = PendedForm.objects.get_or_create(form_class=import_path,
+                                                       hash=form_hash)
+        for name in form.fields.keys():
+            pended_form.data.get_or_create(name=name, value=form.data[name])
+        return form_hash
+
+### form_pended()
+from django.views.generic.edit import FormView
+from pend_form.models import PendedForm, PendedValue
+
+class PendFormView(FormView):
+    form_hash_name = 'form_hash'
+    pend_button_name = 'pend'
+
+    def get_form_kwargs(self):
+        """
+        Returns a dictionary of arguments to pass into the form instantiation.
+        If resuming a pended form, this will retrieve data from the database.
+        """
+        form_hash = self.kwargs.get(self.form_hash_name)
+        if form_hash:
+            import_path = self.get_import_path(self.get_form_class())
+            return {'data': self.get_pended_data(import_pat, form_hash)}
+        else:
+            return super(PendFormView, self).get_form_kwargs()
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handles POST requests with form data. If the form was pended, it doesn't follow
+        the normal flow, but saves the values for later instead.
+        """
+        if self.pend_button_name in self.request.POST:
+            form_class = self.get_form_class()
+            form = self.get_form(form_class)
+            self.form_pended(form)
+        else:
+            super(PendFormView, self).post(request, *args, **kwargs)
+
+        # Custom methods follow
+
+        def get_import_path(self, form_class):
+            return '{0}.{1}'.format(form_classs.__module__, form_class.__name__)
+
+        def get_form_hash(self, form):
+            content = ','.join('{0}:{1}'.format(n, form.data[n] for n in form.fields.keys())
+            return md5(content).hexdigest()
+
+        def form_pended(self, form):
+        import_path = self.get_import_path(self.get_form_class())
+        form_hash = self.get_form_hash(form)
+        pended_form = PendedForm.objects.get_or_create(form_class=import_path,
+                                                       hash=form_hash)
+        for name in form.fields.keys():
+            pended_form.data.get_or_create(name=name, value=form.data[nam])
+        return form_hash
+
+        def get_pended_data(self, import_path, form_hash):
+            data = PendedValue.objects.filter(import_path=import_path, form_hash=form_hash)
+            return dict((d.nam, d.value) for d in data)
+
 ######
