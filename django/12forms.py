@@ -501,4 +501,44 @@ def resume(cls, form_hash):
     data = dict((d.name, d.value) for d in form.data.all())
     return cls(data)
 
+###### A Full Workflow
+1. Display an empty form.
+2. User fills in some data.
+3. User clicks Submit
+4. Validate data submitted by the user.
+5. Display th form with errors.
+6. User clicks Pend.
+7. Save form values in the database.
+8. Validate data retrieved from the database.
+9. Display the form with errors.
+10. Process the completed form.
+
+- User requests a form without any data.
+- User posts data using th Pend button.
+- User requests a form using a form hash.
+- User posts data using the Submit button.
+
+from django import http
+from django.shortcuts import render_to_response
+from django.template.context import RequestContext
+
+from properties import models, forms
+
+def make_offer(request, id, template_name='', form_hash=None):
+    if request.method == 'POST':
+        form = forms.Offer(request.POST)
+        if 'pend' in request.POST:
+            form_hash = form.pend()
+            return http.HttpRedirect(form_hash)
+        else:
+            if form.is_valid():
+                # This is where actual processing would take place
+        else:
+            if form_hash:
+                form = form.Offer.resume(form_hash)
+            else:
+                form = form.Offer()
+        return render_to_response(template_name, {'form': form},
+                                  context_instance=RequestContext(request))
+
 ######
