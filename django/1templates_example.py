@@ -404,4 +404,19 @@ t = loader.select_template(['property/listing_123.html',
 t.name
 # 'property/listing.html'
 
+###### Variable Filters
+
+from django.template import Library
+from django.template.defaultfilters import stringfilter
+
+register = Library()
+
+@register.filter
+@stringfilter
+def firts(value, count=1):
+    """
+    Returns the first portion of a string, according to the count provided.
+    """
+    return value[:count]
+
 ######
