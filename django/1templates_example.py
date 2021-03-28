@@ -449,4 +449,30 @@ register = Library()
 def first(value, count):
     return value[:count]
 
+###### Converting a Token to a String 
+
+from django import template
+
+def string_from_token(token):
+    """
+    Converts a lexer token back into a string for use with Jinja.
+    """
+    if token.token_type == template.TOKEN_TEXT:
+        return token.contents
+    elif token.token_type == template.TOKEN_VAR:
+        return '%s %s %s' % (
+                template.VARIABLE_TAG_START,
+                token.contents,
+                template.VARIABLE_TAG_END,
+        )
+
+    elif token.token_type == template.TOKEN_BLOCK:
+        return '%s %s %s' % (
+                template.BLOCK_TAG_START,
+                token.contents,
+                template.BLOCK_TAG_END,
+        )
+    elif token.token_type == template.TOKEN_COMMENT:
+        return u'' # Django doesn't store the content of comments
+
 ######
