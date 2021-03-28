@@ -374,4 +374,22 @@ c.pop()
 c['a'], c['b']
 # (1, 2)
 
-######
+###### Complex Variable Lookup
+
+from django.template import Variable
+c = Context({'var': [1, 2, {'spam': u'eggs'}]})
+var = Variable('var')
+zero = Varible('var.0')
+one = Variable('var.1')
+spam = Variable('var.2.spam')
+
+var.resolve(c)
+# [1, 2, {'spam': u'eggs'}]
+zero.resolve(c)
+# 1
+one.resolve(c)
+# 2
+spam.resolve(c)
+# u'eggs'
+
+#####
