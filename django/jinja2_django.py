@@ -534,4 +534,18 @@ class JinjaEnvironvent(Environment):
         super(JinjaEnvironment, self).__init__(**kwargs)
         self.policies['truncate.leeway'] = 0
 
-##########
+########## Calculate the value before sending it to the tmplate
+
+{% load jinja %}
+
+{% for property in object_list %}
+Address: {{ property.address }}
+Internal area: {{ property.square_feet }} square feet
+Lot size: {{ property.lot_width }}' by {{ property.lot_depth }}'
+
+{% jinja %}
+Lot area: {{ property.lot_width * property.lot_depth / 43560 }} acres
+{% endjinja %}
+{% endfor %}
+
+######

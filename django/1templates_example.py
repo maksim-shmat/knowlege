@@ -440,4 +440,13 @@ def first(parser, token):
     var, count = token.split contents()[1:]
     return FirstNode(Variable(var), int(count))
 
+### a shortcut for Simple Tags
+from django.template import Library
+
+register = Library()
+
+@register.simle_tag
+def first(value, count):
+    return value[:count]
+
 ######
