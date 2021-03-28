@@ -392,4 +392,16 @@ one.resolve(c)
 spam.resolve(c)
 # u'eggs'
 
-#####
+##### django.template.loader.select_template(template_name_list)
+
+from django.template import loader
+t = loader.get_template('property/listing.html')
+t.name
+# error
+#django.template.TemplateDoesNotExist: properyty/listing_123.html
+t = loader.select_template(['property/listing_123.html',
+                            'property/listing.html'])
+t.name
+# 'property/listing.html'
+
+######
