@@ -357,4 +357,21 @@ for token in Lexer(template, 'shell').tokenize():
 # 1: a
 # 2: test
 
+###### Simple variable resolution for template context
+
+from django.template.context import Context
+c = Context({'a': 1, 'b': 2})
+c['a'], c['b']
+# (1, 2)
+c.push()
+c['a'], c['b']
+# (1, 2)
+c['b'] = 3
+c['a'], c['b']
+# (1, 3)
+c.pop()
+# {'b': 3}
+c['a'], c['b']
+# (1, 2)
+
 ######
