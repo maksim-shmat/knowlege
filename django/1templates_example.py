@@ -345,4 +345,16 @@ Copying '/www/STORE/coffeehouse/about/static/css/custom.css'
   {% endif %}
 {% endfor %}
 
+###### Content Tokens
+
+from django.template import Lexer
+template = 'This is {# only #}{ a }}{% test %}'
+for token in Lexer(template, 'shell').tokenize():
+    print('%s: %s' % (token.token_type, token.contents)
+
+# 0: This is
+# 3: only
+# 1: a
+# 2: test
+
 ######
