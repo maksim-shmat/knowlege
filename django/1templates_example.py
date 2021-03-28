@@ -419,4 +419,25 @@ def firts(value, count=1):
     """
     return value[:count]
 
+###### A Simple Tag
+
+from django.template import Library, Node, Variable
+
+register = Library()
+
+class FirstNode(Node):
+    def __init__(self, var, count):
+        self.var = var
+        self.count = count
+
+    def render(self, context):
+        value = self.var.resolve(context)
+        return value[:self.count]
+
+###
+@register.tag
+def first(parser, token):
+    var, count = token.split contents()[1:]
+    return FirstNode(Variable(var), int(count))
+
 ######
