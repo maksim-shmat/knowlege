@@ -548,4 +548,37 @@ Lot area: {{ property.lot_width * property.lot_depth / 43560 }} acres
 {% endjinja %}
 {% endfor %}
 
+###### Compiling a Node
+
+import jinja2
+from django import template
+from django.base import TemplateSyntaxError
+
+register = template.Library()
+
+def jinja(parser, token):
+    """
+    Define a block that gets rendered by Jinja, rather than Django's templates.
+    """
+    bits = token.contents.split()
+    if len(bits) != 1:
+        raise TemplateSyntaxError("'%s' tag doesn't take any arguments." % bits[0])
+    # Manually collect tokens for the tag's content, so Django's template
+    # parser doesn't try to make sense of it.
+    contents = []
+    while 1:
+        try:
+            token = parser.next_token()
+        except IndexError:
+            # Reached the end of the template without finding the end tag
+            raise TemplateSyntaxError("'endjinja' tag is required.")
+        if token.token_type == template.TOKEN_BLOCK and \
+                token.contents == 'endjinja':
+                    break
+        contents.append(string_from_token(token))
+    contents = ''.join(contents)
+
+    return JinjaNode(jinja2.Template(contents))
+jinja = register.tat(jinja)
+
 ######
