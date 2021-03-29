@@ -581,4 +581,22 @@ def jinja(parser, token):
     return JinjaNode(jinja2.Template(contents))
 jinja = register.tat(jinja)
 
+###### Preparing the Jinja Template
+
+import jinja2
+
+class JinjaNode(template.Node):
+    def __init__(self, template):
+        self.template = template
+
+    def render(self, django_context):
+        # Jinja can't use Django's Context objects, so we have to
+        # flatten it out to a single dictionary before using it.
+        jinja_context = {}
+        for layer in django_context:
+            for key, value in layer.items():
+                if key not in jinja_context:
+                    jinja_context[key] = value
+        return self.template.render(jinja_context)
+
 ######
