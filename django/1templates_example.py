@@ -617,4 +617,67 @@ class ThemeForm(form.ModelForm):
             class Meta:
                 model = models.Theme
 
+###### An Example Theme for site
+
+THEME_EXTENDS = 'base.html'
+THEME_CONTEXT_NAME = 'theme'
+THEME_CONTAINER_BLOCK = 'theme'
+THEME_BLOCK = (
+        'title',
+        'sidebar',
+        'links',
+)
+
+# the base.html template at eh root of the inheritance chain might look like
+<html>
+<head>
+<title>{% block title %}{% endblock %}</title>
+<link rel="stylesheet" type="text/css" href="/style.css"/>
+</head>
+<body>{% block theme %}{% endblock %}</body>
+<html>
+
+# exemplar THEME model
+{% extends 'base.html' %}
+
+{% block theme %}
+<h1>{% block title %}{% endblock %}</h1>
+<ul id="links">{% block links %}{% endblock %}</ul>
+<div id="content">{% block content %}{% endblock %}</div>
+{% endblock %}
+
+# consider the template for the root of a real estate site
+{% extends theme %}
+
+{% block title %}Acme Real Estate{% endblock %}
+
+{% block links %}
+<li><a href="{% url home_page %}">Home</a></li>
+<li><a href="{% url property_list %}">Properties></a></li>
+<li><a href="{% url about_page %}">About</a></li>
+{% endblock %}
+
+{% block content %}
+<p>Welcome to Acme Real Estate!</p>
+{% endblock %}
+
+# and loading full HTML
+<html>
+<head>
+<title>Acme Real Estate</title>
+<link rel="stylesheet" type="text/css" href="/style.css"/>
+</head>
+<body>
+<h1>Acme Real Estate</h1>
+<ul id="links">
+<li><a href="/">Home</a></li>
+<li><a href="/properties/">Properties</a></li>
+<li><a href="/abut/">About</a></li>
+</ul>
+<div id="content".
+<p>Welcome to Acme Real Estate!</p>
+</div>
+</body>
+</html>
+
 ######
