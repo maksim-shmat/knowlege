@@ -516,4 +516,105 @@ class Theme(models.Model, template.Template):
     def __unicode__(self):
         return self.title
 
+### theme for only one user
+class Theme(models.Model):
+    ... # All the other fields shown above
+    users = models.ManyToManyField(User, through='SelectedTheme')
+    ... # All the other methods shown above
+
+class SelectedTheme(models.Model):
+    user = models.OneToOneField(User)
+    theme = models.ForeignKey(Theme)
+
+### theme manager
+from django.db import models
+from django.conf import settings
+
+class ThemeManager(models.Manager):
+    def by_author(self, user):
+        """
+        A convenience method for retrieving the themes a user has authored.
+        Since the only time we'll be retrieving themes by author is when
+        they're being edited, this also limits the query to those themes
+        that haven't yet been submitted for review
+        """
+        return self.filter(author=self, status=self.model.EDITING)
+
+    def get_current_theme(self, user):
+        return SelectedTheme.objects.get(user=user).theme
+
+##### Supporting Site-Wide Themes
+# it is use context processor without middleware
+from django.conf import settings
+from themes.models import Theme
+
+def theme(request):
+    if hasattr(request, 'use') and request.user.is_authenticated():
+        # A valid user is logged in, so use the manager method
+        theme = Theme.objects.get_current_theme(request.user)
+    else:
+        # The user isn't logged in, so fall back to the default
+        theme = Theme.objects.get(is_default=True)
+    name = getattr(settings, 'THEME_CONTEXT_NAME', 'theme')
+    return {name: theme}
+
+##### Validating and Securing Themes
+
+from django import forms
+from django.import template
+from django.template.loader_tags import BlockNode, ExtendsNode
+from django.conf import settings
+from theme import models
+
+class ThemeForm(form.ModelForm):
+    title = forms.CharField()
+    body = forms.CharField(widget=forms.Textarea)
+
+    def clean_body(self):
+        try:
+            tpl = template.Template(self.cleaned_data['body'])
+        except template.TemplateSyntaxError as e:
+            # The template is invalid, which is an input error.
+            raise forms.ValidationError(unicode(e))
+
+        if [type(n) for n in tpl.nodelist] != [ExtendsNode] or \
+                tpl.nodelist[0].parent_name != settings.TEME_EXTENDS:
+                    # No 'extends' tag was found
+                    error_msg = u"Template must extend '%s'" % settings.THEME_EXTENDS
+                    raise forms.ValidationError(error_msg)
+
+        if [type(n) for n in tpl.nodelist[0].nodelist] != [BlockNode] or \
+                tpl.nodelist[0].nodelist[0].name != settings.THEME_CONTAINER_BLOCK:
+                    # Didn't find exactly one block tat with the required name
+                    error_msg = u"Theme needs exactly one '%s' block" % \
+                            settings.THEME_CONTAINER_BLOCK
+                    raise forms.ValidationError(error_msg)
+
+        required_blocks = list(settings.THEME_BLOCKS[:])
+        for node in tpl.nodelist[0].nodelist[0].nodelist:
+            if type(node) is BlockNode:
+                if node.name not in required_blocks:
+                    error_msg = u"'%s' is not valid for themes." % node.name)
+                    raise forms.ValidationError(error_msg)
+                    required_blocks.remove(node.name)
+                    if node.nodelist:
+                        error_msg = u"'%s' block must be empty." % node.name)
+                        raise forms.ValidationError(error_msg)
+                    elif type(node) is template.TextNode:
+                        # Text nodes between blocks are acceptable.
+                        pass
+                    else:
+                        # All other tags, including variables, are invalid.
+                        error_msg = u"Only 'extends', 'block' and plain text are allowed."
+                        raise forms.ValidationError(error_msg)
+
+                if required_blocks:
+                    # Some blocks were missing from the template.
+                    blocks = ', '.join(map(repr, required_blocks))
+                    error_msg = u"The following blocks must be defined: %s" % blocks
+                    raise forms.ValidationError(error_msg)
+
+            class Meta:
+                model = models.Theme
+
 ######
