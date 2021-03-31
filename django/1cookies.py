@@ -30,4 +30,23 @@ class SignedCookiesMiddleware(object):
             )
             return response
 
+###### Validating Incoming Request Cookies
+
+class SignedCookiesMiddleware(object):
+    def process_request(self, request):
+        for key in request.COOKIES:
+            request.COOKIES[key] = request.get_signed_cookie(key)
+
+### catching the exception and removing those cookies
+from django.core.signing import BadSignature, SignatureExpired
+
+class SignedCookiesMiddleware(object):
+    def process_request(self, request):
+        for (key,signed_value) in request.COOKIES.items():
+            try:
+                request.COOKIES[key] = request.get_signed_cookie(key)
+            except (BadSignature, SignatureExpired):
+                # Invalid cookies should behave as if they were never sent
+                del request.COOKIES[key]
+
 ######
