@@ -43,4 +43,17 @@ d['e']
 d.getlist('e')
 # '7'
 
+###### Sorted Dict
+
+from django.utils.datastructures import SortedDict
+
+d = SortedDict([('c', '1'), ('d', '3'), ('a', '2')])
+d.keys()
+# ['c', 'd', 'a']
+d.values()
+# ['1', '3', '2']
+d['b'] = '4'
+d.items()
+# [('c', '1') ('d', '3'), ('a', '2'), ('b', '4')]
+
 ######
