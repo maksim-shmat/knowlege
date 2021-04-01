@@ -24,4 +24,23 @@ dict_one['a'] = 42
 combined['a']
 42
 
+###### Multi Value Dict
+
+from django.utils.datastructures import MultiValueDict
+
+d = MultiValueDict({'a': ['1', '2', '3'], 'b': ['4'], 'c': ['5', '6']})
+d['a'], d['b'], d['c']
+# ('3', '4', '6')
+d.getlist('a')
+# ['1', '2', '3']
+d.getlist('b')
+# ['4']
+d.getlist('c')
+# ['5', '6']
+d = MultiValueDict({'e': '7'})
+d['e']
+# '7'
+d.getlist('e')
+# '7'
+
 ######
