@@ -190,4 +190,12 @@ def create_model(name, attrs={}, meta_attrs={}, module_path='django.db.models'):
     attrs['Meta'] = Meta
     return type(name, (models.Model,), attrs)
 
+###### Defining a Signal
+
+from django.dispatch import Signal
+
+signal = Signal()
+signal
+# <django.dispatch.dispatcher.Signal object at ...>
+
 ######
