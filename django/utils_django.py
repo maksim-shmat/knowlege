@@ -55,4 +55,41 @@ tripled = curry(normalize_value, factor=3, comment='Triple')
 tripled(3, 4)
 # '2.25 (Triple)'
 
+###### Breack indempotency with memoize() from django
+
+from django.utils.functional import memoize
+def median(value_list):
+    """
+    Finds the median value of a list of numbers
+    """
+    print 'Executing the function!'
+    value_list = sorted(value_list)
+    half = int(len(value_list) / 2)
+    if len(value_list) % 2:
+        # Odd number of values
+        return value_list[half]
+    else:
+        # Even number of values
+        a, b = value_list[half - 1:half + 1]
+        return float(a + b) / 2
+primes = (2, 3, 5, 7, 11, 13, 17)
+fibonacci = ( 0, 1, 1, 2, 3, 5, 8, 13)
+median(primes)
+# Executing the function!
+# 7
+median(primes)
+# Executing the function!
+# 7
+median = memoize(median, {}, 1)
+median(primes)
+# Executing the function!
+# 7
+median(primes)
+# 7
+median(fibonacci)
+# Executing the function!
+# 2.5
+median(fibonacci)
+# 2.5
+
 ######
