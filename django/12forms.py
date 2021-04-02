@@ -705,4 +705,20 @@ class UserEditiorForm(forms.ModelForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email')
 
+###### contact.forms.ContactEditorForm
+
+from django import forms
+from django_localflavor_us import forms as us_forms
+
+from contacts.models import Contact
+
+class ContactEditorForm(forms.ModelForm):
+    phone_number = us_forms.USPhoneNumberField(requierd=False)
+    state = us_forms.USStateField(widget=us_forms.USStateSelect, requierd=False)
+    zip_code = us_forms.USZipCodeField(label="ZIP Code", required=False)
+
+    class Meta:
+    model = Contact
+    exclude = ('user',)
+
 ######
