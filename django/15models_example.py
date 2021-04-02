@@ -125,4 +125,46 @@ def last_name(self):
 def get_full_name(self):
     return self.user.get_full_name()
 
+###### properties.models.Property
+
+from django.db import models
+from django_localflavor_us import models as us_models
+
+class Property(models.Model):
+    LISTED, PENDING, SOLD = range(3)
+    STATUS_CHOICES = (
+            (LISTED, 'Listed'),
+            (PENDING, 'Pending Sale'),
+            (SOLD, 'Sold'),
+    )
+
+    slug = models.SlugField()
+    address = models.CharField(max_length=255)
+    city = models.CharField(max_length=255)
+    state = us_models.USStateField()
+    zip = models.CharField(max_length=255)
+    square_feet = models.PositiveIntegerField(null=True, blank=True)
+    acreage = models.FloatField(null=True, blank=True)
+    status = models.PositiveSmallIntegerField(choices=STATUS_CHOICES,
+                                              null=True, blank=True)
+    price = models.PositveIntegerField(null=True, blank=True)
+    features = models.ManyToManyField('Feature', through='PropertyFeature')
+    interested_parties = models.ManyToManyField(Contact, 
+                                                through='InterestedParty')
+
+    objects = PropertyManager()
+
+    class Meta:
+        verbose_name_plural = 'properties'
+
+    def __unicode__(self):
+        return u'%s, %s' % (self.address, self.city)
+
+###
+class PropertyManager(models.Manager):
+    def listed(self):
+        qs = super(PropertyManager, self).get_query_set()
+        return qs.filter(models.Q(status=Property.LISTED)
+                         models.Q(status=Property.PENDING))
+
 ######
