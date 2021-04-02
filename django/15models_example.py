@@ -113,4 +113,16 @@ class Contact(models.Model):
     def __unicode__(self):
         return self.user.get_full_name()
 
-#####
+###
+@property
+def first_name(self):
+    return self.user.first_name
+
+@property
+def last_name(self):
+    return self.user.last_name
+
+def get_full_name(self):
+    return self.user.get_full_name()
+
+######

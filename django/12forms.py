@@ -695,4 +695,14 @@ class PendFormView(FormView):
             data = PendedValue.objects.filter(import_path=import_path, form_hash=form_hash)
             return dict((d.nam, d.value) for d in data)
 
+###### contacts.forms.UserEditForm
+
+from django import forms
+from django.contrib.auth.models import User
+
+class UserEditiorForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ('username', 'first_name', 'last_name', 'email')
+
 ######
