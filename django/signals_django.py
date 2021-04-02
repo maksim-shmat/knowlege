@@ -198,4 +198,38 @@ signal = Signal()
 signal
 # <django.dispatch.dispatcher.Signal object at ...>
 
+###### Sending a Signal
+
+from django.dispatch import Signal
+
+signal = Signal()
+sender = object()
+signal.send(sender=sender, spam='eggs')
+# []
+
+###### Defining a Listener
+
+def listener(sender, a, **kwargs):
+    return a * 3
+
+###### Forsing Strong References
+
+from django.dispatch import Signal
+
+signal = Signal()
+def weak_customer():
+    def weak_handler(sender, **kwargs):
+        pass
+    signal.connect(weak_handler)
+
+def strong_customizer():
+    def strong_handler(sender, **kwargs):
+        pass
+    signal.connect(strong_handler, weak=False)
+
+weak_customizer()
+strong_customizer()
+signal.send(sender="sender")
+# [(<function <strong_handler> at ...>, None)]
+
 ######
