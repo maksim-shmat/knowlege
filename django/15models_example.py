@@ -167,4 +167,16 @@ class PropertyManager(models.Manager):
         return qs.filter(models.Q(status=Property.LISTED)
                          models.Q(status=Property.PENDING))
 
-######
+###### properties.models.Feature
+
+class Feature(models.Model):
+    slug = models.SlugField()
+    title = models.CharField(max_length=255)
+    definition = models.TextField()
+
+    def __unicode__(self):
+        return self.title
+
+### properties.models.PropertyFeature
+
+c
