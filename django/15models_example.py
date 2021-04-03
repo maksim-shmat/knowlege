@@ -179,4 +179,36 @@ class Feature(models.Model):
 
 ### properties.models.PropertyFeature
 
-c
+class PropertyFeature(models.Model):
+    property = models.ForeignKey(Property)
+    feature = models.ForeignKey(Feature)
+    description = models.TextField(blank=True)
+
+    def __unicode__(self):
+        return unicode(self.feature)
+
+### property.models.InterestedParty
+
+from contacts.models import Contact
+
+class InterestedParty(models.Model):
+    BUILDER, OWNER, BUYER, AGENT, INSPECTOR = range(5)
+    INTEREST_CHOICES = (
+            (BUILDER, 'Builder'),
+            (OWNER, 'Owner'),
+            (BUYER, 'Buyer'),
+            (AGENT, 'Agent'),
+            (INSPECTOR, 'Inspector'),
+    )
+
+    property = models.ForeignKey(Property)
+    contact = models.ForeignKey(Contact)
+    interest = models.PositiveSmallIntegerField(choices=INTEREST_CHOICES)
+
+    class Meta:
+        verbose_name_plural = 'interested parties'
+
+        def __unicode__(self):
+            return u'%s, %s' % (self.contact, self.get_interest_display())
+
+######
