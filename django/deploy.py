@@ -2,7 +2,7 @@
 
 ###### sign up Heroku account
 
-$ brew install heroku (for Mac)
+$ sudo snap install heroku --classic
 
 $ heroku login
 
@@ -11,6 +11,11 @@ $ heroku login
 - install gunicorn as our web server
 - make a one-line change to settings.py file
 
+###### add from heroku.com for start
+$ git clone https://github.com/heroku/python-getting-started.git
+$ cd python-getting-started
+(it add runtime.txt and requirement.txt)
+######
 # Pipfile
 [requires]
 python_version = "3.6"
@@ -21,10 +26,13 @@ $ pipenv lock
 $ touch Procfile
 # add in
 web: gunicorn pages_project.wsgi --log-file -
-
+(web: gunicorn gettingstarted.wsgi)
 ======
 $ pipenv install gunicorn==19.9.0
-
+($pip install -r requirements.txt)
+($python manage.py collectstatic)
+($ heroku local web)
+open http://localhost:5000
 ======
 # change to settings.py
 ALLOWED_HOST = ['*']
@@ -45,7 +53,7 @@ $ heroku create
 $ heroku config:set DISABLE_COLLECTSTATIC=1
 
 ====== # push our code to Heroku
-$ git push heroku master
+$ git push heroku main
 
 ====== # make app live to be free
 $ heroku ps:scale web=1
@@ -122,4 +130,32 @@ $ heroku ps:scale web=1
 
 https://dfd-blog.herokuapp.com/
 
+###### Views logs
+$ heroku logs --tail
+control+c for stop viewing
+###### Push local changes
+$ pip install requests
+add requirements.txt
+
+modify hello/views.py so that it imports the 'requests' module at the start
+
+import requests
+
+Now modify the index method to make use of the module.
+Try replacing the current 'index' method with the following code:
+def index(request):
+    r = requests.get('http://httpbin.org/status/418')
+    print(r.text)
+    return HttpResponse('<pre>' + r.text + '</pre>')
+
+#
+$ heroku local
+go to http://httpbin.org/status/418
+and view teapot
+#
+git add .
+git commit -m "Demo"
+git push heroku main
+$ heroku open
 ######
+
