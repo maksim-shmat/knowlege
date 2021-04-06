@@ -15,24 +15,71 @@ python3.8 -m pip install django-cms
 python3.8 -m pip install djangocms-admin-style
 У них свой магаз приложений и по ходу свой хостинг, так что задеплоить на heroku наверное будет trubles. Мб потом. 
 """
-
+# next
 django-admin.py startproject maksimshmat
+cd maksimshmat
+django-admin startapp shop
 settings.py
 INSTALLED_APPS =[
         ...
-        'maksimshmat.apps.ShopConfig',
+        'shop.apps.ShopConfig',
 
+# next
+add class Category and class Product in models.py
 
-add 'sekizai' and more, gide: http://docs.django-cms.org/en/latest/how_to/install.html
-urls.py
+# next
+python3.8 -m pip install Pillow
 
-pip install psycopg2 # for Postgre(later)
-python manage.py migrate # make db(SQLite3)
+# next
+python manage.py makemigrations
+python manage.py migrate
+
+# next
+add @admin.register(Category) and (Product) into admin.py
+
+# next
 python manage.py createsuperuser
+username (leave blank to use 'jack')
+Email address: m.sh@
+Password:
+Password(again)
 
-python manage.py cms check
-settings.py
+# next
+add to views.py
+def product_list()
+def product_detail()
 
+# next
+add paths to urls.py by /shop
+
+# next
+add to models.py /maksimshmat
+def get_absolute_url(self) to class Catetory and class Product
+
+# next
+add templates/ structure to /shop
+add base.html
+add list.html
+add detail.html
+
+# next
+make static/ in shop/
+
+# next
+add no_image.png to static/img/
+
+# next
+add to settings.py form maksimshmat/
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+
+# next
+add a little to urls.py from maksimshmat/
+import settings
+import static
+if settings.DEBUG:
+
+# next
 
 make files structure for magAzine
 requirements/_base.txt
