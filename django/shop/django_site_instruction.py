@@ -14,11 +14,6 @@ giy config --global push.default simple    # push only current branch
 pip3 install requests
 pip3 install --upgrade requests
 
-django-admin statrproject site_django
-python3 manage.py migrate
-
-python3 manage.py startapp notes
-
 python3.8 -m pip install psycopg2
 python3.8 -m pip install django-taggit
 python3.8 -m pip install markdown
