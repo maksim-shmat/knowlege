@@ -80,7 +80,9 @@ import static
 if settings.DEBUG:
 
 # next
+That`s it simple site now.
 
+###
 make files structure for magAzine
 requirements/_base.txt
 requirements/production.txt
