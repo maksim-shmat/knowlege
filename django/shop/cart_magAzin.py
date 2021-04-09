@@ -54,3 +54,18 @@ add cart_product_form
 add to shop/product/detail.html "csrf_token"
 
 # next
+add update button and quantity form into the detail.py
+<td>
+  <form action="{% url "cart:cart_add" product.id..."
+
+# next
+create context_processors.py/cart
+
+add 'cart.context_processors.cart' into settings.py
+
+add to shop/base.html
+<div class="cart">
+{% with total_items=cart...}
+
+# next
+
