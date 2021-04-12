@@ -45,5 +45,12 @@ add to "#" <a href="{% urk "orders:order_create" %}" class="button">
 # next
 make a structure: templates/orders/order/create.html created.html
 
+# next trubles with Decimal and JSON
+python3.8 -m pip install simplejson  # for exit from trumbles Decimal/JSON
+or pip3 install simplejson
+
+import simplejson as json
+from decimal import Decimal
+
 # next
 
