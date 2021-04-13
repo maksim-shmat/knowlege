@@ -52,5 +52,10 @@ or pip3 install simplejson
 import simplejson as json
 from decimal import Decimal
 
+# next Try clear migerations
+python manage.py migrate <app_name> zero
+python manage.py makemigrations <app_name>
+python manage.py migrate <app_name>
+
 # next
 
