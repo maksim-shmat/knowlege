@@ -19,7 +19,7 @@ But that it address is view Recipient, keep it eye.
 Blind correspondent copy, that address is hide, in archive in another place, for example.
 
 # Forward
-Sent new message without conversation. It is whole new message without tails.
+Resend with body those letter that you able. Add your remark to it.
 
 # Reply
 And reply is a chat

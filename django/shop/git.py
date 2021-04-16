@@ -1,27 +1,18 @@
 """ How make good commits?"""
 
-build: changes that affect the build system or external dependencies (example
+build:   changes that affect the build system or external dependencies (example
+scopes:  gulp, broccoli, npm)
+ci:      changes to our CI configuration files and scripts (example scopes: Travis,Circle, BrowserStack, SauceLabs)
 
-scopes: gulp, broccoli, npm)
-
-ci: changes to our CI configuration files and scripts (example scopes: Travis,
-    Circle, BrowserStack, SauceLabs)
-
-docs: documentation only changes
-
-feat: a new feature
-
-fix: a bug fix
-
-perf: a code change that improves performance.
-
+docs:     documentation only changes
+feat:     a new feature
+fix:      a bug fix
+perf:     a code change that improves performance.
 refactor: a code change that neither fixes a bug nor adds a future
-
-style: changes that do not affect the meaning of the code (white-space,
+style:    changes that do not affect the meaning of the code (white-space,
     formatting, missing semi-colons, etc)
-chore: updating grunt tasks etc; no production code change.
-
-test: adding missing tests or correcting existing tests
+chore:    updating grunt tasks etc; no production code change.
+test:     adding missing tests or correcting existing tests
 
 
 $ cat .gitignore
@@ -44,13 +35,15 @@ git rm \*~  # rm file where ower for tilda
 
 How create new repository.
 
-echo "# Book_markus" >> README.md
+echo "Beralusian_Kingdom" >> README.md
 git init
 git add README.md
-git commit -m "The man in black fled across the desert, and the gunslinger followed."
-git branch -M dictator
-git remote add origin https://github.com/maksim-shmat/Book_markus.git
-git push -u origin dictator
+git commit -m "Start a project"
+git branch -M king
+Go to github and create new project "Beralusian_Kingdom" without README.md and
+copy link
+git remote add origin git@github.com:maksim-shmat/Beralusian_Kingdom.git
+git push -u origin king
 git remote add nahui https://github.com... # name remote repo
 ################
 

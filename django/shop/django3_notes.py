@@ -15,7 +15,7 @@ chmod u+x pre-commit
 make executabel fle  in myproject/settings/last-update.txt
 chmod u+x last-update.txt
 
-For the make .gitignore file: from place where is manage.py make touch .gitignore, or from github site
+.gitignore file: from place where is manage.py make touch .gitignore, or from github site
 
 Make deleter or .py[co] files from bash:
     vim ~/.bash_profile:
