@@ -53,14 +53,8 @@ def product_detail()
 add paths to urls.py by /shop
 
 # next
-add to models.py /maksimshmat
-def get_absolute_url(self) to class Catetory and class Product
-
-# next
-add templates/ structure to /shop
-add base.html
-add list.html
-add detail.html
+add templates/shop/base.html
+add templates/shop/product/detail.html list.html
 
 # next
 make static/ in shop/
@@ -71,7 +65,7 @@ add no_image.png to static/img/
 # next
 add to settings.py form maksimshmat/
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = BASE_DIR, 'media/'
 
 # next
 add a little to urls.py from maksimshmat/
@@ -82,11 +76,37 @@ if settings.DEBUG:
 # next
 That`s it simple site now.
 
-###
+# next
 make files structure for magAzine
 requirements/_base.txt
 requirements/production.txt
 requiremente/dev.txt
 python3.8 -m pip install -r requirements/dev.txt (download and write big pack)
 or python3.8 -m pip freeze > requirements/_base.txt (if you are install all self)
+-it is for download all pip programms for project
 
+# next 
+add --- local.env --- with Django project configuration
+Debug=True
+# syntax: DATABASE_URL=psql://username:password@127.0.0.1:8458/database
+DATABASE_URL=sqlite:///db.sqlite3
+SECRET_KEY="*************"
+
+# next
+make file --- requirements.txt --- for memory?
+Django>=1.7
+django-environ>=0.3.0
+django-braces>=1.4.0
+django-crispy-forms>=1.4.0
+django-admin-bootstrapped>=1.6.9
+django-debug-toolbar>=1.2.1
+
+# next
+make file --- dev-requirements.txt
+-r requirements.txt
+# Extra stuff required for local dev
+pudb==2014.1
+
+# next
+in settings.py write:
+    SECRET_KEY = env('SECRET_KEY')

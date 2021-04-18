@@ -15,13 +15,8 @@ chore:    updating grunt tasks etc; no production code change.
 test:     adding missing tests or correcting existing tests
 
 
-$ cat .gitignore
-
-*.[oa]  # Игнорируй файлы заканчивающиеся на .о или .а
-*~   # Игнор все файлы заканчивающиеся на ~
 man gitignore  # справочка
 
-git commit -v  # v добавить дульту изменений
 git commit -a  # without add .
 
 rm file
@@ -45,6 +40,8 @@ copy link
 git remote add origin git@github.com:maksim-shmat/Beralusian_Kingdom.git
 git push -u origin king
 git remote add nahui https://github.com... # name remote repo
+if you change repo in site github
+use git pull before git push
 ################
 
 How clone another repo.
@@ -83,5 +80,15 @@ git reset HEAD@{index}
 ###
 # Change the last commit
 git commit --amend
+###
+
+if trubles in merge
+git config merge.tool vimdiff3
+
+git diff
+
+git mergetool
+git commit
+git push
 ###
 

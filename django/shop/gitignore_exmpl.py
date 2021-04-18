@@ -185,4 +185,30 @@ Thumbs.db
 .prof
 
 
-# End
+### Global/Vim.gitignore
+# Swap
+[._]*.s[a-v][a-z]
+!*.svg # comment out if you don't need verctor files
+[._]*.sw[a-rt-v][a-z]
+[._]s[a-rt-v][a-z]
+[._]ss[a-gi-z]
+[._]sw[a-p]
+
+# Session
+Session.vim
+Sessionx.vim
+
+# Temporary
+.netrwhist
+*~
+
+# Auto-generated tag files
+tags
+
+# Persistent undo
+[._]*.un~
+
+### Exclude local.env with pass and other
+local.env
+
+

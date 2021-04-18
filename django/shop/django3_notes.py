@@ -15,7 +15,7 @@ chmod u+x pre-commit
 make executabel fle  in myproject/settings/last-update.txt
 chmod u+x last-update.txt
 
-.gitignore file: from place where is manage.py make touch .gitignore, or from github site
+gitignore file: from place where is manage.py make "touch .gitignore", or from github site
 
 Make deleter or .py[co] files from bash:
     vim ~/.bash_profile:
@@ -25,31 +25,3 @@ Make deleter or .py[co] files from bash:
     source ~/.bash_profile
 And voila!
 (env)$ delpyc
-
-Import rules:
-    # System libraries
-    import os
-    import re
-    from datetime import datetime
-
-    # Third-party libraries
-    import boto
-    from PIL import Image
-
-    # Django modules
-    from django.db import modules
-    from django.conf import settings
-
-    # Django apps
-    from cms.models import Page
-
-    # Currennt-app modules
-    from .models import NewsArticle
-    from . import app_settings
-
-================================
-copy the build_dev_example.sh script to build_dev.sh
-chmod +x build_dev.sh
-./build_dev.sh
-.....Big Downloading
-
