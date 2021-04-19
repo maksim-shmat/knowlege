@@ -77,8 +77,8 @@ if settings.DEBUG:
 That`s it simple site now.
 
 # next
-make files structure for magAzine
-requirements/_base.txt
+make files structure for magAzine where there README.md
+requirements/base.txt
 requirements/production.txt
 requiremente/dev.txt
 python3.8 -m pip install -r requirements/dev.txt (download and write big pack)
@@ -110,3 +110,8 @@ pudb==2014.1
 # next
 in settings.py write:
     SECRET_KEY = env('SECRET_KEY')
+
+# next
+python3.5 -m pip install environs
+
+# next

@@ -80,9 +80,9 @@ git reset HEAD@{index}
 ###
 # Change the last commit
 git commit --amend
-###
 
-if trubles in merge
+### --- trubles with merge ---
+
 git config merge.tool vimdiff3
 
 git diff
@@ -90,5 +90,14 @@ git diff
 git mergetool
 git commit
 git push
-###
+
+### make a left branch
+git branch dev
+git branch        # check branches
+git checkout dev  # move to new branch
+
+git checkout king # go back
+git merge dev
+
+# git branch -d dev  --- delete left branch ---
 
