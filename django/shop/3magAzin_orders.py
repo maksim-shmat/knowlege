@@ -1,5 +1,6 @@
 """App orders shop about."""
 
+# git branch dev --- from king ---
 python manage.py startapp orders
 
 INSTALLED_APPS = [
@@ -45,14 +46,12 @@ add to "#" <a href="{% urk "orders:order_create" %}" class="button">
 # next
 make a structure: templates/orders/order/create.html created.html
 
-# next trubles with Decimal and JSON
-python3.8 -m pip install simplejson  # for exit from trumbles Decimal/JSON
-or pip3 install simplejson
+# next
+add to shop/templates/shop/base.html
+Your cart:
+<a href....cart_get_total_price
 
-import simplejson as json
-from decimal import Decimal
-
-# next Try clear migerations
+# next Try clean migrations
 python manage.py migrate <app_name> zero
 python manage.py makemigrations <app_name>
 python manage.py migrate <app_name>

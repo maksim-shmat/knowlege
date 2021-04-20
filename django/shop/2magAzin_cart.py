@@ -4,7 +4,7 @@
 CART_SESSION_ID = 'cart'
 
 # next
-python mangage.py startapp cart
+python manage.py startapp cart
 
 add app to settings.py
 INSTALLED_APPS = [
@@ -51,7 +51,7 @@ views.py/shop
 add cart_product_form
 
 # next
-add to shop/product/detail.html "csrf_token"
+add to templates/shop/product/detail.html "csrf_token"
 
 # next
 add update button and quantity form into the detail.py
@@ -68,4 +68,5 @@ add to shop/base.html
 {% with total_items=cart...}
 
 # next
+add to .gitignore --- .env ---
 
