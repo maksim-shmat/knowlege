@@ -13,7 +13,7 @@ class Timer(object):
         self.start = datetime.datetime.now()
         return self.start
 
-    def stop(self, message="Toral: "):
+    def stop(self, message="Total: "):
         """Stops the timer. Returns the time elapsed"""
         self.stop = datetime.datetime.now()
         return message + str(self.stop - self.start)

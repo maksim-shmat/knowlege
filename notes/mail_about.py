@@ -8,9 +8,6 @@ And send it all and me myself.
 If you push down checkbox "Include previous messages" that
 your resume not be included.
 
-# Delete default message.
-In the hands method delete "Sent from my Galaxy" it be dumb.
-
 # Cc 
 Correspondent copy, sent it my accountant for agree, for example.
 But that it address is view Recipient, keep it eye.

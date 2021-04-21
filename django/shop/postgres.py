@@ -1,41 +1,41 @@
-mkdir django-postgres
-cd django-postgres
+"""About db."""
 
-python -m venv env
-env/scripts/activate   # win?
+sudo apt-get install postgresql postgresql-contrib
+# but should install in venv or docker?
 
-pip install django
-pip freeze
-env/scripts/activate
+# next 2
+python3.8 -m pip install psycopg2-binary
 
-django-admin startproject postgresTest
-cd postgresTest
-python manage.py startapp testdb
+settings.py
+import psycopg2
 
-python manage.py runserver
-open pgAdmin4 in filemanager and make db
+DATABASE_URL = ?os.environ['DATABASE_URL']
+conn = psycopg2.connect(DATABASE_URL, sslmode='require')
 
-Go to settings.py
-INSTALLE_APPS  <add 'testdb',>
+python3.8 -m pip install dj-database-url
 
+add to --- requirements.txt --- 
+psycopg2-binary
+dj-database-url
+
+# next 3
+su postgres
+createuser -dP blog
+
+createdb -E utf8 -U blog blog
+
+# next 4
 DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'dbtest',
-            'USER': 'postgres',
-            'PASSWORD': '1234',
-            'HOST': '127.0.0.1',
-            'PORT': '5432',
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'blog',
+            'USER': 'blog',
+            'PASSWORD': '****',
         }
 }
 
-test/db/models.py
+# next 5
+python manage.py migrate
+python manage.py createsuperuser
 
-from django.db import models
-class Teacher(models.Model):
-    name = models.CharField(max_length=80)
-    age = models.IntegerField()
-
-pip install psycopg2
-
-manage your db with pgAdmin
+#
