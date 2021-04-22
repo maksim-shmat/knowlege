@@ -95,6 +95,7 @@ git push
 git branch dev
 git branch        # check branches
 git checkout dev  # move to new branch
+git checkout dev -b # make and go to new branch
 
 git checkout king # go back
 git merge dev
