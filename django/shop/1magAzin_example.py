@@ -112,6 +112,4 @@ in settings.py write:
     SECRET_KEY = env('SECRET_KEY')
 
 # next
-python3.5 -m pip install environs
-
-# next
+add base.css to static/css  # it is fone
