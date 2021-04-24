@@ -44,4 +44,58 @@ sudo systemctl status docker
 
 # All it that's with Docker
 
+######
+Add <docker> command without sudo
+
+sudo usermod -aG docker ${USER}
+su - ${USER}
+id -nG  # check user in docker
+
+# add user in docker group withot root
+sudo usermod -aG docker username
+
+######
+Work with docker
+docker # list commands
+docker docker-subcommand --help
+docker info
+docker run hello-world
+docker search ubuntu
+docker login
+docker pull ubuntu
+docker images
+docker run -it ubuntu  # run ubuntu image into container(run ->create container with image ubuntu)
+root@2ded33ab36c0:/# apt update #-is used in command
+exit # go out from container
+
+######
+Work with docker farther
+docker ps # check active containers
+docker ps -a # check all containers
+docker ps -l # check last container
+docker start 9fb60763329a
+docker stop quizzical_mcnulty # use name or ID
+docker rm youthful_curie
+
+######
+More work with docker
+docker commit -m "What" -a "jack" container_id repository(dockershmat)/new_image_name # save current position of all programms into container
+
+repository = dockershmat
+docker commit -m "added Node.js" -a "jack" d9b1002f636 dockershmat/ubuntu-nodejs
+docker image # check new repo with ubuntu
+
+docker login -u dockershmat
+docker tag jack/ubuntu dockershmat/ubuntu # because jack not dockershmat
+docker push dockershmat/docker-image-name # upload
+docker push jack/ubuntu # upload into jack repo
+
+######
+Remove and clear
+docker ps -a # all containers
+docker images # all images
+docker rm container_id(or name)
+docker rmi name_image
+
+######
 
