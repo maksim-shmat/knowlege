@@ -64,7 +64,7 @@ docker search ubuntu
 docker login
 docker pull ubuntu
 docker images
-docker run -it ubuntu  # run ubuntu image into container(run ->create container with image ubuntu)
+docker run -it ubuntu  # run ubuntu image into container(run ->CREATE container with image ubuntu)
 root@2ded33ab36c0:/# apt update #-is used in command
 exit # go out from container
 
@@ -98,4 +98,22 @@ docker rm container_id(or name)
 docker rmi name_image
 
 ######
+Work with containers
+docker run --help # inf about indexes
+docker run [OPTIONS] IMAGE [COMMAND] [ARG...]
+docker run --rm sos_ka # Autoremove container after exit
+docker run --name string # Assign a name to the container
+
+###### new tutorial
+make a mkdir software and file into dir Dockerfile
+
+write into Dockerfile:
+    FROM python:3.9
+    RUN python -m pip install DateTime
+    RUN apt update && apt -y install vim
+
+next 1
+docker build -t your-user-name/python-docker-totorial:v1.0.0. .
+-t # name and tag your image
+. # is a full stop? and path in this place
 
