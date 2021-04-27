@@ -64,4 +64,23 @@ services:
           ports:#make redis accessible locally
             -"127.0.0.1:6379:6379"
 
+###### NOT USE ROOT use USER
+FROM ubuntu:18.04
+RUN useradd --create-home appuser
+WORKDIR /home/appuser
+USER appuser
+
+###### Run PostgreSQL in side a docker-compose.yaml
+version: "3"
+services:
+  db:
+    image: "postgres:11"
+    container_name: "postgres"
+    ports:
+      -"5432:5432"
+    volumes:
+      -dbdata:/var/lib/postgresql/data
+volumes:
+  dbdata:
+
 ######
