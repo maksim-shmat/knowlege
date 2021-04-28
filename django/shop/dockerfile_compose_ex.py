@@ -159,7 +159,98 @@ volumes:
 version: '3.7'
 services:
   veb:
-      build: app
-      ports:
-        - '8000:8000'
+    build: app
+    ports:
+      - '8000:8000'
+######
+#how add redis in docker-compose.yaml
+redis:
+  image: "redis:alpine"
+  ports:
+    - "6379:6379"
+
+###
+docker-compose up -d redis
+
+######
+create a service called worker for the Python RQ
+
+worker:
+  image: "flask-by-example:v1"
+  command: "worker.py"
+  environment:
+    APP_SETTINGS: config.ProductionConfig
+    DATABASE_URL: postgresql://wordcount_dbadmin:$DBPASS@db/wordcount
+    REDISTOGO_URL: redis://redis:6379
+  depends_on:
+    - db
+    - redis
+
+###
+docker-compose up -d worker
+
+######
+create a new service called "app" in docker-compose.yaml
+
+app:
+  image: "flsk-by-example:v1"
+  command: "manage.py runserver --host=0.0.0.0"
+  ports:
+    - "5000:5000"
+  environment:
+    APP_SETTINGS: config.ProductionConfig
+    DATABASE_URL: postgresql://wordcount_dbadmin:$DBPASS@db/wordcount
+    REDISTOGO_URL: redis:6379
+  depends_on:
+    - db
+    - redis
+
+######
+# final version docker-compose.yaml
+version: "3"
+services:
+  app:
+    image: "griggheo/flask-by-example:v1"
+    command: "manage.py runserver --host=0.0.0.0"
+    ports:
+      - "5000:5000"
+    environment:
+      APP_SETTINGS: config.ProductionConfig
+      DATABASE_URL: postgresql://wordcount_dbadmin:$DBPASS@db/wordcount
+      REDISTOGO_URL: redis://redis:6379
+    depends_on:
+      - db
+      - redis
+  worker:
+    image: "griggheo/flask-by-example:v1"
+    command: "worker.py"
+    environment:
+      APP_SETTINGS: config.ProductionConfig
+      DATABASE_URL: postgresql://wordcount_dbadmin:$DBPASS@db/wordcount
+      REDISTOGO_URL: redis://redis:6379
+    depends_on:
+      - db
+      - redis
+  migration:
+    image: "griggheo/flask-by-example:v1"
+    command: "manage.py db upgrade"
+    environment:
+      APP_SETTINGS: config.ProductionConfig
+      DATABASE_URL: postgresql://wordcount_dbadmin:$DBPASS@db/wordcount
+    depends_on:
+      - db
+  db:
+    image: "postgres:11"
+    container_name: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      -dbdata:/var/lib/postgresql/data
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+volumes:
+  dbdata:
+
 ######
