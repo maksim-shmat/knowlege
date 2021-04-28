@@ -74,13 +74,62 @@ USER appuser
 version: "3"
 services:
   db:
-    image: "postgres:11"
+    image: "postgres:11"    # POSTGRES
     container_name: "postgres"
     ports:
-      -"5432:5432"
+      -"5432:5432"    # from local port to the container port
     volumes:
       -dbdata:/var/lib/postgresql/data
 volumes:
   dbdata:
+
+# and $ docker-compose up -d db # for run db
+docker-compose logs db # inspect
+docker ps # see postgres container
+docker volume ls | grep dbdata # run docker volume
+docker-compose exec db psql -U postgres # connect to the PostgreSQL
+# postgres=#
+
+###
+postgres=# create database wordcount;
+CREATE DATABASE
+
+postgres=# \l
+
+### create a role in db
+docker-compose exec db psql -U postgres wordcount
+wordcount=# CREATE ROLE wordcount_dbadmin;
+CREATE ROLE
+wordcount=# ALTER ROLE wordcount_dbadmin LOGIN;
+ALTER ROLE
+wordcount=# ALTER USER wordcount_dbadmin PASSWORD 'MYPASS';
+ALTER ROLE
+postgres=# \q
+
+### change requirements.txt
+for your Postgres:
+    change psycopg2 version
+    change redis version for Python version support
+    change rq pagage for Python version support
+
+### Dockerfile for this
+# cat Dockerfile
+FROM python:3.7.3-alpine
+
+ENV APP_HOME /app
+WORKDIR $APP_HOME
+
+COPY requirements.txt .
+
+RUN \
+  apk add --no-cache postgresql-libs && \
+  apk add --no-cache --virtual .build-deps gcc musl-dev postgesql-dev && \
+  python3 -m pip install -r requirements.txt --no-cache-dir && \
+  apk --purge del .build-deps
+
+COPY . .
+
+ENTRYPOINT [ "python" ]
+CMD ["app.py"]
 
 ######
