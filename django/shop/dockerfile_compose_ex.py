@@ -35,34 +35,34 @@ services:
   app:
     build:./compose/app_dev
     volumes:
-      -./baa:/srv/app
-      -env:/srv/env
+      - ./baa:/srv/app
+      - env:/srv/env
     working_dir:/srv/app
     env_file
-      -env_dev
-      -env_dev_secret
+      - env_dev
+      - env_dev_secret
     ports:
-      -"127.0.0.1:5000:5000"
+      - "127.0.0.1:5000:5000"
       depends_on:
-        -db
-        -redis
+        - db
+        - redis
       # uncommennt for debugging the service-container does not try to start dev server
       # entrypoint:["sh","-c","sleep infinity"]
     db:
       # https://hub.docker.com/_/postgres/
       image:postgres:9.6.3
       volumes:
-        -postgres_data:/var/lib/postgresql/data
+        - postgres_data:/var/lib/postgresql/data
       environment:
         POSTGRES_USER:postgres
         POSTGRES_PASSWORD:dbpw
       ports:#make db accessible locally
-        -"127.0.0.1:5432:5432"
+        - "127.0.0.1:5432:5432"
       redis:
           # https://hub.docker.com/_/redis/
           image:redis:3.2.9
           ports:#make redis accessible locally
-            -"127.0.0.1:6379:6379"
+            - "127.0.0.1:6379:6379"
 
 ###### NOT USE ROOT use USER
 FROM ubuntu:18.04
@@ -77,9 +77,9 @@ services:
     image: "postgres:11"    # POSTGRES
     container_name: "postgres"
     ports:
-      -"5432:5432"    # from local port to the container port
+      - "5432:5432"    # from local port to the container port
     volumes:
-      -dbdata:/var/lib/postgresql/data
+      - dbdata:/var/lib/postgresql/data
 volumes:
   dbdata:
 
@@ -132,4 +132,34 @@ COPY . .
 ENTRYPOINT [ "python" ]
 CMD ["app.py"]
 
+###### Example migrate for flask
+# cat docker-compose.yaml
+version: "3"
+services:
+  migrations:
+    image: "flask-by-example:v1"
+    command: "manage.py db upgrade"
+  environment:
+    APP_SETTINGS: config.ProductionConfig
+    DATABASE_URL: postgresql://wordcount_dbadmin:$DBPASS@db/wordcount
+  depends_on:
+    - db
+db:
+  image: "postgres:11"
+  container_name: "postgres"
+  ports:
+    - "5432:5432"
+  volumes:
+    - dbdata:/var/lib/postgresql/data
+volumes:
+  dbdata:
+
+###### Ports fo Django 8000, and 5000 flask
+# django ex
+version: '3.7'
+services:
+  veb:
+      build: app
+      ports:
+        - '8000:8000'
 ######
