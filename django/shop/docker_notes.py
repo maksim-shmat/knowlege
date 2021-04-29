@@ -69,3 +69,46 @@ sudo curl -L "https://github.com/docker/compose/releases/download/1.27.4/docker-
 sudo chmod +x /usr/local/bin/docker-compose
 docker-compose --version
 
+Even if you want to run a single Docker container, it is still a good idea to include it in a docker-compose.yaml file and launch it with the docker-compose up -d command. It will make your life easier when you want to add a second container into the mix, and it will also serve as a mini Infrastructure as Code example, with the docker-compose.yaml file reflecting the state of your local Docker setup for your application.
+
+######
+porting the docker-compose services to a new host and os
+
+sudo apt-get update
+sudo apt-get remove docker docker-engine docker.io containerd runc
+sudo apt-get installl \
+        apt transport-https \
+        ca-sertificates \
+        curl \
+        gnupg-agent \
+        software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo add-apt-repository \
+        "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) \
+        stable"
+
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+sudo usermod -a -G docker ubuntu
+
+# download docker-compose
+$ sudo curl -L \
+        "https://github.com/docker/compose/releases/download/1.24.1/docker-compose-\
+
+$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+$ sudo chmod +x /usr/local/bin/docker-compose
+
+###
+copy docker-compose.yaml to the remote EC2 instance and start the db service
+
+docker-compose up -d db
+docker-compose exec db psql -U postgres
+docker exec -it 49fe88efdb46 psql -U postgres wordcount
+
+###
+docker login
+export DOCKER_PASS=MYPASS
+
+docker-compose up -d
+
