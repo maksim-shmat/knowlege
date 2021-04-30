@@ -112,3 +112,28 @@ export DOCKER_PASS=MYPASS
 
 docker-compose up -d
 
+###### Old instruction how to fill docker into DigitalOcean
+$ curl -sOL https://github.com/docker/machine/releases/download/v0.3.0/ \
+        docker-machine_darwin-amd64
+
+$ mv docker-machine_darwin-amd64 docker-machine
+$ chmod +x docker-machine
+$ ./docker-machine --version
+docker-machine version 0.3.0
+
+### with the environment variable DIGITALOCEAN_ACCESS_TOKEN set, you can create your remote Docker host:
+$ ./docker-machine create -d digitalocean foobar
+Creating SSH key ...
+Creating Digital Ocean droplet ...
+
+### Configure your local Docker client to use this remote Docker host
+$ ./docker-machine env foobar
+export DOCKER_HOST="tcp://104.131.92.15:2376"
+export DOCKER_CERT_PATH="/Users/sebastiengoasguen/.docker/machine/machines/foobar"
+export DOCKER_MACHINE_NAME="foobar"
+# Run this command to configure your shell:
+# eval "$(docker-machine env foobar)"
+$ eval "$(./docker-machine env foobar)"
+# Enjoy Docker running remotely on a DigitalOcean droplet created with Docker Machine
+
+######
