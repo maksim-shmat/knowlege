@@ -135,5 +135,7 @@ export DOCKER_MACHINE_NAME="foobar"
 # eval "$(docker-machine env foobar)"
 $ eval "$(./docker-machine env foobar)"
 # Enjoy Docker running remotely on a DigitalOcean droplet created with Docker Machine
-
+###
+$ ./docker-machine
+$ ./docker-machine ls
 ######
