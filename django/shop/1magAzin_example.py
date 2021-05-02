@@ -96,10 +96,10 @@ SECRET_KEY="*************"
 make file --- requirements.txt --- for memory?
 Django>=1.7
 django-environ>=0.3.0
-django-braces>=1.4.0
+django-braces>=1.4.0 # pipenv not eat dependencies
 django-crispy-forms>=1.4.0
-django-admin-bootstrapped>=1.6.9
-django-debug-toolbar>=1.2.1
+django-admin-bootstrapped>=1.6.9 # pipenv not eat
+django-debug-toolbar>=1.2.1 # pipenv not eat
 
 # next
 make file --- dev-requirements.txt
@@ -113,3 +113,4 @@ in settings.py write:
 
 # next
 add base.css to static/css  # it is fone
+gitignore file: from place where is manage.py make "touch .gitignore", or from github site
