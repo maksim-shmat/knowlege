@@ -132,3 +132,11 @@ $ pipenv lock --clear # clear cache resolver
 
 # next 20
 wow wow pipenv shoud install in venv, orly?
+
+###### scripts for Pipfile
+# pipenv run python manage.py runserver  --it is not convenient
+[scripts]
+server = "python manage.py runserver"
+# and now:   $pipenv run server
+
+######

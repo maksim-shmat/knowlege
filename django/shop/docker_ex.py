@@ -12,7 +12,7 @@ sudo rm -rf /var/lib/container # 4
 docker --version 
 
 # next 
-sudo pip install docker-compose
+sudo pip3 install docker-compose
 
 # next
 docker run -it ubuntu bash
@@ -159,4 +159,7 @@ echo "hello" > hello
 echo -e "FROM busybox\nCOPY /hello/\nRUN cat /hello" > Dockerfile
 docker build -t helloapp:v1
 
+######
+How rm images <none>?
+$docker image prune
 ######
