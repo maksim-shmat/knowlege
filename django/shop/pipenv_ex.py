@@ -130,9 +130,6 @@ $ pipenv open background # and now I read it with vim?
 # next 19
 $ pipenv lock --clear # clear cache resolver
 
-# next 20
-wow wow pipenv shoud install in venv, orly?
-
 ###### scripts for Pipfile
 # pipenv run python manage.py runserver  --it is not convenient
 [scripts]

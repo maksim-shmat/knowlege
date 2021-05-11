@@ -25,15 +25,15 @@ Download from github example (requests lib)
 $ pipenv install -e git+https://github.com/requests/requests.git#egg=requests
 
 # next
-install in setarate pack --dev, not into the dev pack programs
+install in separate pack --dev, not into the dev pack programs
 $ pipenv install pytest --dev 
 
 # next
-pipenv lock ???
+pipenv lock  # make Pipfile.lock
 
 # next
-pipenv graph
-pipenv praph --reverse # all dependancies
+pipenv graph # view all programs dependencies
+pipenv graph --reverse # all dependancies
 
 # next
 pipenv open psycopg2 (for example, open programm into editor)
