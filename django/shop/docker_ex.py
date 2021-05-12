@@ -160,6 +160,11 @@ echo -e "FROM busybox\nCOPY /hello/\nRUN cat /hello" > Dockerfile
 docker build -t helloapp:v1
 
 ######
-How rm images <none>?
+How rm images <none>
+--------------------
 $docker image prune
 ######
+worke with volumes
+------------------
+docker volume ls
+docler volume rm app_234u789

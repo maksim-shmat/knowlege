@@ -100,19 +100,33 @@ password:
 docker-compose down
 
 docker-compose.yml
-add note about db
 -----------------
+# version is now using "compose spec"
+# v2 and v3 are now combined!
+# docker-compose v1.27+ required
+
+services:
+  web:
+    build: .
+    command: python /code/manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/code
+    ports:
+      - "8000:8000"
+
+
   env_file:
     - ./.env.dev
   depends_on:
     - db
 db:
-  image: postgres:13
+  image: postgres
+  restart: always
   volumes:
-    - postgres_data:/var/lib/postgresql/data/
+    - ./data/db:/var/lib/postgresql/data/
   environment:
-    - POSTGRES_USER=hello_django
-    - POSTGRES_PASSWORD=hello_django
+    - POSTGRES_USER=postgres
+    - POSTGRES_PASSWORD=postgres
     - POSTGRES_DB=hello_django_dev
 volumes:
   postgres_data:
@@ -139,7 +153,7 @@ docker-compose up -d --build
 docker-compose exec web pipenv install psycopg2-binary
 docker-compose down
 docker-compose up -d --build
-незавёлся постгрес этот чорт не указал реквизиты
+
 #################
 settings.py for .env.dev
 -----------------------------
