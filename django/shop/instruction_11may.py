@@ -61,34 +61,10 @@ RUN pip install pipenv && pipenv install --system
 
 COPY . /code/
 
-###
-docker build .
-
-###
-touch docker-compose.yml
-------------------------
-# version is now using "compose spec"
-# v2 and v3 are now combined!
-# docker-compose v1.27+ required
-
-services:
-  web:
-    build: .
-    command: python /code/manage.py runserver 127.0.0.1:8000
-    volumes:
-      - .:/code
-    ports:
-      - 8000:8000
-
-###
-docker-compose up
-docker-compose down
-
 ####################
 
 (hello) $ python manage.py migrate
-
-docker-compose up -d
+docker-compose up -d 
 
 docker-compose exec web python manage.py createsuperuser
 
@@ -97,9 +73,7 @@ email:
 password:
 
 ###
-docker-compose down
-
-docker-compose.yml
+docker-compose.yml # CHECK
 -----------------
 # version is now using "compose spec"
 # v2 and v3 are now combined!
@@ -168,9 +142,8 @@ DEBUG = env.bool("DEBUG", default=False)
 
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])['.herokuapp.com', 'localhost', '127.0.0.1']
 
-DJANGO_DATABASE_URL = env.db("DATABASE_URL")
-DATABASES = {
-        "default": env.dj_db_url("DATABASE_URL")}
+DATABASE_URL = env.db("DATABASE_URL")
+# DATABASE_URL = env.dj_db_url("DATABASE_URL")
 TIME_ZONE = env.str("TIME_ZONE", default="America/Chicago")
 
 ### 
@@ -187,5 +160,5 @@ SQL_PASSWORD='postgres'
 SQL_HOST='db'
 SQL_PORT=5432
 DATABASE_URL=psql://postgres:postgres@127.0.0.1:8000/database
-#DATABASE_URL=psql://username:password@127.0.0.1:8000/database
+#DATABASE_URL=psql://username:password@127.0.0.1:8458/database
 TIME_ZONE="America/Chicago"
