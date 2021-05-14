@@ -131,7 +131,8 @@ docker-compose up -d --build
 #################
 settings.py for .env.dev
 -----------------------------
-from environs import Env # new
+#from environs import Env # new
+import environ #?
 
 env = Env() # new
 env.read_env(env_file=root_path(".env.dev")) # new
@@ -162,3 +163,6 @@ SQL_PORT=5432
 DATABASE_URL=psql://postgres:postgres@127.0.0.1:8000/database
 #DATABASE_URL=psql://username:password@127.0.0.1:8458/database
 TIME_ZONE="America/Chicago"
+
+######
+docker-compose logs -f

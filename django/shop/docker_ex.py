@@ -168,3 +168,8 @@ worke with volumes
 ------------------
 docker volume ls
 docler volume rm app_234u789
+
+######
+check processes in container
+----------------------------
+docker-compose logs -f
