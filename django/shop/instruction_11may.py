@@ -129,10 +129,10 @@ docker-compose down
 docker-compose up -d --build
 
 #################
+pipenv install environs
 settings.py for .env.dev
 -----------------------------
-#from environs import Env # new
-import environ #?
+from environs import Env # new
 
 env = Env() # new
 env.read_env(env_file=root_path(".env.dev")) # new
