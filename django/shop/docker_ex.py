@@ -173,3 +173,19 @@ docler volume rm app_234u789
 check processes in container
 ----------------------------
 docker-compose logs -f
+
+######
+Add a django-crispy-forms
+
+docker-compose exec web pipenv install django-crispy-forms
+docker-compose down
+docker-compose up -d --build
+
+######
+Add a django-allauth
+
+docker-compose exec web pipenv install django_allauth
+docker-compose down
+docker-compose up -d --build
+
+######

@@ -31,3 +31,10 @@ $ source <(sops -d environment.secrets); docker-compose up -d migrations
 # next
 verify that the migrations
 $ docker-compose exec db psql -U postgres wordcount
+
+######
+Note that if your secret key includes a dollar sign, $, then you need to add an additional
+dollar sign, $$. This is due to how docker-compose handles variable substitution a .
+Otherwise you will see an error!
+
+######
