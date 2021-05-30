@@ -1,20 +1,5 @@
 """ Eng phrases."""
 
-What I want to speak about is 
-То, о чём я хочу поговорить сейчас, - это...
-
-Let me inform you about
-Позвольте сообщить вам
-
-My speech will be about
-Речь пойдёт о
-
-As far as I remember/know
-Насколько я помню/знаю
-
-If I'm not mistaken
-Если я не ошибаюсь
-
 It's needless to say
 Нет нужды говорить
 
@@ -93,17 +78,9 @@ I hadn`t thought of that before
 It`s worth trying/discussing
 Стоит попробовать/обсудить
 
-I have nothing against
-Ничего не имею против
 ----------------------------
 I`m afraid you aren`t quite right
 Боюсь, вы не совсем правы
-
-I should not say so
-Я бы так не сказал
-
-I may be wrong, but
-Возможно я ошибаюсь, но
 
 I just want to pay your attention
 Я просто хочу обратить ваше внимание
