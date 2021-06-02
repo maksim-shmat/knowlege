@@ -31,11 +31,91 @@ from .models import Pizzeria  # and then fool path - from stores.model import Pi
 admin.site.register(Pizzeria)
 
 -----------------------
-#add more to model.py
+# add more to model.py
 make data to the string in a model.py
 def __str__(self):
     return "{}, {}".format(self.pizzeria_name, self.city)
 
 -----------------------
-#Now DjangoREST make serialization to JSON
-tou
+# Now DjangoREST make serialization to JSON
+# touch serializers.py
+from rest_framefork import serializers
+from .models import Pizzeria
+
+class PizzeriaListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Pizzeria
+        fields = [
+                'id',
+                'logo_image',
+                'pizzeria_name',
+                'city',
+                'zip_code',
+                'absolute_url'
+        ]
+
+
+    class PizzeriaDetailSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Pizzeria
+            fields = [
+                    'id',
+                    'pizzeria_name',
+                    'street',
+                    'city',
+                    'state',
+                    'zip_code',
+                    'website',
+                    'phone_number',
+                    'description',
+                    'logo_image',
+                    'email',
+                    'active'
+            ]
+
+----------------------
+# next make a view.py
+from django.shortcuts import render
+from rest_framework import generics
+from .serializers import PizzeriaListSerializer, PizzeriaDetailSerializer
+from .models import Pizzeria
+# Create your views here.
+
+class PizzeriaListAPIView(generics.ListAPIView):
+    queryset = Pizzeria.objects.all()
+    serializer_class = PizzeriaListSerializer
+
+
+class PizzeriaRetriveAPIView(generics.RetrieveAPIView):
+    lookup_field = "id"
+    queryset = Pizzeria.objects.all()
+    serializer_class = PizzeriaDetailSerializer
+
+
+class PizzeriaCreateAPIView(generics.CreateAPIView):
+    queryset = Pizzeria.objects.all()
+    serializer_class = PizzeriaDetailSerializer
+
+----------------------
+# next urls.py
+from django.urls import path
+from . import views
+
+urlpatterns = [
+        path('', views.PizzeriaListAPIView.as_view(), name='pizzeria_list'),
+        path('<int:id>/', views.PizzeriaRetrieveAPIView.as_view(),
+            name="pizzeria_detail"),
+        path('create/', views.PizzeriaCreateAPIView.as_view(), name='pizzeria_create'),
+]
+
+# next add path to main urls.py
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+        path('admin/', admin.site.urls),
+        path('', include('stores.urls')),
+]
+
+-----------------------
+
