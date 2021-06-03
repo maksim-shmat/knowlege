@@ -96,6 +96,12 @@ class PizzeriaCreateAPIView(generics.CreateAPIView):
     queryset = Pizzeria.objects.all()
     serializer_class = PizzeriaDetailSerializer
 
+
+class PizzeriaRetriveUpdateAPIView(generics.RetriveUpdateAPIView):
+    lookup_field = "id"
+    queryset = Pizzeria.objects.all()
+    serializer_class = PizzeriaDetailSerializer
+
 ----------------------
 # next urls.py
 from django.urls import path
