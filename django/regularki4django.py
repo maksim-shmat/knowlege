@@ -327,3 +327,4 @@ def detail(request,store_id='1',location=None):
     return render(request,'stores/detail.html', values_for_template)
 
 ###########
+
