@@ -16,3 +16,14 @@ messages.info(request, 'All items on this page have free shipping.')
 messages.success(request, 'Email sent successfully.')
 messages.warning(request, 'You will need to change your password in one week.')
 messages.error(request, 'We could not process your request at this time.')
+
+###### Set default Django message level globally in settings.py
+# Reduce threshold to DEBUG level in settings.py
+from django.contrib.messages import constants as message_constants
+MESSAGE_LEVEL = message_constants.DEBUG
+
+# Increase threshold to WARNING level in settings.py
+from django.contrib.messages import constants as message_constants
+MESSAGE_LEVEL = message_constants.WARNING
+
+######
