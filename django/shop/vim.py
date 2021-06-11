@@ -9,3 +9,7 @@
 
 Ctrl + r - redo
 
+# Move all text from cursor to end
+    > G
+
+#
