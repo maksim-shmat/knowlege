@@ -90,3 +90,21 @@ python manage.py createsuperuser
 8. service apache2 restart
 
 ######
+replace default configurations with our settings for apache
+
+sudo nano /etc/pache2/sites-available/000-default.conf
+
+###### 755 for everyone hacker read and write on your site, CHANGE IT!
+sudo adduser $USER www-data
+sudo chown www-data:www-data /var/www/venv/BookProject/pizzaproject
+sudo chown www-data:www-data /var/www/venv/BookProject/pizzaproject/db.sqlite3
+sudo chmod -R 775 /var/www/venv/BookProject/pizzaproject
+
+### work with media
+cd media
+mkdir pizzeriaImages
+sudo chmod 777 /var/www/venv/BookProject/pizzaproject/media/pizzeriaImages
+python manage.py collectstatic
+service apache2 restart
+
+######
