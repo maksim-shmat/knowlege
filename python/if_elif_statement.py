@@ -147,4 +147,29 @@ if not a:
 else:
     print(a)
 
+###### ternary operator
+
+a, b = 2, 5
+
+# get maximum of a, b
+max = a if a > b else b
+
+print(max)
+
+##### print statements in python ternary operator
+
+a, b = 2, 5
+
+# ternary operator
+print('Python') if a > b else print('Examples')
+
+###### nested ternary operator
+
+a, b, c = 15, 93, 22
+
+# nested ternary operator
+max = a if a > b and a > c else b if b > c else c
+
+print(max)
+
 ######
