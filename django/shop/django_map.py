@@ -5,27 +5,65 @@
 simple/
     simple/
         .git/
+        .gitignore
+        .editorconfig
         manage.py
-        requirements.py
+        pyproject.toml
+        requirements/
             base.txt
             local.txt
             production.txt
             tests.txt
+        setup.cfg
         simple/
-            locale/
-            settings/
-                __init__.py
-                base.py
-                local.py
-                production.py
-                tests.py
-            static/
-            templates/
             __init__.py
-            asgi.py
-            urls.py
-            wsgi.py
-    venv/
+            apps/
+                accounts/
+                    migrations/
+                        __init__.py
+                static/
+                    accounts/
+                templates/
+                    accounts/
+                tests/
+                    __init__.py
+                    factories.py
+                __init__.py
+                admin.py
+                apps.py
+                constants.py
+                models.py
+                views.py
+            core/
+                migrations/
+                    __init__.py
+                static/
+                    core/
+                templates/
+                    core/
+                tests/
+                    __init__.py
+                    factories.py
+                __init__.py
+                admin.py
+                apps.py
+                constants.py
+                models.py
+                views.py
+            __init__.py
+        locale/
+        settings/
+            __init__.py
+            base.py
+            local.py
+            production.py
+            tests.py
+        static/
+        templates/
+        asgi.py
+        urls.py
+        wsgi.py
+venv/
 
 ######
 
@@ -193,3 +231,83 @@ MEDIA_ROOT = BASE_DIR.parent.parent / "media"
 # =====================
 
 SIMPLE_ENVIRONMENT = config("SIMPLE_ENVIRONMENT", default="local")
+
+###### local.py
+
+# flake8: noqa
+
+from .base import *
+
+INSTALLED_APPS += ["debug_toolbar"]
+MIDDLEWARE.insert(0, "debug_toolbar.middleware.DebugToolbarMiddleware")
+
+# ===============
+# EMAIL SETTINGS
+# ===============
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+###### tests.py
+
+# flake8: noqa
+
+from .base import *
+
+PASSWORD_HASHERS = ["django.contrib.auth.hashers.MD5PasswordHasher"]
+
+class DisableMigrations:
+    def __contains__(self, item):
+        return True
+
+    def __getitem__(self, item):
+        return None
+
+MIGRATION_MODULES = DisableMigrations()
+
+###### production.py
+
+# flacke8: noqa
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+import simple
+from .base import *
+
+# =================
+# SECURITY SETTINGS
+# =================
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+
+SECURE_HSTS_SECONDS = 60 * 60 * 24 * 7 * 52  # one year
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_SSL_REDIRECT = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+
+SESSION_COOKIE_SECURE = True
+
+# =========================
+# THIRD-PARTY APPS SETTINGS
+# =========================
+
+sentry_sdk.init(
+        dsn=config("SENTRY_DSN", default=""),
+        environment=SIMPLE_ENVIRONMENT,
+        release="simple@%s" % simple.__version__,
+        integrations=[DjnagoIntegrations()],
+)
+
+###### accounts/apps.py
+
+from django.apps import AppConfig
+
+class AccountsConfig(AppConfig):
+    default_auto_field = 'django.db.models.BigAutoField'
+    name = 'accounts' # this is the default name created by the startapp command
+    name = 'simple.apps.accounts'  # for example
+
+###### 
