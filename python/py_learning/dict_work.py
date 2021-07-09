@@ -98,3 +98,10 @@ print()
 
 dict_salesinfo = {'SID': 'Fiat', 'Sales': 20000, 'LaunchDay': 'Wed', 'Cost': 500000}
 print(dict_salesinfo)
+
+######
+names = dict(hello=1, world=2)
+' '.join(names)
+# 'hello world'
+
+######
