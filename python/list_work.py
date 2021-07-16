@@ -145,3 +145,17 @@ List = [string[::-1] for string in ('Hello', 'Analytics', 'Vidhya')]
 # Display the list
 print(List)
 
+###### get lists of numbers and sum it
+
+def pairwise_sum(list1, list2):
+    result = []
+    for i in range(len(list1)):
+        result.append(list1[i] + list2[i])
+    return result
+
+######
+# Имеется список, каждый элемент которого также является списком:
+# [[1, 2, 3], [2, 1, 3], [4, 0, 1]]. Надо сортирнуть по второму элементу.
+the_list = [[1, 2, 3], [2, 1, 3], [4, 0, 1]]
+the_list.sort(key=lambda x: x[1])
+print(the_list)

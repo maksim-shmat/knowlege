@@ -508,3 +508,28 @@ while num > 0:
             answer = int(input("No, try again: "))
 print("There are no more green bottles hanging on the wall. ")
 
+=======================
+
+"""Input integer."""
+
+# read integer from user
+n1 = int(input('Enter a number: '))
+n2 = int(input('Ener another number: '))
+
+print('The sum of two numbers is:', n1+n2)
+
+#read integer from user
+n1 = int(input('Enter a number: '))
+print(type(n1))
+
+==========================
+
+""" Docs. """
+
+name_age = {}
+for i in range(3):
+    name = input("Name? ")
+    age = int(input("Age? "))
+    name_age[name] = age
+name_choice = input("Name to find? ")
+print(name_age[name_choice])

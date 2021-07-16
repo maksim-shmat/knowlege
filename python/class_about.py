@@ -43,3 +43,71 @@ laptop1.processor = 'Intel Core i7'
 laptop1.details()
 
 ######
+"""Classes and Subclasses."""
+
+###### Python class syntax and behavior
+
+class Drink():
+    """Drink class"""
+    def __init__(self,size):
+        self.size = size
+    # Used to display object instance
+    def __str__(self):
+        return 'Drink: size %s' % (self.size)
+    # Helper method for size in ounces
+    def sizeinoz(self):
+        if self.size == "small":
+            return "8 oz"
+        elif self.size == "medium":
+            return "12 oz"
+        elif self.size == "large":
+            return "24 oz"
+        else:
+            return "Unknown"
+
+thedrink = Drink("small")
+print(thedrink)
+print("thedrink is %s " % thedrink.sizeinoz())
+
+###### Python subclass syntax and behavior
+
+class Coffee(Drink):
+    """Coffee class"""
+    beans = "arabica"
+    def __init__(self,*args,**kwargs):
+        Drink.__init__(self,*args)
+        self.temperature = kwargs['temperature']
+    # Used to display object instance
+    def __str__(self):
+        return 'Coffee: beans %s, size %s, temperature %s' % (self.beans,self.size,self.temperature)
+
+thecoffee = Coffee("large",temperature="cold")
+print(thecoffee)
+print("thecoffee is %s " % thecoffee.sizeinoz())
+
+######
+class TypedListList(list):
+    def __init__(self, example_element, initial_list=[]):
+        self.type = type(example_element)
+        if not isinstance(initial_list, list):
+            raise TypeError("Second argument of TypedList must "\
+                    "be a list.")
+        for element in initial_list:
+            self.__check(element)
+        super().__init__(initial_list)
+    def __check(self, element):
+        if type(element) != self.type:
+            raise TypeError("Atttmpted to add an element of "\
+                    "incorrect type to a typed list.")
+    def __setitem__(self, i, element):
+        self.__check(element)
+        super().__setitem__(i, element)
+x = TypedListList("", 5 * [""])
+x[2] = "Hello"
+x[3] = "There"
+print(x[2] + ' ' + x[3])
+a, b, c, d, e = x
+print(a, b, c, d)
+print(x[:])
+x.sort()
+print(x[:])
