@@ -1,9 +1,5 @@
 """Class about."""
 
-class Developer:
-    def createProject(self):    # create a method, self is default argument
-        print('The developer created a project.')
-
 ### calling the method
 
 class Developer:
@@ -17,6 +13,7 @@ dev1 = Developer()
 
 # call object's mehtod
 dev1.createProject()
+print('==============')
 
 ###### createf an object for Class
 
@@ -35,6 +32,7 @@ class Laptop:
     def details(self):
         print('My laptop name is:', self.name)
         print('It has', self.processor, 'processor.')
+print('=============')
 
 # create object
 laptop1 = Laptop()
@@ -68,6 +66,7 @@ class Drink():
 thedrink = Drink("small")
 print(thedrink)
 print("thedrink is %s " % thedrink.sizeinoz())
+print('=============')
 
 ###### Python subclass syntax and behavior
 
@@ -84,6 +83,7 @@ class Coffee(Drink):
 thecoffee = Coffee("large",temperature="cold")
 print(thecoffee)
 print("thecoffee is %s " % thecoffee.sizeinoz())
+print('=============')
 
 ######
 class TypedListList(list):
@@ -111,3 +111,36 @@ print(a, b, c, d)
 print(x[:])
 x.sort()
 print(x[:])
+print('=============')
+
+# =====================
+
+###### __init__() function
+
+class Laptop:
+
+    def __init__(self, name, processor, hdd, ram, cost):
+        self.name = name
+        self.processor = processor
+        self.hdd = hdd
+        self.ram = ram
+        self.cost = cost
+
+    def details(self):
+        print('The details of the laptop are: ')
+        print('Name          :', self.name)
+        print('Processor     :', self.processor)
+        print('HDD Capacity  :', self.hdd)
+        print('RAM           :', self.ram)
+        print('Cost($)       :', self.cost)
+print('==============')
+# create object
+laptop1 = Laptop('Dell Alienware', 'Intel Core i7', 512, 8, 2500.00)
+
+print(laptop1.name)
+print(laptop1.processor)
+
+laptop1.details()
+
+print('==============')
+######
