@@ -112,8 +112,8 @@ print()
 
 ###### if...else with list comprehension
 
-list = ["even" if y % 2 == 0 else "odd" for y in range(5)]
-print(list)
+listus = ["even" if y % 2 == 0 else "odd" for y in range(5)]
+print(listus)
 print()
 
 ###### finding transpose of matrix using nested loops
@@ -159,3 +159,68 @@ def pairwise_sum(list1, list2):
 the_list = [[1, 2, 3], [2, 1, 3], [4, 0, 1]]
 the_list.sort(key=lambda x: x[1])
 print(the_list)
+"""Lists about."""
+
+# Имеется список х. Нужно безопасно удалить элемент в том и только том
+# случае, если значение присутствует в списке.  
+#if element in x:
+#    x.remove(element)
+
+# если более чем в одном экземпляре
+#if x.count(element) > 1:
+#    x.remove(element)
+# Этот код удаляет только первое вхождение
+
+###### concat lists without cicle
+
+L = [[1, 2, 3], [4, 5], [6], [7, 8, 9]]
+print(sum(L, []))
+
+### concat lists with itertools
+
+import itertools
+
+L = [[1, 2, 3], [4, 5], [6], [7, 8, 9]]
+print(list(itertools.chain.from_iterable(L)))
+
+print()
+
+###### transposed 
+
+original  = [('a', 'b'), ('c', 'd'), ('e', 'f')]
+transposed = zip(*original)
+print(list(transposed))
+
+print()
+
+###### remove double in list
+
+items = [2, 2, 3, 3, 1]
+print(list(set(items)))
+
+print()
+
+###### for one by one
+
+irems = [2, 2, 3, 3, 1]
+from collections import OrderedDict
+print(list(OrderedDict.fromkeys(items).keys()))
+
+print()
+
+###### find max often frequent element of list
+
+a = [1, 2, 3, 1, 2, 3, 2, 2, 4, 5, 1]
+print(max(set(a), key=a.count))
+print()
+
+### some max often values
+
+from collections import Counter
+
+a = [1, 2, 3, 1, 2, 3, 2, 2, 4, 5, 1]
+cnt = Counter(a)
+print(cnt.most_common(3))
+print()
+
+######

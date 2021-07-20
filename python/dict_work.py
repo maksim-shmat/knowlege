@@ -104,4 +104,21 @@ names = dict(hello=1, world=2)
 ' '.join(names)
 # 'hello world'
 
+print()
+
+###### sort dict for value
+
+d = {'apples':40, 'oranges':80, 'bananas':70}
+print(sorted(d, key=d.get))
+
+print()
+
+###### generator dict and set
+
+S = {i**2 for i in range(10)}
+D = {i: i**2 for i in range(10)}
+print(S)
+print(D)
+print()
+
 ######
