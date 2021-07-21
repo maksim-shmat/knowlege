@@ -223,4 +223,13 @@ cnt = Counter(a)
 print(cnt.most_common(3))
 print()
 
+###### length of list naive method without len()
+
+ListName = ["Hello", "Edureka", 1, 2, 3]
+print("The list is: "+str(ListName))
+counter = 0
+for i in ListName:
+    counter = counter + 1
+    print("Length of list using naive method is : " + str(counter))
+print()
 ######
