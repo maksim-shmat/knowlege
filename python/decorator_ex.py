@@ -145,7 +145,7 @@ make_list1()
 make_list2()
 make_list3()
 make_list4()
-"""
+
 ###### decorator with __call__
 import requests
 
@@ -180,3 +180,59 @@ get_coin_price(5)
 get_coin_price(5)
 get_coin_price(5)
 get_coin_price(5)
+
+###### simple example 
+
+def  execute(user, action):
+    self.authenticate(user)        # one
+    self.authorize(user, action)   # two, not good, just only one
+    return action()
+
+### dicision with decorator
+
+def execute(action, *args, **kwargs):
+    return action()
+
+def authenticated_only(method):
+    def decorated(*args, **kwargs):
+        if check_authenticated_only(method):
+            return method(*args, **kwargs)
+        else:
+            raise UnauthenticatedError
+    return decorated
+
+def authorized_only(method):
+    def decorated(*args, **kwargs):
+        if check_authorized(kwargs['user'], kwargs['action']):
+            return method(*args, **kwargs)
+        else:
+            raise UnauthorizedError
+    return decorated
+
+execute = authenticated_only(execute)
+execute = authorized_only(execute)
+
+### same name but with parent inserted decorator
+
+def authenticated_only(method):
+    def decorated(*args, **kwargs):
+        if check_authenticated(kwargs['user']):
+            return method(*args, **kwargs)
+        else:
+            raise UnauthenticatedError
+    return decorated
+
+def authorized_only(method):
+    def decorated(*args, **kwargs):
+        if check_authorized(kwargs['user'], kwargs['action']):
+            return method(*args, **kwargs)
+        else:
+            raise UnauthorizedError
+    return decorated
+
+@authorized_only
+@authenticated_only
+def execute(action, *args, **kwargs):
+    return action()
+
+######

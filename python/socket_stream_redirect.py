@@ -1,3 +1,5 @@
+"""Socket redirect."""
+
 import sys
 from socket import *
 port = 50008
