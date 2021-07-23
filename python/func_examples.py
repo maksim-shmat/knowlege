@@ -87,3 +87,74 @@ number = int(input("Input a number to compute the factorial : "))
 print(factorial(number))
 
 ###### 
+"""Athributes of function in python."""
+
+def func(x):
+    intermediate_var = x**2 + x + 1
+
+    if intermediate_var % 2:
+        y = intermediate_var ** 3
+    else:
+        y = intermediate_var ** 3 + 1
+
+    # settings attributes here
+    func.optonal_return = intermediate_var
+    func.is_awesome = 'Yes, my function is awesome.'
+
+    return y
+
+y = func(3)
+print('Final answer is', y)
+
+# Accessing function attributes
+print('Show calculations -->', func.optional_return)
+print('Is my function awesome? -->', func.is_awesome)
+
+######
+"""Athributes of function in python."""
+
+def func(x):
+    intermediate_var = x**2 + x + 1
+
+    if intermediate_var % 2:
+        y = intermediate_var ** 3
+    else:
+        y = intermediate_var ** 3 + 1
+
+    # settings attributes here
+    func.optonal_return = intermediate_var
+    func.is_awesome = 'Yes, my function is awesome.'
+
+    return y
+
+y = func(3)
+print('Final answer is', y)
+
+# Accessing function attributes
+print('Show calculations -->', func.optional_return)
+print('Is my function awesome? -->', func.is_awesome)
+
+###### simple function example
+
+def allowed_to_drive(age):
+    if age >= 21:
+        return True
+    else:
+        return False
+
+print(allowed_to_drive(42))
+print(allowed_to_drive(12))
+
+###### 
+
+def is_laundry_day(today, laundry_day = "Monday", on_vacation = False):
+    if today is laundry_day and today != "Sunday" and on_vacation is False:
+        return True
+    else:
+        return False
+
+print(is_laundry_day("Tuesday"))
+print(is_laundry_day("Tuesday", "Tuesday"))
+print(is_laundry_day("Friday", "Friday", True))
+
+######
