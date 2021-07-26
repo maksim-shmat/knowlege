@@ -28,4 +28,18 @@ wget "http://geolite.maxmind.com/\
         download/geoip/database/GeoLiteCity.dat.gz"
 gunzip GeoLiteCity.dat.gz
 
+###### Start/Restart/Stop Nginx Commands
+
+1. sudo systemctl start nginx
+   sudo systemctl stop nginx
+   sudo systemctl restart nginx
+
+2. sudo service nginx start
+   sudo service nginx stop
+   sudo service nginx restart
+
+3. sudo /etc/init.d/nginx start
+   sudo /etc/init.d/nginx stop
+   sudo /etc/init.d/nginx restart
+
 ######
