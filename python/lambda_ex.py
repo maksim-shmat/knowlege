@@ -4,6 +4,7 @@ square = lambda a: a*a
 # call lambda function
 result = square(6)
 print(result)
+print()
 
 ###### multiple arguments
 
@@ -11,6 +12,7 @@ mul = lambda a,b: a*b
 # call lamda function
 result = mul(5,3)
 print(result)
+print()
 
 ###### with no arguments
 
@@ -18,6 +20,7 @@ six = lambda : 6
 # call lambda function
 result = six()
 print(result)
+print()
 
 ###### recursive lambda function
 
@@ -25,6 +28,7 @@ factorial = lambda a: a*factorial(a-1) if (a>1) else 1
 # call lambda function
 result = factorial(5)
 print(result)
+print()
 
 ###### return lambda function
 
@@ -41,5 +45,23 @@ squareroot = myfunc(0.5) # squareroot = lambda a : math.pow(a, 0.5)
 print(square(3))
 print(cube(3))
 print(squareroot(3))
+print()
+
+###### lambda function with if Else Condition
+
+x = lambda n: n**2 if n%2 == 0 else n**3
+
+print(x(4))
+print(x(3))
+print()
+
+###### lambda function with nested if else condition
+
+x = lambda n: n if n%10 == 0 else (n**2 if n%2 == 0 else n**3)
+
+print(x(4))
+print(x(3))
+print(x(10))
+print()
 
 ######
