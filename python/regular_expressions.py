@@ -104,4 +104,57 @@ result = re.split(pattern, string, maxsplit=2)
 print(result)
 print()
 
+# ====================
+# re.sub() replace one or many matches with a string in the given text
+### re.sub() replace pattern matchings with replacement string
+
+import re
+
+pattern = '[0-9]+'
+string = 'Account Number - 12345, Amount - 586.32'
+repl = 'NN'
+
+print('Original string')
+print(string)
+
+result = re.sub(pattern, repl, string)
+
+print('After replacement')
+print(result)
+print()
+
+###### re.sub() - limit maximum number of replacement
+
+import re
+
+pattern = '[0-9]+'
+string = 'Account Number - 12345, Amount - 586.32'
+repl = 'NN'
+
+print('Original string')
+print(string)
+
+result = re.sub(pattern, repl, string, count=2)
+
+print('After replacement')
+print(result)
+print()
+
+###### re.sub() - optonal flags
+
+import re
+
+pattern = '[a-z]+'
+string = 'Account Number - 12345, Amount - 586.32'
+repl = 'AA'
+
+print('Original string')
+print(string)
+
+result = re.sub(pattern, repl, string, flags=re.IGNORECASE)
+
+print('After replacement')
+print(result)
+print()
+
 ######
