@@ -157,4 +157,33 @@ print('After replacement')
 print(result)
 print()
 
+###### Check if string starts with a word
+
+import re
+
+str = 'Python is a programming language.'
+# search using regex
+x = re.search('^Python', str)
+
+if (x!=None):
+    print('The line starts with \'Python\'.')
+else:
+    print('The line does not start with \'Python\'.')
+
+print()
+
+###### Check if string starts with a word
+
+import re
+
+str = 'Python is a programming language.'
+# search using regex
+x = re.search('^programming', str)
+
+if (x!=None):
+    print('The line starts with \'programming\'.')
+else:
+    print('The line does not start with \'programming\'.')
+print()
+
 ######
