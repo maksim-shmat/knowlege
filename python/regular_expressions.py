@@ -172,18 +172,20 @@ else:
 
 print()
 
-###### Check if string starts with a word
+###### Check if string ends with a word
 
 import re
 
-str = 'Python is a programming language.'
+str = 'Python is a programming language'
 # search using regex
-x = re.search('^programming', str)
+x = re.search('language$', str)
 
 if (x!=None):
-    print('The line starts with \'programming\'.')
+    print('The line ends with \'language\'.')
 else:
-    print('The line does not start with \'programming\'.')
+    print('The line does not end with \'language\'.')
 print()
 
 ######
+
+
