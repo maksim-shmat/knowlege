@@ -186,6 +186,51 @@ else:
     print('The line does not end with \'language\'.')
 print()
 
+###### get the list of all numbers in a string
+
+import re
+
+str = 'We live at 9-162 Malibeu. My phone number is 666688888.'
+# search using regex
+x = re.findall('[0-9]+', str)
+print(x)
+print()
+
+###### get the list of all continuous digits in a string
+
+import re
+
+str = 'We four guys, live at 2nd street of Malibeu. I had a cash of $248 \
+        in my pocket. I got a ticket with serial number 88796451-52.'
+# search using regex
+x = re.findall('[0-9]+', str)
+print(x)
+print()
+
+###### Find numbers of specific length in a string
+
+import re
+
+str = 'We four guys, live at 2nd street of Malibeu 521. I had a cash of $248\
+        in my pocket. I got a ticket with werial number 88796451-52.'
+# search using regex
+x = re.findall('[0-9]+', str)
+print('All Numbers\n', x)
+
+# digits of length N
+N=3
+
+def filterNumber(n):
+    if (len(n)==N):
+        return True
+    else:
+        return False
+
+# filter the list
+finalx = list(filter(filterNumber, x))
+print('Final List\n', finalx)
+print()
+
 ######
 
 

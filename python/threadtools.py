@@ -1,3 +1,5 @@
+"""Example two."""
+
 try:
     import _thread as thread
 except ImportError:
