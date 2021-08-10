@@ -1,4 +1,4 @@
-"""max() about."""
+"""max() about, and min()"""
 
 # find maximum of iterable
 
