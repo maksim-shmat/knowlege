@@ -137,7 +137,7 @@ for i in range(1, 6):
     if answer == correct:
         score = score + 1
 print("You scored", score, "out of 5")
-"""
+
 # 059
 # Display five colours and ask the user to pick one. If they pick the same
 # as the program has chosen, say "Well done", otherwise display a witty
@@ -169,3 +169,28 @@ while tryagain == True:
             print("Are you WHITE as a sheet, as you didn't guess correctly?")
         elif colour == "pink":
             print("Shame you are not feeling in the PINK, as you got it wrong!")
+"""
+###### generate random negative number
+
+import random
+
+randomnumber = random.randint(-100, -21)
+print(randomnumber)
+print()
+
+###### generate random number of length
+
+import random
+
+def randN(N):
+    min = pow(10, N-1)
+    max = pow(10, N) - 1
+    return random.randint(min, max)
+
+print(randN(5))
+print(randN(7))
+print(randN(4))
+print(randN(8))
+print()
+
+###### 
