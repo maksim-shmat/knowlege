@@ -193,4 +193,54 @@ print(randN(4))
 print(randN(8))
 print()
 
-###### 
+###### Generate random string
+#------ step 1 - choose character group
+
+# string.ascii_letters
+# string.ascii_lowercase
+# string.ascii_uppercase
+# string.ascii_digits
+# string.digits
+# string.hexdigits
+# string.letters
+# string.lowercase
+# string.octdigits
+# string.punctuation
+# string.printable
+# string.uppercase
+# string.whitespace
+
+#------ step 2 - random choice()
+
+# random.choice(string.ascii_uppercase + string.digits)
+
+#------ step 3 - repeat picking the characters
+
+# random.choice(string.ascii_uppercase + string.digits) for _ in range(N)
+
+#------ step 4 - join characters
+
+# ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(N))
+
+### example generate random string of specific length
+
+import random
+import string
+
+def randStr(chars = string.ascii_uppercase + string.digits, N=10):
+    return ''.join(random.choice(chars) for _ in range(N))
+
+# default length(=10) random string
+print(randStr())
+print()
+# random string of length 7
+print(randStr(N=7))
+print()
+# random string with characters picked from ascii_lowercase
+print(randStr(chars=string.ascii_lowercase))
+print()
+# random string with characters picked from 'abcdef123456'
+print(randStr(chars='abcdef123456'))
+print()
+######
+
