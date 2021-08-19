@@ -242,5 +242,27 @@ print()
 # random string with characters picked from 'abcdef123456'
 print(randStr(chars='abcdef123456'))
 print()
-######
 
+###### random floating point number in the range(0,1)
+
+import random
+
+# generate a random floating point number
+f = random.random()
+print(f)
+print()
+
+### random floating point number in the range(min, max)
+
+import random
+
+# specific range
+min = 2
+max = 10
+
+# generate a random floating point number
+f = min + (max-min)*random.random()
+print(f)
+print()
+
+######
