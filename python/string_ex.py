@@ -55,7 +55,63 @@ print()
 name = "Monty Python"
 print(name[6:9])
 print(name[6:])
-print(name[:5]
+print(name[:5])
+print()
+
+###### check if string is empty
+
+mystring = ""
+if not mystring:
+    print("The string is empty.")
+else:
+    print("The string is not empty.")
+
+### check if string is empty with ==
+
+mystring == ""
+if mystring == "":
+    print("The string is empty.")
+else:
+    print("The string is not empty.")
+print()
+
+######
+"""str() about."""
+
+# str() with list object as argument
+
+myList = [25, 'hello world', 36.25]
+resultString = str(myList)
+print(f'Resulting string is - "{resultString}"')
+print()
+
+###### str() with no object as argument
+
+resultString = str()
+print(f'Resulting string is - "{resultString}"')
+print()
+
+###### str() with encoding
+
+bytes = b'\x65\x66\x67\x68\x69'
+resultString = str(bytes, encoding='utf-8')
+print(f'Resulting string is - "{resultString}"')
+print()
+
+###### find string length
+
+mystring = 'python examples'
+# length of string
+length = len(mystring)
+
+print('Length of the string is:', length)
+print()
+
+### find empty string length
+
+mystring = ''
+length = len(mystring)
+print('length of the is: ', length)
 print()
 
 ######
