@@ -114,4 +114,32 @@ length = len(mystring)
 print('length of the is: ', length)
 print()
 
+###### slicing, find substring
+
+mystring = 'pythonexamples.org'
+substring = mystring[6:12]
+print(substring)
+print()
+
+###### find substring with end position greater than string length
+
+mystring = 'pythonexamples.org'
+substring = mystring[6:35]
+print(substring)
+print()
+
+###### substring - negative position
+
+mystring = 'pythonexample.org'
+substring = mystring[-15:-5]
+print(substring)
+print()
+
+###### substring - no start or end provided
+
+mystring = 'pythonexamples.org'
+substring = mystring[:]
+print(substring)
+print()
+
 ######
