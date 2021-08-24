@@ -142,4 +142,40 @@ substring = mystring[:]
 print(substring)
 print()
 
+###### reverse string using slicing
+
+str = "Welcome to Python Examples."
+reversed = str[::-1]
+print(reversed)
+print()
+
+##### reverse string using for loop
+
+str = "Welcome to Python Examples."
+reversed = ''
+for c in str:
+    reversed = c + reversed
+print(reversed)
+print()
+
+###### reverse string using while loop
+
+str = "What in the heaven's name are you talking about?"
+reversed = ''
+length = len(str) - 1
+while length >= 0:
+    reversed = reversed + str[length]
+    length = length - 1
+print(reversed)
+print()
+
+###### reverse string using List.reverse()
+
+str = "What is going know?"
+str_list = list(str)
+str_list.reverse()
+reversed = ''.join(str_list)
+print(reversed)
+print()
+
 ######
