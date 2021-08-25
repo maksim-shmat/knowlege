@@ -178,4 +178,34 @@ reversed = ''.join(str_list)
 print(reversed)
 print()
 
+###### slice string with specific end position
+
+string1 = 'hello-world'
+stop = 5
+slice_object = slice(stop)
+result = string1[slice_object]
+print(result)
+print()
+
+###### slice string with specific start and end position
+
+string1 = 'hello-world'
+start = 2
+stop = 5
+slice_object = slice(start, stop)
+result = string1[slice_object]
+print(result)
+print()
+
+###### slice string with specific start and end position, step
+
+string1 = 'hello-world'
+start = 2
+stop = 9
+step = 2
+slice_object = slice(start, stop, step)
+result = string1[slice_object]
+print(result)
+print()
+
 ######
