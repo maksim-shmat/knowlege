@@ -208,4 +208,32 @@ result = string1[slice_object]
 print(result)
 print()
 
+###### iterate over words of string
+
+str = 'Hello! I am Robot. This is a Python example.'
+# split string
+splits = str.split()
+
+# for loop to iterate over words array
+for split in splits:
+    print(split)
+print()
+
+###### clean string & iterate over words of string
+
+import re
+str = "What in the heavens's name are you talking about?"
+
+# clean string
+pat = re.compile(r'[^a-zA-Z ]+')  # not check apostrofie
+str = re.sub(pat, '', str).lower()
+
+# split strng
+splits = str.split()
+
+# for loop to iterate over words array
+for split in splits:
+    print(split)
+print()
+
 ######
