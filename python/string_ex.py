@@ -236,4 +236,39 @@ for split in splits:
     print(split)
 print()
 
+###### find index of first occurence of substring
+
+string = 'Python programming. Network programming.'
+substring = 'prog'
+index = string.find(substring)
+print(index)
+print()
+
+###### find index of first occurence of substring after a specific position
+
+string = 'Python programming. Network programming.'
+substring = 'prog'
+start = 12
+index = string.find(substring, start)
+print(index)
+print()
+
+###### number of overlapping occurrences of substring
+
+string = 'abcdefghghghghghg.'
+substring = 'ghg'
+
+count = 0
+start = 0
+if (len(string)>0 and len(string) < 201):
+    for i in range(len(string)):
+        i = string.find(substring, start)
+        if (i>0):
+            start = i+1
+            count += 1
+        else:
+            break
+print(count)
+print()
+
 ######
