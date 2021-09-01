@@ -271,4 +271,78 @@ if (len(string)>0 and len(string) < 201):
 print(count)
 print()
 
+###### change strings
+
+cap = 'need capital later in head'.capitalize()
+print(cap)
+print()
+
+spac = '    spaces!!!    '.strip()
+print(spac)
+print()
+
+cent = 'centerus for tg bot exmpl'.center(70)
+print(cent)
+print()
+
+one_to_two = 'PyThOn'.swapcase()
+print(one_to_two)
+print()
+
+low = 'ALICE!!! Alice come here'.lower()
+print(low)
+print()
+
+up = 'Hurraaay!'.upper()
+print(up)
+print()
+
+######
+"""Find understring."""
+
+programmers = ["I'm an expert Python Programmer",
+               "I'm an expert Javascript Programmer",
+               "I'm a professional Python Programmer",
+               "I'm a beginner C++ Programmer"
+]
+
+# method 1
+for p in programmers:
+    if p.find("expert"):
+        print("wrong example")
+
+
+# method 2
+for p in programmers:
+    if "Python" in p:
+        print(p)
+
+###### trim white spaces around string
+
+mystring = '    python examples        '
+cleanstring = mystring.strip()
+
+# before strip
+print(mystring)
+print(len(mystring))
+
+# after string
+print(cleanstring)
+print(len(cleanstring))
+print()
+
+###### trin white spaces like \n \t around string
+
+mystring = ' \n\t  python examples \n\n'
+cleanstring = mystring.strip()
+
+# before strip
+print(mystring)
+print(len(mystring))
+
+# after string
+print(cleanstring)
+print(len(cleanstring))
+print()
+
 ######

@@ -19,4 +19,12 @@ acombo = list(it.combinations([1, 2, 3], 2))
 print(acombo)
 print()
 
-######
+###### clear elements, del it
+
+from itertools import compress
+
+letters = ['A', 'B', 'C', 'B', 'D']
+mask = [1, 0, 1, 0, 0]  # 1 == True
+result = compress(letters, mask)
+print(list(result))
+
