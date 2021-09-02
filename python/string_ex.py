@@ -289,7 +289,7 @@ one_to_two = 'PyThOn'.swapcase()
 print(one_to_two)
 print()
 
-low = 'ALICE!!! Alice come here'.lower()
+low = 'ALICE!!! Alice come here'
 print(low)
 print()
 
@@ -345,4 +345,33 @@ print(cleanstring)
 print(len(cleanstring))
 print()
 
-######
+###### traverse strings in list of strings
+
+list_of_strings = ['apple', 'banana', 'mango']
+for string in list_of_strings:
+    print(string)
+print()
+
+### with while
+
+list_of_strings = ['apple', 'banana', 'mango']
+i = 0
+while i < len(list_of_strings):
+    print(list_of_strings[i])
+    i += 1
+print()
+
+###### modify strings in list of strings
+
+list_of_strings = ['apple', 'banana', 'mango']
+list_of_strings[1] = "orange"
+print(list_of_strings)
+print()
+
+###### access strings in list of strings
+
+list_of_strings = ['apple', 'banana', 'mango']
+print(list_of_strings[0])
+print(list_of_strings[1])
+print()
+
