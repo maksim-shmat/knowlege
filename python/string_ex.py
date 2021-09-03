@@ -375,3 +375,54 @@ print(list_of_strings[0])
 print(list_of_strings[1])
 print()
 
+###### check if string contains only Alphabets
+
+str1 = "hello world, welcome to python example."
+bool = str1.isalpha()
+print('str1 contains only alphabets:', bool)
+print()
+
+### check more
+
+str1 = "HELLOWORLDPYTHONEXAMPLE"
+bool = str1.isalpha()
+print('str1 contains only alphabets:', bool)
+print()
+
+###### string with only alphanumeric characters
+
+str = 'pythonexamples125'
+isalnum = str.isalnum()
+print('Is String Alphanumeric :', isalnum)
+print()
+
+### alphanumeric and spaces is false
+### alphanumeric and special characters is false
+
+###### check if string contains substring
+
+string = 'Hello World!'
+substring = 'Wor'
+isSubstringPresent = substring in string
+print(isSubstringPresent)
+print()
+
+### with if/else
+
+string = 'Hello World!'
+substring = 'Wor'
+if substring in string:
+    print('String contains substring.')
+else:
+    print('String does not contain substring.')
+
+### with string.find()
+
+string = 'Hello World!'
+substring = 'Wor'
+if string.find(substring) > -1:
+    print('String contains substring.')
+else:
+    print('String does not contains substring.')
+
+######
