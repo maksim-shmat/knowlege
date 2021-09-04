@@ -1,31 +1,31 @@
 """Strings about."""
 
-# concatenate strings without addition
+#1 concatenate strings without addition
 
 a = ["Python", "-", 'beautiful', 'language.']
 print(" ".join(a))
 print()
 
-###### convert list of numbers to string with .join
+######2 convert list of numbers to string with .join
 
 numbers = [1, 2, 3, 4, 5]
 print(', '.join(map(str, numbers)))
 print()
 
-######  escape sharacters
+######3  escape sharacters
 
 escape_str = "She said: \"Python is great!\""
 print(escape_str)
 print()
 
-###### concatenate strings
+######4 concatenate strings
 
 one = "Lux"
 two = "Academy"
 print(one + " " + two)
 print()
 
-###### interpolation
+######5 interpolation
 # method 1
 
 first_name = "Lux"
@@ -50,7 +50,7 @@ greet = 'Welcome at{first} {last} !'.format(first=first_name, last=last_name)
 print(greet)
 print()
 
-###### extract substring
+######6 extract substring
 
 name = "Monty Python"
 print(name[6:9])
@@ -58,7 +58,7 @@ print(name[6:])
 print(name[:5])
 print()
 
-###### check if string is empty
+######7 check if string is empty
 
 mystring = ""
 if not mystring:
@@ -75,7 +75,7 @@ else:
     print("The string is not empty.")
 print()
 
-######
+######8
 """str() about."""
 
 # str() with list object as argument
@@ -85,20 +85,20 @@ resultString = str(myList)
 print(f'Resulting string is - "{resultString}"')
 print()
 
-###### str() with no object as argument
+######9 str() with no object as argument
 
 resultString = str()
 print(f'Resulting string is - "{resultString}"')
 print()
 
-###### str() with encoding
+######10 str() with encoding
 
 bytes = b'\x65\x66\x67\x68\x69'
 resultString = str(bytes, encoding='utf-8')
 print(f'Resulting string is - "{resultString}"')
 print()
 
-###### find string length
+######11 find string length
 
 mystring = 'python examples'
 # length of string
@@ -114,42 +114,42 @@ length = len(mystring)
 print('length of the is: ', length)
 print()
 
-###### slicing, find substring
+######12 slicing, find substring
 
 mystring = 'pythonexamples.org'
 substring = mystring[6:12]
 print(substring)
 print()
 
-###### find substring with end position greater than string length
+######13 find substring with end position greater than string length
 
 mystring = 'pythonexamples.org'
 substring = mystring[6:35]
 print(substring)
 print()
 
-###### substring - negative position
+######14 substring - negative position
 
 mystring = 'pythonexample.org'
 substring = mystring[-15:-5]
 print(substring)
 print()
 
-###### substring - no start or end provided
+######15 substring - no start or end provided
 
 mystring = 'pythonexamples.org'
 substring = mystring[:]
 print(substring)
 print()
 
-###### reverse string using slicing
+######16 reverse string using slicing
 
 str = "Welcome to Python Examples."
 reversed = str[::-1]
 print(reversed)
 print()
 
-##### reverse string using for loop
+#####17 reverse string using for loop
 
 str = "Welcome to Python Examples."
 reversed = ''
@@ -158,7 +158,7 @@ for c in str:
 print(reversed)
 print()
 
-###### reverse string using while loop
+######18 reverse string using while loop
 
 str = "What in the heaven's name are you talking about?"
 reversed = ''
@@ -169,7 +169,7 @@ while length >= 0:
 print(reversed)
 print()
 
-###### reverse string using List.reverse()
+######19 reverse string using List.reverse()
 
 str = "What is going know?"
 str_list = list(str)
@@ -178,7 +178,7 @@ reversed = ''.join(str_list)
 print(reversed)
 print()
 
-###### slice string with specific end position
+######20 slice string with specific end position
 
 string1 = 'hello-world'
 stop = 5
@@ -187,7 +187,7 @@ result = string1[slice_object]
 print(result)
 print()
 
-###### slice string with specific start and end position
+######21 slice string with specific start and end position
 
 string1 = 'hello-world'
 start = 2
@@ -197,7 +197,7 @@ result = string1[slice_object]
 print(result)
 print()
 
-###### slice string with specific start and end position, step
+######22 slice string with specific start and end position, step
 
 string1 = 'hello-world'
 start = 2
@@ -208,7 +208,7 @@ result = string1[slice_object]
 print(result)
 print()
 
-###### iterate over words of string
+######23 iterate over words of string
 
 str = 'Hello! I am Robot. This is a Python example.'
 # split string
@@ -219,7 +219,7 @@ for split in splits:
     print(split)
 print()
 
-###### clean string & iterate over words of string
+######24 clean string & iterate over words of string
 
 import re
 str = "What in the heavens's name are you talking about?"
@@ -236,7 +236,7 @@ for split in splits:
     print(split)
 print()
 
-###### find index of first occurence of substring
+######25 find index of first occurence of substring
 
 string = 'Python programming. Network programming.'
 substring = 'prog'
@@ -244,7 +244,7 @@ index = string.find(substring)
 print(index)
 print()
 
-###### find index of first occurence of substring after a specific position
+######26 find index of first occurence of substring after a specific position
 
 string = 'Python programming. Network programming.'
 substring = 'prog'
@@ -253,7 +253,7 @@ index = string.find(substring, start)
 print(index)
 print()
 
-###### number of overlapping occurrences of substring
+######27 number of overlapping occurrences of substring
 
 string = 'abcdefghghghghghg.'
 substring = 'ghg'
@@ -271,7 +271,7 @@ if (len(string)>0 and len(string) < 201):
 print(count)
 print()
 
-###### change strings
+######28 change strings
 
 cap = 'need capital later in head'.capitalize()
 print(cap)
@@ -297,7 +297,7 @@ up = 'Hurraaay!'.upper()
 print(up)
 print()
 
-######
+######29
 """Find understring."""
 
 programmers = ["I'm an expert Python Programmer",
@@ -317,7 +317,7 @@ for p in programmers:
     if "Python" in p:
         print(p)
 
-###### trim white spaces around string
+######30 trim white spaces around string
 
 mystring = '    python examples        '
 cleanstring = mystring.strip()
@@ -331,7 +331,7 @@ print(cleanstring)
 print(len(cleanstring))
 print()
 
-###### trin white spaces like \n \t around string
+######31 trin white spaces like \n \t around string
 
 mystring = ' \n\t  python examples \n\n'
 cleanstring = mystring.strip()
@@ -345,7 +345,7 @@ print(cleanstring)
 print(len(cleanstring))
 print()
 
-###### traverse strings in list of strings
+######32 traverse strings in list of strings
 
 list_of_strings = ['apple', 'banana', 'mango']
 for string in list_of_strings:
@@ -361,21 +361,21 @@ while i < len(list_of_strings):
     i += 1
 print()
 
-###### modify strings in list of strings
+######33 modify strings in list of strings
 
 list_of_strings = ['apple', 'banana', 'mango']
 list_of_strings[1] = "orange"
 print(list_of_strings)
 print()
 
-###### access strings in list of strings
+######34 access strings in list of strings
 
 list_of_strings = ['apple', 'banana', 'mango']
 print(list_of_strings[0])
 print(list_of_strings[1])
 print()
 
-###### check if string contains only Alphabets
+######35 check if string contains only Alphabets
 
 str1 = "hello world, welcome to python example."
 bool = str1.isalpha()
@@ -389,7 +389,7 @@ bool = str1.isalpha()
 print('str1 contains only alphabets:', bool)
 print()
 
-###### string with only alphanumeric characters
+######36 string with only alphanumeric characters
 
 str = 'pythonexamples125'
 isalnum = str.isalnum()
@@ -399,7 +399,7 @@ print()
 ### alphanumeric and spaces is false
 ### alphanumeric and special characters is false
 
-###### check if string contains substring
+######37 check if string contains substring
 
 string = 'Hello World!'
 substring = 'Wor'
@@ -424,5 +424,23 @@ if string.find(substring) > -1:
     print('String contains substring.')
 else:
     print('String does not contains substring.')
+print()
+
+######38 replace a string
+
+mystring = 'Python Examples. Examples for basic and advanced concepts.'
+print('Original String : ', mystring)
+
+newstr = mystring.replace('Examples', 'Programs')
+print('New String :', newstr)
+
+### replace string only a specific number of times
+
+mystring = 'Python Examples. Examples.Examples. Examples. Examples. Examples.'
+print('Original String :', mystring)
+
+newstr = mystring.replace('Examples', 'Programs', 3)
+print('New String :', newstr)
+print()
 
 ######
