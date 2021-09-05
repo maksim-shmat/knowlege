@@ -443,4 +443,18 @@ newstr = mystring.replace('Examples', 'Programs', 3)
 print('New String :', newstr)
 print()
 
+######39 replace continuous multiple white spaces with single space
+
+mystring = 'welcome     to  python         examples'
+correctedstring = " ".join(mystring.split())
+print(correctedstring)
+print()
+
+### replace continuous multiple white spaces, containing \n, \t, etc
+
+mystring = 'welcome \t\t    to  pythob   \n\n        examples'
+correctedstring = " ".join(mystring.split())
+print(correctedstring)
+print()
+
 ######
