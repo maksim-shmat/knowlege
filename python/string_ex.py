@@ -457,4 +457,25 @@ correctedstring = " ".join(mystring.split())
 print(correctedstring)
 print()
 
-######
+######40 replace character at a given position in a string using string slicing
+string = 'pythonhxamples'
+position = 6
+new_character = 'e'
+
+string = string[:position] + new_character + string[position+1:]
+print(string)
+
+### replace character at a given position in a string using list
+
+string = 'pythonhxamples'
+position = 6
+new_character = 'e'
+
+temp = list(string)
+temp[position] = new_character
+string = "".join(temp)
+
+print(string)
+print()
+
+######41
