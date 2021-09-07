@@ -478,4 +478,33 @@ string = "".join(temp)
 print(string)
 print()
 
-######41
+######41 split string into chunks
+
+str = 'CarBadBoxNumKeyValRayCppSan'
+n = 3
+chunks = [str[i:i+n] for i in range(0, len(str), n)]
+print(chunks)
+
+### split string by length
+
+str = 'Welcome to Python Examples'
+n = 4
+chunks = [str[i:i+n] for i in range(0, len(str), n)]
+print(chunks)
+
+### split string into chunks using while loop
+
+str = 'Welcome to Python Examples'
+n = 5
+chunks = []
+i = 0
+while i < len(str):
+    if i+n < len(str):
+        chunks.append(str[i:i+n])
+    else:
+        chunks.append(str[i:len(str)])
+    i += n
+print(chunks)
+print()
+
+######42
