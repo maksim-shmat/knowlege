@@ -507,4 +507,18 @@ while i < len(str):
 print(chunks)
 print()
 
-######42
+######42 split string by underscore
+
+str = '52_841_63_24_76_49'
+items = str.split('_')
+print(items)
+
+### split string by one or more underscore
+
+import re
+str = '52_841__63____24_76______49'
+items = re.split('_+', str)
+print(items)
+print()
+
+######43
