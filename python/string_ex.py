@@ -521,4 +521,30 @@ items = re.split('_+', str)
 print(items)
 print()
 
-######43
+######43 split string by space
+
+str = '63 41 92 81 69 70'
+chuncks = str.split(' ')
+print(chunks)
+
+### split string by one or more adjacent spaces
+import re
+
+str = '63 41    92  81          69  70'
+chunks = re.split(' +', str)
+print(chunks)
+
+### split string by any white space character
+# ascii hex code: 09 - horizontal tab
+#                 0A - new line feed
+#                 0B - vertical tab
+#                 0D - carrage return/form feed
+#                 20 - space
+import re
+
+str = '63 41\t92\n81\r69 70'
+chunks = str.split()
+print(chunks)
+print()
+
+######44
