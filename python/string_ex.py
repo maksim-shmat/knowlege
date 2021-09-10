@@ -547,4 +547,42 @@ chunks = str.split()
 print(chunks)
 print()
 
-######44
+######44 split string by new line using str.split()
+
+string1 = '''Welcome
+to
+pythonexamples.org'''
+chunks = string1.split('\n')
+print(chunks)
+
+str = 'Welcome\nto\nPythonExamples.org'
+chunks = str.split('\n')
+print(chunks)
+
+### split string by new line using re.split()
+
+import re
+
+string1 = '''Welcome
+to
+pythonexamples.org'''
+chunks = re.split('\n', string1)
+print(chunks)
+
+### split string by one or more new lines
+
+import re
+
+str = '''Welcome
+
+to
+
+
+
+
+PythonExamples.org'''
+chunks = re.split('\n+', str)
+print(chunks)
+print()
+
+######45
