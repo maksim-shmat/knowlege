@@ -585,4 +585,39 @@ chunks = re.split('\n+', str)
 print(chunks)
 print()
 
-######45
+######45 split string by comma
+
+str = 'apple,orange,grape'
+chunks = str.split(',')
+print(chunks)
+
+### split string by one or more commas
+
+str = 'apple,,orange,,,grape'
+chunks = str.split(',')
+print(chunks)
+
+# and that without empty items in take a string
+
+import re
+
+str = 'apple,,orange,,,grape'
+chunks = re.split(',+', str)
+print(chunks)
+print()
+
+######46 split string into list of characters with for loop
+
+def getCharList(str):
+    return [char for char in str]
+str = 'pythonexamples'
+print(getCharList(str))
+
+### split string into list of characters using list class
+
+str = 'pythonexamples'
+chars = list(str)
+print(chars)
+print()
+
+######47
