@@ -620,4 +620,21 @@ chars = list(str)
 print(chars)
 print()
 
-######47
+######47 split string by regular expression
+
+import re
+
+str = '63__foo,,bar,_mango_,apple'
+chunks = re.split('[_,][_,]',str)
+print(chunks)
+
+### split string by a class
+
+import re
+
+str = 'foo635bar412mango2apple21orange'
+chunks = re.split('\d+', str)
+print(chunks)
+print()
+
+######
