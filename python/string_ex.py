@@ -637,4 +637,25 @@ chunks = re.split('\d+', str)
 print(chunks)
 print()
 
-######
+######48 sort list of string in ascending order
+
+my_list = ['cherry', 'mango', 'apple', 'orange', 'banana']
+my_list.sort()
+print(my_list)
+
+### keep the original list unchanged
+
+my_list = ['cherry', 'mango', 'apple', 'orange', 'banana']
+sorted_list = my_list.copy()
+sorted_list.sort()
+print(my_list)
+print(sorted_list)
+
+### sort list of strings in descending order
+
+my_list = ['cherry', 'mango', 'apple', 'orange', 'banana']
+my_list.sort(reverse=True)
+print(my_list)
+print()
+
+######49
