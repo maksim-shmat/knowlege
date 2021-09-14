@@ -658,4 +658,19 @@ my_list.sort(reverse=True)
 print(my_list)
 print()
 
-######49
+######49 sort characters in string using sorted()
+
+string = 'apple'
+sorted_chars = sorted(string)  # sorted(string, reverse=True)
+sorted_string = ''.join(sorted_chars)
+print(sorted_string)
+
+### sort characters in string using list.sort()
+
+string = 'apple'
+chars = list(string)
+chars.sort()  # chars.sort(reverse = True)
+sorted_string = ''.join(chars)
+print(sorted_string)
+
+######50
