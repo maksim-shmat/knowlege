@@ -672,5 +672,27 @@ chars = list(string)
 chars.sort()  # chars.sort(reverse = True)
 sorted_string = ''.join(chars)
 print(sorted_string)
+print()
 
-######50
+######50 compares two strings
+
+def compare(str1, str2):
+    if str1 == str2:
+        return 0
+    elif str1 > str2:
+        return 1
+    else:
+        return -1
+
+str1 = 'abc'
+str2 = 'cde'
+result = compare(str1, str2)
+if result == 0:
+    print('Both the strings are equal.')
+elif result > 0:
+    print('str1 is greater than str2.')
+elif result < 0:
+    print('str1 is less than str2.')
+print()
+
+######51
