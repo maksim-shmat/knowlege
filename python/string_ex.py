@@ -695,4 +695,19 @@ elif result < 0:
     print('str1 is less than str2.')
 print()
 
-######51
+######51 variables in string
+
+x = 25
+y = 88
+mystring = f'The point in XY plane is ({x}, {y})'
+print(mystring)
+
+### string variables in strings
+
+name = 'ABC'
+place = 'Houston'
+mystring = f'My name is {name}. I live in {place}.'
+print(mystring)
+print()
+
+######52
