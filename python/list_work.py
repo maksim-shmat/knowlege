@@ -263,4 +263,38 @@ length = len(cars)
 print('Length of the list is :', length)
 print()
 
-######25
+######25 loop list items using while loop
+
+a = [52, 85, 41, 'sum', 'str', 3 + 5j, 6.8]
+
+i = 0
+while i < len(a):
+    print(a[i])
+    i += 1
+print()
+
+### loop list items using index
+
+a = [52, 85, 41, 'sum', 'str', 3 + 5j, 6.8]
+
+for i in range(len(a)):
+    print(a[i])
+print()
+
+### loop list items accessing list item directly
+
+a = [52, 85, 41, 'sum', 'str', 3+5j, 6.8]
+
+for x in a:
+    print(x)
+print()
+
+### loop list items using enumerate
+
+a =[52, 85, 41, 'sum', 'str', 3+5j, 6.8]
+
+for i, x in enumerate(a):
+    print('element#', i, 'is : ', x)
+print()
+
+######26
