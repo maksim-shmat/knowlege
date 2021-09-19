@@ -297,4 +297,21 @@ for i, x in enumerate(a):
     print('element#', i, 'is : ', x)
 print()
 
-######26
+######26 remove item
+
+mylist = [21, 5, 8, 52, 21, 87]
+item = 21
+mylist.remove(item)
+print(mylist)
+
+### remove all the occurences of an item from the list
+
+mylist = [21, 5, 8, 52, 21, 87]
+r_item = 21
+for item in mylist:
+    if(item==r_item):
+        mylist.remove(r_item)
+print(mylist)
+print()
+
+######27
