@@ -314,4 +314,25 @@ for item in mylist:
 print(mylist)
 print()
 
-######27
+######27 remove item at specific index from list
+
+mylist = [21, 5, 8, 52, 21, 87, 52]
+index = 3
+mylist.pop(index)
+print(mylist)
+
+### remove last item of list
+
+mylist = [21, 5, 8, 52, 21, 87, 52]
+mylist.pop()
+print(mylist)
+
+### pop() with negative index
+
+mylist = [21, 5, 8, 52, 21, 87, 52]
+index = -2
+mylist.pop(index)
+print(mylist)
+print()
+
+######28
