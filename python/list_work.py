@@ -335,4 +335,28 @@ mylist.pop(index)
 print(mylist)
 print()
 
-######28
+######28 remove all occurrences in list using for loop
+
+mylist = [21, 5, 8, 52, 21, 87]
+r_item = 21
+for item in mylist:
+    if(item==r_item):
+        mylist.remove(r_item)
+print(mylist)
+
+### remove all occurrences in list using filter
+
+mylist = [21, 5, 8, 52, 21, 87]
+r_item = 21
+mylist = list(filter((r_item).__ne__, mylist))
+print(mylist)
+
+### remove all occurrences in list using while statement
+
+mylist = [21, 5, 8, 52, 21, 87]
+r_item = 21
+while r_item in mylist: mylist.remove(r_item)
+print(mylist)
+print()
+
+######29
