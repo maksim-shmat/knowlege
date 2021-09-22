@@ -359,4 +359,24 @@ while r_item in mylist: mylist.remove(r_item)
 print(mylist)
 print()
 
-######29
+######29 remove duplicate items from list using membership operator
+
+list1 = [2, 3, 7, 3, 6, 2, 8, 8]
+list2 = []
+for item in list1:
+    if item not in list2:
+        list2.append(item)
+print(list2)
+
+### remove duplicate items from list in-place
+
+list1 = [2, 3, 7, 3, 6, 2, 8, 8]
+index = 1
+while index < len(list1):
+    if list1[index] in list1[ : index]:
+        list1.pop(index)
+    else:
+        index += 1
+print(list1)
+
+######30
