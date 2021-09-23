@@ -378,5 +378,30 @@ while index < len(list1):
     else:
         index += 1
 print(list1)
+print()
 
-######30
+######30 append a list to another list
+
+# initialize lists
+list1 = [6, 52, 74, 62]
+list2 = [85, 17, 81, 92]
+list1.extend(list2)
+print(list1)
+
+### append a list to another list keeping a copy of original list
+
+list1 = [6, 52, 74, 62]
+list2 = [85, 17, 81, 92]
+result = list1.copy()
+result.extend(list2)
+print(result)
+
+### append a list to another list - for loop
+
+list1 = [6, 52, 74, 62]
+list2 = [85, 17, 81, 92]
+for item in list2:
+    list1.append(item)
+print(list1)
+
+#####31
