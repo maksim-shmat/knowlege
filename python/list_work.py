@@ -403,5 +403,17 @@ list2 = [85, 17, 81, 92]
 for item in list2:
     list1.append(item)
 print(list1)
+print()
 
-#####31
+#####31 reverse list using reverse()
+
+mylist = [21, 5, 8, 52, 21, 87, 52]  # list of strings yet
+mylist.reverse()
+print(mylist)   # reverse() method update the original list
+
+### reverse list using slicing
+
+mylist = [21, 5, 8, 52, 21, 87, 52]
+mylist = mylist[::-1]
+print(mylist)   # slicing returns a reversed list, not mod original
+
