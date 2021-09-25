@@ -10,4 +10,13 @@ a = [ 1, 2, 3, 10]
 print(reduce(add_num, a))
 print()
 
+### format a list of strings using the reduce()
+
+from functools import reduce
+def add_str(a,b):
+    return a+' '+b
+a = ['MUO', 'is', 'a', 'media', 'website']
+print(reduce(add_str, a))
+print()
+
 ######2

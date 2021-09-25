@@ -179,6 +179,9 @@ def pairwise_sum(list1, list2):
 the_list = [[1, 2, 3], [2, 1, 3], [4, 0, 1]]
 the_list.sort(key=lambda x: x[1])
 print(the_list)
+# syntax - list.sort() sort(cmp=None, key=None, reverse=False)
+# cmp=lambda x,y: cmp(x.lowe(), y.lower())
+# key=str.lower
 print()
 
 ######18
