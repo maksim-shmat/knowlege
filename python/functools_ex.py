@@ -19,4 +19,39 @@ a = ['MUO', 'is', 'a', 'media', 'website']
 print(reduce(add_str, a))
 print()
 
-######2
+######2 split()
+
+words = "column1 column2 column3"
+words = words.split(" ")
+print(words)
+print()
+
+######3 enumerate()
+
+fruits = ["grape", "apple", "mango"]
+for i, j in enumerate(fruits):
+    print(i, j)
+print()
+
+###3 enumerate()
+
+fruits = ["grape", "apple", "mango"]
+for i, j in enumerate(fruits):
+    print(i, j)
+print()
+
+###3 enumerate()
+
+fruits = ["grape", "apple", "mango"]
+for i, j in enumerate(fruits):   # ...enumerate(fruits, start=1): - not from 0
+    print(i, j)
+print()
+
+### standard?
+
+fruits = ["grape", "apple", "mango"]
+for i in range(len(fruits)):
+    print(i, fruits[i])
+print()
+
+######
