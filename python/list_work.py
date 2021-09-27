@@ -419,4 +419,23 @@ print(mylist)   # reverse() method update the original list
 mylist = [21, 5, 8, 52, 21, 87, 52]
 mylist = mylist[::-1]
 print(mylist)   # slicing returns a reversed list, not mod original
+print()
 
+######32 check if list is empty
+
+myList = []
+if not myList:
+    print('The list is empty.')
+else:
+    print('The list is not empty.')
+
+### check if list is empty using len()
+
+myList = []
+if (len(myList) == 0):
+    print('The list is empty.')
+else:
+    print('The list is not empty.')
+print()
+
+######33
