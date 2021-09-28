@@ -438,4 +438,23 @@ else:
     print('The list is not empty.')
 print()
 
-######33
+######33 check if element is in list
+
+vowels = {'a', 'e', 'i', 'o', 'u'}
+element = 'a'
+if element in vowels:
+    print(element, 'is in the list of vowels.')
+else:
+    print(element, 'is not in list of vowels.')
+
+### check if element is not in list
+
+vowels = ['a', 'e', 'i', 'o', 'u']
+element = 'b'
+if element not in vowels:
+    print(element, 'is not the list of vowels.')
+else:
+    print(element, 'is in the list of vowels.')
+print()
+
+######34
