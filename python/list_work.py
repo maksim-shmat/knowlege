@@ -457,4 +457,35 @@ else:
     print(element, 'is in the list of vowels.')
 print()
 
-######34
+######34 check if list 1 contains all elements of list 2 using all()
+
+list_1 = ['a', 'b', 'c', 'd', 'e']
+list_2 = ['a', 'c', 'e']
+
+if all(x in list_1 for x in list_2):
+    print("List 1 contains all elements of list 2.")
+else:
+    print("List 1 does not contain all elements of list 2.")
+
+### check if list 1 contains all elements of list 2 using nested for
+
+list_1 = ['a', 'b', 'c', 'd', 'e']
+list_2 = ['a', 'c', 'e']
+
+isPresent = True
+for x in list_2:
+    x_present = False
+    for y in list_1:
+        if x == y:
+            x_present = True
+            break
+    if not x_present:
+        isPresent = False
+        break
+if isPresent:
+    print("List 1 contains all elements of list 2.")
+else:
+    print("List 1 does not contain all elements of list 2.")
+print()
+
+######35
