@@ -488,4 +488,17 @@ else:
     print("List 1 does not contain all elements of list 2.")
 print()
 
-######35
+######35 count items in list with a given value
+
+mylist = [6, 52, 74, 62, 85, 62, 62, 85, 6, 92, 74]
+
+length_74 = mylist.count(74)
+length_62 = mylist.count(62)
+length_92 = mylist.count(92)
+
+print('74 occured', length_74, 'times in the list.')
+print('62 occured', length_62, 'times in the list.')
+print('92 occured', length_92, 'times in the list.')
+print()
+
+######36
