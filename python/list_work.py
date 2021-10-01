@@ -501,4 +501,24 @@ print('62 occured', length_62, 'times in the list.')
 print('92 occured', length_92, 'times in the list.')
 print()
 
-######36
+######36 find duplicate items of list
+
+myList = [9, 1, 5, 9, 4, 2, 7, 2, 9, 5, 3]
+occurrences = []
+
+for item in myList:
+    count = 0
+    for x in myList:
+        if x == item:
+            count += 1
+    occurrences.append(count)
+duplicates = set()
+index = 0
+while index < len(myList):
+    if occurrences[index] != 1:
+        duplicates.add(myList[index])
+    index += 1
+print(duplicates)
+print()
+
+######37
