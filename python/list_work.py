@@ -521,4 +521,26 @@ while index < len(myList):
 print(duplicates)
 print()
 
-######37
+######37 find unique items of list using set
+
+myList = [9, 1, 5, 9, 4, 2, 7, 2, 9, 5, 3]
+mySet = set(myList)
+print(mySet)
+
+### find uinque elements of a list using for loop
+
+myList = [9, 1, 5, 9, 4, 2, 7, 2, 9, 5, 3]
+uniqueList = []
+
+for item in myList:
+    itemExist = False
+    for x in uniqueList:
+        if x == item:
+            itemExist = True
+            break
+    if not itemExist:
+        uniqueList.append(item)
+print(uniqueList)
+print()
+
+######38
