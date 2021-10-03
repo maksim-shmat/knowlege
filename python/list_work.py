@@ -543,4 +543,32 @@ for item in myList:
 print(uniqueList)
 print()
 
-######38
+######38 find index of item in list
+
+mylist = [21, 5, 8, 52, 21, 87]
+item = 8
+index = mylist.index(item)
+print('The index of', item, 'in th list is:', index)
+
+### find index of item in list - start, end
+
+mylist = [21, 8, 67, 52, 8, 21, 87]
+item = 8
+start = 2
+end = 7
+
+index = mylist.index(item, start, end)
+print('The index of', item, 'in the list is:', index)
+
+### find index of item in list - item not present
+
+mylist = [21, 5, 8, 52, 21, 87, 52]
+item = 67
+try:
+    index = mylist.index(item)
+    print('The index of', item, 'in the list is:', index)
+except ValueError:
+    print('item not present')
+print()
+
+######39
