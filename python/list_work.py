@@ -571,4 +571,15 @@ except ValueError:
     print('item not present')
 print()
 
-######39
+######39 insert item at specified index in list
+
+mylist = [21, 5, 8, 52, 21, 87, 52]
+item = 36
+index = 4  # 0/-100 = go to start of list
+           # len(mylist)/1000 = go to end of list
+
+mylist.insert(index, item)
+print(mylist)
+print()
+
+######40
