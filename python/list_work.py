@@ -582,4 +582,23 @@ mylist.insert(index, item)
 print(mylist)
 print()
 
-######40
+######40 find the largest number using sort() function
+
+a = [18, 52, 23, 41, 32]
+a.sort()
+ln = a[-1]
+print("Largest element is: ", ln)
+
+### find the largest number in list using for loop
+
+a = [18, 52, 23, 41, 32]
+ln = a[0] if a else None
+
+for i in a:
+    if i>ln:
+        ln=i
+print("Largest element is: ",ln)
+
+print()
+
+######41
