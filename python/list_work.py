@@ -601,4 +601,26 @@ print("Largest element is: ",ln)
 
 print()
 
-######41
+######41 find the smallest number using min()
+
+a = [18, 52, 23, 41, 32]
+smallest = min(a)
+print(f'Smallest number in the list is : {smallest}.')
+
+### find the smallest number using sort() function
+
+a = [18, 52, 23, 41, 32]
+smallest = a[0]
+print("Smallest number is: ",smallest)
+
+### find the smallest number using for loop
+
+a = [18, 52, 23, 41, 32]
+smallest = a[0] if a else None
+
+for i in a:
+    if i<smallest:
+        smallest=i
+print("Smallest element is: ", smallest)
+
+######42
