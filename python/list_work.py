@@ -621,6 +621,25 @@ smallest = a[0] if a else None
 for i in a:
     if i<smallest:
         smallest=i
-print("Smallest element is: ", smallest)
 
-######42
+print("Smallest element is: ", smallest)
+print()
+
+######42 list comprehension using two lists
+
+list_1 = [2, 6, 7, 3]
+list_2 = [1, 4, 2]
+
+list_3 = [x * y for x in list_1 for y in list_2]
+print(list_3)
+
+### permutation of items in two lists using comprehension
+
+list_1 = [1, 2, 3]
+list_2 = ['a', 'b', 'c']
+
+list_3 = [(x, y) for x in list_1 for y in list_2]
+print(list_3)
+print()
+
+######43
