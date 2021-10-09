@@ -656,4 +656,18 @@ list_3b = [x * y for x in list_1b for y in list_2b if (x+y)%2 == 0]
 print(list_3b)
 print()
 
-######
+### list comprehension with multiple IF conditions
+
+list_1c = [7, 2, -8, 6, 2, 15, 4, -2, 3, 9]
+list_2c = [x for x in list_1c if x > 0 if x % 3 == 0]
+print(list_2c)
+
+### list comprehension using multiple IF Conditions and multiple input lists
+
+list_1d = [-2, -1, 0, 1, 2, 3]
+list_2d = [4, 5, 6, 7, 8]
+list_3d = [x * y for x in list_1d for y in list_2d if x > 0 if y % 2 == 0]
+print(list_3d)
+print()
+
+######44
