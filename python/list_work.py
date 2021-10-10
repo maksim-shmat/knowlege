@@ -670,4 +670,20 @@ list_3d = [x * y for x in list_1d for y in list_2d if x > 0 if y % 2 == 0]
 print(list_3d)
 print()
 
-######44
+######44 get list without last element using slice
+
+source_list = [8, 4, 7, 3, 6, 1, 9]
+new_list = source_list[:-1]
+print(source_list)
+print(new_list)
+
+### list without last element using list.pop()
+
+source_list = [8, 4, 7, 3, 6, 1, 9]
+new_list = source_list.copy()
+new_list.pop()
+print(source_list)
+print(new_list)
+print()
+
+######45
