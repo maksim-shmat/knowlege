@@ -686,4 +686,19 @@ print(source_list)
 print(new_list)
 print()
 
-######45
+######45 traverse list except last element using slicing
+
+source_list = [8, 4, 7, 3, 6, 1, 9]
+for x in source_list[:-1]:
+    print(x)
+
+### traverse list except last element using index
+
+source_list = [8, 4, 7, 3, 6, 1, 9]
+index = 0
+while index < len(source_list) - 1:
+    print(source_list[index])
+    index += 1
+print()
+
+######46
