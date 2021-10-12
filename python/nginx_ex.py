@@ -61,4 +61,8 @@ sudo service nginx restart
 
 Go to your browser and type localhost:81
 
-######2
+######2 get the list of all running nginx processes
+
+ps -ax | grep nginx
+
+######3 

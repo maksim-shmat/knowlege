@@ -701,4 +701,31 @@ while index < len(source_list) - 1:
     index += 1
 print()
 
-######46
+######46 list with first N elements usnig slicing
+
+source_list = [8, 4, 7, 3, 6, 1, 9]
+N = 4
+new_list = source_list[:N]
+print(source_list)
+print(new_list)
+
+### list with first N elements using For loop
+
+source_list = [8, 4, 7, 3, 6, 1, 9]
+N = 4
+new_list = []
+for index in range(0, N):
+    new_list.append(source_list[index])
+print(source_list)
+print(new_list)
+
+### list with first N elements using list comprehension
+
+source_list = [8, 4, 7, 3, 6, 1, 9]
+N = 4
+new_list = [x for index, x in enumerate(source_list) if index < N]
+print(source_list)
+print(new_list)
+print()
+
+######47
