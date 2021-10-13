@@ -728,4 +728,32 @@ print(source_list)
 print(new_list)
 print()
 
-######47
+######47 slice list with specific end position
+
+list_1c = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+stop = 4
+slice_object = slice(stop)
+result = list_1c[slice_object]
+print(result)
+
+### slice list with specific start and end position
+
+list_1d = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
+start = 2
+stop = 7
+slice_object = slice(start, stop)
+result = list_1d[slice_object]
+print(result)
+
+### slice list with specific start and end position, step.
+
+list_1e = ['a', 'b', 'c', 'd', 'e','f', 'g', 'h']
+start = 2
+stop = 7
+step = 2
+slice_object = slice(start, stop, step)
+result = list_1e[slice_object]
+print(result)
+print()
+
+######48
