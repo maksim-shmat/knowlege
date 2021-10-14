@@ -756,4 +756,40 @@ result = list_1e[slice_object]
 print(result)
 print()
 
-######48
+######48 define list of lists
+
+list_of_lists = [['a', 25, 69, 'Apple'],
+                 [5, 'doll', 854, 41.2],
+                 [8, 6, 'car', True]]
+print(list_of_lists)
+
+### iterate over Python list of lists
+
+list_of_lists = [['a', 25, 69, 'Apple'],
+                 [5, 'doll', 854, 41.2],
+                 [8, 6, 'car', True]]
+i = 0
+while i < len(list_of_lists):
+    print(list_of_lists[i])
+    i += 1
+
+### with for
+
+list_of_lists = [['a', 25, 69, 'Apple'],
+                 [5, 'doll', 854, 41.2],
+                 [8, 6, 'car', True]]
+
+for list_i in list_of_lists:
+    print(list_i)
+
+### revover a list from list of lists
+
+list_of_lists = [['a', 25, 69, 'Apple'],
+                 [5, 'doll', 854, 41.2],
+                 [8, 6, 'car', True]]
+del list_of_lists[1]
+print(list_of_lists)
+print()
+
+######
+
