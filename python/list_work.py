@@ -782,7 +782,7 @@ list_of_lists = [['a', 25, 69, 'Apple'],
 for list_i in list_of_lists:
     print(list_i)
 
-### revover a list from list of lists
+### remove a list from list of lists
 
 list_of_lists = [['a', 25, 69, 'Apple'],
                  [5, 'doll', 854, 41.2],
@@ -791,5 +791,32 @@ del list_of_lists[1]
 print(list_of_lists)
 print()
 
-######
+######49 Convert list to Dictionary
 
+myList = ['a', 'apple', 'b', 'banana', 'c', 'cherry']
+
+myDict = {myList[i]: myList[i + 1] for i in range(0, len(myList), 2)}
+print(myDict)
+
+### Convert list of keys and values to dictionary
+
+listKeys = ['a', 'b','c']
+listValues = ['apple', 'banana', 'cherry']
+
+myDict = {listKeys[i]: listValues[i] for i in range(0, len(listKeys), 1)}
+print(myDict)
+
+### Covert list of tuples to dictionary
+
+myList = [('a', 'apple'), ('b', 'banana'), ('c', 'chrry')]
+myDict = {myList[i][0]: myList[i][1] for i in range(0, len(myList), 1)}
+print(myDict)
+
+### Convert list of dicgionary with index as value
+
+myList = ['a', 'b', 'c']
+myDict = {myList[i]: i for i in range(0, len(myList), 1)}
+print(myDict)
+print()
+
+######50
