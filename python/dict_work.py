@@ -1,6 +1,6 @@
 """Work with a dicts."""
 
-# extracting dictionary element using its key
+######1 extracting dictionary element using its key
 
 dict_salesid = {'SID1': "Fiat",
                 'SID2': "Mersedes",
@@ -28,7 +28,7 @@ else:
     print('Sales ID {} not found'.format(sales_id))
     print()
 
-### setting dictionary element using its key
+######2 setting dictionary element using its key
 
 dict_salesinfo['LaunchDay'] = 'Thurs'
 dict_salesinfo['Cost'] = 6000000
@@ -49,7 +49,7 @@ print()
 ### delete with clear()
 # print(dict_salesinfo.clear())
 
-### looping through a dictionary object
+######3 looping through a dictionary object
 
 dict_keys = dict_salesinfo.keys()
 print(dict_keys)
@@ -58,43 +58,34 @@ print()
 
 ### and more
 for var in dict_keys:
-    print(var + ":" + str(dict_salesinfo[var]))
+    print(var + ": " + str(dict_salesinfo[var]))
     print()
 
-### printing dictionary object values in key, value pair
+######4 printing dictionary object values in key, value pair
 
 dict_values = dict_salesinfo.values()
 print(dict_values)
 print()
 
-### the item function converts a dictionary item into a tuple
+######5 the item function converts a dictionary item into a tuple
 
 dict_items = dict_salesinfo.items()
 print(dict_items)
 print(type(dict_items))
 print()
 
-### looping through the items function
+######6 looping through the items function
 
 for key, value in dict_salesinfo.items():
     print(key + "-" + str(value))
     print()
 
-### converting a list into a dictionary object
-
-sales_infolist = [['SID', 'Fiat'], ['Sales', '20000'], ['LaunchDay', 'Wed'], ['Cost', '5000000']]
-print(type(sales_infolist))
-print()
-sales_infolist_dict = dict(sales_infolist)
-print(type(sales_infolist_dict))
-print()
-
-### copying a dictionary into a new dictionary
+######7 copying a dictionary into a new dictionary
 dict_salesinfo_new = dict_salesinfo.copy()
 print(dict_salesinfo_new)
 print()
 
-### updating the dictionary object
+######8 updating the dictionary object
 
 dict_salesinfo = {'SID': 'Fiat', 'Sales': 20000, 'LaunchDay': 'Wed', 'Cost': 500000}
 print(dict_salesinfo)
@@ -106,14 +97,14 @@ names = dict(hello=1, world=2)
 
 print()
 
-###### sort dict for value
+######9 sort dict for value
 
 d = {'apples':40, 'oranges':80, 'bananas':70}
 print(sorted(d, key=d.get))
 
 print()
 
-###### generator dict and set
+######10 generator dict and set
 
 S = {i**2 for i in range(10)}
 D = {i: i**2 for i in range(10)}
@@ -121,4 +112,79 @@ print(S)
 print(D)
 print()
 
-######
+######11 Python dictionary methods
+### clear()
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+dictionary.clear()
+print(dictionary)
+
+### copy()
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+dictionary_1 = dictionary.copy()
+dictionary_1["b"] = 2
+print(dictionary)
+print(dictionary_1)
+
+### fromkeys()
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+dictionary_1 = dict.fromkeys(dictionary, 1)
+print(dictionary_1)
+
+### get()
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+x = dictionary.get("b")
+print(x)
+
+### items()
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+for key, value in dictionary.items():
+    print(key, '-', value)
+
+### keys()
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+for key in dictionary.keys():
+    print(key)
+
+### values()
+
+dictonary = {"a": 4, "b": 5, "c": 6}
+for value in dictionary.values():
+    print(value)
+
+### pop() removes the key-value pair
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+x = dictionary.pop("b")
+print(x)
+print(dictionary)
+
+### popitem() removes the last inserted key-value pair
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+x = dictionary.popitem()
+print(x)
+print(dictionary)
+
+### setdefault()
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+x = dictionary.setdefault("b")
+print(x)
+y = dictionary.setdefault("m", 0)
+print(y)
+print(dictionary)
+
+### update()
+
+dictionary = {"a": 4, "b": 5, "c": 6}
+dictionary_1 = {"a": 8, "m": 2, "v": 7}
+dictionary.update(dictionary_1)
+print(dictionary)
+
+######12
