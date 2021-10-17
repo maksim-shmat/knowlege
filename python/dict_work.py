@@ -186,5 +186,29 @@ dictionary = {"a": 4, "b": 5, "c": 6}
 dictionary_1 = {"a": 8, "m": 2, "v": 7}
 dictionary.update(dictionary_1)
 print(dictionary)
+print('next')
 
-######12
+######12 Create dictionary using dict comprehencion
+
+def someThing(x):
+    x = x**3
+    return x
+
+myDict = {x: someThing(x) for x in (5, 8, 9, 12)}
+print(type(myDict))
+print(myDict)
+
+### create dictionary with keyword argument to dict()
+
+myDict = dict(a='foo', b='bar', c='moo')
+print(type(myDict))
+print(myDict)
+
+### create dictionary using dict() constructor
+
+myDict = dict([(1, 'foo'), (2, 'bar'), (3, 'moo')])
+print(type(myDict))
+print(myDict)
+print('next')
+
+######13
