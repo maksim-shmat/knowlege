@@ -1,5 +1,20 @@
 """Work with a dicts."""
 
+######0 Add items to dictionary
+
+myDictionary = {
+        'a': '65',
+        'b': '66',
+        'c': '67'
+}
+
+myDictionary['d'] = '68'
+myDictionary['e'] = '69'
+myDictionary['f'] = '70'
+
+print(myDictionary)
+print('next')
+
 ######1 extracting dictionary element using its key
 
 dict_salesid = {'SID1': "Fiat",
