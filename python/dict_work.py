@@ -226,4 +226,20 @@ print(type(myDict))
 print(myDict)
 print('next')
 
-######13
+######13 check if dictionary is empty using not operator
+
+myDict = {}
+if not myDict:
+    print('The dictionary is empty.')
+else:
+    print('The dictionary is not empty.')
+
+### check if dictionary is empty using len()
+
+myDict = {}
+if (len(myDict)) == 0:
+    print('The dictionary is empty.')
+else:
+    print('The dictionary is not empty.')
+
+######14
