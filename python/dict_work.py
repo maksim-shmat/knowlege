@@ -52,17 +52,42 @@ Cost=dict_salesinfo.get('Cost')
 print('Launchday is {}, Cost is {}'.format(LaunchDay, Cost))
 print()
 
-### delete
-# del dict_salesinfo
+######!2 Delete items from dictionary using del keyword
 
-### delete a specific item
-# del dict_salesinfo['SID']
+myDictionary = {
+        'a': '65',
+        'b': '66',
+        'c': '67'
+}
+del myDictionary['c']
+print(myDictionary)
+print('above - delete with del')
+print()
 
-### delete with pop()
-# print(dict_salesinfo.pop('SID'))
+### Delete items from dictionary using pop()
 
-### delete with clear()
-# print(dict_salesinfo.clear())
+myDictionary = {
+        'a': '65',
+        'b': '66',
+        'c': '67'
+}
+poppedItem = myDictionary.pop('c')
+print(poppedItem)
+print(myDictionary)
+print('above - delete with pop() example')
+print()
+
+### Clear all items of a dictionary
+
+myDictionary = {
+        "a": 65,
+        "b": 66,
+        "c": 67
+}
+print('Dictionary items:\n', myDictionary)
+myDictionary.clear()
+print('Dictionary items after clear():\n', myDictionary)
+
 
 ######3 looping through a dictionary object
 
@@ -105,7 +130,7 @@ print()
 dict_salesinfo = {'SID': 'Fiat', 'Sales': 20000, 'LaunchDay': 'Wed', 'Cost': 500000}
 print(dict_salesinfo)
 
-######
+####
 names = dict(hello=1, world=2)
 ' '.join(names)
 # 'hello world'
@@ -158,7 +183,7 @@ print(x)
 
 dictionary = {"a": 4, "b": 5, "c": 6}
 for key, value in dictionary.items():
-    print(key, '-', value)
+    print(key, '-', value)  # or print(key)
 
 ### keys()
 
@@ -241,5 +266,78 @@ if (len(myDict)) == 0:
     print('The dictionary is empty.')
 else:
     print('The dictionary is not empty.')
+print('    next')
 
-######14
+######14 Check if key is present in dictionary
+
+myDictionary = {
+        "name": "Luna",
+        "year": 1989,
+        "expertise": "data expeliarmos"}
+isPresent = 'expertise' in myDictionary
+print(isPresent)
+print('    next')
+
+######15 Get length of dictionary
+
+myDictionary = {
+        "name": "Lini",
+        "year": 1989,
+        "expertise": "data analytics"}
+length = len(myDictionary)
+print('Length of dictionary is: ', length)
+print('    next')
+
+######16 List of dictionaries
+### Create
+
+myList = [
+        {
+            'foo': 12,
+            'bar': 14
+        },
+        {
+            'moo': 52,
+            'car': 642
+        },
+        {
+            'doo': 6,
+            'tar': 84
+        }
+]
+print(myList)
+print(myList[0])
+print(myList[0]['bar'])
+
+### Update
+
+myList = [
+        {
+            'foo': 12,
+            'bar': 14,
+        },
+        {
+            'moo': 52,
+            'car': 642
+        },
+        {
+            'doo': 6,
+            'tar': 84
+        }
+]
+# update value for 'bar in first dict
+myList[0]['bar'] = 52
+
+# add a new key: value pair to second dict
+myList[1]['gar'] = 38
+
+# delete a key: value pair from third dict
+del myList[2]['doo']
+print(myList)
+
+### Append a dict to list of dict
+myList.append({'joo': 48, 'par': 28})
+print(myList)
+print('next')
+
+######17
