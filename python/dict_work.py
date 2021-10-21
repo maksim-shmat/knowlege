@@ -340,4 +340,48 @@ myList.append({'joo': 48, 'par': 28})
 print(myList)
 print('next')
 
-######17
+######17 Dictionary keys to list
+### using dict.keys()
+
+myDict = {'a': 'apple', 'b': 'banana', 'c': 'cherry'}
+keysList = list(myDict.keys())
+print(keysList)
+
+### using list comprehension
+
+myDict1 = {'a': 'apple', 'b': 'banana', 'c': 'cherry'}
+keysList1 = [key for key in myDict1]
+print(keysList)
+
+### using for loop
+
+myDict2 = {'a': 'apple', 'b': 'banana', 'c': 'cherry'}
+keysList2 = []
+for key in myDict2:
+    keysList2.append(key)
+print(keysList2)
+print('   ^ above dict keys to list')
+
+######18 Dictionary values to list
+### Using dict.values()
+
+myDict3 = {'a': 'apple', 'b': 'banana', 'c': 'cherry'}
+valuesList = list(myDict3.values())
+print(valuesList)
+
+### using list comprehension
+
+myDict4 = {'a': 'apple', 'b': 'banana', 'c': 'cherry'}
+valuesList1 = [myDict4[key] for key in myDict4]
+print(valuesList1)
+
+### using for loop
+
+myDict5 = {'a': 'apple', 'b': 'banana', 'c': 'cherry'}
+valuesList2 = []
+for key in myDict5:
+    valuesList2.append(myDict5[key])
+print(valuesList2)
+print('   ^ above dict values to list')
+
+######19
