@@ -141,4 +141,57 @@ for item in tuple15:
 print('Is', check_item, 'Present? ', is_item_present)
 print()
 
-######6
+######6 Reverse tuple
+
+myTuple = ('a', 'b', 'c')
+reversed_tuple = reversed(myTuple)
+result = tuple(reversed_tuple)
+print(result)
+print()
+
+######7 List of tuples
+### Append tuple to list of tuples
+
+list_of_tuples = [(1, 'Saranya', 92), (2, 'Surya', 95), (3, 'Mania', 93)]
+list_of_tuples.append((4, 'Reshmi', 94))
+print(list_of_tuples)
+
+### Update a tuple in list of tuples
+
+list_of_tupless = [(1, 'Sui', 92), (2, "Zuzu", 95), (3, "Mana", 94)]
+list_of_tupless[1] = (2, 'Recshmi', 99)
+print(list_of_tupless)
+
+### Remove a tuple from list of tuples
+
+list_of_tuples1 = [(1, 'Sui', 92), (2, 'Quzu', 99), (53, 'Mumu', 88)]
+del list_of_tuples1[2]
+print(list_of_tuples1)
+
+######8 Sort list of tuples using list.sort()
+
+list_students = [('Sara', 84), ('Sui', 92), ('Mark', 86), ('Ritha', 89)]
+list_students.sort(key=lambda x: x[1])  # index 1 mean second element
+print(list_students)
+
+### and reverse
+list_students = [('Sara', 84), ('Sui', 92), ('Mark', 86), ('Ritha', 89)]
+list_students.sort(key=lambda x: x[1], reverse=True)
+print(list_students)
+
+######9 Sort list of tuples using bubble sort algorithm
+
+list_ = [('Sara', 84), ('Suita', 92), ('Mazurka', 86), ('Givi', 89)]
+# sort by second element of tuple
+ith = 1  # or 0 first element of tuple
+list_length = len(list_)
+for i in range(0, list_length):
+    for j in range(0, list_length-i-1):
+        if (list_[j][ith] > list_[j + 1][ith]):
+                temp = list_[j]
+                list_[j] = list_[j + 1]
+                list_[j + 1] = temp
+
+print(list_)
+
+###
