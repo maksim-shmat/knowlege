@@ -167,6 +167,7 @@ print(list_of_tupless)
 list_of_tuples1 = [(1, 'Sui', 92), (2, 'Quzu', 99), (53, 'Mumu', 88)]
 del list_of_tuples1[2]
 print(list_of_tuples1)
+print()
 
 ######8 Sort list of tuples using list.sort()
 
@@ -178,6 +179,7 @@ print(list_students)
 list_students = [('Sara', 84), ('Sui', 92), ('Mark', 86), ('Ritha', 89)]
 list_students.sort(key=lambda x: x[1], reverse=True)
 print(list_students)
+print()
 
 ######9 Sort list of tuples using bubble sort algorithm
 
@@ -193,5 +195,49 @@ for i in range(0, list_length):
                 list_[j + 1] = temp
 
 print(list_)
+print()
 
-###
+######10 Convert tuple to list
+# use list() constructor
+
+tuple_1 = ('a', 'e', 'i', 'o', 'u')
+list_1 = list(tuple_1)
+print(list_1)
+print(type(list_1))
+
+### unpack tuple inside square brackets
+
+tuple_1 = ('a', 'e', 'i', 'o', 'u')
+list_1 = [*tuple_1,]
+print(list_1)
+print(type(list_1))
+print()
+
+######11 Convert tuple to string using join()
+
+tuple11 = ('p', 'yt', 'ho', 'n')
+str = ''.join(tuple11)
+print(str)
+
+### convert tuple to string using for loop
+
+tuple01 = ('p', 'y', 'th', 'o', 'n')
+str = ''
+for item in tuple01:
+    str = str + item
+print(str)
+print()
+
+######12 Slice a tuple
+# slice with specific start and end position
+
+tuple_1 = ('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h')
+start = 2
+stop = 7
+# step = 2
+slice_object = slice(start, stop)  # slice(start, stop, step)
+result = tuple_1[slice_object]
+print(result)
+print()
+
+######13
