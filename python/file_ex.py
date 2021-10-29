@@ -51,5 +51,29 @@ if not os.path.isdir(dirPath):
     os.mkdir(dirPath)
 else:
     print('The directory is present.')
+print()
 
-######8
+######8 Find unique words in text file
+
+text_file = open('jill.py', 'r')
+text = text_file.read()
+
+# cleaning
+text = text.lower()
+words = text.split()
+words = [word.strip('.,!()[]') for word in words]
+words = [word.replace("'s", '') for word in words]
+
+# finding unique
+unique = []
+for word in words:
+    if word not in unique:
+        unique.append(word)
+
+# sort
+unique.sort()
+
+# print
+print(unique)
+
+######9
