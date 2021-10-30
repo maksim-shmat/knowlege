@@ -76,4 +76,29 @@ unique.sort()
 # print
 print(unique)
 
-######9
+######9 Append text to file
+
+fin = open("jill.txt", 'a')  # or 'at'
+fin.write('\nI love you Jill!')
+fin.close
+
+######10 Replace string in file,  # full underwrite file?
+
+#fin = open("jill.py", "rt")
+#fout = open("jill.txt", "wt")
+#for line in fin:
+#    fout.write(line.replace('yebat', 'wow'))
+#fin.close()
+#fout.close()
+
+### Replace string in the same file
+
+fin = open("jill.txt", "rt")
+data = fin.read()
+data = data.replace('wow', 'yebat')
+fin.close()
+fin = open("jill.txt", "wt")
+fin.write(data)
+fin.close()
+
+######11
