@@ -101,4 +101,11 @@ fin = open("jill.txt", "wt")
 fin.write(data)
 fin.close()
 
-######11
+######11 Count how many times a word occured in given text file
+
+file = open('jill.txt')
+data = file.read()
+occurrences = data.count("love")
+print('Number of occurences of the word : ', occurrences)
+
+######
