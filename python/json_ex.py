@@ -69,4 +69,36 @@ print(type(pythonObj[0]))
 city = pythonObj[1]['city']
 print(city)
 
+###### Convert Class object to json string
+
+import json
+
+class Laptop:
+    name = 'My Laptop'
+    processor = 'Intel Core'
+
+laptop1 = Laptop()
+laptop1.name = 'Dell Alienware'
+laptop1.processor = 'Intel Core i7'
+
+jsonStr = json.dumps(laptop1.__dict__)
+
+print(jsonStr)
+
+### Convert properties of python class object to json string
+
+import json
+
+class Laptop:
+    def __init__(self, name, processor, hdd, ram, cost):
+        self.name = name
+        self.processor = processor
+        self.hdd = hdd
+        self.ram = ram
+        self.cost = cost
+
+laptop1 = Laptop('Dell Alienware', 'Intel core I4', 512, 8, 2500.98)
+jsonStr = json.dumps(laptop1.__dict__)
+print(jsonStr)
+
 ######
