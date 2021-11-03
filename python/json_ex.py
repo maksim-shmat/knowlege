@@ -10,29 +10,6 @@ with open('jill.json', 'r', encoding = 'utf-8') as json_file:
     print('a: ', a)
     print('b: ', b)
 
-######2 write to json (dump)
-
-import json
-outfile = open("mars_data_01.json", "w")
-json.dump(weather, outfile)
-outfile.close()
-json.dumps(weather)
-
-from pprint import pprint as pp
-
-print(json.dumps(weather, indent=2))
-
-######3 go in json in dict for safe
-
-outfile = open("mars_data.json", 'w')
-weather_obj = {"reports": weather_list, "count": 2}
-json.dump(weather, outfile)
-outfile.close()
-
-### load
-with open("mars_data.json") as infile:
-    weather_obj = json.load(infile)
-
 ######4 Create json string from dictionary
 
 import json
@@ -45,17 +22,17 @@ print(jsonString)
 
 import json
 
-myList = [{'a': 54}, {'b': 41, 'c': 87}]
-jsonString = json.dump(myList, indent=4)
-print(jsonString)
+myList1 = [{'a': 54}, {'b': 41, 'c': 87}]
+jsonString1 = json.dumps(myList1, indent=4)  # json.dumps! not .dump!
+print(jsonString1)
 
 ### Create json string from tuple
 
 import json
 
 myTuple = ({'a': 54}, {'b': 42, 'c':38})
-jsonString = json.dumps(myTuple, indent=4)
-print(jsonString)
+jsonString2 = json.dumps(myTuple, indent=4)
+print(jsonString2)
 
 ######5 Parse json string to list
 
@@ -69,7 +46,7 @@ print(type(pythonObj[0]))
 city = pythonObj[1]['city']
 print(city)
 
-###### Convert Class object to json string
+######6 Convert Class object to json string
 
 import json
 
@@ -81,9 +58,9 @@ laptop1 = Laptop()
 laptop1.name = 'Dell Alienware'
 laptop1.processor = 'Intel Core i7'
 
-jsonStr = json.dumps(laptop1.__dict__)
+jsonStr4 = json.dumps(laptop1.__dict__)
 
-print(jsonStr)
+print(jsonStr4)
 
 ### Convert properties of python class object to json string
 
@@ -98,7 +75,25 @@ class Laptop:
         self.cost = cost
 
 laptop1 = Laptop('Dell Alienware', 'Intel core I4', 512, 8, 2500.98)
-jsonStr = json.dumps(laptop1.__dict__)
-print(jsonStr)
+jsonStr5 = json.dumps(laptop1.__dict__)
+print(jsonStr5)
 
-######
+######7 Convert tuple to json string
+
+import json
+
+mytuple4 = ("python", "json", "postgreshechka")
+jsonStr7 = json.dumps(mytuple4)
+print(jsonStr7)
+
+### Convert tuple with different datatypes to json string
+
+import json
+
+mytuple5 = ("python", "json", 22, 23.04)
+jsonStr8 = json.dumps(mytuple5)
+print(jsonStr8)
+jsonArr = json.loads(jsonStr8)
+print(jsonArr[2])
+
+###### 
