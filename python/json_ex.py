@@ -10,6 +10,15 @@ with open('jill.json', 'r', encoding = 'utf-8') as json_file:
     print('a: ', a)
     print('b: ', b)
 
+### read json file
+
+import json
+
+fileObject1 = open("jill.json", "r")
+jsonContent1 = fileObject1.read()
+aList1 = json.loads(jsonContent1)
+print(aList1)
+
 ######4 Create json string from dictionary
 
 import json
@@ -114,7 +123,74 @@ def csv_to_json(csvFilePath, jsonFilePath):
         jsonf.write(jsonString)
 
 csvFilePath = r'data.csv'
-jsonFilePath = r'data.json'
+jsonFilePath = r'jill.json'
 csv_to_json(csvFilePath, jsonFilePath)
 
-######
+######9 json object to dictionary
+
+import json
+
+jsonString = '{"a": 54, "b": 28}'
+aDict = json.loads(jsonString)
+print(aDict)
+print(aDict['a'])
+print(aDict['b'])
+print()
+
+### json nested object to dictionary
+
+import json
+
+jsonString = '{"a": 54, "b": {"c": 87}}'
+aDict = json.loads(jsonString)
+print(aDict)
+print(aDict['a'])
+print(aDict['b'])
+print(aDict['b']['c'])
+print()
+
+######10 convert json array string to python list
+
+import json
+
+jsonStr = '[{"a": 1, "b": 2}, {"c": 3, "d": 4}]'
+aList = json.loads(jsonStr)
+print(aList[0]['b'])
+
+### convert json array of arrays string to python list
+
+import json
+
+jsonStr = '[[{"a": 1, "b": 2}], [{"c": 3, "d": 4}]]'
+aList = json.loads(jsonStr)
+print(aList[0][0])
+print(type(aList))
+
+######11 convert pytnon list of lists to json
+
+import json
+
+aList = [[{'a': 1, 'b': 2}], [{'c': 3, 'd': 4}]]
+jsonStr = json.dumps(aList)
+print(jsonStr)
+print(type(jsonStr))
+
+######12 Write json (object) to file
+
+aDict = {"a": 54, "b":87}
+jsonString = json.dumps(aDict)
+jsonFile = open("jill.json", "w")
+jsonFile.write(jsonString)
+jsonFile.close()
+
+### Write json (list of object) to file
+
+import json
+
+aList = [{"a": 54, "b": 87}, {"c": 81, "d": 63}, {"e": 17, "f": 39}]
+jsonString = json.dumps(aList)
+jsonFile = open("data.json", "w")
+jsonFile.write(jsonString)
+jsonFile.close()
+
+######13
