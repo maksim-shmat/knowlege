@@ -12,6 +12,9 @@ print("Hello",firstname, surname)
 # 003
 print("What do you call a bear with no teeth?\nA gummy bear!")
 
+### x = input('What do you call a bear with no teeth?\n')
+print('\nNo', x, '\nA gummy bear!')
+
 # 004
 num1 = int(input("Please enter your first number: "))
 num2 = int(input("Please enter your second number: "))
@@ -533,3 +536,10 @@ for i in range(3):
     name_age[name] = age
 name_choice = input("Name to find? ")
 print(name_age[name_choice])
+
+######1 input with float
+
+x = float(input('Enter a float : '))
+print('You entered : ', x)
+
+######2  
