@@ -18,7 +18,7 @@ except MyError as error:
 
 ######2 Try except catching multiple exception and with else block
 
-x = input('Eneter numenator : ')
+x = input('Enter numenator : ')
 y = input('Enter denomenator : ')
 
 try:
@@ -32,4 +32,3 @@ except ZeroDivisionError:
 else:
     print('No Errors.')
 
-######3
