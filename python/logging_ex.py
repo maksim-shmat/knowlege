@@ -28,4 +28,22 @@ logger.warning('This is a WARNING message')
 logger.error('This is an ERROR message')
 logger.critical('This is a CRITICAL message')
 
-######4 
+######4 Log DEBUG lines
+
+import logging
+
+# create a logger
+logger = logging.getLogger('mylogger')
+# set logging level
+logger.setLevel(logging.DEBUG)
+
+handler = logging.FileHandler('jill.log')
+# create a logging format
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+
+# write a debug message
+logger.debug('This is a DEBUG message')
+
+######5
