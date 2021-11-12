@@ -123,4 +123,50 @@ logger.warning('This is a WARNING message')
 logger.error('This is an ERROR message')
 logger.critical('This is a CREITICAL message')
 
-######8 
+######8 Log WARNING lines
+
+import logging
+
+# create a logger
+logger = logging.getLogger('mylogger')
+# set logger level
+logger.setLevel(logging.WARNING)
+# or you can set one of the following level
+# logger.setLevel(logging.INFO)
+# logger.setLevel(logging.DEBUG)
+
+handler = logging.FileHandler('jill.log')
+# create a logging format
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+
+logger.addHandler(handler)
+# write a Warning message
+logger.warning('This is a WARNING message')
+
+### Log only WARNING lines using python logger
+
+import logging
+
+class MyFiler(object):
+    def __init__(self, level):
+        self.__level = level
+
+    def filter(self, logRecord):
+        return logRecord.levelno <= self.__level
+
+# create a logger
+logger = logging.getLogger('mylogger')
+logger.setLevel(logging.WARNING)
+handler = logging.FileHandler('jill.log')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+# set filter to log only WARNING lines
+handler.addFilter(MyFilter(logging.WARNING))
+logger.addHandler(handler)
+
+logger.warning('This is a WARNING message')
+logger.error('This is an ERRRO message from WARNING work')
+logger.critical('This is a CRITICAL message from WARNING work')
+
+######9
