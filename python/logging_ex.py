@@ -169,4 +169,49 @@ logger.warning('This is a WARNING message')
 logger.error('This is an ERRRO message from WARNING work')
 logger.critical('This is a CRITICAL message from WARNING work')
 
-######9
+######9 Log ERROR lines
+
+import logging
+
+# create a logger
+logger = logging.getLogger('mylogger')
+# set logger level
+logger.setLevel(logging.ERROR)
+# or set one of the following level
+# logger.setLevel(logging.WARNING)
+# logger.setLevel(logging.INFO)
+# loggetr.setLevel(logging.DEBUG)
+
+handler = logging.FileHandler('jill.log')
+# create a logging format
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+logger.addHandler(handler)
+
+# write a error message
+logger.error('This is an ERROR message')
+
+### Log only ERROR lines using python logger
+
+import logging
+
+class MyFilter(object):
+    def __init__(self, level):
+        self.__level = level
+
+    def filter(self, logRecord):
+        return logRecord.levelno <= self.__level
+
+# create a logger
+logger = logging.getLogger('mylogger')
+logger.setLevel(logging.ERROR)
+handler = logging.FileHandler('jill.log')
+formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+handler.setFormatter(formatter)
+# set filter to log only ERROR lines
+handler.addFilter(MyFilter(logging.ERROR))
+logger.addHandler(handler)
+
+logger.error('This is an ERROR message')
+logger.critical('This is an CRITICAL message')
+
+######10
