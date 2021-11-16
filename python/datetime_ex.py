@@ -47,4 +47,20 @@ print(dt.strftime('%A %d-%m-%y'))
 print(dt.strftime('%A %d-%m-%Y, %H:%M:%S'))
 print(dt.strftime('%X %x'))
 
-######4
+######4 Check if one date-time is compare other date-time
+
+import datetime
+
+# date and time in yyyy/mm/dd hh:mm:ss format
+d1 = datetime.datetime(2020, 5, 13, 22, 50, 55)
+d2 = datetime.datetime(2020, 8, 13, 22, 50, 55)
+d3 = datetime.datetime(2020, 7, 13, 22, 50, 55)
+
+print(d1 > d2)
+print(d2 > d3)
+print(d1 < d2)
+print(d1 == d3)
+print(d1.date() == d2.date())  # only dates of date-time objects
+print(d1.time() == d2.time())  # only time of date-time objects
+
+######5
