@@ -63,4 +63,65 @@ print(d1 == d3)
 print(d1.date() == d2.date())  # only dates of date-time objects
 print(d1.time() == d2.time())  # only time of date-time objects
 
-######5
+######5 Convert date and time string to datetime object
+
+from datetime import datetime
+
+dt1 = datetime.fromisoformat('2020-11-18')
+print(type(dt1), dt1)
+
+dt2 = datetime.fromisoformat('2020-11-18T00:-05:23')
+print(type(dt2), dt2)
+
+dt3 = datetime.fromisoformat('2020-11-18 00:05:23.283')
+print(type(dt3), dt3)
+
+dt4 = datetime.fromisoformat('2020-11-18 00:05:23.283+00:00')
+print(type(dt4), dt4)
+
+dt5 = datetime.fromisoformat('2020-11-18T00:05:23+04:00')
+print(type(dt5), dt5)
+
+### access the individual parts
+
+from datetime import datetime
+
+dt = datetime.fromisoformat('2020-11-18 17:05:23.283')
+
+# print hours
+print(dt.strftime("%H"))
+
+# print weekday
+print(dt.strftime("%A"))
+
+######6 Convert date string to date object
+
+from datetime import date
+
+# convert string to date object
+dateStr = '2020-11-18'
+date1 = date.fromisoformat(dateStr)
+
+# access date object
+print(date1)
+print(date1.strftime('%Y'))  # year
+print(date1.strftime('%B'))  # month name
+print(date1.strftime('%d'))  # day of month
+
+######7 Convert Time String to time object
+
+from datetime import time
+
+time2 = time.fromisoformat('17:15:23')
+print(type(time2), time2)
+
+time3 = time.fromisoformat('17:15:23.283')
+print(type(time3), time3)
+
+time4 = time.fromisoformat('17:15:23.283+00:00')
+print(type(time4), time4)
+
+time5 = time.fromisoformat('17:15:23+04:00')
+print(type(time5), time5)
+
+######8
