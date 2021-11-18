@@ -124,4 +124,46 @@ print(type(time4), time4)
 time5 = time.fromisoformat('17:15:23+04:00')
 print(type(time5), time5)
 
-######8
+######8 Convert datetime to string
+
+import datetime
+
+# get current date and time
+x = datetime.datetime.now()
+
+# convert date and time to string
+dateTimeStr = str(x)
+
+# print the date and time string
+print(dateTimeStr)
+
+# print the type of dateTimeStr
+print(type(dateTimeStr))
+
+# get the date from datetime string using index slicing
+print(dateTimeStr[:10])
+
+### convert to string with isoformat
+
+import datetime
+
+x = datetime.datetime(2020, 1, 1, 12, 30, 59, 0)
+
+# convert the datetime object to string
+datetimeStr = str(x)
+print(datetimeStr)
+
+# print the iso format of datetime object
+print(x.isoformat(' '))
+
+### Format datetime string
+
+import datetime
+
+x = datetime.datetime(2020, 1, 1, 12, 30, 59, 0)
+
+# convert the datetime object to string of specific format
+datetimeStr = x.strftime("%Y %B, %A %w, %H hours %M minutes")
+print(datetimeStr)
+
+######9
