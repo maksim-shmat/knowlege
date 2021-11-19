@@ -166,4 +166,20 @@ x = datetime.datetime(2020, 1, 1, 12, 30, 59, 0)
 datetimeStr = x.strftime("%Y %B, %A %w, %H hours %M minutes")
 print(datetimeStr)
 
-######9
+######9 Get month as number
+
+import datetime
+
+d = datetime.datetime.now()
+print(d)
+print(d.strftime("%m"))
+
+### get month number of specfic date
+
+import datetime
+
+d = datetime.datetime(2019, 8, 12)
+print(d)
+print(d.strftime("%m"))
+
+######10
