@@ -182,4 +182,31 @@ d = datetime.datetime(2019, 8, 12)
 print(d)
 print(d.strftime("%m"))
 
-######10
+######10 Get month name full version of current date
+
+import datetime
+
+# get current time
+d = datetime.datetime.now()
+
+# print date
+print(d)
+
+# get month name full vetsion
+print(d.strftime("%B"))
+
+### get month name full vetrsion of specific date
+
+import datetime
+
+# set specific date
+
+d = datetime.datetime(2019, 8, 12)
+
+# print date
+print(d)
+
+# get month name full vetsion
+print(d.strftime("%B"))
+
+######11
