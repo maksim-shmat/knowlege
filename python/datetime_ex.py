@@ -209,4 +209,75 @@ print(d)
 # get month name full vetsion
 print(d.strftime("%B"))
 
-######11
+######11 Get month name short version of current date
+
+import datetime
+
+d = datetime.datetime.now()
+print(d)
+print(d.strftime("%b"))
+
+######12 Get day of month of current date
+
+import datetime
+
+d = datetime.datetime.now()
+print(d)
+print(d.strftime("%d"))
+
+### Get day of month of specific date
+
+import datetime
+
+d = datetime.datetime(2019, 8, 12)
+print(d)
+print(d.strftime("%d"))
+
+######13 Get weekday as number of current date
+
+import datetime
+d = datetime.datetime.now()
+print(d)
+print(d.strftime("%w"))
+
+### get weekday as number of specific date
+
+import datetime
+
+d = datetime.datetime(2019, 8, 12)
+print(d)
+print(d.strftime("%w"))
+
+######14 get weekday full version
+
+import datetime
+
+d = datetime.datetime.now()
+print(d)
+print(d.strftime("%A"))
+
+### get weekday full version of a specific date
+
+import datetime
+
+d = datetime.datetime(2020, 9, 11)
+print(d)
+print(d.strftime("%A"))
+
+######15 get weekday short version of current date
+
+import datetime
+
+d = datetime.datetime.now()
+print(d)
+print(d.strftime("%a"))
+
+### get weekday short version of a specific date
+
+import datetime
+
+d = datetime.datetime(2019, 8, 12)
+print(d)
+print(d.strftime("%a"))
+
+######16
