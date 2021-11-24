@@ -173,11 +173,3 @@ Where from?
 
 Who with?
 С кем
----------------------
-These
-Эти
-
-Those
-Те
-
-
