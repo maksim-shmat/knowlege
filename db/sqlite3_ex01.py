@@ -40,4 +40,23 @@ conn.commit()
 # close the connection
 conn.close()
 
-######3
+######3 Insert Row in sqlite3 table and check if insertion is successful
+
+import sqlite3
+
+conn = sqlite3.connect('jill.db')
+c = conn.cursor()
+
+# create table
+c.execute('''CREATE TABLE IF NOT EXISTS students
+        (rollno real, name text, class real)''')
+
+c.execute('''INSERT INTO students
+        VALUES(1, 'Glen', 8)''')
+
+print(c.lastrowid)  # if you see non-zero, then data inserted
+
+conn.commit()
+conn.close()
+
+######4
