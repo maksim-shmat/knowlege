@@ -59,4 +59,35 @@ print(c.lastrowid)  # if you see non-zero, then data inserted
 conn.commit()
 conn.close()
 
-######4
+######4 Select rows from sqlite3 table
+
+import sqlite3
+
+conn = sqlite3.connect('jill.db')
+c = conn.cursor()
+
+c.execute('''SELECT * FROM students;''')
+
+rows = c.fetchall()
+for row in rows:
+    print(row)
+
+conn.commit()
+conn.close()
+
+### Select from sqlite3 table with WHERE clause
+import sqlite3
+
+conn = sqlite3.connect('jill.db')
+c = conn.cursor()
+
+c.execute('''SELECT * FROM students WHERE name="Elliot";''')
+
+rows = c.fetchall()
+
+for row in rows:
+    print(row)
+conn.commit()
+conn.close()
+
+######5
