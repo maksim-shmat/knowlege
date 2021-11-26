@@ -59,4 +59,21 @@ print(c.lastrowid)  # if you see non-zero, then data inserted
 conn.commit()
 conn.close()
 
-######4
+######4 Insert multimple rows into sqlite table
+
+import sqlite3
+
+conn = sqlite3.connect('jill.db')
+c = conn.cursor()
+
+records = [(1, 'Glen', 8),
+           (2, 'Elliot', 9),
+           (3, 'Bob', 7)]
+
+c.executemany('INSERT INTO students VALUES(?,?,?);',records);
+print('We have inserted', c.rowcount, 'records to the table.')
+
+conn.commit()
+conn.close()
+
+######5
