@@ -40,7 +40,7 @@ conn.commit()
 # close the connection
 conn.close()
 
-######3 Insert Row in sqlite3 table and check if insertion is successful
+######3 Insert Row into sqlite3 table and check if insertion is successful
 
 import sqlite3
 
@@ -59,38 +59,25 @@ print(c.lastrowid)  # if you see non-zero, then data inserted
 conn.commit()
 conn.close()
 
-<<<<<<< HEAD
-######4 Insert multimple rows into sqlite table
-=======
-######4 Select rows from sqlite3 table
->>>>>>> fb847ebcd397dbe6bd0f0a9612bb1f916f881f71
+######4 Select rews from sqlite3 table
 
 import sqlite3
 
 conn = sqlite3.connect('jill.db')
 c = conn.cursor()
 
-<<<<<<< HEAD
-records = [(1, 'Glen', 8),
-           (2, 'Elliot', 9),
-           (3, 'Bob', 7)]
-
-c.executemany('INSERT INTO students VALUES(?,?,?);',records);
-print('We have inserted', c.rowcount, 'records to the table.')
-=======
 c.execute('''SELECT * FROM students;''')
 
 rows = c.fetchall()
+
 for row in rows:
     print(row)
->>>>>>> fb847ebcd397dbe6bd0f0a9612bb1f916f881f71
 
 conn.commit()
 conn.close()
 
-<<<<<<< HEAD
-=======
 ### Select from sqlite3 table with WHERE clause
+
 import sqlite3
 
 conn = sqlite3.connect('jill.db')
@@ -102,8 +89,25 @@ rows = c.fetchall()
 
 for row in rows:
     print(row)
+
 conn.commit()
 conn.close()
 
->>>>>>> fb847ebcd397dbe6bd0f0a9612bb1f916f881f71
-######5
+######5 Insert multimple rows into sqlite table
+
+import sqlite3
+
+conn = sqlite3.connect('jill.db')
+c = conn.cursor()
+
+records = [(1, 'Glen', 8),
+           (2, 'Elliot', 9),
+           (3, 'Bob', 7)]
+
+c.executemany('INSERT INTO students VALUES(?,?,?);',records);
+print('We have inserted', c.rowcount, 'records to the table.')
+
+conn.commit()
+conn.close()
+
+######6
