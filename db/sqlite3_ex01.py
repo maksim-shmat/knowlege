@@ -110,4 +110,16 @@ print('We have inserted', c.rowcount, 'records to the table.')
 conn.commit()
 conn.close()
 
-######6
+######6 Delete rows from sqlite3 table
+
+import sqlite3
+
+conn = sqlite3.connect('jill.db')
+c = conn.cursor()
+
+c.execute('DELETE FROM students;',);
+print('We have deleted', c.rowcount, 'records from the table.')
+conn.commit()
+conn.close()
+
+######7
