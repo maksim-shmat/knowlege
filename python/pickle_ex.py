@@ -80,4 +80,41 @@ picklefile.close()
 print(type(laptop1))
 laptop1.details()
 
-######4
+######4 Pickle a dataframe
+
+import numpy as np
+import pandas as pd
+import pickle
+
+# dataframe
+df = pd.DataFrame(
+        [['Suomi', 68, 84, 78, 96],
+         ['Kiki', 74, 56, 77, 98],
+         ['Anlal', 77, 68, 52, 89],
+         ['Lenin', 89, 23, 34, 86]],
+         columns=['name', 'phisics', 'chemistry', 'algebra', 'calculus'])
+
+# create a file
+picklefile = open('df_marks', 'wb')
+# pickle the dataframe
+pickle.dump(df.picklefile)
+piclefile.close()
+
+### Unpickle a dataframe
+
+import numpy as np
+import pandas as pd
+import pickle
+
+# read the pickle file
+picklefile = open('df_marks', 'rb')
+# unpickle the dataframe
+df = pickle.load(picklefile)
+# close file
+picklefile.close()
+
+# print the dataframe
+print(type(df))
+print(df)
+
+######5
