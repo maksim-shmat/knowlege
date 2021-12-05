@@ -1,0 +1,7 @@
+"""Backup about."""
+
+# make a copy
+cp jill.py jill.py.original
+
+# extract 
+cp jill.py.original jill.py
