@@ -7,13 +7,13 @@ from tkinter import messagebox
 
 tkWindow = Tk()
 tkWindow.geometry('400x150')
-tkWindow.title('Click on the button, and get the message')
+tkWindow.title('Привет, там внизу есть кое что?')
 
 def showMsg():
-    messagebox.showinfo('Message', 'You clicked the Submitus button!')
+    messagebox.showinfo('WARNING!', 'Ты нажал на соску!')
 
 button = Button(tkWindow,
-                text = 'Submitus',
+                text = 'Привет, я Соска!',
                 command = showMsg)
 button.pack()
 
