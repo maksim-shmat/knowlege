@@ -110,4 +110,13 @@ git restore bel
 
 git commit --amend
 
-######2
+######2 How del but don't that need
+
+git rm jill.db  # del it
+# how revert?
+git reset --hard HEAD
+git add .
+git commit
+git pull
+
+######3 
