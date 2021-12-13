@@ -110,7 +110,7 @@ git restore bel
 
 git commit --amend
 
-######2 How del but don't that need
+######2 How back del file
 
 git rm jill.db  # del it
 # how revert?
@@ -119,4 +119,12 @@ git add .
 git commit
 git pull
 
-######3 
+######3 Add all files to commit
+
+git add -u
+
+######4 Remove dir from git defense
+
+rm -r -f broken dir/
+
+######5 
