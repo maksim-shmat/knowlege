@@ -2,7 +2,7 @@
 
 build:   changes that affect the build system or external dependencies (example
 scopes:  gulp, broccoli, npm)
-Ci:      changes to our CI configuration files and scripts (example scopes: Travis,Circle, BrowserStack, SauceLabs)
+ci:      changes to our CI configuration files and scripts (example scopes: Travis,Circle, BrowserStack, SauceLabs)
 
 docs:     documentation only changes
 feat:     a new feature
@@ -25,7 +25,7 @@ git rm log/\*.log (\ ecran)
 
 git rm --cached file # rm from commit but hold in working dir
 
-git rm \*~  # rm file where over for tilde
+git rm \*~  # rm file where ower for tilda
 ################
 
 How create new repository.
@@ -81,7 +81,7 @@ git reset HEAD@{index}
 # Change the last commit
 git commit --amend
 
-### --- troubles with merge ---
+### --- trubles with merge ---
 
 git config merge.tool vimdiff3
 

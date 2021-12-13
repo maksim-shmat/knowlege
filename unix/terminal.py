@@ -8,41 +8,19 @@ rmdir   # remove directory
 
 echo    # sends data
 
-cp      # copy a file (cp [source] [destination]
-
 mv      # move a file (mv [source] [destination]
 
 locate  # locate a file on the machine (locate [filename]
 
 updatedb # update the directory database
 
-man     # manualy page of any command
-
 grep    # search for the following words (can be used to check if a file
         # contains specific info)
 
 # =====================
-./      # your directory right now
-
-../     # previous folder
-
-~       # the users root folder
-
-|       # pipe the output of one command into another
-
 >       # use command on the following file (overwrite)
 
 >>      # use command on following file (appends)
-
-# =====================
-
-cat     # reads a file to the terminal
-
-chmod   # change permission for a file
-
-adduser # make a new user
-
-su      # switch user
 
 # ====================
 
@@ -60,7 +38,7 @@ netstat -a # shows all open ports and what is connected to these ports
 route   # shows a routing table
 
 # =====================
-
+history 10 # last 10 command
 history # lists the 15 commands you entered (history | grep [command] shows
         # all the times you run a command on the machine (including spec syntax))
 apt purge # program name - (You have to use the **)
