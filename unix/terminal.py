@@ -18,9 +18,9 @@ grep    # search for the following words (can be used to check if a file
         # contains specific info)
 
 # =====================
->       # use command on the following file (overwrite)
+    >       # overwrite
 
->>      # use command on following file (appends)
+    >>      # appends, echo hui >> jill.py
 
 # ====================
 
