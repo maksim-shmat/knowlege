@@ -10,7 +10,7 @@ gpg --full-generate-key
 
 #3 Check fingerprint
 
-gpg --fingerprint m.sh@gmail
+gpg --fingerprint m.sh@gmail  # or "Antuan Pestrunoff"
 
 #4 Write key into file
 
@@ -29,7 +29,46 @@ gpg --list-secret-keys
 
 #6 Remove keys
 
-gpg --delete-key "Andrus Petuhoff"
+gpg --delete-key "Andrus Petuhoff"  # or fingerprint, or email
 gpg --delete-secret-key "Andrus Petuhoff"
 
-#7 
+#7 Encryption
+
+gpg -e -a -r "Petr Bzdunoff" petrushka.py  ## -a (ASCII, .asc) for mailing key
+
+### Encrypt message for copy from terminal, for mailing
+
+echo 'Hello, World' | gpg -e -a -r 'Anri Kars'
+
+### Scenarios1: not simple
+#--------------
+###1 encrypt message and output into terminal
+###2 copy into buffer
+###3 move primary buffer to file.gpg with xsel
+###4 ...
+###5 decrypt it with gpg
+
+<1> gpg -e -a -r "Hello, World!" | gpg -e -a -r "Unt Serensen"  # -e encrypt
+                                                            # -a ASCII
+                                                            # -r Recipient
+<2> ...
+<3> xsel -p > message_Unt.py.gpg  # -p primary buffer
+<4> send it file, for example
+<5> gpg --decrypt -o decrypted_Unt.py message_Unt.py.gpg  
+                # -o output into newfile
+
+### Scenarious2:  better and simple
+###1 encrypt and output into file
+echo "Hello, John!" | gpg -e -a -r "John Mclain" > message_for_john.py.gpg
+
+###2 decrypt into file
+
+gpg -d -o decrypted_John.py message_for_john.py.gpg  # output into file
+# gpg -d encrypted.py.gpg > decrypted.py
+gpg -d message_for_john.py.gpg  # output into terminal
+
+#8 Check for how message without keys (ID, time, name, comment, email, type key)
+
+gpg -- list-only -d encrypted_mess.py.gpg
+
+
