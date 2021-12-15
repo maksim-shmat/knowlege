@@ -36,17 +36,17 @@ gpg --delete-secret-key "Andrus Petuhoff"
 
 gpg -e -a -r "Petr Bzdunoff" petrushka.py  ## -a (ASCII, .asc) for mailing key
 
-### Encrypt message for copy from terminal, for mailing
+# Encrypt message for copy from terminal, for mailing
 
 echo 'Hello, World' | gpg -e -a -r 'Anri Kars'
 
-### Scenarios1: not simple
+# Scenarios1: not simple
 #--------------
-###1 encrypt message and output into terminal
-###2 copy into buffer
-###3 move primary buffer to file.gpg with xsel
-###4 ...
-###5 decrypt it with gpg
+#- encrypt message and output into terminal
+#- copy into buffer
+#- move primary buffer to file.gpg with xsel
+#- ...
+#- decrypt it with gpg
 
 <1> gpg -e -a -r "Hello, World!" | gpg -e -a -r "Unt Serensen"  # -e encrypt
                                                             # -a ASCII
@@ -57,11 +57,11 @@ echo 'Hello, World' | gpg -e -a -r 'Anri Kars'
 <5> gpg --decrypt -o decrypted_Unt.py message_Unt.py.gpg  
                 # -o output into newfile
 
-### Scenarious2:  better and simple
-###1 encrypt and output into file
+# Scenarious2:  better and simple
+#1 encrypt and output into file
 echo "Hello, John!" | gpg -e -a -r "John Mclain" > message_for_john.py.gpg
 
-###2 decrypt into file
+#2 decrypt into file
 
 gpg -d -o decrypted_John.py message_for_john.py.gpg  # output into file
 # gpg -d encrypted.py.gpg > decrypted.py
@@ -71,4 +71,16 @@ gpg -d message_for_john.py.gpg  # output into terminal
 
 gpg -- list-only -d encrypted_mess.py.gpg
 
+#9 Signs
+# not readable before decryption
+gpg --local-user 'Jeffrey Stokman' -s test.py  # -u = --local-user
+gpg -d test.py.gpg
 
+# readable, decript for view sign
+gpg -u 'Joui Smargl'--clear-sign test.py
+gpg -d test.py.asc
+
+# Sign in different file .sig with link to original file, send both files.
+gpg -u 'Farhad Simbaef' -b test.py  # -b = --detach-sign
+
+#9
