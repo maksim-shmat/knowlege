@@ -35,6 +35,9 @@ gpg --delete-secret-key "Andrus Petuhoff"
 #7 Encryption
 
 gpg -e -a -r "Petr Bzdunoff" petrushka.py  ## -a (ASCII, .asc) for mailing key
+gpg -e -a -r "Petr Bzdunoff" petrushka.py > encripted_file.gpg
+# decrypt
+gpg -r "Petr Bzdunoff" -d encrypted_file.gpg > decrypted.txt
 
 # Encrypt message for copy from terminal, for mailing
 
@@ -59,12 +62,14 @@ echo 'Hello, World' | gpg -e -a -r 'Anri Kars'
 
 # Scenarious2:  better and simple
 #1 encrypt and output into file
+
 echo "Hello, John!" | gpg -e -a -r "John Mclain" > message_for_john.py.gpg
 
 #2 decrypt into file
 
 gpg -d -o decrypted_John.py message_for_john.py.gpg  # output into file
 # gpg -d encrypted.py.gpg > decrypted.py
+
 gpg -d message_for_john.py.gpg  # output into terminal
 
 #8 Check for how message without keys (ID, time, name, comment, email, type key)
@@ -73,14 +78,28 @@ gpg -- list-only -d encrypted_mess.py.gpg
 
 #9 Signs
 # not readable before decryption
+
 gpg --local-user 'Jeffrey Stokman' -s test.py  # -u = --local-user
 gpg -d test.py.gpg
 
-# readable, decript for view sign
+#9a readable, decript for view sign
+
 gpg -u 'Joui Smargl'--clear-sign test.py
 gpg -d test.py.asc
 
-# Sign in different file .sig with link to original file, send both files.
+#9b Sign in different file .sig with link to original file, send both files.
+
 gpg -u 'Farhad Simbaef' -b test.py  # -b = --detach-sign
 
-#9
+#9c Encrypt and sign
+
+gpg --encrypt --sign --armor -r j.sh@pes -o text.py.gpg
+gpg --decrypt -o text.py.gpg new_file.py  # it
+gpg --decrypt text.py.asc > text.py  # or it
+
+#10 How delete keys?
+
+gpg --delete-key "Atnon Fuhuert"
+gpg --delete-secret-key "Atnon Fuhuert"
+
+#11 
