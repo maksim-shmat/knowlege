@@ -127,4 +127,13 @@ git add -u
 
 rm -r -f broken dir/
 
-######5 
+######5 Change .gitconfig for gpg verification
+[commit]
+        gpgsign = true
+[user]
+        signingkey = <KehID>
+[gpg]
+        program = /usr/bin/gpg
+and then add your pub key into github: options > ssh/gpg
+
+#6
