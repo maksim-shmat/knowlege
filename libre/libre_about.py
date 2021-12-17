@@ -6,7 +6,7 @@ Ctrl + 1, 2, 3 ...
 
 #2 Navigator
 F5
-
+Ctrl + F5 # Side bar
 #3 Close window
 
 Ctrl + w
@@ -49,4 +49,26 @@ Ctrl + o
 Ctrl + s
 Ctrl + Shif + s  # save as
 
-#13 
+#13 Drag and drop cell
+
+Click and Shift + Click, and drag it
+
+#13 Extending selection Click start and Click end selection
+
+F8
+
+#14 Adding selection Click to add to Extended selection
+
+Shift + F8
+
+#15 Block selection, all second leters in the list for example
+
+Alt + Shift + F8
+
+#16 Fool screen
+
+Ctrl + Shift + j
+
+#17 Go to page #
+
+Ctrl + g
