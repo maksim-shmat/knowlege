@@ -72,3 +72,31 @@ Ctrl + Shift + j
 #17 Go to page #
 
 Ctrl + g
+
+#18 Paste Special
+
+Ctrl + Shift + v
+Ctrl + Shift + Alt + v  # unformatted text
+
+#19 Find bar
+
+Ctrl + F
+
+#20 Find and Replace
+
+Ctrl + H
+
+#21 Non-breaking hyphens/spaces
+
+Ctrl +Shift + space/minus
+
+#22 Spellchecking
+
+F7
+
+#23 Auto text
+
+F3
+Ctrl + F3
+
+# 24
