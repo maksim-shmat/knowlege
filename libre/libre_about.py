@@ -99,4 +99,20 @@ F7
 F3
 Ctrl + F3
 
-# 24
+# 24 Under list
+
+Shift + F12
+
+# 25 Revove style
+
+Ctrl + M
+
+# 26 Insert table
+
+Ctrl + F12
+
+#27 Fields
+
+Ctrl + F2
+
+#28
