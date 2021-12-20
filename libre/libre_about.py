@@ -115,4 +115,21 @@ Ctrl + F12
 
 Ctrl + F2
 
-#28
+#28 Function Wizard
+
+Ctrl + F2  # on a spreadsheets
+
+#29 Insert/delete cell on the Calc
+
+Ctrl + <->  # del
+Ctrl + <+>  # insert (go down, or right?)
+
+#30 Random numbers
+
+Sheet --> Fill Cells --> Random Number
+
+#31 Format numbers in a cell
+
+Ctrl + 1
+
+# 32
