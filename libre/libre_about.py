@@ -132,4 +132,21 @@ Sheet --> Fill Cells --> Random Number
 
 Ctrl + 1
 
-# 32
+#32 Recalculate
+
+Ctrl + Shift + F9
+
+#33 List of items for autoinput
+
+Alt + Down arrow
+
+#34 Editing mode on the cell
+
+F2
+
+#35 More typing on the cell
+
+Ctrl + Enter  # edit mode
+Ctrl + Shift  # on the formula bar
+
+# 36
