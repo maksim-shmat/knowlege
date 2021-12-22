@@ -149,4 +149,16 @@ F2
 Ctrl + Enter  # edit mode
 Ctrl + Shift  # on the formula bar
 
-# 36
+#36 Add Comment
+
+Ctrl + Alt + C
+
+#37 Print Preview
+
+Ctrl + Shift + O
+
+#38 New slide on the Impress
+
+Ctrl + M
+
+#39
