@@ -161,4 +161,39 @@ Ctrl + Shift + O
 
 Ctrl + M
 
-#39
+#39 Add text box on the Impress
+
+F2
+
+#40 Increase/decrease text on the Impress
+
+Ctrl + ]  or [
+
+#41 Next string without formating
+
+Shift + Enter
+
+#42  Move bullet
+
+Shift + Alt + up  # or down, left, right
+
+#43 Insert comment into slide to the Impress
+
+Ctrl + Alt + C
+
+#44 Print
+
+Ctrl + P
+
+#45 Start the slideshow
+
+F5  # from first slide
+Shift + F5  # from current slide
+
+#46 Drow line
+
+Ctrl + drow  #???
+Shift + drow  # horizontal, vertical of 45 degrees
+Alt + drow  # Centreped
+
+#47 
