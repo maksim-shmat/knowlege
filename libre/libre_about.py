@@ -190,10 +190,23 @@ Ctrl + P
 F5  # from first slide
 Shift + F5  # from current slide
 
-#46 Drow line
+#46 Draw line
 
-Ctrl + drow  #???
-Shift + drow  # horizontal, vertical of 45 degrees
-Alt + drow  # Centreped
+Ctrl + draw  # snap on the point
+Shift + draw  # horizontal, vertical of 45 degrees
+Alt + draw  # Centreped
 
-#47 
+#47 Fast insert figure and other
+
+Ctrl + Click figure
+
+#48 Select several objects on the Draw
+
+Shift + Click figure
+
+#49 Select hidden objects
+
+Tab  # forvard
+Shift + Tab  # reverse
+
+#50 
