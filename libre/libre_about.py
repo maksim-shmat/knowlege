@@ -209,4 +209,21 @@ Shift + Click figure
 Tab  # forvard
 Shift + Tab  # reverse
 
-#50 
+#50 Duplicate object
+
+Shift + F3
+
+#51 Group elements in Draw
+
+Shift + Control + G  # group
+
+#52 Combine objects
+
+Shift + Control + K
+
+#53 Go to next placeholder in the Math
+
+F4  # forward
+Shift + F4  # backward
+
+#54
