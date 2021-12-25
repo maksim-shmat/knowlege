@@ -4,9 +4,10 @@
 
 new line  # five lines available
 
-#2 Square
+#2 Square and not equal
 
 a^2  # a in square
+i <>j  # not equal
 
 #3 Square root
 
@@ -74,4 +75,47 @@ abs x = left lbrace stack {x "for" x >= 0 # -x "for" x <0} right none
 
 ="", ={}, =`, =~
 
-#16 
+#16 Space between characters in a formula
+
+`, ~, ""
+
+#17 Adding limits to sum/integral commands
+
+sum from k = 1 to n a_k  # n above, k=1 beneath
+
+sum from{i=1} to{n} sum from{j=1; i<>j} to{m} x_ij  # n,m above; i=1,j=1 beneathe
+
+int from 0 to x f(t) dt  # x above; 0 beneathe
+
+int_0^x f(t) dt  # x above and after integral; 0 beneathe and after integral
+
+int from Re f  # Re beneathe integral
+
+#18 Derivatives
+
+{df} over {dx}
+
+{partial f} over {partial y}
+
+{partial^2 f} over {partial t^2}
+
+#19 Write caracter as text
+
+2"%" = 0.02  # 2%=0.02
+
+#20 Italic text
+
+"Hello "World""  # World is italic
+
+#21 Aligning formulas
+
+matrix{alignr x+y # {}={} # alignl 2 ## alignr x {}={} # alignl 2-y}
+        ## x + y and x in one column; 2 and 2-y in another column
+        } # this bracket for python
+
+#22 Color characters
+
+color red { 5 times 4}
+# magenta, purple, black, grey, red, blue, green, yellow, white
+
+#23 
