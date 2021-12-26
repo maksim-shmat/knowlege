@@ -73,7 +73,9 @@ abs x = left lbrace stack {x "for" x >= 0 # -x "for" x <0} right none
 
 #15 Empty after equals character (if you need)
 
-="", ={}, =`, =~
+="", ={}
+=`  # small space 
+=~  # big space
 
 #16 Space between characters in a formula
 
