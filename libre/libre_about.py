@@ -231,4 +231,8 @@ Shift + F4  # backward
 F3
 Shift + F3
 
-#55
+#55 Insert the hyperlink
+
+Ctrl + K
+
+#56
