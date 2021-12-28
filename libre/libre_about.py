@@ -128,7 +128,7 @@ Ctrl + <+>  # insert (go down, or right?)
 
 Sheet --> Fill Cells --> Random Number
 
-#31 Format numbers in a cell
+#31 Format cell about
 
 Ctrl + 1
 
@@ -235,4 +235,45 @@ Shift + F3
 
 Ctrl + K
 
-#56
+#56 Universal top menu
+
+Alt + <?>  # F -file, T - tools etc
+
+#57 Step by different elements menu
+
+F6
+Shift + F6  # switches focus through objects in the opposite direction
+Ctrl + F6  # switches the focus to the document
+
+#58 Close currently document
+
+Ctrl + F4
+
+#59 Delete
+
+Del  # move to recycle bin
+Shift + Del  # absolutely del and cute selected items
+
+#60 Cute
+
+Ctrl + X
+
+#61 Paste
+
+Ctrl + V
+Ctrl + Shift + V  # opens the paste special dialog
+Ctrl + Alt + Shift + V  # pastes unformatted text
+
+#62 Select all
+
+Ctrl + A
+
+#63 Repeat last command
+
+Ctrl + Shift + Y
+
+#64 Find
+
+Ctrl + F
+Ctrl + H  # find and replace dialog
+Ctrl + Shift + F  # searches for last entered search term

@@ -118,6 +118,6 @@ matrix{alignr x+y # {}={} # alignl 2 ## alignr x {}={} # alignl 2-y}
 #22 Color characters
 
 color red { 5 times 4}
-# magenta, purple, black, grey, red, blue, green, yellow, white
+# magenta, purple, black, grey, red, blue, green, yellow, white, cyan?
 
 #23 
