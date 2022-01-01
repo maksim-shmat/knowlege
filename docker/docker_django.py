@@ -230,5 +230,191 @@ docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --no
 
 docker-compose -f docker-compose.prod.yml logs -f
 
-#27 
+#27 Make a new Dockerfile.prod
+
+-------------
+# app/Dockerfile.prod
+
+###########
+# BUILDER #
+###########
+
+# pull official base image
+
+FROM python:3.9.5-slim as builder
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install system dependencies
+
+RUN apt-get update && apt-get install -y --no-install-recommends gcc
+
+# lint
+
+RUN pip install --upgrade pip
+RUN pip install flake8==3.9.1
+COPY . .
+RUN flake8 --ignore=E501,F401 .
+
+# install python dependencies
+
+COPY requirements.txt
+RUN pip wheel --no-cache-dir --no-deps --wheel-dir /usr/src/app/wheels -r requirements.txt
+
+########
+# FINAL#
+########
+
+# pull official base image
+
+FROM python:3.9.5-slim
+
+# create directory for the app user
+
+RUN mkdir -p /home/app
+
+# create the app user
+
+RUN addgroup --system app && adduser --system --group app
+
+# create the appropriate directories
+
+ENV HOME=/home/app
+ENV APP_HOME=/home/app/web
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+
+# install dependencies
+
+COPY --from=builder /usr/src/app/wheels /wheels
+COPY --from=builder /app/requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install --no-cache /wheels/*
+
+# copy project
+
+COPY . $APP_HOME
+
+# chown all the files to the app user
+
+RUN chown -R app:app $APP_HOME
+
+# change to the app user
+
+USER app
+------------
+
+#28 Renew web into docker-compose.prod.yml for Docker.prod
+
+------------
+web:
+    build:
+        context: ./app
+        dockerfile: Dockerfile.prod
+    command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; gunicorn --bind 0.0.0.0:8000 config.wsgi'
+    ports:
+        - 8008:8000
+    environment:
+        - DEBUG=0
+        - DATABASE_URL=postgresql://django_traefik:django_traefik@5432/django_traefik
+    depends_on:
+        - db
+------------
+
+# 29 try next commands
+
+$ docker-compose -f docker-compose.prod.yml down -v
+
+docker-compose -f docker-compose.prod.yml up -d --build
+
+docker-compose -f docker-compose.prod.yml exec web python manage.py migrate --noimput
+
+#30 Traefik it is a HTTP-proxy and balancer (Traefik vs Nginx)
+# add file traefik.dev.toml
+
+-------------
+# traefik.dev.toml
+
+# listen on port 80
+[entryPoints]
+  [entryPoints.web]
+  address = ":80"
+
+# Traefik dashboard over http
+[api]
+insecure = true
+
+[log]
+level = "DEBUG"
+
+[accessLog]
+
+# containers are not discovered automatically
+[providers]
+  [providers.docker]
+    exposedByDefault = false
+-------------
+
+#31 Renew docker-compose.yml and add traefik:
+
+-------------
+# docker-compose.yml
+version: '3.8'
+
+services:
+    web:
+        build: ./app
+        command: bash -c 'while !</dev/tcp/db/5432; do sleep 1; done; python manage.py runserver 0.0.0.0:8000'
+        volumes:
+            - ./app:/app
+        expose: # new
+            - 8000
+        environment:
+            - DEBUG=1
+            - DATABASE_URL=postgresql://django_traefik:django_traefik@db:5432/django_traefik
+        depends_on:
+            - db
+        labels: # new
+            - "traefik.enable=true"
+            - "traefik.http.routers.django.rule=Host(`django.localhost`)"
+        db:
+            image: postgres:13-alpine
+            volumes:
+                - postgres_data:/var/lib/postgresql/data/
+            expose:
+                - 5432
+            environment:
+                - POSTGRES_USER=django_traefik
+                - POSTGRES_PASSWORD=django_traefik
+                - POSTGRES_DB=django_traefik
+        traefik: # new
+            image: traefik:v2.2
+            ports:
+                - 8008:80
+                - 8081:8080
+            volumes:
+                - "$PWD/traefik.dev.toml:/etc/traefik/traefik.toml"
+                - "/var/run/docker.sock:/var/run/docker.sock:ro"
+volumes:
+    postgres_data:
+---------------
+
+#32 for check 
+# first down all containers
+
+$ docker_compose down -v
+$ docker_commpose -f docker-compose.prod.yml down -v
+
+#33 Make a new images
+
+$ docker-compose up -d --build
+
+go to hppp://django.localhost:8008/
+and check django.localhost:8081  # for traefik
+
+# stop it
+$ docker-compose down -v
+
 
