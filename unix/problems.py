@@ -8,4 +8,11 @@ Alt + F2 >> opened window >> r + Enter
 
 Fn + Esc
 
-######3
+######3 Give file from android bluetooth
+
+Window bluetooth setings need be opened!
+1. Open window bluetooth.
+2. Send file from android.
+3. Check the message that you give file
+
+#4 
