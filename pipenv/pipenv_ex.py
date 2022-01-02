@@ -1,17 +1,19 @@
-"""About  pipenv that mean pip plas enviroment in one place."""
+"""About  pipenv that mean pip + venv in one place."""
 
-$ pipenv graph # chech your installed programs 
+$ pipenv graph # show a graph of your installed dependencies 
+$ pipenv graph --reverse  # all dependencies
+$ pipenv -h  # help
 $ pipenv install --help
 
-#$ sudo apt install pipenv
-#$ sudo upgrade pipenv
+$ sudo apt install pipenv
+$ sudo upgrade pipenv
 
-$ pipenv install
-$ pip --version
 
 $ pip install --user pipenv
 $ pip install --user --upgrade pipenv
 
+$ pipenv install pytest --dev  # e.g. install pytest into dev pack programs
+-----------
 # next 1
 $ cd myproject
 $ pipenv install requests # add all default programm
@@ -26,13 +28,6 @@ print('Your IP is {0}'.format(response.json()['origin']))
 $ pipenv run python main.py
 Your IP is 8.8.8.8
 
-$ pipenv run
-$ pipenv shell # start a virt
-for Pipfile.lock  commands:
-    pipenv install
-    pipenv uninstall
-    pipenv lock
-
 # next 3
 init Python3 in virtual environment:
     $ pipenv --three
@@ -42,13 +37,16 @@ init Python3 in virtual environment:
 deactivated:
     exit  # heay it close vim tab (shell exit? or run exit? or pipenv exit?)
 
-# next 5
+#5 Run
+
+pipenv open psycopg2  # open program into edior
+pipenv run <insert command here>
 run:
     pipenv run python3
     pipenv run pip freeze
 
 # next 6
-check    - it command checked PEP 508 security
+pipenv check  # check your installed dependencies for security PEP 508
 
 # next 7
 Pipfiles   - is some other requirements.txt(old style)
@@ -77,7 +75,11 @@ Upgrade:
     $ pipenv update  # for everything
     $ pipenv update <pkg>  # for each outdated package
 
-# next 11
+#11 Generate/Import requirements.txt from Pipenv
+
+pipenv lock -r > requirements.txt  # generate
+pipenv lock -r -d > dev-requirements.txt
+
 Importing from requirements.txt
 
 $ pipenv install -r path/to/requirements.txt
@@ -103,7 +105,7 @@ or by default in your operating system
 
 # next 14
 more parameters with pipenv
-$ pipenv --dev # install both develop an default packages form Pipfile
+$ pipenv install --dev # install both develop an default packages form Pipfile
 $ pipenv --deploy # check Pipfile.lock
 $ pipenv --ignore-lock # ignore the Pipfile and install from Pipfile.lock
 $ pipenv --skip-lock # ignore the Pipfile.lock and install from Pipfile. Do not write changes to the Pipfile
@@ -113,18 +115,16 @@ Uninstall
 $ pipenv uninstall --all # purge all files an leave th Pipfile untouched
 $ pipenv uninstall --all-dev # remove all files and all from Pipfile
 
-# next 16
-VCS(version-controlled dependencies)
-$ pipenv install -e git+https://github.com/requests/... # -e editable mode
-
 # next 17
 If you`d like a requirements.txt 
 $ pipenv lock -r # with hashes
 $ pipenv run pip freeze # without hashes
 
-# next 18
-Open a Modele in your editor
+#18 Install packages with pipenv from git and other Version Control System(VCS)
+$<vcs_type>+<scheme>://<location>/<user_or_organization>/<repository>@<branch_or_tag>#<package_name>
+
 $ pipenv install -e git+https://github.com/...
+
 $ pipenv open background # and now I read it with vim?
 
 # next 19
@@ -136,4 +136,39 @@ $ pipenv lock --clear # clear cache resolver
 server = "python manage.py runserver"
 # and now:   $pipenv run server
 
-######
+#20 Create a new project using Python 3.7, specifically:
+
+$ pipenv --python 3.7
+
+#21 Remove project virualenv (interred from current directory)
+
+$ pipenv --rm
+
+#22 Generate a lockfile, and lockfile containing pre-releases e.g.
+
+$ pipenv lock
+
+$ pipenv lock --pre
+
+#23 Install a local setup.py into your virtual environment/Pipfile
+
+$ pipenv install -e .
+
+#24 Lower-level pip command
+
+$ pipenv run pip freeze
+                 check
+                 clean
+                 graph
+
+                 install
+                 lock
+                 open
+                 run
+
+                 scripts
+                 shell
+                 sync
+                 uninstall
+
+#25
