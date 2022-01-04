@@ -27,3 +27,8 @@ $ pip freeze
       shell
       sync
       uninstall
+
+      list
+      show
+      search
+      
