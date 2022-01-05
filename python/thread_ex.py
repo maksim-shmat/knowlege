@@ -54,7 +54,7 @@ def startThread(action, args, context, onExit, onFail, onProgress=None):
         def __len__(self): return self.count
 
 if __name__ == '__main__':
-'''
+
 ######
 
 import time
@@ -127,4 +127,48 @@ if __name__ == "__main__":
     print("Done!")
     print()
 
-######
+###### Thread Classes
+
+import threading
+
+class MyThread(threading.Thread):
+
+    def __init__(self, message):
+        threading.Thread.__init__(self)
+        self.message=message
+
+        def run(self):
+            for x in range(100):
+                print(self.message)
+                mt1 = MyThread("This is my thread message!")
+                mt1.start()
+'''
+#4 Synchronizing Threads
+
+import threading
+import time
+
+x = 8192
+
+def halve():
+    global x
+    while(x>1):
+        x/=2
+        print(x)
+        time.sleep(1)
+        print("END!")
+
+def double():
+    global x
+    while(x<16384):
+        x *= 2
+        print(x)
+        time.sleep(1)
+        print("END!")
+t1 = threading.Thread(target=halve)
+t2 = threading.Thread(target=double)
+
+t1.start()
+t2.start()
+
+#5
