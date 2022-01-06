@@ -142,7 +142,7 @@ class MyThread(threading.Thread):
                 print(self.message)
                 mt1 = MyThread("This is my thread message!")
                 mt1.start()
-'''
+
 #4 Synchronizing Threads
 
 import threading
@@ -171,4 +171,102 @@ t2 = threading.Thread(target=double)
 t1.start()
 t2.start()
 
-#5
+### with locking, run one thread after second
+
+import threading
+import time
+
+x = 8192
+lock = threading.Lock()
+
+def halve():
+    global x, lock
+    lock.acquire()
+    while(x > 1):
+        x /= 2
+        print(x)
+        time.sleep(1)
+        print("Oiii!")
+        lock.release()
+
+def double():
+    global x, lock
+    lock.acquire()
+    while(x < 16384):
+        x *= 2
+        print(x)
+        time.sleep(1)
+        print("Bliat!")
+        lock.release()
+
+t1 = threading.Thread(target=halve)
+t2 = threading.Thread(target=double)
+
+t1.start()
+t2.start()
+
+#5 Semaphores for don't completely lock
+
+import threading
+import time
+
+semaphores = threading.BoundedSemaphore(value=5)
+
+def access(thread_number):
+    print("{}:Trying access...".format(thread_number))
+    semaphore.acquire()
+    print("{}:Access granted!".format(thread_number))
+    print("{}:Waiting 5 seconds...".format(thread_number))
+    time.sleep(5)
+
+    semaphore.release()
+    print("{}:Releasing!".format(thread_number))
+    for thread_number in range(10):
+        t = threading.Thread(target=access, args=(thread_number,))
+        t.start()
+
+#6 Events into a thread
+
+import threading
+
+event = threading.Event()
+
+def function():
+    print("Waiting for event...")
+    
+    event.wait()
+    print("Continuing!")
+
+    thread = threading.Thread(target=function)
+    thread.start()
+
+    x = input("Trigger event?")
+    if (x == "yes"):
+        event.set()
+'''
+#7 Daemon threads
+
+import threading
+import time
+
+path = "text.txt"
+text = ""
+
+def readFile():
+    global path, text
+    while True:
+        with open (path) as file:
+            text = file.read()
+            time.sleep(3)
+
+def printloop():
+    global text
+    for x in range(30):
+        print(text)
+        time.sleep(1)
+
+t1 = threading.Thread(target=readFile, daemon=True)
+t2 = threading.Thread(target=printloop)
+
+t1.start()
+t2.start()
