@@ -4,7 +4,7 @@ from tkinter.filedialog import Open, SaveAs
 from tkinter.messagebox import showinfo, showerror, askyesno
 from tkinter.simpledialog import askstring, askinteger
 from tkinter.colorchooser import askcolor
-from guimaker import *
+#from guimaker import *
 
 try:
     import textConfig
