@@ -1,5 +1,31 @@
 """Regular Expressions about."""
 
+'''
+\d - Some digit
+\D - Everything BUT a digit
+\s - White space
+\S - Everything BUT a white space
+\w - Some letter
+\W - Everything BUT a letter
+ . - Every character except for new lines
+\b - White spaces around a word
+\. - A dot
+
+{x,y} - A number that has a length between x and y
++ - At least one
+? - None or one
+* - Everything
+$ - At the end of a string
+^ - At the beginning of a string
+| - Either Or
+[] - Value range
+{x} - x times
+{x,y} - x to y times
+
+\n - New line
+\t - Tab
+\s - White Space
+
 # re.findall() substring in string
 
 import re
@@ -231,6 +257,32 @@ finalx = list(filter(filterNumber, x))
 print('Final List\n', finalx)
 print()
 
-######
 
+#1 Find ages
+import re
 
+text = """
+Mike is 20 years old and George is 29!
+My grandma is even 104 years old!
+"""
+ages = re.findall(r'\d{1,3}', text)
+print(ages)
+
+# replace all ages
+text = re.sub(r'\d{1,3}', "100", text)
+print(text)
+
+'''
+#2 Apply regular expression for mails
+
+import re
+
+text = "test@mail.com"
+
+result = re.fullmatch(r"^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@{a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$", text)
+if result != None:
+    print("VALID!")
+else:
+    print("INVALID!")
+
+#3
