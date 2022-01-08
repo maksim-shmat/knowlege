@@ -1,5 +1,6 @@
 """Logging about."""
 
+'''
 ######1 Import logging Library
 
 import logging
@@ -213,5 +214,18 @@ logger.addHandler(handler)
 
 logger.error('This is an ERROR message')
 logger.critical('This is an CRITICAL message')
+'''
+#10 
 
-######10
+import logging
+
+logger = logging.getLogger()
+logger.setLevel(logging.INFO)
+handler = logging.FileHandler("jill.log")
+handler.setLevel(logging.INFO)
+formatter = logging.Formatter('%(asctime)s: %(levelname)s-%(message)s')
+handler.setFormatter(formatter)
+logger.addHandler(handler)
+logger.info("This will get into the file!")
+
+
