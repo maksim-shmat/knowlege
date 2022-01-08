@@ -17,6 +17,4 @@ def log(message, destination):
     destination.write('[{}] - {}'.format(datetime.now(), message))
 
 upd_logger = SocketWriter('1.2.3.4', '9999')
-log('Something happened', udp_destination)
-
-######
+#log('Something happened', udp_destination)
