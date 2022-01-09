@@ -128,4 +128,77 @@ a6 = np.array([
 a6[1][2] = 7
 print(a6)
 
-#16
+#16 Shape manipulation function
+
+# a.reshape(x,y) - Returns an array with the same values structured in a different shape
+# a.flatten() - Returns a flattened one-dimensional copy of the array
+
+# a.ravel() - Does the same as flatten but works with the actual array instead of a copy
+# a.transpose() - Returns an array with the same values but swapped dimensions
+# a.swapaxes() - Returns an array with the same values but two swapped axes
+# a.flat - Not a function but an iterator for the flattened version of the array
+
+#17 Joining Functions
+
+# np.concatenate(a,b) - Joins multiple arrays along an existing axis
+# np.stack(a,b) - Joins multiple arrays along a new axis
+# np.hstack(a,b) - Stacks the arrays horizontally (column-wise)
+# np.vstack(a,b) - Stacks the arrays vertically (row-wise)
+
+#18 Contatenate and Stack
+
+a7 = np.array([10, 20, 30])
+b7 = np.array([20, 20, 10])
+print(np.concatenate((a7,b7)))
+print(np.stack((a7,b7)))
+
+#19 Splitting functions
+
+# np.split(a,x) - Splits one array into multiple arrays
+# np.hspite(a,x) - Splts one array into multiple arrays horizontally (column-wise)
+# np.vsplite(a,x) - Splits one array into multiple arrays vertically (row-wise)
+a8 = np.array([
+    [10, 29, 30],
+    [40, 50, 60],
+    [70, 80, 90],
+    [100, 110, 120]
+])
+
+print(np.split(a8, 2))
+print(np.split(a8,4))
+
+#20 Adding and Removing
+
+# np.resize(a,(x,y)) - Return a resized version of the array
+# np.append(a,[...]) - Appends values at the end of the array
+# np.insert(a,x,...) - Insert a value at the index x of the array
+# np.delete(a,x,y)   - Delete axes of the array
+
+#21 Serialization in .csv
+
+a9 = np.array([
+    [10, 20, 30],
+    [40, 50, 60],
+    [70, 80, 90],
+    [100, 110, 120]
+])
+
+np.save('myarray.npy', a)
+
+# Load from serialized file *.npy
+
+a10 = np.load('myarray.npy')
+print(a10)
+
+#22 Save into *.csv
+
+np.savetxt('myarray.csv', a10)
+
+#23 Load to *.csv
+
+a11 = np.loadtxt('myarray.csv')
+print(a11)
+
+# with another separator
+a12 = np.loadtxt('myarray.csv', delimiter=';')
+print(a12)
