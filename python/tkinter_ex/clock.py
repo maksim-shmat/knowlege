@@ -199,7 +199,7 @@ class ClockWindow(Clock):
         title = appname
         if name: title = appname + ' - ' + name
         self.master.title(title)
-        self.mastr.protocol('WM_DELETE_WINDOW', self.quit)
+        self.master.protocol('WM_DELETE_WINDOW', self.quit)
 
 if __name__ == '__main__':
     def getOptions(config, argv):
