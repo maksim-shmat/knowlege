@@ -6,7 +6,7 @@ def point(tick, range, radius):
     radiusPerDegree = math.pi / 180
     pointX = int( round( radius * math.sin(angle * radiusPerDegree) ))
     pointY = int( round( radius * math.cos(angle * radiusPerDegree) ))
-    return (pointX, pintY)
+    return (pointX, pointY)
 
 def circle(points, radius, centerX, centerY, slow=0):
     canvas.delete('lines')

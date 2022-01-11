@@ -3,6 +3,7 @@
 def intersect(*args):
     res = []
     for x in args[0]:
+       #if x in res: continue
         for other in args[1:]:
             if x not in other: break
         else:

@@ -146,9 +146,8 @@ def move_ball():
     ball_left, ball_top, ball_right, ball_bot = c.coords(BALL)
     ball_center = (ball_top + ball_bot) / 2
 
-    if ball_right + BALL_X_SPEED < right_line_distance and \
-            ball_left + BALL_X_SPEED > PAD_W:
-                c.move(BALL, BALL_X_SPEED, BALL_Y_SPEED)
+    if ball_right + BALL_X_SPEED < right_line_distance and ball_left + BALL_X_SPEED > PAD_W:
+        c.move(BALL, BALL_X_SPEED, BALL_Y_SPEED)
     elif ball_right == right_line_distance or ball_left == PAD_W:
         if ball_right > WIDTH / 2:
 
