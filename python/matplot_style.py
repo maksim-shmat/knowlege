@@ -1,4 +1,4 @@
-"""What is it?"""
+"""Numpy and matplotlib example"""
 
 import numpy as np
 import matplotlib.pyplot as plt

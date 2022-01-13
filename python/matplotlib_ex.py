@@ -169,7 +169,7 @@ ax = plt.axes(projection = '3d')
 ax.plot3D(x, y, z)
 
 plt.show()
-'''
+
 #15 Surface plots
 
 from mpl_toolkits import mplot3d
@@ -187,3 +187,21 @@ Z = z_function(X,Y)
 ax.plot_surface(X,Y,Z)
 
 plt.show()
+'''
+#16 Matplotlib with Pandas
+import pandas as pd
+import matplotlib.pyplot as plt
+
+data = {'Name': ['Anna', 'Bob', 'Charles', 'Daniel', 'Evan', 'Fiona', 'Gerald', 'Henry', 'Intuition'],
+        'Age': [ 17, 28, 35, 23, 32, 89, 76, 110, 11],
+        'Height': [123, 321, 234, 32, 35, 534, 234, 22, 2]}
+
+df = pd.DataFrame(data)
+df.sort_values(by = ['Age', 'Height'])
+df.hist()
+df.plot()
+
+plt.plot(df['Age'], 'bo')  # dots on the line if use with df.plot() 
+plt.show()
+
+#
