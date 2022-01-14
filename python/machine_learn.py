@@ -2,7 +2,7 @@
 
 import numpy as np
 import pandas as pd
-#import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
 
@@ -27,3 +27,70 @@ X_new = np.array([[18, 1, 3, 40, 15, 16]])
 Y_new = model.predict(X_new)
 
 print(Y_new)
+
+#1 Visualizing Correlations
+
+plt.title("Correlation")
+plt.xlabel("Study Time")
+plt.ylabel("Final Grade")
+plt.show()
+
+plt.title("Correlation")
+plt.xlabel("Second Grade")
+plt.ylabel("Final Grade")
+plt.show()
+
+#2 Loading data
+
+import numpy as np
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.datasets import load_breast_cancer
+
+data = load_breast_cancer()
+print(data.feature_names)
+print(data.target_names)
+
+X = np.array(data.data)
+Y = np.array(data.target)
+X_train, X_test, Y_train, Y_test=train_test_split(X, Y, test_size=0.1)
+
+#3 Training and testing
+
+knn = KNeighborsClassifier(n_neighbors = 5)
+knn.fit(X_train, Y_train)
+
+accuracy = knn.score(X_test, Y_test)
+print(accuracy)
+
+#4 The best algorithm
+
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.naive_bayers import GaussianNB
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier
+
+clf1 = KNeighborsClassifier(n_neighbors=5)
+clf2 = GaussianNB()
+clf3 = LogisticRegression()
+clf4 = DecisionTreeClassifier()
+clf5 = RandomForestClassifier()
+
+clf1.fit(X_train, Y_train)
+clf2.fit(X_train, Y_train)
+clf3.fit(X_train, Y_train)
+clf4.fit(X_train, Y_train)
+clf5.fit(X_train, Y_train)
+
+print(clf1.score(X_test, Y_test))
+print(clf2.score(X_test, Y_test))
+print(clf3.score(X_test, Y_test))
+print(clf4.score(X_test, Y_test))
+print(clf5.score(X_test, Y_test))
+
+X_new = np.array([[...]])
+Y_new = clf.predict(X_new)
+
+#5
+
