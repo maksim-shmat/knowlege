@@ -92,5 +92,33 @@ print(clf5.score(X_test, Y_test))
 X_new = np.array([[...]])
 Y_new = clf.predict(X_new)
 
-#5
+#5 Support verctor machines
+# loading data
 
+from sklearn.svn import SVC
+from sklearn.datasets import load_breast_cancer
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import train_test_split
+
+data = load_breast_cancer()
+
+X = data.data
+Y = data.target
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=30)
+
+# training and testing
+
+model = SVC(kernel='linear', C=3)
+model.ft(X_train, Y_train)
+
+accuracy = model.score(X_test, Y_test)
+print(accuracy)
+
+# KNeighborsClassifier with random_state
+
+knn = KNeughborsClassifier(n_neighbors=5)
+knn.fit(X_train, Y_train)
+knn_accuracy = knn.score(X_test, Y_test)
+print(knn_accuracy)
+
+#6 Clustering 
