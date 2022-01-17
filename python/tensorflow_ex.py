@@ -5,6 +5,7 @@
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
+import cv2 as cv
 
 mnist = tf.keras.datasets.mnist
 (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
@@ -26,3 +27,12 @@ loss, accuracy = model.evaluate(X_test, Y_test)
 print('Loss:', loss)
 print('Accuracy:', accuracy)
 
+image = cv.imread('digit.png')[:,:,0]
+image = np.invert(np.array([image]))
+
+prediction = model.predict(image)
+print("Prediction:{}".format(np.argmax(prediction)))
+plt.imshow(image[0])
+plt.show()
+
+# data cardinality is ambigous x=6000, y=10000???
