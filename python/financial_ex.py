@@ -1,5 +1,5 @@
 """Pandas, Numpy and etc for finacial count."""
-
+'''
 #1 Loading financial data
 
 from pandas_datareader import data as web  # download info from web
@@ -45,6 +45,7 @@ df = pd.read_json("apple.json")
 # Graphical Visualization
 
 import matplotlib.pyplot as plt
+import pandas as pd
 
 # Plotting Diagrams
 
@@ -60,5 +61,46 @@ plt.ylabel('Adjusted Close')
 plt.title('AAPL Share Price')
 df['Adj Close'].plot()
 plt.show()
-
+'''
 # Comparing Stocks
+import matplotlib.pyplot as plt
+from matplotlib import style
+import pandas as pd
+from pandas_datareader import data as web
+import datetime as dt
+
+style.use('ggplot')
+
+start = dt.datetime(2020, 1, 1)
+end = dt.datetime(2021, 1, 1)
+
+apple = web.DataReader('AAPL', 'yahoo', start, end)
+facebook = web.DataReader('FB', 'yahoo', start, end)
+
+apple['Adj Close'].plot(label='APPL')
+facebook['Adj Close'].plot(label='FB')
+plt.ylabel('Adjusted Close')
+plt.title('Share Price')
+plt.legend(loc='upper left')
+plt.show()
+
+# Subplots for more different data
+
+apple = web.DataReader('AAPL', 'yahoo', start, end)
+amazon = web.DataReader('AMZN', 'yahoo', start, end)
+
+plt.subplot(211)
+apple['Adj Close'].plot(color='blue')
+plt.ylabel('Adjusted Close')
+plt.title('AAPL Share Price')
+
+plt.subplot(212)
+amazon['Adj Close'].plot()
+plt.ylabel('Adjusted Close')
+plt.title('AMZN Share Price')
+
+plt.tight_layout()
+
+plt.show()
+
+# Candlestick charts
