@@ -33,7 +33,7 @@ df.to_html('apple.html')
 
 df.to_json('apple.json')
 
-# Loading date from files
+#2 Loading date from files
 
 import pandas as pd
 
@@ -42,7 +42,7 @@ df = pd.read_csv("apple.csv", sep=";")
 df = pd.read_html("apple.html")
 df = pd.read_json("apple.json")
 
-# Graphical Visualization
+#3 Graphical Visualization
 
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -62,7 +62,7 @@ plt.title('AAPL Share Price')
 df['Adj Close'].plot()
 plt.show()
 '''
-# Comparing Stocks
+#4 Comparing Stocks
 import matplotlib.pyplot as plt
 from matplotlib import style
 import pandas as pd
@@ -104,3 +104,20 @@ plt.tight_layout()
 plt.show()
 
 # Candlestick charts
+
+from mplfinance.original_flavor import candlestick_ohlc
+import matplotlib.dates as mdates
+
+apple = apple[['Open', 'High', 'Low', 'Close']]
+apple.reset_index(inplace=True)
+apple['Date'] = apple['Date'].map(mdates.date2num)  # convert datetime to a number
+
+# Plotting Data
+
+ax = plt.subplot()
+candlestick_ohlc(ax, apple.values, width=5, colordown='r', colorup='g')
+ax.grid()
+ax.xaxis_date()
+plt.show()
+
+#5 Plotting Multiple Days
