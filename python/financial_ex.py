@@ -61,7 +61,7 @@ plt.ylabel('Adjusted Close')
 plt.title('AAPL Share Price')
 df['Adj Close'].plot()
 plt.show()
-'''
+
 #4 Comparing Stocks
 import matplotlib.pyplot as plt
 from matplotlib import style
@@ -119,5 +119,35 @@ candlestick_ohlc(ax, apple.values, width=5, colordown='r', colorup='g')
 ax.grid()
 ax.xaxis_date()
 plt.show()
-
+'''
 #5 Plotting Multiple Days
+
+import pandas as pd
+from pandas_datareader import data as web
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+from matplotlib import style
+from mplfinance.original_flavor import candlestick_ohlc
+import datetime as dt
+
+start = dt.datetime(2020, 1, 1)
+end = dt.datetime(2022, 1, 1)  # or end = dt.datetime.now()
+
+apple = web.DataReader('AAPL', 'yahoo', start, end)
+apple_ohlc = apple['Adj Close'].resample('10D').ohlc()
+apple_ohlc.reset_index(inplace=True)
+apple_ohlc['Date'] = apple_ohlc['Date'].map(mdates.date2num)
+
+apple_volume = apple['Volume'].resample('10D').sum()  # create a second subplot
+# define the two subplots
+ax1 = plt.subplot2grid((6, 1), (0, 0), rowspan=4, colspan=1)
+ax2 = plt.subplot2grid((6, 1), (4, 0), rowspan=2, colspan=1, sharex=ax1)
+ax1.xaxis_date()
+
+candlestick_ohlc(ax1, apple_ohlc.values, width=5, colorup='g', colordown='r')
+ax2.fill_between(apple_volume.index.map(mdates.date2num), apple_volume.values)
+plt.tight_layout()
+plt.show()
+
+#6 Analysis and statistics
+
