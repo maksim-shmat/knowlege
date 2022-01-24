@@ -140,3 +140,41 @@ plt.plot(fit_data.Date, fit1d(dates), 'r')
 plt.show()
 
 # Next. Predicting Share Prices
+
+from sklearn import preprocessing
+from sklearn.model_selection import train_test_split
+from sklearn.linear_model import LinearRegression
+
+# Loading and preparing data
+
+start = dt.datetime(2016, 1, 1)
+end = dt.datetime(2019, 1, 1)
+
+apple = web.DataReader('AAPL', 'yahoo', start, end)
+data = apple['Adj Close']
+
+days = 50
+data['Shifted'] = data['Adj Close'].shift(-days)
+data.dropna(inplace=True)
+
+X = np.array(data.drop(['Shifted'], 1))
+Y = np.array(data['Shifted'])
+X = preprocessing.scale(X)
+
+# Training and testing
+
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+
+clf = LinearRegression()
+clf.fit(X_train, Y_train)
+accuracy = clf.score(X_test, Y_test)
+print(accuracy)
+
+# Predicting data
+
+X = X[:-days]
+X_new = X[-days:]
+
+prediction = clf.predict(X_new)
+print(prediction)
+
