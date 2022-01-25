@@ -14,3 +14,12 @@ Ctrl + r - redo
 
 # Find (+)
     f+
+#3 Freeze keyboard
+
+Ctrl + S
+
+#4 Unfreeze keyboard
+
+Ctrl + Q
+
+#5
