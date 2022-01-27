@@ -15,4 +15,10 @@ Window bluetooth setings need be opened!
 2. Send file from android.
 3. Check the message that you give file
 
-#4 
+#4 Bluetooth ON after reload, change it!
+
+sudo vim /etc/bluetooth/main.conf
+
+AutoEnable=false  # from true
+
+#5 
