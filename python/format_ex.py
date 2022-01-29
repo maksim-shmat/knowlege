@@ -142,3 +142,66 @@ pi1 = f"\u03C0 is aproximately {pi}."
 print(pi1)
 
 #22
+
+zutsct = "{foo}{}{bar}{}".format(1, 2, bar=4, foo=3)
+print(zutsct)  # 3142
+
+#23
+
+zibrst = "{foo}{1}{bar}{0}".format(1,2, bar=4, foo=3)
+print(zibrst)  # 3241
+
+#24
+
+fullname = ["Alfred", "Smoketoomuch"]
+vustr = "Mr {name[1]}".format(name=fullname)
+print(vustr)  # Mr Smoketoomuch
+
+#25 
+
+import math
+tmpl = "The {mod.__name__} module defines the value {mod.pi} for '\u03C0'"
+tmpl.format(mod=math)
+print(tmpl)  # that's old version?
+
+#26
+
+print("{pi!s}{pi!r}{pi!a}".format(pi="п"))  # s-str, r-repr, a-ascii
+# п 'п' '\u03c0'
+
+#27 
+
+print("The number is {num}".format(num=42))  # 42
+print("numbe is{num:f}".format(num=42))  # 42.000000
+print("num is {num:b}".format(num=42))  # 101010
+print("num is {num:%}".format(num=42))  # 4200.000000%
+print("num is {num:x}".format(num=42))  # 2a
+print("num is {num:o}".format(num=42))  # 52
+
+#28      Width format
+
+print("{num:10}".format(num=3))
+print("{name:10}".format(name="Bob"))
+print("Pi day is {pi:.2f}".format(pi=pi))
+print("{pi:10.2f}".format(pi=pi))
+print("{:.5}".format("Guido van Rossum"))
+print("One googol is {:,}".format(10**100))
+
+#29 Sign, alignment, and Zero-padding
+
+print('{:010.2f}'.format(pi))
+print('{0:<10.2f}\n{0:^10.2f}\n{0:>10.2f}'.format(pi))
+print("{:$^15}".format(" WIN BIG"))  # $$$ WIN BIG $$$
+print('{0:10.2f}\n{1:10.2f}'.format(pi, -pi))
+print('{0:10.2f}\n{1:=10.2f}'.format(pi, -pi))
+print('{0:-.2}\n{1:-2}'.format(pi, -pi)) # Default
+print('{0:+.2}\n{1:+.2}'.format(pi, -pi))
+print('{0:.2}\n{1:.2}'.format(pi, -pi))
+
+print("{:b}".format(42))
+print("{:#b}".format(42))
+
+print("{:g}".format(42))
+print("{:#g}".format(42))  # with decimal zeroes
+
+
