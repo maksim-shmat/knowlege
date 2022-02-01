@@ -21,4 +21,8 @@ sudo vim /etc/bluetooth/main.conf
 
 AutoEnable=false  # from true
 
-#5 
+#5 Search the last file
+
+ls -l --sort time
+
+#6
