@@ -166,17 +166,34 @@ dictionary_1["b"] = 2
 print(dictionary)
 print(dictionary_1)
 
+# deepcopy()
+from copy import deepcopy
+d = {}
+d['names'] = ['Alfred', 'Bertrand']
+c = d.copy()
+dc = deepcopy(d)
+d['names'].append('Clive')
+print(c)  # {'names': ['Alfred', 'Bertrand', 'Clive']}
+print(dc)  # {'names': ['Alfred', 'Bertrand']}
+
 ### fromkeys()
 
 dictionary = {"a": 4, "b": 5, "c": 6}
 dictionary_1 = dict.fromkeys(dictionary, 1)
-print(dictionary_1)
+print(dictionary_1)  # default value None
+
+# can use your own default value
+# dict.fromkeys(['name', 'age'], '(unknown_artist)')
 
 ### get()
 
 dictionary = {"a": 4, "b": 5, "c": 6}
 x = dictionary.get("b")
 print(x)
+
+# if empty that return None as default value
+# if need your own defaul
+# d.get('name', 'N/A')  # key 'name' - value 'N/A'
 
 ### items()
 
@@ -195,6 +212,13 @@ for key in dictionary.keys():
 dictonary = {"a": 4, "b": 5, "c": 6}
 for value in dictionary.values():
     print(value)
+
+# d = {}
+d[1] = 1
+d[2] = 2
+d[3] = 3
+d[4] = 1
+d.values()  # dict_values([1,2,3,2])
 
 ### pop() removes the key-value pair
 
@@ -219,7 +243,15 @@ y = dictionary.setdefault("m", 0)
 print(y)
 print(dictionary)
 
-### update()
+#
+d = {}
+d.setdefault('name', 'N/A')
+print(d)  # {'name': 'N/A'}
+d['name'] = 'Bumby'
+d.stdefault('name', 'N/A')  # 'Gumby'
+print(d)  # {'name': 'Gumby'}
+
+### update(), added to old one
 
 dictionary = {"a": 4, "b": 5, "c": 6}
 dictionary_1 = {"a": 8, "m": 2, "v": 7}
@@ -383,41 +415,4 @@ for key in myDict5:
 print(valuesList2)
 print('   ^ above dict values to list')
 
-#19 Telephone boor example
-# Make a simplt db
-people = {
-        'Alice':{
-            'phone':'2341',
-            'addr':'Foo drive 23'
-        },
-        'Beth':{
-            'phone':'9102',
-            'addr':'Bar street 42'
-        },
-        'Cecil':{
-            'phone':'3158',
-            'addr':'Baz avenue 90'
-        }
-}
-
-# Descriptive labels for the phone numbers and address. These will be used
-# when printing the output.
-labels = {
-        'phone':'phone number',
-        'addr':'address'
-}
-
-name = input('Name:')
-
-# Are we looking for a phone number or an address?
-request = input('Phone number(p) or address(a)?')
-
-# Use the correct key:
-if request == 'p':key = 'phone'
-if request == 'a':key = 'addr'
-
-# Only try to print information if the name is f valid key in our dictionary
-if name in people: print("{}'s {} is {}.".format(name, labels[key],
-    people[name][key]))
-
-#20
+#19 

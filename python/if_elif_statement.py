@@ -172,4 +172,21 @@ max = a if a > b and a > c else b if b > c else c
 
 print(max)
 
-######
+#1 if/else in one string
+
+name = input('What is your name?')
+
+status = 'friend' if name.endswith("Gumby") else "stranger"
+print(status)
+
+#2 elif clauses
+
+num = int(input('Enter a number:'))
+if num > 0:
+    print('The number is positive')
+elif num < 0:
+    print('The number is negative')
+else:
+    print('The numbe is zero')
+
+#3 
