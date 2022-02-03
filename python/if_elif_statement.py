@@ -175,7 +175,8 @@ print(max)
 #1 if/else in one string
 
 name = input('What is your name?')
-
+if 's' in name:
+    print('Your name contains the letter "s".')
 status = 'friend' if name.endswith("Gumby") else "stranger"
 print(status)
 
