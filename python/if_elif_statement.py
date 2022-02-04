@@ -1,5 +1,5 @@
 """About if and."""
-
+'''
 a = 5
 b = 2
 
@@ -171,7 +171,7 @@ a, b, c = 15, 93, 22
 max = a if a > b and a > c else b if b > c else c
 
 print(max)
-
+'''
 #1 if/else in one string
 
 name = input('What is your name?')
@@ -190,4 +190,27 @@ elif num < 0:
 else:
     print('The numbe is zero')
 
-#3 
+#3 Boolean operators
+# old style
+number = int(input('Enter a number between 1 and 10:'))
+if number <= 10:
+    if number >=1:
+        print('Great!')
+    else:
+        print('Wrong1!')
+else:
+    print('Wrong2!')
+
+# new style
+number = int(input('Enter a number between 1 and 10:'))
+if number <= 10 and number >= 1:  # or 1 <= number <= 10
+    print('Great!')
+else:
+    print('Wrong!')
+
+#4 or
+
+name = input('What is your name?') or '<unrknown>'
+print(name)
+
+#5
