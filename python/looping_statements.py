@@ -190,4 +190,22 @@ level = 0
 while(level < 10):
     level += 1
 
-######
+#1 Parallel iteration
+
+names = ['anne', 'beth', 'george', 'damon']
+ages = [12, 45, 32, 102]
+for i in range(len(names)):
+    print(names[i], 'is', ages[i], 'years old')
+# anne is 12 years old
+# beth is 45 years old
+
+# or
+list(zip(names, ages))
+# [('anne': 12), ('beth': 45)....]
+# then unpack tuples
+for name, age in zip(names, ages):
+    print(name, 'is', age, 'years old')
+# anne is 12 years old
+# beth is 45 years old
+
+#2
