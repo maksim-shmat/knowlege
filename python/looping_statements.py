@@ -208,4 +208,12 @@ for name, age in zip(names, ages):
 # anne is 12 years old
 # beth is 45 years old
 
-#2
+#2 While True idiom
+
+while True:
+    word = input('Please enter a word:')
+    if not word: break
+    # do something with the word:
+    print('The word was', word)
+
+

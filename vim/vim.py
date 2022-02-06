@@ -22,4 +22,7 @@ Ctrl + S
 
 Ctrl + Q
 
-#5
+#5 If ''' is trubles roll page from up to down
+gg, down-down to bottom of page
+
+#6

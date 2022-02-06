@@ -204,4 +204,9 @@ print("{:#b}".format(42))
 print("{:g}".format(42))
 print("{:#g}".format(42))  # with decimal zeroes
 
+#30 
+squares = {i:"{} squared is {}".format(i, i ** 2) for i in range(10)}
+squares[8]
+print(squares)
 
+#31

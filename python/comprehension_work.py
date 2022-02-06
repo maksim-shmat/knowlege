@@ -55,4 +55,38 @@ Output: 6
 def maximumWealth(self, accounts):
     return max([sum(row) for row in accounts])
 
-######
+#1 
+[x * x for x in range(10)]
+# [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
+
+#2
+[x * x for x in range(10) if x % 3 == 0]
+# [0, 9, 36, 81]
+
+#3
+[(x, y) for x in range(3) for y range(3)]
+# [(0, 0), (0, 1), (0, 2), (1, 0), (1, 1), (2, 0), (2, 1) (2, 2)]
+
+# or
+
+result = []
+for x in range(3):
+    for y in range(3):
+        result.append((x, y))
+
+# 
+girls = ['alice', 'bernice', 'clarice']
+boys = ['chris', 'arnold', 'bob']
+[b+ '+' +g for b in boys for g in girls if b[0] == g[0]]
+# ['chris+clarice', 'arnold+alice', 'bob+bernice']
+
+# with dict
+girls = ['Alice', 'Bernice', 'Clarice']
+boys = ['Chris', 'Arnold', 'Bob']
+letterGirls = {}
+for girl in girls:
+    letterGirls.setdefault(girl[0], []).append(girl)
+print([b+ '+' +g for b in boys for g in letterGirls[b[0]]])
+# ['Chris+Clarice', 'Arnold+Alice', 'Bob+Bernice']
+
+#4 
