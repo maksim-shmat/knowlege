@@ -70,4 +70,21 @@ def address_full(country,*args,**kwargs):
 address_full('US','100 Park Boulevard', 'San Diego', state='CA',zipcode=92101)
 address_full('CA','777 Pacific Boulevard','Vancouver',province='BC',postalcode='V6B 4Y8')
 
-######
+#1 Just simple example
+
+def print_params(x, y, z=3, *pospar, **keypar):
+    print(x, y, z)
+    print(pospar)
+    print(keypar)
+
+print_params(1, 2, 3, 5, 6, 7, foo=1, bar=2)
+# 1 2 3
+# (5, 6, 7)
+# {'foo':1,'bar':2}
+
+print_params(1, 2)
+# 1 2 3
+()
+{}
+
+#2
