@@ -55,5 +55,32 @@ print(v1)
 print(v2)
 print(v4)
 
-#3
+#3 Simple example
 
+__metaclass__ = type  # Include this if you're using Python2
+
+class Person:
+
+    def set_name(self, name):
+        self.name = name
+    
+    def get_name(self):
+        return self.name
+
+    def greet(self):
+        print("Hello, world! I'm {}.".format(self.name))
+
+foo = Person()
+bar = Person()
+
+foo.set_name('Luke')
+bar.set_name('Anka')
+
+print(foo.greet())  # Hello, world! I'm Luke
+print(bar.greet())  # Hello, world! I'm Anka
+
+print(foo.name)
+bar.name = 'Yaga'
+print(bar.greet())
+
+#4 

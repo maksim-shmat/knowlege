@@ -64,4 +64,11 @@ print(x(3))
 print(x(10))
 print()
 
-######
+#1 Sum of all the numbers in a sequence
+
+numbers = [72, 101, 108, 108, 111, 44, 32, 119, 111, 114, 108, 100, 33]
+from functools import reduce
+joh = reduce(lambda x, y: x + y, numbers)
+print(joh)  # 1161
+
+#2
