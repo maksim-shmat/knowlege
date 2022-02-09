@@ -1,5 +1,6 @@
 """More examples for the God of Examples python class about."""
 
+'''
 #1
 
 class Person:
@@ -82,5 +83,26 @@ print(bar.greet())  # Hello, world! I'm Anka
 print(foo.name)
 bar.name = 'Yaga'
 print(bar.greet())
+'''
+#4 Simple spam filter
 
-#4 
+class Filter:
+    def init(self):
+        self.blocked = []
+
+    def filter(self, sequence):
+        return [x for x in sequence if x not in self.blocked]
+
+class SPAMFilter(Filter):
+    def init(self):  # Overrides init method from Filter superclass
+        self.blocked = ['SPAM']
+
+f = Filter()
+f.init()
+print(f.filter([1, 2, 3]))
+
+s = SPAMFilter()
+s.init()
+print(s.filter(['SPAM', 'SPAM', 'SPAM', 'SPAM', 'eggs', 'bacon', 'SPAM']))
+
+#5 
