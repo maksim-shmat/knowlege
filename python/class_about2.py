@@ -83,7 +83,7 @@ print(bar.greet())  # Hello, world! I'm Anka
 print(foo.name)
 bar.name = 'Yaga'
 print(bar.greet())
-'''
+
 #4 Simple spam filter
 
 class Filter:
@@ -104,5 +104,22 @@ print(f.filter([1, 2, 3]))
 s = SPAMFilter()
 s.init()
 print(s.filter(['SPAM', 'SPAM', 'SPAM', 'SPAM', 'eggs', 'bacon', 'SPAM']))
+'''
+#5 Multiple classes
 
-#5 
+class Calculator:
+    def calculate(self, expression):
+        self.value = eval(expression)
+
+class Talker:
+    def talk(self):
+        print('Hi, my value is', self.value)
+
+class  TalkingCalculator(Calculator, Talker):
+    pass
+
+ts = TalkingCalculator()
+ts.calculate('1 + 2 * 3')
+print(ts.talk())
+
+#6
