@@ -115,7 +115,7 @@ class Talker:
     def talk(self):
         print('Hi, my value is', self.value)
 
-class  TalkingCalculator(Calculator, Talker):
+class  TalkingCalculator(Calculator, Talker):  # Hm, if change (Talker, Calculator) that working too
     pass
 
 ts = TalkingCalculator()
