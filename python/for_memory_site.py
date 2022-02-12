@@ -28,4 +28,21 @@ zip(seq1, seq2, ...)  # Creates a new sequence suitable for parallel iteration
 
 =================
 
+callable(object)  # Determines if the object is callable (such as a function or a method)
+
+getattr(object, name[,default])  # Gets the value of an attribute, optionally providing a default
+
+hasattr(object, name)  # Determines if the object has the given attribute
+
+isinstance(object, class)  # Determines if the object is an instance of the class
+
+issubclass(A, B)  # Determines if A is a subclass of B
+
+random.choice(sequence)  # Chooses a random element from a nonempty sequence
+
+settattr(object, name, value)  # Sets the given attribute of the object to value
+
+type(object)  # Return the type of the object
+
+===================
 
