@@ -54,3 +54,53 @@ actually implementing it.
 There are many opinions about how (or whether!) to do object-oriented design.
 No matter where you stand on the issue, it`s understand your problem
 thoroughly and to create a design that is easy to understand.
+
+#9 Exception objects
+
+Exceptional situations (such as when an error has occurred) are represented by
+exception objects. These can be manipulated in several ways, but if ignored,
+they terninate your program.
+
+#10 Raising exceptions
+
+You can raise exceptions with the raise statement. It accepts either an 
+exception class or an exception instance as its arguments. You can also supply
+two arguments (an exception and an error message). If you call raise with no
+arguments in an except clause, it "reraises" the exception caught by that
+clause.
+
+#11 Custom exception clausses
+
+You can create your own kinds of exceptions by subclassing Exception.
+
+#12 Catching exceptions
+
+You catch exceptions with the except clause of a try statement. If you don`t
+specify a class in the except clause, all exceptions are caught. You can
+specify more than one class by putting them in a tupple. If you give two arguments to except, the second is bound to the exception object. You can have
+several except clauses in the same try/except statement, to react differently 
+to different exception.
+
+#13 else clauses
+
+You can use an else clause in addition to except. The else clause is executed
+if no exceptions are raised in the main try block.
+
+#14 finally
+
+You can use try/finally if you need to make sure that some code (for example,
+cleanup code) is executed, regardless of whether or not an exception is
+raised. This code is then put in the finally clause.
+
+#15 Exception and functions
+
+When you raise an exception inside a function, it propagates to the place
+where the function was called. (The same goes for methods.)
+
+#16 Warnings
+
+Warnings are similar to exceptions but will (in generall) just print out an
+error message. You can specify a warning catergory, which is a subclass of
+Warning.
+
+#17

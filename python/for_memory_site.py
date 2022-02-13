@@ -46,3 +46,7 @@ type(object)  # Return the type of the object
 
 ===================
 
+warnings.filterwarnings(action, category=Warning, ...)  # Used to filter out warnings
+warnings.warn(message, category=None)  # Used to issue warnings
+
+===================
