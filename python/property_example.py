@@ -1,3 +1,7 @@
+"""Properties about."""
+
+#1
+
 class Rectangle():
     def __init__(self, x, y):
         self.__x = x
@@ -26,3 +30,30 @@ print(my_rect.x, my_rect.y)
 my_rect.x = 4
 my_rect.y = 5
 print(my_rect.x, my_rect.y)
+
+#2
+
+class Rectangle:
+    def __init__(self):
+        self.width = 0
+        self.height = 0
+
+    def set_size(self, size):
+        self.width, self.height = size
+
+    def get_size(self):
+        return self.width, self.height
+    size = property(get_size, set_size)  # property string
+
+r = Rectangle()
+r.width = 10
+r.height = 5
+print(r.get_size())  # (10, 5)  without property string
+#r.set_size((150, 100))
+print(r.width)  # 150  witout property string
+
+print(r.size)  # (10, 5)  with property
+r.size = 151, 101
+print(r.width)
+
+#3
