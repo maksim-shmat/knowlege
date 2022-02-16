@@ -1,7 +1,8 @@
 """About the decorators."""
 
+'''
 def  outer_function():
-    '''Assign task to student'''
+    """Assign task to student"""
 
     task = 'Read Python book chapter 3.'
     def inner_function():
@@ -13,7 +14,7 @@ homework()
 
 ### One func move to another func with how an argument
 def friendly_reminder(func):
-    '''Reminder for husband'''
+    """Reminder for husband"""
 
     func()
     print('Don\'t forget to bring your wallet!')
@@ -43,7 +44,7 @@ def my_func():
 from datetime import datetime
 
 def log_datetime(func):
-    '''Log the date and time of a function'''
+    """Log the date and time of a function"""
 
     def wrapper():
         print(f'Function: {func.__name__}\nRun on: {datetime.today().strftime("%Y-%m-%d %H:%M:%S")}')
@@ -69,7 +70,7 @@ def my_decorator_func(func):
 
 @my_decorator_func
 def my_func(my_arg):
-    '''Example docstring for function'''
+    """Example docstring for function"""
 
     pass
 
@@ -85,7 +86,7 @@ def my_decorator_func(func):
 
 @my_decorator_func
 def my_func(my_args):
-    '''Example docstring for function'''
+    """Example docstring for function"""
 
     pass
 """
@@ -95,7 +96,7 @@ import tracemalloc
 from time import perf_counter
 
 def measure_performance(func):
-    '''Measure performance of a function'''
+    """Measure performance of a function"""
 
     @wraps(func)
     def wrapper(*args, **kwargs):
@@ -115,19 +116,19 @@ def measure_performance(func):
 
 @measure_performance
 def make_list1():
-    '''Range'''
+    """Range"""
     
     my_list = list(range(100000))
 
 @measure_performance
 def make_list2():
-    '''List comprehension'''
+    """List comprehension"""
 
     my_list = [l for l in range(100000)]
 
 @measure_performance
 def make_list3():
-    '''Append'''
+    """Append"""
 
     my_list = []
     for item in range(100000):
@@ -135,7 +136,7 @@ def make_list3():
 
 @measure_performance
 def make_list4():
-    '''Concatenation'''
+    """Concatenation"""
 
     my_list = []
     for item in range(100000):
@@ -167,7 +168,7 @@ class LimitQuery:
 @LimitQuery
 
 def get_coin_price():
-    '''View the Bitcoin Price Index (BPI)'''
+    """View the Bitcoin Price Index (BPI)"""
 
     url = requests.get('https://api.coindesk.com/v1/bpi/currentprice.json')
 
@@ -234,5 +235,31 @@ def authorized_only(method):
 @authenticated_only
 def execute(action, *args, **kwargs):
     return action()
+'''
+#1
+# old Python 2.4
+class MyClass:
+    def smeth():
+        print('This is a static method')
+    smeth = staticmethod(smeth)
+    def cmeth(cls):
+        print('This is a class method of', cls)
+    cmeth = classmethod(cmeth)
 
-######
+# style with decorator from the new aegis
+
+class MyClass1:
+    @staticmethod
+    def smeth1():
+        print('This is a static method 1')
+
+    @staticmethod
+    def cmeth2(cls):
+        print('This is a class method of 2', cls)
+
+print(MyClass.smeth())
+print(MyClass.cmeth())
+print(MyClass1.smeth1())
+print(MyClass1.cmeth2())  # ?
+
+
