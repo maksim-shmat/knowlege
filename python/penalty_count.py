@@ -109,4 +109,7 @@ print('The end')
 # 5. in a loop need continue
 # how insert link to another file for planning ? /home/jack/django2/knowlege/python/looping_statements.py
 
+#1 Generator example
 
+g = ((i + 2) ** 2 for i in range(2, 27))
+print(next(g))  # 16
