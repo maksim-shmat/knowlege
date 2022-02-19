@@ -103,4 +103,55 @@ Warnings are similar to exceptions but will (in generall) just print out an
 error message. You can specify a warning catergory, which is a subclass of
 Warning.
 
-#17
+#17 Magic methods
+
+Several special methods (with names beginning and ending with double
+underscores) exist in Python. These methods diffeer quite a bit in function,
+but most of them are called automatically by Python under certain
+circumstances. (For example, __init__ is called after object cration.)
+
+#18 Constructors
+
+These are common to many objects-oriented languages, and you`ll probably
+implement one for almost every class you write. Constructors are named init
+and are automatically called immediately after an object is created.
+
+#19 Overriding
+
+A class can override methods (or any other attributes) defined in it`s
+superclasses simply by implementing the methods. If the new method needs to
+call the overridden version, it can either call the unbound version from the
+superclass directly (old-style classes) or use the super function (new-style
+classes).
+
+#20 Sequences and mappings
+
+Creating a sequence or mapping of your own requires implementing all the
+methods of the sequence and mapping protocols, including such magic methods
+as getitem and __setitem__. By subclassing list (or UserList) and dict (or
+UserDict), you can save a lot of work.
+
+#21 Iterators
+
+An iterator is simply an object that has a __next__ method. Iterators can be
+used to iterate over a set of values. When there are no more values, the next
+method should raise a StopIteration exception. Iterable objects have an
+__iter__ method, which returns an iterator, and can be used in for loops,
+just like sequences. Often, and iterator is also iterable; that is, it has
+an __iter__ method that returns the iterator itself.
+
+#22 Generators
+
+A generator-function (or method) is a function (or method) that contains the
+keyword yield. When called, the generator-function returns a generator, which
+is a special type of iterator. You can interact with an active generator from
+the outside be using the methods send, throw, and close.
+
+#23 Eight Queens
+
+The Eight Queens problem is well known is computer science and lends itself
+easily to implementation with generators. The goal is to position eight
+queens on a chessboard so that none of the queens is in a position from which
+she can attack any of the others.
+
+#24

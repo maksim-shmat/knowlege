@@ -1,4 +1,4 @@
-"""Count Paulik's debt."""
+"""Decision in the file 'interest_compound.py'"""
 
 '''
 def four(limit):
