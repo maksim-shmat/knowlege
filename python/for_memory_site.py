@@ -50,3 +50,14 @@ warnings.filterwarnings(action, category=Warning, ...)  # Used to filter out war
 warnings.warn(message, category=None)  # Used to issue warnings
 
 ===================
+
+iter(obj)  # Extracts an iterator from an iterable object
+
+next(it)  # Advances an iterator and returns its next element
+
+property(fget, fset, fdel, doc)  # Returns a property; all arguments are optional
+
+super(class, obj)  # Return a bound instance of class's superclass
+
+===================
+
