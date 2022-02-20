@@ -26,6 +26,30 @@ $ - At the end of a string
 \t - Tab
 \s - White Space
 
+#0.1 Function/Description of the re module
+
+compile(pattern[,flags])  # Creates a pattern object from a string with a re
+
+search(pattern, string[,flags])  # Matches pattern at the begining of string
+
+split(pattern,string[,maxsplit=0])  # Splits a string by occurences of pattern in string
+
+findall(pattern, string)  # Returna a list of all occurences of pattern in string
+
+sub(pat, repl, string[,count=0])  # Substitute occurences of pat in string with repl
+
+escape(string)  # Escapes all special regular expression characters in string
+
+#0.2 re match object methods
+
+group([group1, ...])  # Retrives the occurrences of the given subpatterns(groups)
+
+start([group])  # Returns the starting position of the occurrence of a given group
+
+end([group])  # Returns the ending position (an exclusive limit, as in slices) of the occurrence of a given group.
+
+span([group])  # Returns both the beginning and ending position of a group
+
 # re.findall() substring in string
 
 import re
@@ -285,4 +309,54 @@ if result != None:
 else:
     print("INVALID!")
 
-#3
+#3 re.split()
+
+some_text = 'alpha, beta,,,,gamma delta'
+
+print(re.split('[,     ]+', some_text))  # ['alpha', 'beta', 'gamma', 'delta']
+print(re.split('[,     ]+',some_text, maxsplit=2))  # ['alpha', 'beta', 'gamma delta']
+
+#4 re.findall()
+
+pat = '[a-zA-Z]+'
+text = '"Hm... Err -- are you sure?" he said, somethting insecure.'
+print(re.findall(pat, text))  # ['Hm', 'Err', 'are', 'you', 'sure', 'he', 'said', 'something', 'insecure']
+
+pat = r'[.?\-",]+'
+print(re.findall(pat, text))  # ['", '...', '--' '?"', ',','.']
+
+#5 re.sub()
+
+pat = '{name}'
+text = 'Dear {name}...'
+print(re.sub(pat, 'Mr.Gibmly', text))  # 'Dear Mr.Gibmly...'
+
+#6 re.escape()
+
+print(re.escape('www.python.org'))  # 'www\.python\.org'
+
+#7 re.match()
+
+m = re.match(r'www\.(.*)\..{3}', 'www.python.org')
+
+print(m.group(1))  # 'python'
+print(m.start(1)) # 4
+print(m.end(1))  # 10
+print(m.span(1))  # (4, 10)
+
+#8 
+emphasis_pattern = r'\*([^\*]+)\*'
+
+print(re.sub(emphasis_pattern, r'<em>\1</em>', 'Hello, *world*!'))  # 'Hello, <em>world</em>!'
+
+#9 Greedy pattern
+
+emphasis_pattern1 = r'\*(.+)\*'
+print(re.sub(emphasis_pattern1, r'<em>\1</em>', '*This*is*it*!'))  # '<em>This*is*it</em>!'
+
+#10 Nongreedy pattern
+
+emphasis_pattern2 = r'\*\*(.+?)\*\*'
+print(re.sub(emphasis_pattern2, r'<em>\1</em>', '**This**is**it**!'))  # '<em>This</em>is<em>it</em>!'
+
+#11

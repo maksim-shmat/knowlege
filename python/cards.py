@@ -16,3 +16,5 @@ from random import shuffle
 shuffle(deck)
 
 pprint(deck[:12])
+
+while deck: input(deck.pop())  # string for write, but just press Enter for give new card
