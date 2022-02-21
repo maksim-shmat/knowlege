@@ -61,3 +61,52 @@ super(class, obj)  # Return a bound instance of class's superclass
 
 ===================
 
+Modules: A module is basically a subprogram whose main function is to define
+things, such as function, classes, and variables. If a module contains any
+test code, it should be placed in an if statement that checks whether
+name == '__main__'. Modules can be imported if they are in the PYTHONPATH.
+You import a module stored in the file foo.py with the statement import foo.
+
+Packages: A package is just a module that contains other modules. Packages are
+implemented as directories that contain a file named __init__.py.
+
+Exploring modules: After you have imported a module into interactive
+interpreter, you can explore it in many ways. Among them are using dir,
+examining th __all__ variable, and using the help function. The documentation
+and the source code can also be excellent sources of information and insight.
+
+The standard library: Python comes with several modules included, collectively
+called the standard library:
+    sys: A module that gives you access to several variables and functions
+    that are tightly linked with the Python interpreter.
+
+    os: A module that gives you access to several variables and functions
+    that are tightly linked with the operating system.
+
+    fileinput: A module that makes it easy to iterate over the lines of
+    several files of streams.
+
+    sets, heapq, and deque: Three modules that provide three useful data
+    structures. Sets are alse available in the form of the built-in type set.
+
+    time: A module for getting the current time and for manipulating and
+    formating times and dates.
+
+    random: A module with functions for generating random numbers, choosing
+    random elements from a sequence, and shuffling the elements of a list.
+
+    shelve: A module for creating a persistent mapping, which stores it`s
+    contents in a database with a given file name.
+
+    re: A module with support for regular expressions.
+
+===================
+
+dir(obj)  # Retrurns an alphabeized list of attribute names.
+
+help(obj)  # Provides interacitve help or help about a specific object.
+
+imp.reload(module)  # Returns a reloaded version of a module that has already been imported.
+
+===================
+
