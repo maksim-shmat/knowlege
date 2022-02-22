@@ -82,7 +82,7 @@ fin = open("jill.txt", 'a')  # or 'at'
 fin.write('\nI love you Jill!')
 fin.close
 
-######10 Replace string in file,  # full underwrite file?
+######10 Replace string in file,  # full rewrite file?
 
 #fin = open("jill.py", "rt")
 #fout = open("jill.txt", "wt")
