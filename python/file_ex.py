@@ -5,18 +5,21 @@
 fileObject = open('jill.py', 'r')
 data = fileObject.read()
 print(data)
+fileObject.close()
 
 ######2 Read only some characters in the file
 
 f = open('jill.py', 'r')
 data = f.read(8)  # 20 characters
 print(data)
+f.close()
 
 ######3 Read file in text mode
 
 f = open('jill.py', 'rt')
 data = f.read()
 print(data)
+f.close()
 
 ######4 Read file line by line
 
@@ -57,6 +60,7 @@ print()
 
 text_file = open('jill.py', 'r')
 text = text_file.read()
+text_file.close()
 
 # cleaning
 text = text.lower()
@@ -75,6 +79,7 @@ unique.sort()
 
 # print
 print(unique)
+text_file.close()
 
 ######9 Append text to file
 
@@ -103,9 +108,9 @@ fin.close()
 
 ######11 Count how many times a word occured in given text file
 
-file = open('jill.txt')
+file1 = open('jill.txt')
 data = file.read()
 occurrences = data.count("love")
 print('Number of occurences of the word : ', occurrences)
-
+file1.close()
 ######
