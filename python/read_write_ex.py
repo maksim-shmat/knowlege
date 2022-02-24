@@ -46,7 +46,7 @@ f4.close()
 # 1...
 # 2...
 # 3...
-'''
+
 #4
 
 import pprint
@@ -65,3 +65,71 @@ lines[1] = "isn't a\n"
 f5 = open(r'jill.txt', 'w')
 f5.writelines(lines)
 f5.close()
+
+#5 read one character
+
+def process(string):
+    print('Processing:', string)
+
+with open(r'jill.txt') as f6:
+    char = f6.read(1)
+    while char:
+        process(char)
+        char = f6.read(1)
+# Processing: t
+# Processing: h
+# Processing: i
+# Processing: s ...
+
+#6 read one line at a time, for big file
+
+def process1(string):
+    print('Processing:', string)
+
+with open(r'jill.txt') as f7:
+    while True:
+        line = f7.readline()
+        if not line: break
+        process1(line)
+
+# Processing: this
+# Processing: isn't...
+
+#7 reading everything char, for isn't too large files
+
+def process2(string):
+    print('Processing: ', string)
+
+with open(r'jill.txt') as f8:
+    for char in f8.read():
+        process2(char)
+
+#8 rading everithing
+
+def process3(string):
+    print('Processing: ', string)
+
+with open(r'jill.txt') as f9:
+    for line in f9.readlines():
+        process3(line)
+
+#9 Lazy line iteration with fileinput
+
+import fileinput
+
+def process4(string):
+    print('Processing: ', string)
+    
+for line in fileinput.input(r'jill.txt'):
+    process4(line)
+'''
+#10 Iterating over a file
+
+def process5(string):
+    print('Processing: ', string)
+
+with open(r'jill.txt') as f10:
+    for line in f10:
+        process5(line)
+
+#11
