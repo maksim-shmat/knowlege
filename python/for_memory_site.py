@@ -110,3 +110,33 @@ imp.reload(module)  # Returns a reloaded version of a module that has already be
 
 ===================
 
+File-like objects: A file-like object is (informally) an object that
+supports a set of methods such as read and readline (and possibly write and
+writelines).
+
+Opening and closing files: You open a file with the open function, by
+supplying a file name. If you want to make sure your file is closed, even if
+something goes wrong, you can use the with statement.
+
+Modes and file types: When opening a file, you can also supply a mode, such
+as 'r' for read mode or 'w' for write mode. By appending 'b' to your mode,
+you can open files as binary files and turn off Unicode ecnoding and newline
+substitution.
+
+Standard streams: The three standard files (stdin, stduot, and stderr, found
+in the sys module) are file-like objects that implement the UNIX standard I/O
+mecanism (also available in Windows).
+
+Reading and writing: You read from a file of file-like object using the
+method read. You write with the method write.
+
+Reading and writing lines: Your can read lines from a file using readine and
+readlines. You can write files with writelines.
+
+Iterating over file contents: There are many ways of iterating over file
+contents. It is most common to iterate over the lines of a text file, and
+you can do this by simply iterating over the file itself. There are other
+methods too, such as using readlines, that are compatible with older versions
+of Python.
+
+==================

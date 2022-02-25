@@ -122,7 +122,7 @@ def process4(string):
     
 for line in fileinput.input(r'jill.txt'):
     process4(line)
-'''
+
 #10 Iterating over a file
 
 def process5(string):
@@ -133,3 +133,26 @@ with open(r'jill.txt') as f10:
         process5(line)
 
 #11
+# for line in open(filename):
+#    process(line)
+--------------
+# import sys
+# for line in sys.stdin:
+#    process(line)
+'''
+#12
+
+f11 = open('jill.txt', 'w')
+print('First', 'line', file=f11)  # add \n automatically
+print('Second', 'line', file=f11)  # add \n automatically
+print('Third', 'and final','line', file=f11)  # add \n automatically
+f11.close()
+lines = list(open('jill.txt'))
+print(lines)  # ['First line\n', 'Second line\n', 'Third and final line\n']
+
+first, second, third = open('jill.txt')
+print(first)  # 'First line\n'
+print(second)  # 'Second line\n'
+print(third)  # 'Third and final line\n'
+
+#13
