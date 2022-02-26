@@ -61,47 +61,6 @@ super(class, obj)  # Return a bound instance of class's superclass
 
 ===================
 
-Modules: A module is basically a subprogram whose main function is to define
-things, such as function, classes, and variables. If a module contains any
-test code, it should be placed in an if statement that checks whether
-name == '__main__'. Modules can be imported if they are in the PYTHONPATH.
-You import a module stored in the file foo.py with the statement import foo.
-
-Packages: A package is just a module that contains other modules. Packages are
-implemented as directories that contain a file named __init__.py.
-
-Exploring modules: After you have imported a module into interactive
-interpreter, you can explore it in many ways. Among them are using dir,
-examining th __all__ variable, and using the help function. The documentation
-and the source code can also be excellent sources of information and insight.
-
-The standard library: Python comes with several modules included, collectively
-called the standard library:
-    sys: A module that gives you access to several variables and functions
-    that are tightly linked with the Python interpreter.
-
-    os: A module that gives you access to several variables and functions
-    that are tightly linked with the operating system.
-
-    fileinput: A module that makes it easy to iterate over the lines of
-    several files of streams.
-
-    sets, heapq, and deque: Three modules that provide three useful data
-    structures. Sets are alse available in the form of the built-in type set.
-
-    time: A module for getting the current time and for manipulating and
-    formating times and dates.
-
-    random: A module with functions for generating random numbers, choosing
-    random elements from a sequence, and shuffling the elements of a list.
-
-    shelve: A module for creating a persistent mapping, which stores it`s
-    contents in a database with a given file name.
-
-    re: A module with support for regular expressions.
-
-===================
-
 dir(obj)  # Retrurns an alphabeized list of attribute names.
 
 help(obj)  # Provides interacitve help or help about a specific object.
@@ -110,33 +69,6 @@ imp.reload(module)  # Returns a reloaded version of a module that has already be
 
 ===================
 
-File-like objects: A file-like object is (informally) an object that
-supports a set of methods such as read and readline (and possibly write and
-writelines).
+open(name, ...)  # Opens a file and returns a file object
 
-Opening and closing files: You open a file with the open function, by
-supplying a file name. If you want to make sure your file is closed, even if
-something goes wrong, you can use the with statement.
-
-Modes and file types: When opening a file, you can also supply a mode, such
-as 'r' for read mode or 'w' for write mode. By appending 'b' to your mode,
-you can open files as binary files and turn off Unicode ecnoding and newline
-substitution.
-
-Standard streams: The three standard files (stdin, stduot, and stderr, found
-in the sys module) are file-like objects that implement the UNIX standard I/O
-mecanism (also available in Windows).
-
-Reading and writing: You read from a file of file-like object using the
-method read. You write with the method write.
-
-Reading and writing lines: Your can read lines from a file using readine and
-readlines. You can write files with writelines.
-
-Iterating over file contents: There are many ways of iterating over file
-contents. It is most common to iterate over the lines of a text file, and
-you can do this by simply iterating over the file itself. There are other
-methods too, such as using readlines, that are compatible with older versions
-of Python.
-
-==================
+===================
