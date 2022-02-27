@@ -155,4 +155,8 @@ print(first)  # 'First line\n'
 print(second)  # 'Second line\n'
 print(third)  # 'Third and final line\n'
 
-#13
+#13 Open with ASCII
+
+f = open(fname, encoding="ascii", errors="surrogateescape")
+
+#14

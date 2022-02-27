@@ -245,4 +245,25 @@ some of these events; otherwise, the user won`t be able to interact to some
 of these events; otherwise, the user won`t be able to interact with it. In
 Tkinter, event handlers are added to components with the bind method.
 
-#27
+#27 SQL
+
+The Python DB API: This API provides a simple, standardized interface to
+which database wrapper modules should confirm, to make it  easier to write programs that will work with several different databases.
+
+Connections: A connection object represents the communication link with the
+SQL database. From it, you can get individual cursors, using the cursor method. You also use the connection object to commit or roll back transactions.
+After you`re finished with the database, the connection can be closed.
+
+Cursors: A cursor in used to execute queries and to examine the  results.
+Resulting rows can be retrived one by one or many (or all) at once.
+
+Types and special values: The DB API specifies the names of a set of
+constructiors and special values. The constructors deal with date and time
+objects, as well as binary data objects. The special values represent the
+types of the relational database, such as STRING, NUMBER, and DATATIME.
+
+SQLite: This is a small, embedded SQL database, whose Python wrapper is
+included in the standard Python distribution under the name sqlite3. It`s
+fast and simple to use and does not require a separate server to be set up.
+
+#28
