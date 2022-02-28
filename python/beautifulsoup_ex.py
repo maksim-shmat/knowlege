@@ -1,6 +1,7 @@
 """Beautifulsoup4 webscrapping examples."""
 
 # ON the Internet, man!
+# pip install beautifulsoup4
 
 import bs4 as bs
 import requests
@@ -178,3 +179,16 @@ X_new = X[-days:]
 prediction = clf.predict(X_new)
 print(prediction)
 
+#1 A screen-scrapping program using beautiful soup
+
+from urllib.request import urlopen
+from bs4 import BeautifulSoup
+
+text = urlopen('http://python.org/jobs').read()
+soup = BeautifulSoup(text, 'html.parser')
+jobs = set()
+for job in soup.body.section('h2'):
+    jobs.add('{}({})'.format(job.a.string, job.a['href']))
+    print('\n'.join(sorted(jobs, key=str.lower)))
+
+#2

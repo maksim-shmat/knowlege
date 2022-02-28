@@ -73,3 +73,95 @@ open(name, ...)  # Opens a file and returns a file object
 
 ===================
 
+# urllib about
+
+asynchat  # Additional functionality for asyncore
+
+asyncore  # Asynchronous socket handler
+
+cgi  # Basic CGI support
+
+Cookie  # Cookie object manipulation, mainly for servers
+
+cookielib  # Client-side cookie support
+
+email  # Support for e-mail messages(including MIME)
+
+ftplib  # FTP client module
+
+gopherlib  # Gopher client module
+
+httplib  # HTTP client module
+
+imaplib  # IMAP4 cient module
+
+mailbox  # Reads several mailbox formats
+
+mailcap  # Access to MIME configuration through mailcap files
+
+mhlib  # Access to MH mailboxes
+
+nntplib  # NNTP client module
+
+poplib  # POP client module
+
+robotparser  # Support for parsing web server robot files
+
+Simple XMLRPCServer  # A simple XML-RPC server
+
+smtpd  # SMTP server module
+
+smtplib  # SMTP client module
+
+telnetlib  # Telnet client module
+
+urlparse  # Support for interpreting URLs
+
+xmlrpclib  # Client support for XML-RPC
+
+==================
+# urllib and Twisted
+
+urllib.urlopen(url[, data[, proxies]])  # Opens a file-like object from a URL
+
+urllib.urlretrieve(url[, fname[, hook[, data]]])  # Downloads a file from a URL
+urllib.quote(string[, save])  # Quotes special URL characters
+
+urllib.quote_plus(string[, safe])  # The same as quote, but quotes spaces as +
+
+urllib.unquote(string)  # The reverse of quote
+
+urllib.urlencode(query[, doseq])  # Encodes mapping for use in CGI queries
+
+select.select(iseq, oseq, eseq[, timeout])  # Finds sockets ready for reading/writing
+select.poll()  # Creates a poll object, for polling sockets
+
+reactor.listenTCP(port, factory)  # Twisted function; listen for connections
+
+reactr.run()  # Twisted function; main server loop
+
+===================
+# Scrapping with Tidy
+
+handle_starttag(tag, attrs)  # When a start tag is fount, attrs is a sequence
+# of (name, value) pairs
+handle_startendtag(tag, attrs)  # For empt tags; default handles start and
+# end separately.
+handle_endtag(tag)   # When and end tag is found
+
+handle_data(data)  # For textual data.
+
+handle_charref(ref)  # For character references of the form &#ref;.
+
+handle_entityref(name)  # For comments; called with only th comment contents.
+
+handle_comment(data)  # For comments; called with only the comment contents.
+
+handle_decl(decl)  # For declarations of the form <!...>.
+
+handle_pi(data)  # For processing instructions.
+
+unknown_decl(data)  # Called when an unknown declaration is read.
+
+====================
+#

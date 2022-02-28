@@ -266,4 +266,55 @@ SQLite: This is a small, embedded SQL database, whose Python wrapper is
 included in the standard Python distribution under the name sqlite3. It`s
 fast and simple to use and does not require a separate server to be set up.
 
-#28
+#28 Sockets
+
+Sockets and the socket module: Sockets are information channels that let
+programs (processes) communicate, possibly across a network. The socket module
+gives you low-level access to both client and server sockets. Server sockets
+listen at a given address for client connections, while clients simply connect
+directly.
+
+urllib and urllib2: These models let you read and download data from various
+servers, given a URl to the data source. The urllib module is a simpler
+implemetation, while urllib2 is very extensible and quit powerful. Both work
+through strightforward functions such as urlopen.
+
+The SocketServer framework: This is a network of synchronous server base
+classes, found in the standard library, which lets you write servers quite
+easily. There is even support for simple web (HTTP) servers with CGI. If you
+want to handle serveral connections simultaneously, you need to use a
+forking or threading mix-in class.
+
+select and poll: These two functions let you consider a set of connections and
+find out which ones are ready for reading and writing. This means that you can
+serve several connections piecemeal, in a round-robin fashion. This gives the
+illusion of handling several connections at the same time and, although
+superficially a bit more complicated to code, is a much more scalable and
+efficient solution than threading or forking.
+
+Twisted: this framework, from Twisted Matrix Laboratories, is very rich and
+complex, with support for most major network protocols. Eve though it is
+large and some of the idioms used may seem a bit foreign, basic usage is very
+simple and intuitive. The Twisted framework is also asynchronous, so it`s
+very efficient and scalable. If you have Twisted available, it may very well
+be the best choice for many custom network applications.
+
+#29 Parsing/scraping
+
+Screen scraping: This is the practice or downloading web pages automatically
+and extracting information from them. The Tidy program and its library version
+are useful tools for fixing ill-formed HTML before using an HTML parser.
+Another option is to use Beautiful Soup, which is very forgiving of messy
+input.
+
+CGI: The Common Gateway Interface is a way of creating dynamic web pages, by
+making a web server run and communicate with your programs and display the
+results. The cgi and cgiltb modules are useful for writing CGI scripts. CGI
+scripts are usually invoked from HTML forms.
+
+Web services: Web services are to programs with (dynamic) web pages are to
+people. You may see them as a way of making it possible to do network
+programming at a higher level of abstraction. Common web service standards are
+RSS (and its relatives, RDF and Atom), XML-RPC, and SOAP.
+
+#30
