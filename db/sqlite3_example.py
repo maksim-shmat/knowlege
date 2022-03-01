@@ -245,7 +245,7 @@ cursor.execute(""" INSERT INTO Authors(Name,PlaceofBirth)
 db.commit()
 
 cursor.execute(""" CREATE TABLE IF NOT EXISTS Books(
-        ID integere PRIMARY KEY,
+        ID integer PRIMARY KEY,
         Title text,
         Author text,
         DatePublished integer); """)

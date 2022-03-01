@@ -164,4 +164,9 @@ handle_pi(data)  # For processing instructions.
 unknown_decl(data)  # Called when an unknown declaration is read.
 
 ====================
+# CGI: The Common Gateway Interface
+
+cgitb.enable()  # Enables tracebacks in CGI scripts
+
+====================
 #
