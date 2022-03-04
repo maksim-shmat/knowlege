@@ -1,7 +1,7 @@
 """Unittest about."""
 
 ### Basic example
-'''
+
 import unittest
 
 class TestStringMethods(unittest.TestCase):
@@ -66,7 +66,7 @@ def suite():
 if __name__ == '__main__':
     runner = unittest.TextTestRunner()
     runner.run(suite())
-'''
+
 #1 unittest for doctest_ex.py file
 
 import unittest, doctest_ex
@@ -87,3 +87,26 @@ class ProductTextCase(unittest.TestCase):
                 self.assertEqual(p, x * y, 'Float multiplication failed')
 
 if __name__ == '__main__': unittest.main()
+
+#2 Calling external checkers using the subprocess module
+# pychecker???
+# Other way call PyChecker??? and PyLint from CLI ($ pychecker, $ pylint)
+
+import unittest, doctest_ex
+from subprocess import Popen, PIPE
+
+class ProductTestCase(unittest.TestCase):
+    # Insert previous tests here, from #1
+    def test_with_PyChecker(self):
+        cmd = 'pychecker', '-Q', doctest_ex.__file__.rstrip('c')
+        pychecker = Popen(cmd, stdout=PIPE, stderr=PIPE)
+        self.assertEqual(pychecker.stdout.read(),'')
+
+    def test_with_PyLint(self):
+        cmd = 'pylint', '-rn', 'doctest_ex'
+        pylint = Popen(cmd, stdout=PIPE, stderr=PIPE)
+        self.assertEqual(pylint.stdout.read(),'')
+
+if __name__ == '__main__': unittest.main()
+
+#3

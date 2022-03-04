@@ -169,4 +169,12 @@ unknown_decl(data)  # Called when an unknown declaration is read.
 cgitb.enable()  # Enables tracebacks in CGI scripts
 
 ====================
-#
+# Tests
+
+doctest.testmod(module)  # Checks docstring examples. (Takes many more arguments.)
+unittest.main()  # Runs the unit tests in the current module.
+
+profile.run(stmt[,filename])  # Executes and profiles statement. Optionally,
+# saves results to filename.
+
+====================

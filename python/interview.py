@@ -317,4 +317,24 @@ people. You may see them as a way of making it possible to do network
 programming at a higher level of abstraction. Common web service standards are
 RSS (and its relatives, RDF and Atom), XML-RPC, and SOAP.
 
-#30
+#30 Tests
+
+Test-driven programming: Basically, test-driven programming means to test
+first, code later. Tests let you rewrite your code with confidence, making
+your development and maintenance more flexible.
+
+The doctest and modules: These are indispensible tools if you want to do unit
+testing in Python. The doctest module is designed to check examples in
+docstrings but can easily be used to design test suites. For more flexibility
+and structure in your suites, the unittest framework is very useful.
+
+PyChecker and PyLint: These two tools read source code and point out potential
+(and actual) problems, They check everything from short variable names to
+unreachable pieces of code. With a little to make sure all of your rewrites
+and refactorings conform to your coding standards.
+
+Profiling: If you really care about speed and want to optimize your program
+(do this if it`s absolutely necessary), you should profile it first. Use the
+profile or cProfile module to find bottlenecks in your code.
+
+#31

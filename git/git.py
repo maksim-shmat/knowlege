@@ -122,7 +122,7 @@ git pull
 ######3 Add all files to commit
 
 git add -u
-
+git add -A
 ######4 Remove dir from git defense
 
 rm -r -f broken dir/

@@ -72,4 +72,3 @@ def search(max):
             if is_palindrom(str(i * j)) < max:
                 return max
 print(search(max))
-
