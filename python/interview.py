@@ -337,4 +337,56 @@ Profiling: If you really care about speed and want to optimize your program
 (do this if it`s absolutely necessary), you should profile it first. Use the
 profile or cProfile module to find bottlenecks in your code.
 
-#31
+#31 Compiling 
+
+Extension philosophy: Python extensions are useful mainly for two things: for
+using existing (legacy) code or for speeding up bottlenecks. If you`re
+writing your own code from scratch, try to prototype it in Python, find the
+bottlenecks, and factor them out as extensions if needed. Encapsulating
+potential bottlenecks beforehand can be useful.
+
+SWIG: SWIG is a tool for automatically generating wrapper code for your C
+libraries. The wrapper code takes care of the Python C API so you don`t have
+to deal with it. SWIG is one of the easiest and most popular ways of
+extending Python
+    
+#32 Make a useful file
+
+Setuptools: The Setuptools toolkit lets you write installer scripts,
+conventionally called setup.py. With these scripts, you can install modules,
+packages, and extensions.
+
+Setuptools commands: You can run your setup.py script with several commands,
+such as build, build_ext, install, sdist, and bdist.
+
+Executable binaries: The py2exe estenstion to Setuptools can be used to
+create executable Windows binaries from your Python programs. Along with a
+couple of extra file (which can be conveniently installed with an installer),
+these .exe file can be run wthout installing a Python interpreter separately.
+The py2app extension provides similar functionality for macOS.
+
+#33 Logging
+
+Flexibility: When designing and programming, you should aim for flexibility.
+Instead of clinging to your initial ideas, you should be willing to - and even
+prepared to - revise and change every aspect of your program as you gain
+insight into the problem at hand.
+
+Prototyping: One important technique for learning about a problem and possible
+implementations is to write a simple version of your program to see how it
+works. In Python, this is so easy that you can write several prototypes in the
+time it takes to wary of rewriting your code from scratch if you don`t have to
+- refactoring is usually a better solution.
+
+Configuration: Extracting constants from your program makes it easier to
+change them at some later point. Putting them in a configuration file makes it
+possible for your users to configure the program to behave as they would like.
+Employing environment variables and command-line options can make your
+programm even more configurable.
+
+Logging: Logging can be quite useful for uncovering problems with your program
+- or just to monitor its ordinary behavior. You can implement simple logging
+yourself, using the print statement, but the safest bet is to use the logging
+module from the standard library.
+
+#34
