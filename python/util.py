@@ -1,4 +1,4 @@
-"""A text block generator (util.py) for markup_ex.py."""
+"""A text block generator (util.py) for markup.py."""
 
 def lines(file):
     for line in file: yield line

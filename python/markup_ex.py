@@ -1,5 +1,7 @@
 """Simple Markup program."""
 
+# python3 markup_ex.py < jill.txt > jill.html
+
 import sys, re
 from util import *  # from file util.py
 
