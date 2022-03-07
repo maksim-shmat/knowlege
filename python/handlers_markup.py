@@ -1,6 +1,8 @@
 """Markup .txt to .html with blackjack and classes."""
 
 # python3 markup.py < test_input.txt(jill.txt) > text_output.html
+# Test it!
+# Hadler third ones call a block.
 
 class Handler:
     """
@@ -13,7 +15,7 @@ class Handler:
     """
 
     def callback(self, prefix, name, *args):
-        method = getattr(self, prefix + name, None)
+        method = getattr(self, prefix+name, None)
         if callable(method): return method(*args)
 
     def start(self, name):

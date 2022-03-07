@@ -48,7 +48,7 @@ class ListItemRule(Rule):
 
     def action(self, block, handler):
         handler.start(self.type)
-        handler.feed(blok[1:].strip())
+        handler.feed(block[1:].strip())
         handler.end(self.type)
         return True
 

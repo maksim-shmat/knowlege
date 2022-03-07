@@ -1,8 +1,6 @@
     Welcome to World Wide Span, Inc.
 
-    These are the corporate web pages of *World Wide Span*, Inc. We hope
-
-    you find your stay enjoyable, and that you will sample many of our products.
+These are the corporate web pages of *World Wide Span*, Inc. We hopeyou find your stay enjoyable, and that you will sample many of our products.
 A short history of the company.
 
 World Wide Span was started in the summer of 2000. The business concept was to
@@ -14,14 +12,14 @@ and focused 100% on canned goods. Today, they rank as the world's
 13,892nd online supplier of SPAN
 Destination
 From this page you may visit several of our interesting web pages:
-- What is SPAN? (http://wwspan.fu/whatisspan)
-- How do they make it? (http://wwspan.fu/howtomakeit)
-- Why should I eat it? (http://wwspan.fu/whyeatit)
 
-How to get in touch with us
+-What is SPAN? (http://wwspan.fu/whatisspan)
+-How do they make it? (http://wwspan.fu/howtomakeit)
+-Why should I eat it? (http://wwspan.fu/whyeatit)
 
-You can get in touch with us in *many* ways: By phone (555-1234), by
+How to get in touch with us?
 
-email (wwspan@wwspan.fu) or by visiting our customer feedback page
-
-(http://wwspan.fu/feedback).
+You can get in touch with us in *many* ways:
+By phone (555-1234),
+by email (wwspan@wwspan.fu)
+or by visiting our customer feedback page (http://wwspan.fu/feedback).
