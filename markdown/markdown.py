@@ -8,7 +8,7 @@
 
 **bold**
 
-`monospacd`
+`monospace`
 
 * This is a bullet point.
 * This is an another bullet point.
