@@ -1,20 +1,35 @@
 print('Content-type:text/html\n')
-from os.path import join, abspath
-from hashlib import sha1
+import cgitb; cgitb.enable()
+import psycopg2
+conn = psycopg2.connect('user=foo password=bar dbname=baz')
+curs = conn.cursor()
 import cgi, sys
-
-BASE_DIR = abspath('data')
 form = cgi.FieldStorage()
+sender = form.getvalue('sender')
+subject = form.getvalue('subject')
 text = form.getvalue('text')
-filename = form.getvalue('filename')
-password = form.getvalue('password')
-if not (filename and text and password):
-    print('Invalid parameters.')
+reply_to = form.getvalue('reply_to')
+if not (sender and subject and text):
+    print('Please supply sender, subject, and text')
     sys.exit()
-if sha1(password.encode()).hexdigest() !='8843d7f92416211de9ebb963ff4ce38125932878':
-    print('Invalid password')
-    sys.exit()
-f=open(join(BASE_DIR,filename), 'w')
-f.write(text)
-f.close()
-print('The file has been saved.')
+if reply_to is not None:
+    query = ("""
+    INSERT INTO messages(reply_to, sender, subject, text)
+    VALUES(%s, '%s', '%s', '%s')""", (int(reply_to), sender, subject, text))
+else:
+    query = ("""
+    INSERT INTO messages(sender, subject, text)
+    VALUES('%s', '%s', '%s')""", (sender, subject, text))
+curse.execute(*query)
+conn.commit()
+print("""
+<html>
+<head>
+  <title>Message Saved</title>
+</head>
+<body>
+  <h1>Message Saved</h1>
+  <hr/>
+  <a href='main.cgi'>Back to the main page</a>
+</body>
+</html>s""")
