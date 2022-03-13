@@ -25,4 +25,17 @@ Ctrl + Q
 #5 If ''' is trubles roll page from up to down
 gg, down-down to bottom of page
 
-#6
+#6 change word
+cw
+
+#7 Read Only
+vi -R jill.py
+
+#8 Moving
+0 - to start
+$ - to end
+b - up
+2w - 2 right
+hjkl, 2h, 2j, 2k, 2l
+
+#9
