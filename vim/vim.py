@@ -38,4 +38,18 @@ b - up
 2w - 2 right
 hjkl, 2h, 2j, 2k, 2l
 
-#9
+#9 Bookmarks
+:mark  # Show me all of my bookmarks
+:delmarks 2 zoru n-mark  # delete bookmarks
+m bookmark_name  # set a bookmark
+
+#10 Abbreviation
+
+:ab inc Illigitimi Non Carborundum  # set an abbreviation
+:una inc  # unset the abbreviation
+
+#11 Autocomplete
+- write word multiple times, e.g. Antarctica
+- type Ant and then use Ctrl+N (or Ctrl+P)
+
+#12
