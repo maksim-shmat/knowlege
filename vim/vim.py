@@ -32,8 +32,8 @@ cw
 vi -R jill.py
 
 #8 Moving
-0 - to start
-$ - to end
+0 - to start a string
+$ - to end a string
 b - up
 2w - 2 right
 hjkl, 2h, 2j, 2k, 2l
@@ -52,4 +52,48 @@ m bookmark_name  # set a bookmark
 - write word multiple times, e.g. Antarctica
 - type Ant and then use Ctrl+N (or Ctrl+P)
 
-#12
+#12 work with numbers of lines
+
+:2, 10d  # delete lines 2 through 10
+
+:25, $d  # delete every line from line 25 to the end of the file
+
+:%d  # delete every line
+
+:5, 10t 15  # copy lines from 5 through 10 and insert it after line 15
+
+:5, 10m 15  # move lines from t threugh 10 and insert it atrer line 15
+
+#13 Wrapmargin - how many characters into string
+:set wm=79
+
+#14 Moving on the text
+w or W(without punctuation)  # (word) move by one word to the right
+b or B(without punctuation)  # (word) move to backward
+2w and 2b
+
+#15 Moving with G
+1G  # Start page
+42G  # string n.42
+G  # Go to the bottom
+gg  # Go to the top
+
+#16 Redaction
+a  # append, with num
+c  # change, with num
+d  # delete, with num
+p  # put, with num
+y  # yank, and with num some
+s  # substitute, add simbol (or both with 2s) 
+S  # substitute whole string
+R  # replace
+~ or 22~  # change register
+
+cw  # change word
+c2b  # change word to backward on the two words
+c0  # change words to the start of string from cursor  (but cc ?)
+c$ (equal C)  # change words to the end of sting from the cursor (but cc ?)
+cc  # change string
+C  # change from cursor to the end string
+
+#17
