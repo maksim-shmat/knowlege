@@ -96,4 +96,37 @@ c$ (equal C)  # change words to the end of sting from the cursor (but cc ?)
 cc  # change string
 C  # change from cursor to the end string
 
-#17
+#17 Delete
+
+dw  # delete word from cursor, with whitespace
+de  # delete word from cursor, without space
+2dd  # delete two strings
+D == d$  # delete string from cursor to end string
+
+x  # delete char to rite from cursor
+X  # delete char to left from cursor
+2x and 3X  # etc.
+
+#18 P - put
+
+first d or vd  # deleted text save to 'put' buffer
+p  # and then p to put text from buffer in a new place
+   # or paste after string where is cursor
+
+P  # big P - put text befrore cursor
+   # or paste before string where is cursor
+
+#19 replace two char
+
+in the word mvoe place cursor to v
+and xp  -> move
+
+#20 Yanked - copy to buffer
+
+y  # copy after cursor
+3yk  # copy 3 string to up
+3y  # copy 3 string to beneath
+y$  # copy string from cursor
+yw  # yank word
+yy or Y  # copy string
+
