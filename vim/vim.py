@@ -1,4 +1,5 @@
 # Sands of Time
+
 :erlier 4m - in 4 min back
 
 :later 45s - little-bit forvard
@@ -23,12 +24,15 @@ Ctrl + S
 Ctrl + Q
 
 #5 If ''' is trubles roll page from up to down
+
 gg, down-down to bottom of page
 
 #6 change word
+
 cw
 
 #7 Read Only
+
 vi -R jill.py
 
 #8 Moving
@@ -39,6 +43,7 @@ b - up
 hjkl, 2h, 2j, 2k, 2l
 
 #9 Bookmarks
+
 :mark  # Show me all of my bookmarks
 :delmarks 2 zoru n-mark  # delete bookmarks
 m bookmark_name  # set a bookmark
@@ -49,6 +54,7 @@ m bookmark_name  # set a bookmark
 :una inc  # unset the abbreviation
 
 #11 Autocomplete
+
 - write word multiple times, e.g. Antarctica
 - type Ant and then use Ctrl+N (or Ctrl+P)
 
@@ -65,20 +71,27 @@ m bookmark_name  # set a bookmark
 :5, 10m 15  # move lines from t threugh 10 and insert it atrer line 15
 
 #13 Wrapmargin - how many characters into string
+
 :set wm=79
+:set wm=0  # remove wrapmargin
 
 #14 Moving on the text
+
 w or W(without punctuation)  # (word) move by one word to the right
 b or B(without punctuation)  # (word) move to backward
 2w and 2b
 
 #15 Moving with G
+
 1G  # Start page
 42G  # string n.42
 G  # Go to the bottom
 gg  # Go to the top
++  # Go to first new line
+-  # Go to first backward line
 
 #16 Redaction
+
 a  # append, with num
 c  # change, with num
 d  # delete, with num
@@ -87,6 +100,9 @@ y  # yank, and with num some
 s  # substitute, add simbol (or both with 2s) 
 S  # substitute whole string
 R  # replace
+I  # insert
+O  # open
+
 ~ or 22~  # change register
 
 cw  # change word
@@ -129,4 +145,39 @@ y  # copy after cursor
 y$  # copy string from cursor
 yw  # yank word
 yy or Y  # copy string
+
+#21 Amalgamate strings
+
+With a
+screen editor
+
+J  # amalgamate both string
+or 2J
+With a screen editor
+
+#22 Screenscrolling
+
+^F  # down screen
+^B  # up screen
+^D  # down halfscreen
+^U  # up halfscreen
+zENTER  # down one screen
+200zENTER  # go to 200 line
+z.  # this line to center of screen
+z-  # this line to bottom of screen
+
+#23 Reload screen for remove sys message
+^L
+
+#24 Steps into one screen
+
+H  # go to up
+M  # go to center
+L  # go to bottom
+3H  # go to 3 lines to up
+4L  # go to 4 lines to down
+
+^  # go to first not empty char in string
+3|  # go to 3 |1|2|3<-
+
 
