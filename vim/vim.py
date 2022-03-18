@@ -80,6 +80,20 @@ m bookmark_name  # set a bookmark
 w or W(without punctuation)  # (word) move by one word to the right
 b or B(without punctuation)  # (word) move to backward
 2w and 2b
+e or E(without punctuation)  # go to end word
+
+(  # go to start this sentence.
+)  # go to start next sentence.
+
+{  # go to start current block
+}  # go to start next block
+
+[[  # go to start current paragraph
+]]  # go to start next paragraph
+
+3)  # got to through 3 sentences
+d)  # del from cursor to end sentence
+2y}  # yanked two next block
 
 #15 Moving with G
 
@@ -167,7 +181,8 @@ z.  # this line to center of screen
 z-  # this line to bottom of screen
 
 #23 Reload screen for remove sys message
-^L
+
+^L  # reload page
 
 #24 Steps into one screen
 
@@ -180,4 +195,19 @@ L  # go to bottom
 ^  # go to first not empty char in string
 3|  # go to 3 |1|2|3<-
 
+# Search
+?ENTER  # repeat last search
+/ENTER
+or n, N  # after exit insert mode
 
+d?spam  # del text from cursor to the word spam
+
+fx  # find and move on new [x] simpol in the string
+
+;  # repeat fx
+,  # repeat fx to backward
+
+dfx  # del all before [x] from cursor, del with [x]
+
+tx  # find [x] but cursor before [x]
+dtx  # del [x] but not include [x]
