@@ -31,9 +31,10 @@ gg, down-down to bottom of page
 
 cw
 
-#7 Read Only
+#7 Read only
 
 vi -R jill.py
+view jill.py
 
 #8 Moving
 0 - to start a string
@@ -42,11 +43,25 @@ b - up
 2w - 2 right
 hjkl, 2h, 2j, 2k, 2l
 
+44G  # go to 44 string
+10ENTER  # go to 10 string down
+
+``  # go to previous place
+''  # go to previous place on the start string
+
 #9 Bookmarks
 
 :mark  # Show me all of my bookmarks
 :delmarks 2 zoru n-mark  # delete bookmarks
 m bookmark_name  # set a bookmark
+
+# temporary marks (for current seance)
+mx  # mark [x], or eny leter
+'x  # 'go to start string with mark
+`x  # go to mark where is it
+``  # go to previous temp mark
+''  # go to start string on the previous temp mark
+
 
 #10 Abbreviation
 
@@ -74,6 +89,18 @@ m bookmark_name  # set a bookmark
 
 :set wm=79
 :set wm=0  # remove wrapmargin
+
+# set numbers of strings
+
+:set nu  # show
+:set nonu  # hide
+
+# temporary show numbers
+
+:1, 10#  # show numbers of strings from 1-10
+:.,+20#  # show numbers of strings from cursor to +20 strings down
+:.=  # number of strings where cursor
+:/pattern/=  # number of string where pattern
 
 #14 Moving on the text
 
@@ -137,6 +164,8 @@ x  # delete char to rite from cursor
 X  # delete char to left from cursor
 2x and 3X  # etc.
 
+:%d  # del all into file
+
 #18 P - put
 
 first d or vd  # deleted text save to 'put' buffer
@@ -195,7 +224,7 @@ L  # go to bottom
 ^  # go to first not empty char in string
 3|  # go to 3 |1|2|3<-
 
-# Search
+#25 Search
 ?ENTER  # repeat last search
 /ENTER
 or n, N  # after exit insert mode
@@ -211,3 +240,94 @@ dfx  # del all before [x] from cursor, del with [x]
 
 tx  # find [x] but cursor before [x]
 dtx  # del [x] but not include [x]
+
+#26 Open file with pattern
+$ vi +/pattern file
+or POSIX(Linux) style -> $ vi -c/pattern file
+for pattern with spaces use -> $ vi +/'pat tern' file
+                               $ vim -c/pat\ tern file
+For ease use your own pattern e.g MARK, and then find your pattern.
+
+#27 List all swap files
+
+$ vi -r
+
+#28 Save file to buffer
+
+:pre  or :preserve
+
+#29 paste from one of 1-9 buffers
+
+"2p or "26p
+
+# step by step down for buffers
+
+"1pu.u.u...          #"
+
+#30 copy to named buffer a-z
+
+"dyy  # "copy to 'd' buffer
+"a7yy  # "copy 7 strings to 'a' buffer
+"a5dd  # "del 5 str to 'a' buffer
+
+# add more to buffer
+
+"zd)  # "del from cursor to end sentence and add to 'z' buffer
+2)  go to two sentence down and
+"Zy)  # "add new sentence to 'z' buffer
+
+# past from named buffer
+
+"dP  # "past buffer 'd' before cursor
+"ap  # "past buffer 'a' after cursor
+
+#32 Workd with ex
+
+:6  # got to sixths string
+
+:3, 18d  # del strings in diapazone from 3 to 18
+
+:160, 224m23  # move strings from 160 to 224 -> 24str
+
+:23, 29co100  # copy from 23 to 29 and insert afer 100str
+
+;  # mean current, with number of str, else (if ,)cursor place current
+:100; +5 p  # from 100 +5 str print
+
+#33 global find
+
+:g/pattern  # find and go to words with pattern
+:g!/pattern  # find and go to words without pattern
+:60, 123g/pattern/p  # into diapazon
+
+#34 Combined commands with pipe
+
+:1,3d | s/thier/their/  # del and then rewrite
+
+:1,5 m 10 | g/pattern/nu  # move and then view str with pattern and num str
+
+#34 Save as new file with new name
+
+:w newfile.py
+
+:230,$w newfile.py  # save from 230 string into newfile
+
+:.,600w newfile  # save from current to 600 into newfile
+
+:1, 10w newfile  # thats both commands make two insertions into file
+:340, $w >> newfile
+
+#35 Read another file from opened file with vim
+
+:read filename  # inserted core file into current place of cursor
+:r filename
+:r /home/time/data
+:$r /home/tim/data
+
+:185r /home/tim/data  # insert after 185 str
+
+:/pattern/r  /home/tim/data  # insert after pattern str
+
+#36
+
+
