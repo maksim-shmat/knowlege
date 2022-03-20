@@ -1,6 +1,10 @@
 """All about vim."""
 
 # first $ touch ~/.vimrc
+# an then $ touch ~/.exrc
+# .exrc for /home/ is global
+# .exrc local for special dir (special for prog, or special for writing, with special options how change global .exrc options)
+
 
 # Sands of Time
 
@@ -70,6 +74,7 @@ mx  # mark [x], or eny leter
 #10 Abbreviation
 
 :ab inc Illigitimi Non Carborundum  # set an abbreviation
+and then just write inc for print full name
 :una inc  # unset the abbreviation
 
 #11 Autocomplete
@@ -282,8 +287,8 @@ $ vi -r
 
 # past from named buffer
 
-"dP  # "past buffer 'd' before cursor
-"ap  # "past buffer 'a' after cursor
+"dP  # "put buffer 'd' before cursor
+"ap  # "put buffer 'a' after cursor
 
 #32 Workd with ex
 
@@ -367,4 +372,188 @@ CTRL+^  # go to previous file
 :g/editer/s//editor/g  # both equivalent
 :%s/editor/editor/g
 
-#39
+#39 Regular expression for vim
+
+  - any symbol (p.p = pip, pep etc)
+*  - bugs* = bugss, bug, bugs, bugsss etc
+^  - ^Part = Part at the begining a string, else ^ is carret
+$  - here:$ = here: at the end of string, else $ is dollar
+\  - next simbol is casual, \. - merely dot, \\ - is backslash
+[ ] - [AB] = A or B, p[aeiou]t = pat, pet, pit, pot, put
+/[Tt]he = The or the
+
+[^0-9] = that carret means - NOT, anybody but not number
+[[:alpha:]!] = a, l, p, h, or !
+[[.ch.]] = ch only, but not c and h
+[[=e=]] = e, franch e with`, and other e deviation
+
+[:alnum:] - char and num
+[:alpha:] - Alphabetical symb
+[:blank:] - space and tab
+[:cntrl:] - Control symb
+[:digit:] - num only
+[:graph:] - all visual symb, without spaces or tabs
+[:lower:] - lowercase
+[:print:] - printable symb, with spaces etc
+[:punct:] - punctuation symb
+[:space:] - space symb
+[:upper:] - upercase
+[:xdigit:] - sixteenth num
+
+\( \) - save to the buffer, \(That\) or \(this\) = That to buffer1, this to b2
+:s/\(That\) or \(this\)/\2 or \1/  # changing to this or That (result: this or That)
+:s/\(That\) or \(this\)/\u\2 or \l\1/  # changing places and change low/up cases (result: This or that)
+
+:s/\(abcd/)\1/alphabet-soup  # changeing abcd to alphabet-soup
+
+\< - start of word, \<ac = action
+\> - end of word, ac\> = maninac
+
+& - same name, :%s/Cuchinski/&, Zax/ = :%s/Cuchinski/Cuchinski;, Zax/
+:1, 10s/.*/(&)/  - make ->(every str into brakets)<- from 1-10 str
+
+\u - Upercase, :%s/yes, doctor/\uyes, \udoctor (result: Yes, Doctor)
+\l - Lower Case 
+
+\U, \L - UPPER/LOWER CASES 
+:%s/Fortran/\UFortran/  (result: FORTRAN)
+:%S/Fotran/\U&/  (same)
+
+-----------------------
+# Case1: change child to children, with the same punctuation
+# In the text is: child , child, child,, child., etc
+# And we need is: childred , children, children,, children., etc
+:%s/child\([ ,.;:!?]\)/children\1/g  # \( \)-save to buffer1 punctuation
+:%s/\<child\>/children/g  # That is for not change words as Fairchild
+-----------------------
+
+# Case2: change half word
+mgibox routine.
+mgrbox routine.
+mgabox routine.
+
+:g/mg\([ira]\)box/s//mg\1square/g
+
+result:
+mgisquare routine.
+mgrsquare routine.
+mgasquare routine.
+
+:g/mg[ira]box/s/box/square/g  # but it may change another *box words to *square
+
+result:
+mgisquare routine.
+mgrsquare routine.
+mgasquare routine.
+
+#Case3: move paragraphs
+.Rh "SYNTAX"  # name of paragraphs
+blahblah.
+.Rh "DESCRIPTION"
+blah
+blah.
+.Rh "PARAMETERS"
+blah
+    blah.
+
+:g /SYNATX/.,/DESCRIPTION/-1 move /PARAMETERS/-1  # -1 for print 1str down
+result:
+DESCRIPTION go up above SYNTAX
+
+# ir need del paragraph\
+
+:g/DESCRIPTION/.PARAMETERS/-1d
+
+#Case4: change double spaces to one space
+:%s/  */ /g
+
+#Case5: change one or more spaces after . or : to two spaces
+:%s/\([:.]\)  */\1  /g
+
+#Case6: del all empty strings
+:g/^$/d
+
+#Case7: del all empty and tab-tab or space-space strings
+:g/^[ tab]*$/d
+:g/^[ tab][ tab]*$/d
+
+#Case8: del all spaces on the start string
+:%s/^  *\(.*\)/\1/
+
+#Case9: del all spaces on the end string
+:%s/\(.*\)  *$/\1/
+
+#Case10: Insert [  >] into start all strings
+:%s/^/>  /
+
+#Case11: Add . to end next six strings
+
+:.,+5s/$/./
+
+#Case12: change parts of sentens between defice ->[-]<-
+
+:%s/\(.*\) - \(.*\)/\2 - \1/
+
+#Case13: change all leters on the UPERCASE
+
+:%s/.*/\U&/  # faster
+:%s/./\U&/g  # little bit slower
+
+#Case14: Reverse positions of strings
+:g/.*/mo0
+:g/^/mo0
+
+#Case15: Where is not typing "Paid in full" print "Overdue"
+:g!/Paid in full/s/$/ Overdue/
+:v/Paid in full/s/$/ Overdue/
+
+#Case16: Every string not start with number move to end of text
+
+:g!/^[[:digit:]]/m$
+:g/^[^[:digit:]]/m$
+
+#Case17: Remove numbers into head of paragraphs, from start of strings
+
+:%s/^[1-9][0-9]*\.[1-9][0-9.]* //
+
+#Case18: Change word Fortran to FORTRAN (acronym FORmula TRANslation)
+
+:%s/\(For\)\(tran\)/\U\1\2\E (acronym of \U\1\Emula \U\2\Eslation)/g
+
+#Case19 Make 10 copies 12-17 str to end file
+:1,10g/^/ 12, 17t$
+
+#40 :set
+
+:set all  # list all settings
+ 
+#41 vim and UNIX
+
+:!date  go to bash, see date, press Enter, and go back to vim
+
+:sh  # go to bash, Enter, back vim
+
+:r !sort jill.csv  # open file, sort and write info from jill.csv
+
+:!ls  # go see how named files in current dir
+:r filename
+
+:16,19!sort  # sort strings from 16-19
+
+cursor to 16 string and 5!!sort  # sort from cursor 16str-19
+or !5!sort
+
+go cursor to the string for change cases
+!)  # then write for change lower to upper cases
+tr '[:lower:]' '[:upper:]' ENTER
+
+#42 map
+
+e.g. change places two word 'the' and 'scroll', in the sentence 'you can the scroll page'
+cursor on to 'the'
+dwelp  # dw - del word, e - go to end next word, l - move to one space to right, p - put del word
+then map it command
+:map v dwelp  # v is used in vim, use another button!
+touch v for change plces any two words
+
+#43
