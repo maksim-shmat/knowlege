@@ -1,3 +1,7 @@
+"""All about vim."""
+
+# first $ touch ~/.vimrc
+
 # Sands of Time
 
 :erlier 4m - in 4 min back
@@ -137,7 +141,7 @@ a  # append, with num
 c  # change, with num
 d  # delete, with num
 p  # put, with num
-y  # yank, and with num some
+y  # yank
 s  # substitute, add simbol (or both with 2s) 
 S  # substitute whole string
 R  # replace
@@ -328,6 +332,39 @@ $ vi -r
 
 :/pattern/r  /home/tim/data  # insert after pattern str
 
-#36
+#36 Open both or more files.
 
+$ vi file1 file2
+:args(or :ar)  # how many files was open
+:rewind(or :rew)  # change to first file in a list
+:last  # change to last file in a list of files
+change file1
+:w  # save file1
+change file2
+:x  # save and quit
+:e!  # or remove all changes
 
+#37 Open more files from one's opened
+
+open file1 and then
+:e file2
+CTRL+^  # go to previous file
+
+#38 Global substitutes
+
+:s/old/new/
+:s/old/nen/g  # g is global
+:50, 100s/old/new/g  # substitute from 50str to 100
+
+:1, $s/old/new/g  # substitute in all file
+:%s/old/new/g  # substitute ina all file
+:%s/old/nes/gc  # g - global and c - confirm all changes
+:e!  # remove old version from buffer i.e remove changes
+
+:g/pattern/s/old/new/g
+:g/<body>/s/of/on/g  # target substitute of pattern
+
+:g/editer/s//editor/g  # both equivalent
+:%s/editor/editor/g
+
+#39

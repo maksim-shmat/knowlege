@@ -1,8 +1,61 @@
 """Regular Expressions about."""
 
 '''
+.  - any symbol (p.p = pip, pep etc)
+*  - bugs* = bugss, bug, bugs, bugsss etc
+^  - ^Part = Part at the begining a string, else ^ is carret
+$  - here:$ = here: at the end of string, else $ is dollar
+\  - next simbol is casual, \. - merely dot, \\ - is backslash
+[ ] - [AB] = A or B, p[aeiou]t = pat, pet, pit, pot, put
+/[Tt]he = The or the
+
+[^0-9] = that carret means - NOT, anybody but not number
+[[:alpha:]!] = a, l, p, h, or !
+[[.ch.]] = ch only, but not c and h
+[[=e=]] = e, franch e with`, and other e deviation
+
+[:alnum:] - char and num
+[:alpha:] - Alphabetical symb
+[:blank:] - space and tab
+[:cntrl:] - Control symb
+[:digit:] - num only
+[:graph:] - all visual symb, without spaces or tabs
+[:lower:] - lowercase
+[:print:] - printable symb, with spaces etc
+[:punct:] - punctuation symb
+[:space:] - space symb
+[:upper:] - upercase
+[:xdigit:] - sixteenth num
+
+\( \) - save to the buffer, \(That\) or \(this\) = That to buffer1, this to b2
+:s/\(That\) or \(this\)/\2 or \1/  # changing to this or That (result: this or That)
+:s/\(That\) or \(this\)/\u\2 or \l\1/  # changing places and change low/up cases (result: This or that)
+
+:s/\(abcd/)\1/alphabet-soup  # changeing abcd to alphabet-soup
+
+\< - start of word, \<ac = action
+\> - end of word, ac\> = maninac
+
+& - same name, :%s/Cuchinski/&, Zax/ = :%s/Cuchinski/Cuchinski;, Zax/
+:1, 10s/.*/(&)/  - make ->(every str into brakets)<- from 1-10 str
+
+\u - Upercase, :%s/yes, doctor/\uyes, \udoctor (result: Yes, Doctor)
+\l - Lower Case 
+
+\U, \L - UPPER/LOWER CASES 
+:%s/Fortran/\UFortran/  (result: FORTRAN)
+:%S/Fotran/\U&/  (same)
+
+-----------------------
+# Case1: change child to children, with the same punctuation
+# In the text is: child , child, child,, child., etc
+# And we need is: childred , children, children,, children., etc
+:%s/child\([ ,.;:!?]\)/children\1/g  # \( \)-save to buffer1 punctuation
+:%s/\<child\>/children/g  # That is for not change words as Fairchild
+-----------------------
+
 \d - Some digit
-\D - Everything BUT a digit
+\D - Everything BUT a digit 
 \s - White space
 \S - Everything BUT a white space
 \w - Some letter
