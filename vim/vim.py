@@ -285,6 +285,17 @@ $ vi -r
 2)  go to two sentence down and
 "Zy)  # "add new sentence to 'z' buffer
 
+# work with @-functions of buffer
+
+just write in a text field:
+cwbubsyexample^[  # that means cw bubsyexample CTRL-V ESC
+then del and move it to the buffer:
+"gdd    #"
+and then go to start a word, and replace it with buffer
+@g
+result: word -> bubsy^[
+emmm...
+
 # past from named buffer
 
 "dP  # "put buffer 'd' before cursor
