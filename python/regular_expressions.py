@@ -1,5 +1,6 @@
 """Regular Expressions about."""
 
+# : - means regular expressions for vim
 '''
 .  - any symbol (p.p = pip, pep etc)
 *  - bugs* = bugss, bug, bugs, bugsss etc
