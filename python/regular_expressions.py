@@ -66,15 +66,21 @@ $  - here:$ = here: at the end of string, else $ is dollar
 \. - A dot
 
 {x,y} - A number that has a length between x and y
-+ - At least one
-? - None or one
-* - Everything
++ - ho(use|me)+ = house, home, but without ho
+? - None or one, free?d = fred an freed
+* - Everything, ho(use|me)* = ho, house, home
 $ - At the end of a string
 ^ - At the beginning of a string
-| - Either Or
+| - A Or B
 [] - Value range
-{x} - x times
-{x,y} - x to y times
+{x} - x times, (home|house){2} = homehome, homehouse, househome, househouse, nothing more.
+{n,} - min n and more repeats
+{x,y} - repeat from x to y
+* = {0,}
++ = {1,}
+* = {0,1}
+
+(...) - ho(use|me) = house|home, (house|home) = home, homehouse, househomhousehome etc.
 
 \n - New line
 \t - Tab
