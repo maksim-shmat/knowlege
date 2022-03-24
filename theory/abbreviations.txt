@@ -1,0 +1,37 @@
+    LibreOffice
+
+.ods - open document spreadsheet
+.odt - open document text
+.odp - open document presentations
+.odb - open data bases
+.odg - open document graphics
+.odc - open document charts
+.odf - open document formulas
+
+VBA - Visual Basic for Applications
+
+    #
+
+OLE - Object Linking and Embedding
+
+DPI - dots per inch
+
+EPS - Encapsulated PostScript
+
+TSA - Time Stamping Authority
+
+FTP - File Tansfer Protocol
+
+VCS - Version Control System
+
+LAN - Local Area Network
+
+    #Sentence philosofy
+
+WYSIWYG - What You See Is What You Get
+UNIX(for) - You Asked For It, You Got It
+
+1. Other
+
+vim - vi Improved
+

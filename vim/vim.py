@@ -4,7 +4,7 @@
 # an then $ touch ~/.exrc
 # .exrc for /home/ is global
 # .exrc local for special dir (special for prog, or special for writing, with special options how change global .exrc options)
-
+:version  # how function is available in your version
 
 # Sands of Time
 
