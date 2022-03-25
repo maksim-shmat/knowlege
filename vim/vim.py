@@ -5,6 +5,7 @@
 # .exrc for /home/ is global
 # .exrc local for special dir (special for prog, or special for writing, with special options how change global .exrc options)
 :version  # how function is available in your version
+:help  # read documentation
 
 # Sands of Time
 
@@ -42,6 +43,8 @@ cw
 #7 Read only
 
 vi -R jill.py
+# or vim -Z jill.py
+# or rview jill.py
 view jill.py
 
 #8 Moving
@@ -567,4 +570,27 @@ then map it command
 :map v dwelp  # v is used in vim, use another button!
 touch v for change plces any two words
 
-#43
+#43 Prefixes
+
+-o - open all files into same windows, or open empty window if files less than
+
+-O - open all into vertical windows
+
+-z - closed mode, without bash support or other helps
+# and [rvim] same, with stop seans since ^Z
+
+#44 Remote server commands vith vim...
+
+-remote file
+-remote-silent file
+-remote-wait file
+-remote-send file
+-servername name
+-remote-expr expr
+-remote-wait-silent file
+-remote-tab
+-remote-send keys
+-remote-wait-silent file
+-serverlist
+
+
