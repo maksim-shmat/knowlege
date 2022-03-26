@@ -134,6 +134,11 @@ e or E(without punctuation)  # go to end word
 d)  # del from cursor to end sentence
 2y}  # yanked two next block
 
+Ctrl + o  # takes your back to older position
+Ctrl + i  # to newer position
+
+%  # on the braket go to another one braket, from ( --> )
+
 #15 Moving with G
 
 1G  # Start page
@@ -237,21 +242,26 @@ L  # go to bottom
 3|  # go to 3 |1|2|3<-
 
 #25 Search
-?ENTER  # repeat last search
-/ENTER
-or n, N  # after exit insert mode
+	?ENTER  # repeat last search
+	/ENTER
+	or n, N  # after exit insert mode
 
-d?spam  # del text from cursor to the word spam
+	d?spam  # del text from cursor to the word spam
 
-fx  # find and move on new [x] simpol in the string
+	fx  # find and move on new [x] simpol in the string
 
-;  # repeat fx
-,  # repeat fx to backward
+	;  # repeat fx
+	,  # repeat fx to backward
 
-dfx  # del all before [x] from cursor, del with [x]
+	dfx  # del all before [x] from cursor, del with [x]
 
-tx  # find [x] but cursor before [x]
-dtx  # del [x] but not include [x]
+	tx  # find [x] but cursor before [x]
+	dtx  # del [x] but not include [x]
+        
+        :set ic  # set ignore case
+        :set noic  # unset ignore case
+        :set hls  # highlite search results
+        :set is  # incsearch, show partial matches for a search phrases
 
 #26 Open file with pattern
 $ vi +/pattern file
@@ -593,4 +603,7 @@ touch v for change plces any two words
 -remote-wait-silent file
 -serverlist
 
+#45 Where am I?
+Ctrl + G  # number of current string and path to file
 
+#46
