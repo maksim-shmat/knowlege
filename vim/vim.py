@@ -403,7 +403,50 @@ CTRL+^  # go to previous file
 ^  - ^Part = Part at the begining a string, else ^ is carret
 $  - here:$ = here: at the end of string, else $ is dollar
 \  - next simbol is casual, \. - merely dot, \\ - is backslash
+\| - set variants (house\|home)
+\+ - one or more from previous regular expression
+\= - one or none from previous regular expression
+\{n,m} - diapazon from previous regular expression {0,32000}
+\{n} - n prev re
+\{n,} - how many more prev re, but not less n
+\{,m} - how many more prev re, from 0 to m
+\{} - how many more prev re, from 0
+\{-n,m} - how many min prev re, in diapazon from -n to m
+\{-n}
+\{-n,}
+\{-,m}
+
+\i - any symbol from isindent
+\I - any symbol from isindent, but without numbers
+
+\k - any keyword from iskeyword
+\K - any keyword but witout numbers
+
+\f - any filename from isfname
+\F - any filename from isfname, but without numbers
+
+\p - any printable symbol
+\P - but without numbers
+
+\s - spaces with taps
+\S - All that not spaces and tabs
+
+\b - backspace
+
+\e - escape
+
+\r - carret
+
+\t - tab
+
+\n - ???
+
+~ - last changeble string
+
+
+
 [ ] - [AB] = A or B, p[aeiou]t = pat, pet, pit, pot, put
+
 /[Tt]he = The or the
 
 [^0-9] = that carret means - NOT, anybody but not number
@@ -550,7 +593,10 @@ DESCRIPTION go up above SYNTAX
 #40 :set
 
 :set all  # list all settings
- 
+
+:set laststatus=2  # show status: filename [+], strings amount, percentage.
+:set laststatus=1  # off show status
+
 #41 vim and UNIX
 
 :!date  go to bash, see date, press Enter, and go back to vim
@@ -582,9 +628,10 @@ touch v for change plces any two words
 
 #43 Prefixes
 
--o - open all files into same windows, or open empty window if files less than
+vim -o file1 file2 - open all files into same windows, or open empty window if files less than
+or vim -o5 file1 file2 - two windows is visual and three is hiden
 
--O - open all into vertical windows
+vim -O file1 file2 - open all into vertical windows
 
 -z - closed mode, without bash support or other helps
 # and [rvim] same, with stop seans since ^Z
@@ -606,4 +653,75 @@ touch v for change plces any two words
 #45 Where am I?
 Ctrl + G  # number of current string and path to file
 
-#46
+#46 Completition text or command
+first type e.g. :e
+then tap Ctrl + D
+
+#47 Through the windows
+
+Ctrl + w + w
+Ctrl + w + j (down)
+Ctrl + w + b (bottom)
+Ctrl + w + t (top)
+
+#48 Jump to a subject
+
+Position the cursor on a tag (e.g. |bars|) and hit CTRL-].
+Jump back:  Type CTRL-O.  Repeat to go further back.
+
+#49 Split windows
+
+:split  # two windows for one file
+:vsplit  # vertical two window for one file
+or :split jill.py
+
+:[n]split [++opt][+cmd][file]
+:15split ++fileformat=unix otherfile
+
+:new jill.py  # open new split window
+:vnew jill.py  # open new vertical split window
+:[n]new [++opt][+cmd][file]
+
+:sview filename  # open horizontal split window read only
+:sfind [++opt] [+cmd] filename  # first find file, if it be than open window
+
+# change places of windows
+
+Ctrl-w r  # to -->
+Ctrl-w R  # from there <--
+Ctrl-w x
+
+# change size of windows
+
+Ctrl-w =  # coequal
+
+:resize -4  # decrease window onto four lines
+:cmdheight  # for resize bottom ex-window
+:verticalresize n
+
+Ctrl-w >,<  # change width
+Ctrl-w |  # default width
+
+z22  3 set window 22 lines
+
+#50 Tags open tag into new window
+
+open :help
+write any tag e.g "bars"
+type:
+:stag! bars  # article "bars" will be opened in a new window
+
+#51 Open file under the cursor(link?) into new tab
+^Wgf
+^WgF  # and cursor after filename
+
+#52 Open file in a new tab
+
+:tabnew jill.py
+or :tabnew  # empty file
+
+:tabclose  # close current tab
+:tabonly  # close all another without this tab
+
+Ctrl + PgUp, PgDn  # change tab in terminal
+

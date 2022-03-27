@@ -1,5 +1,3 @@
-"""Encryption files in vim with pass."""
-
 #1 Encrypt
 vim -x jill.py
 pass:123
