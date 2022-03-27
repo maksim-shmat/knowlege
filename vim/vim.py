@@ -725,3 +725,103 @@ or :tabnew  # empty file
 
 Ctrl + PgUp, PgDn  # change tab in terminal
 
+#53 [+] Convolution
+
+zA, za - change all, one
+Zc, zc - close all, one
+zD, zd - del all, one
+zE - del all
+zf - make convolution from cursor line to move cmd
+countzF - make conv from curlor line to count lines
+zM - foldlevel opetion == 0
+zN, zn, zi - foldenable option on/off
+zO, zo - open conv all(enclose), one
+zj, zk - move cursor to next conv
+zm, zr - -1 or +1 foldlevel option
+
+3zF - convolution three lines
+or 2zfj - conv two lines down
+zfgg - conv whole file if cursor is bottom
+
+:set foldcolumn=n  # set suggestions enclose convolution about
+
+:set foldmethod=indent  # convolution with parameters of strings
+:set shiftwidth=4  # check tabulation for indent
+:set foldlevel=2  # deep view in convolution
+:set foldlevel=0  # only headers
+
+then (zr) (zm) - open/closed
+
+#54 Autofoldering prog.lang.
+
+set foldcolumn=3
+zE - remove all previous folders
+
+:set foldenable
+:set foldmethod=syntax
+
+#55 Autocomplete
+
+:imap Tab <C-P> - autocomplete to Tab e.g.
+
+Ctrl-x Ctrl-l - autocomplete whole string
+Ctrl-n, Ctrl-p - up/down in list of variants
+and Ctrl-e - esc
+
+Ctrl-x Ctrl-n - autocomplete with keyword
+
+Ctrl-x Ctrl-k - autocomplete with dictionary
+
+Ctrl-x Ctrl-t - autocomplete with tesaurus
+
+Ctrl-x Ctrl-i - autocomplete with include files
+
+Ctrl-x Ctrl-] - autocomplete with tags
+
+Ctrl-x Ctrl-f - autocomplete with filename
+
+Ctrl-x Ctrl-d - autocomplete with macros name
+
+Ctrl-x Ctrl-v - comand line completition
+
+#56 Digraphs for diacritics marks
+
+Ctrl-k c , = ç
+Ctrl-k c . = ċ
+Ctrl-k a ! = à
+
+# Greec
+
+Ctrl-k p * = π
+
+# ?
+
+Ctrl-k ?I = ¿
+
+Ctrl-k ss = ß
+
+# digraphs with set digraph
+
+:set digraph
+
+c Backspace , = Ç
+A BS ! = à
+- BS = == ¯ UPPER SCORE, or UPPER DASH
+
+' Bs ' = ´
+( Bs a = ă
+< Bs a = ǎ
+, Bs c = ç
+> Bs o = ô
+! Bs a = à
+- Bs o = º
+a Bs - = ā
+o Bs / = ø
+? Bs n = ñ
+: Bs e = ë
+
+:digraph  - list of digraphs
+
+#57 Show dir/files and edit files in another window
+
+o - open file
