@@ -685,6 +685,11 @@ or :split jill.py
 :sview filename  # open horizontal split window read only
 :sfind [++opt] [+cmd] filename  # first find file, if it be than open window
 
+:clo  # close current window
+:hid  # hidden current window
+:on  # only current window is vision
+
+
 # change places of windows
 
 Ctrl-w r  # to -->
@@ -825,3 +830,108 @@ o Bs / = ø
 #57 Show dir/files and edit files in another window
 
 o - open file
+
+#58 Make .html from .txt
+
+go to jill.txt
+write:
+:runtime!syntax/2html.vim  # make entire file
+
+:25, 44TOhtml  # make chank file
+
+#59 Difference
+
+$ vimdiff old_file new_file
+or
+$ vim -d old_file new_file
+
+#60 Undo/redo
+
+:2undo or 2u
+
+:3redo or 2Ctrl-R
+
+#61 fast change two symbols
+xp - erdo --> redo
+
+#62 Fast change two sentence
+
+ddp - up sentence to down
+
+#63
+
+#62 Fast change two sentence
+
+ddp - up sentence to down
+
+#63
+
+#62 Fast change two sentence
+
+ddp - up sentence to down
+
+#63
+
+#62 Fast change two sentence
+
+ddp - up sentence to down
+
+#63
+
+#62 Fast change two sentence
+
+ddp - up sentence to down
+
+#63
+
+#62 Fast change two sentence
+
+ddp - up sentence to down
+
+#63
+
+#62 Fast change two sentence
+
+ddp - up sentence to down
+
+#63
+
+#62 Fast change two sentence
+
+ddp - up sentence to down
+
+#63
+
+#62 Fast change two sentence
+
+ddp - up sentence to down
+
+#63 window last commands
+:Ctrl-F
+exit from window:
+Ctrl-C
+
+#64 If you traped in :ex mode
+
+Q - move you to :ex mode
+write:
+:vi  # go out from :ex mode
+
+#65 Join short sentence
+
+J or 3J
+
+#66 Add spaces around plus
+
+f+  # find + in sentence, if need find to backward press - ,
+s + <Esc>  # rm + and add space, plus, space, esc
+;  # find next plus
+. repeat
+
+#67 Fast find
+
+cursor on the word
+*
+n,n
+
+#68

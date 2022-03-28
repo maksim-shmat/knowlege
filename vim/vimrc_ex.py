@@ -1,5 +1,7 @@
 """.vimrc about."""
 
+$ vim -u NONE -N  # Don't load settings from .vimrc
+
 #1 Comments
 
 " " it is a comment into .vimrc file
@@ -64,7 +66,7 @@ function SetTimeOfDayColors()
     let colorScheme = "evening"
   endif
   " if our calculated value is different, call the colorscheme command. "
-  if g:colors_name != colorScheme  # g:color_name --> j ?
+  if g:colors_name !~ colorScheme  # g:color_name --> j ?
     echo "setting color scheme to" . colorScheme
     execute "colorscheme " . colorScheme
   endif
@@ -78,7 +80,7 @@ endfunction
 function SetTimeOfDayColors()
   "currentHour will be 0, 1, 2, or 3 "
   let g:CurrentHour = (strftime("%H") + 0) / 6
-  if g:colors_name != g:Favcolorschemes[g:CurrentHour]
+  if g:colors_name !~ g:Favcolorschemes[g:CurrentHour]
     execute "colorscheme " . g:Favcolorschemes[g:CurrentHour]
     echo "execute " "colorscheme " . g:Favcolorschemes[g:CurrentHour]
     redraw
@@ -122,15 +124,15 @@ autocmd CursorMovedI * call CheckFileType()
 # write a function
 
 function CheckFileType()
-if exists("b:countCheck") == 0
-  let b:countCheck = 0
-endif
-let b:countCheck += 1
-"Don't start detecting until approx. 20 chars. "
+  if exists("b:countCheck") == 0
+    let b:countCheck = 0
+  endif
+  let b:countCheck += 1
+  "Don't start detecting until approx. 20 chars. "
   if &filetype == "" && b:contCheck > 20 && b:countCheck < 200
     filetype detect
   endif
-  endfunction
+endfunction
 
 #6 Add autocmd to auto group
 
@@ -167,7 +169,7 @@ endfunction
 
 #8 Script how show time into .html (but may more formats)
 
-autocmd BufWritePre,FileWritePre * .html mark s|call LastMod()| 's
+autocmd BufWritePre,FileWritePre * .html mark s|call LastMod()|'s
 "'my mark not includ it 
 fun LastMod()
   " if therer are more than 20 lines, set our max to 20, oterwise, scan "
@@ -177,8 +179,7 @@ fun LastMod()
   else
     let lastModifiedline = line("$")
   endif
-  exe "1," . lastModifiedline . "g/Last modified: /s/Last modified:
-  .*/Last modified: " .
+  exe "1," . lastModifiedline . "g/Last modified: .*/s//Last modified: " .
   \ strftime("%Y %b %d")
 endfun
 
@@ -187,4 +188,3 @@ endfun
 autocmd BufRead,BufNewFile * .html set shiftwidth=2
 autocmd BufRead,BufNewFile * .c, *.h set shiftwidth=4
 
-#10

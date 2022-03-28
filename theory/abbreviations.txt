@@ -10,7 +10,38 @@
 
 VBA - Visual Basic for Applications
 
-    #
+
+#Sentence philosofy
+
+WYSIWYG - What You See Is What You Get
+UNIX(for) - You Asked For It, You Got It
+
+1. Python/Django
+
+WSGI - Web Server Gateway Interface
+
+CGI - Common Gateway Interface
+
+ASGI - Asyncronous Gateway Interface
+
+2. Web
+
+OTN - Optical Transport Networks
+
+DWDM - Dense Wavelength Division Multiplexing
+
+NIC - Network Interface Card
+
+ARP - Address Resolution Protocol
+
+LCN - Logical Channel Number
+
+prg - propagation
+trns - transmission
+
+ITU - International Telecommunication Union
+
+ISO - International Standard Organization
 
 OLE - Object Linking and Embedding
 
@@ -25,13 +56,3 @@ FTP - File Tansfer Protocol
 VCS - Version Control System
 
 LAN - Local Area Network
-
-    #Sentence philosofy
-
-WYSIWYG - What You See Is What You Get
-UNIX(for) - You Asked For It, You Got It
-
-1. Other
-
-vim - vi Improved
-
