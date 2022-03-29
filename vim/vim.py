@@ -934,4 +934,24 @@ cursor on the word
 *
 n,n
 
-#68
+#68 delete back, or there and back again
+
+db and x
+
+and b  # back
+dw
+
+#69 delete a word
+
+if cursor between words you may del next word without moving
+
+daw
+
+#70 addition and subtraction
+
+cursor on the number or will be able next number in left into str
+and Ctrl-a
+40 11Ctrl-a --> 51
+40 -10Ctrl-x --> 30
+
+#71
