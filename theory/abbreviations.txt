@@ -56,3 +56,28 @@ FTP - File Tansfer Protocol
 VCS - Version Control System
 
 LAN - Local Area Network
+
+OSI - Open System Inter Connection
+
+API - Application Programm Interface
+
+PDU - Protocol Data Unit
+
+SSL - Secure Socket Layer
+
+PTT - Round Tip Time
+
+SIR - Sustained Information Rate
+
+IIR - Instantaneous Information Rate
+
+PIR - Peak Information Rate
+
+QoS - Quality of Service
+
+WFQ - Weighted Fair Queueing
+
+FDM - Frequency Division Multiplexing
+
+TCP - Transmisson Control Protocol
+
