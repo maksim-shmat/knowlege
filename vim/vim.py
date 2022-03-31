@@ -6,6 +6,7 @@
 # .exrc local for special dir (special for prog, or special for writing, with special options how change global .exrc options)
 :version  # how function is available in your version
 :help  # read documentation
+:h operator  # documentation is awesome
 
 # Sands of Time
 
@@ -954,4 +955,39 @@ and Ctrl-a
 40 11Ctrl-a --> 51
 40 -10Ctrl-x --> 30
 
-#71
+But! number with 0 e.g 007 it is 8-char(octal numeric system) system, and then
+007 + 001 = 010(in 8-char sys) 010 --> means 8
+
+:set nrformats=  # that option interpret all number in 
+                 # 10-char(decimal numeric system) system
+
+#71 del into insert mode, and into bash
+
+Ctrl-h  # del a char to the left of cursor
+
+Ctrl-w  # del a word to the left of cursor
+
+Ctrl-u  # del a part of string to the left of cursor
+
+#72 One bullet for command 
+
+insert mode, write text...
+Ctrl-o (and zz e.g.)  # up screen
+
+#73 insert buffer one time insert mode
+
+insert mode, write text
+
+Ctrl-r + buffer(a-z, 1-9)
+# and how yanked?
+
+#74 Arithmetic calculations
+
+write:
+ 6 clutches, each costing $12, total $
+then:
+Ctrl-r=  6*12ENTER
+result:
+ 6 clutches, each costing $12, total $72
+
+#75
