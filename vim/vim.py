@@ -990,4 +990,18 @@ Ctrl-r=  6*12ENTER
 result:
  6 clutches, each costing $12, total $72
 
-#75
+#75 insert unicode and ad hoc characters
+
+in insert mode:
+Ctrl-v + 123  # three characters
+
+Ctrl-vu + 1234 or 99bf # Unicode ÿ 馿
+
+# if you need asc what the symbol in this text - put cursor on the ??? 
+# and insert <ga>
+
+Ctrl-k + 12  == ½  # for both symbols(digraphs)
+Ctrl-k + bo  == ぼ
+Ctrl-l + V%  == Ў
+:digraphs
+:h digraph-table  # all digraphs
