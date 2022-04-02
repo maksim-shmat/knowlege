@@ -198,6 +198,9 @@ P  # big P - put text befrore cursor
 in the word mvoe place cursor to v
 and xp  -> move
 
+# replace one char
+gr
+
 #20 Yanked - copy to buffer
 
 y  # copy after cursor
@@ -1005,3 +1008,64 @@ Ctrl-k + bo  == ぼ
 Ctrl-l + V%  == Ў
 :digraphs
 :h digraph-table  # all digraphs
+
+#76 Visual mode
+
+v - one char
+
+V - string
+
+Ctrl-v - block
+
+gv - repeat last 
+
+o - go to brink visual block
+
+# receipte how change visual block
+start visual
+vbb  # go to words back, but start not there where need
+o  # leap to another brink
+e  # go to better start place
+
+#77 Settings for Python
+
+:set shiftwidth=4 softtabstop=4 expandtab
+
+#78 How check word inside symbols?
+
+<a href="#">one</a>  # for one
+
+vit  # visually inside the tag
+U  # change register to capital 
+
+# and there for non visual analog
+gUit  # change register to capital
+j.
+j.
+
+#79 How to make a table with lines
+First we have a table without lines g.e:
+
+Chapter            Page
+Normal mode         15
+Insert mode         32
+Visual mode         88
+
+Then:
+go cursor to the empty place between colones
+Ctrl-v3j  # empty vertical block for del empty space
+x...  # del empty space
+gv  # repeat vertical block
+r|  # change empty block to the vertical line
+yyp  # copy first string and past it for not empty pattern
+Vr-  # change not empty pattern to the horizontal line
+
+Result:
+
+Chapter    |  Page
+------------------
+Normal mode|  15
+Insert mode|  32
+Visual mode|  88
+
+#80 
