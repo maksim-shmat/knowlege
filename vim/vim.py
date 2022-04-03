@@ -154,6 +154,7 @@ gg  # Go to the top
 a  # append, with num
 c  # change, with num
 d  # delete, with num
+e  # edit
 p  # put, with num
 y  # yank
 s  # substitute, add simbol (or both with 2s) 
@@ -318,18 +319,45 @@ emmm...
 "dP  # "put buffer 'd' before cursor
 "ap  # "put buffer 'a' after cursor
 
-#32 Workd with ex
+#32 Work with ex, ex-mode
 
 :6  # got to sixths string
 
 :3, 18d  # del strings in diapazone from 3 to 18
 
 :160, 224m23  # move strings from 160 to 224 -> 24str
-
-:23, 29co100  # copy from 23 to 29 and insert afer 100str
+:[range]move{address}
+:'<,'>m$  # visual block move to the end of file
 
 ;  # mean current, with number of str, else (if ,)cursor place current
 :100; +5 p  # from 100 +5 str print
+
+:[6, 12]delete[x]  # del to buffer x
+:[6, 12]yank[x]  # copy
+:[18]put[x]  # put after 18 line
+
+========================
+:[range]copy{address}  # copy, 82copy95 - add copy string from 82 to 95 str
+# or :6copy. - copy to next string from the cursor
+# or :6co.
+# or :6t.
+# :t.  # copy current string and past to the next string(yyp analog)
+# :t$  # copy currnet string to the end of file
+# :'<,'>t0  # '<,'> == visual mode block, and copy it to the start file
+# :'<,'>t$  # visual block copy to the end of file
+:23, 29co100  # copy from 23 to 29 and insert afer 100str
+========================
+
+:[range]join  # join strings
+:[range]normal{command}  # fulfil command from normal mode for diapazon strings
+:[range]substitute/{pattern}/{string}/[flags]  # change pattern to the string
+:[range]global/{pattern}/[cmd]  # fulfil command[cmd] for pattern globally
+
+:h ex-cmd-index  # all ex-commands
+
+@:  # repeat last ex-cmd
+@@  # repeat-repeat last ex-cmd
+@:  # after @@ backward one step, or use Ctrl-o
 
 #33 global find
 
@@ -527,7 +555,7 @@ blah.
 blah
     blah.
 
-:g /SYNATX/.,/DESCRIPTION/-1 move /PARAMETERS/-1  # -1 for print 1str down
+:g /SYNATX/.,/DESCRIPTION/-1 move /PARAMETERS/-1  # -1 for print 1str less
 result:
 DESCRIPTION go up above SYNTAX
 
@@ -591,7 +619,7 @@ DESCRIPTION go up above SYNTAX
 
 :%s/\(For\)\(tran\)/\U\1\2\E (acronym of \U\1\Emula \U\2\Eslation)/g
 
-#Case19 Make 10 copies 12-17 str to end file
+#Case19 Make 10 copies 12-17 str to end of file
 :1,10g/^/ 12, 17t$
 
 #40 :set
@@ -694,22 +722,44 @@ or :split jill.py
 :on  # only current window is vision
 
 
-# change places of windows
+# windows
 
-Ctrl-w r  # to -->
-Ctrl-w R  # from there <--
+Ctrl-w v (and :e jill.txt) # open vertical window
+or :vsplit jill.txt
+   :vsp jill.txt
+
+Ctrl-w s (and :e jill.py) # open horizontal window
+or :split jill.py
+   :sp jill.py
+
+Ctrl-w c  # close current window
+or :close  # for close current window
+   :clo
+or :only  # for close other windows
+   :on
+
+Ctrl-ww  # go to next window
+Ctrl-w h,j,k,l  # go to the: left, down, up, right
+
+Ctrl-w r  # move window to -->
+Ctrl-w R  # move window from there <--
 Ctrl-w x
 
 # change size of windows
 
 Ctrl-w =  # coequal
 
+Ctrl-w _  # max height current window
+22Ctrl-w _  # increase height to 22 lines
+
+Ctrl-w |  # default width
+20Ctrl-w |  # increase width to 20 lines
+
+Ctrl-w >,<  # change width
+
 :resize -4  # decrease window onto four lines
 :cmdheight  # for resize bottom ex-window
 :verticalresize n
-
-Ctrl-w >,<  # change width
-Ctrl-w |  # default width
 
 z22  3 set window 22 lines
 
@@ -912,7 +962,7 @@ ddp - up sentence to down
 
 #63 window last commands
 :Ctrl-F
-exit from window:
+back from window:
 Ctrl-C
 
 #64 If you traped in :ex mode
@@ -1068,4 +1118,143 @@ Normal mode|  15
 Insert mode|  32
 Visual mode|  88
 
-#80 
+#80 change the collone in the table
+
+Ctrl-v, move the cursor to visual collone
+c  # change
+print new words
+Esc
+Result:
+All words in collone is changed to new words
+
+#81 Visual block text with not equal strings
+Ctr-v jj$  # to the end of strings
+
+# and add ; to the end of string
+
+A;  # go to end of string (or text object) and add semicolon
+Esc
+Result:
+All strings with ; to the end.
+
+#82 normal cmd
+
+# How to add ; to every string in a visual block
+Make diapazon in visual mode:
+jVG
+And then press colon<:>
+:'<,'>normal .
+Result:
+<;> semicolon will be end of every string of visual block
+
+#83 How to add ; to every string to whole file
+:%normal A;
+
+:%normal i#  # comment every string in file
+
+#84 Autocomplete to ex-mode
+
+:col Ctrl-d  # autocomplete variants
+colder    colorscheme
+
+:colorscheme Ctrl-d
+blackboard desert morning shine etc.
+
+or <Tab>  # for autocomplete variants, step by step
+
+#84 Open command line for ex-mode
+
+q:  # open list of last commands
+:q  # exit from list command line
+Ctrl-f  # change list of commands
+
+#85 Start bash into vim
+
+:shell  # start
+$ exit  # go back to vim
+
+Ctrl-z  # vim to sleep and go bash
+$fg  # go back to the vim
+
+#86 sort and filtering
+
+firtst name, last name, email
+jane,doe,jane@example.com
+drew,neil,drew@vimcasts.org
+john,smith,john@example.com
+
+:2, $!sort -t',' -k2  # sort from 2 str to end, delimeter is <,>, for 2-d colone
+
+# insert cursor place to ex-modet comand line, if you need from cursor to the end of file
+!G  # :.,$!  and then add filter to the exclamation mark, e.g. <sort>
+
+#87 Make a vim script file
+
+touch file jill.vim
+write strings of commands into file
+:source jill.vim
+
+# for many files
+:args
+vim/file1.html vim/file2.py vim/file3.txt
+:first
+:source file1.html
+:next
+:source file2.py
+or
+
+:args
+vim/file1.html vim/file2.py vim/file3.txt
+:argdo source batch.vim  # fulfil for all files targeted in :args
+
+#88 buffers
+
+:ls # how many files in buffers now?
+
+Ctrl-^  # go to another file in buffers
+
+:bprev or :bp # go to previous file
+:bnext or :bn # go to next file
+
+:bfirst  # go to first in stack
+:blast  # go to last in stack
+
+:buffer 2  # go to buffer #2
+or
+:buffer {bufname} # :buffer ji for jill.vim, or use Tab for autocomplete name
+
+:bufdo  # for all files
+
+:bdelete N1 N2 N3  # delete buffers
+or
+: N, M bdelete
+:5,10bd  # del buffers form 5 to 10
+:bd 5 6 7 9 10  # del and not touch buffer 8
+
+#89 change working directory into vim-window
+
+:pwd  # print working directory
+:lcd  # look current dir
+:lcd /one/two/three/  # change working directory for current window
+:windo lcd /one/two/three  # define working dir for all windows in this tab
+
+#90 Work with vim-tabs(not terminal-tabs)
+
+:tabe[dit] {filename}  # open filename in new tab
+
+Ctrl-w T  # move current window to new tab
+
+:tabc[lose]  # close current tab and there all windows
+
+:tabo[nly]  # close other tabs
+
+2gt  ------------# go to second tab
+or :tabn[ext] 2  # go to second tab
+
+gT  ---------------# go to backward
+or :tabp[revious]  # go o backward
+
+:tabmove 0  # go tab to the top of stack
+:tabmove    # go tab to the bottom of stack
+
+#91

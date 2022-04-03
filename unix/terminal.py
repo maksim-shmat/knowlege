@@ -1,5 +1,15 @@
 """ About linux terminal."""
 
+#1 Open new window
+
+Shift+Ctrl + T  # open new tab
+Shift+Ctrl + W  # close tab
+
+Shift+Ctrl + N  # open window
+Shift+Ctrl + Q  # close window
+
+
+
 Open file in browser - $xdg-open index.html  # man xdg-open
 
 passwd  # change password
