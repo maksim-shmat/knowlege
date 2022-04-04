@@ -188,3 +188,11 @@ endfun
 autocmd BufRead,BufNewFile * .html set shiftwidth=2
 autocmd BufRead,BufNewFile * .c, *.h set shiftwidth=4
 
+
+#10 How name working dir
+
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
+
+then in ex-mode CLI type %%
+
+#11

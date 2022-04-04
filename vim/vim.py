@@ -61,18 +61,28 @@ hjkl, 2h, 2j, 2k, 2l
 ``  # go to previous place
 ''  # go to previous place on the start string
 
-#9 Bookmarks
+#9 marks
 
 :mark  # Show me all of my bookmarks
 :delmarks 2 zoru n-mark  # delete bookmarks
 m bookmark_name  # set a bookmark
 
 # temporary marks (for current seance)
-mx  # mark [x], or eny leter
-'x  # 'go to start string with mark
-`x  # go to mark where is it
+m{a-xA-Z} # mark
+a-x - local 26 marks
+A-Z - global 26 marks
+
+'x  # 'go to start string with local mark x
+`x  # go to local mark x where is it
+
+mX  # insert global mark X
+`X  # go to global mark X 
+
 ``  # go to previous temp mark
 ''  # go to start string on the previous temp mark
+
+`^  # go to place last insert mode
+`.  # go to place last change
 
 
 #10 Abbreviation
@@ -138,7 +148,7 @@ d)  # del from cursor to end sentence
 Ctrl + o  # takes your back to older position
 Ctrl + i  # to newer position
 
-%  # on the braket go to another one braket, from ( --> )
+%  # cursor on the braket % go to another one braket, from ( -->)
 
 #15 Moving with G
 
@@ -247,9 +257,8 @@ L  # go to bottom
 3|  # go to 3 |1|2|3<-
 
 #25 Search
-	?ENTER  # repeat last search
-	/ENTER
-	or n, N  # after exit insert mode
+        
+        :/d?spam  # search d?spam
 
 	d?spam  # del text from cursor to the word spam
 
@@ -267,6 +276,8 @@ L  # go to bottom
         :set noic  # unset ignore case
         :set hls  # highlite search results
         :set is  # incsearch, show partial matches for a search phrases
+
+        :set path+=path/**  # add path for :find, ** - mean recursively
 
 #26 Open file with pattern
 $ vi +/pattern file
@@ -988,6 +999,17 @@ cursor on the word
 *
 n,n
 
+# find char
+f[char]  # e.g. fo for find [o]
+;  # next
+,  # previous
+
+# find previous char
+F[char]
+
+t[char]  # find place before [char]
+T[char]  # find backward place after [char]
+
 #68 delete back, or there and back again
 
 db and x
@@ -1257,4 +1279,119 @@ or :tabp[revious]  # go o backward
 :tabmove 0  # go tab to the top of stack
 :tabmove    # go tab to the bottom of stack
 
-#91
+#91 Open vim file manager netrw
+
+:edit.
+:e .  # open file manager for current dir
+
+:Explore  # open file manager for current buffer
+:E
+
+:Sexplore  # new horizontal window
+:Vexplore  # new vertical window
+
+Ctrl-w c  # exit
+
+if you open file manager uppon file 
+Ctrl-^  # back again to file
+
+#92 move to screen strings
+gj  # down
+gk  # up
+go  # first symbol
+g^  # first symbol but not space
+g$  # end
+
+#93 move word by word
+
+w, b  # start word
+e, ge  # end word
+
+W, B  # for complex word (e.g. we're - one word)
+E, gE  # ~
+
+#94 find comma and delete all before dot.
+
+I`ve been expecting you, Mister Bond.
+f,
+dt.
+I`ve been expecting you.
+
+#95 Del chunk of text
+
+v  # go to visual mode
+/pattern  # find from cursor to word
+hjkl  # little bit correct cursor if you need
+d  # delete for example
+
+#96 visual objects
+
+print('hello, world')
+
+va(  # visual with brackets ('Hello, World')
+vi(  # visual inside brackets 'Hello, World'
+if need more just add i[ or a' whethever   '
+
+or
+ci'  '# change inside quotes
+
+#97 text objects
+
+ciw  # change insice word
+daw  # ~ plus one space
+ciW  # change inside word object
+daW  # ~ plus one space
+cis  # change inside string
+das  # ~ plus one space
+cip  # change inside paragraph
+dap  # ~ plus one empty string
+
+#98 Change curly brackets to square brakets
+
+cursor on the first braket
+dt{  # delete, find {
+%  # go to another }
+r]  # change } to ]
+``  # go back to first {
+r[  # change { to [
+
+#99 Go to previous place
+
+:jumps  # list of places
+
+Ctrl-o  # Back
+Ctrl-i  # Forward
+
+e.g.
+:e jill.py  # open new file
+Ctrl-o  # go back to first file
+Ctrl-i  # go to new file again
+
+:changes  # list of changes
+
+g;  # go to the place of last changes
+g,  # go to the place of before changes
+
+`^  # go to place last insert mode
+`.  # go to place last change
+
+#100 go to the link of file
+
+~/django2/knowlege/python/jill.py
+
+gf  # go to file in address
+Ctrl-o  # go back to first file
+
+#101 paths to find
+
+:set path?  # how paths includes?
+
+#102 Global find (but you need include all paths for potencial find)
+
+mH  # make global mark in current file
+
+:vimgrep /Dispotcher/ **  # find Dispatcher in whole file system
+
+`H  # go back to first file with yuor sessioned mark
+
+#
