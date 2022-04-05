@@ -916,56 +916,8 @@ $ vim -d old_file new_file
 
 :3redo or 2Ctrl-R
 
-#61 fast change two symbols
+#61 fast change two symbols, leter
 xp - erdo --> redo
-
-#62 Fast change two sentence
-
-ddp - up sentence to down
-
-#63
-
-#62 Fast change two sentence
-
-ddp - up sentence to down
-
-#63
-
-#62 Fast change two sentence
-
-ddp - up sentence to down
-
-#63
-
-#62 Fast change two sentence
-
-ddp - up sentence to down
-
-#63
-
-#62 Fast change two sentence
-
-ddp - up sentence to down
-
-#63
-
-#62 Fast change two sentence
-
-ddp - up sentence to down
-
-#63
-
-#62 Fast change two sentence
-
-ddp - up sentence to down
-
-#63
-
-#62 Fast change two sentence
-
-ddp - up sentence to down
-
-#63
 
 #62 Fast change two sentence
 
@@ -1108,10 +1060,10 @@ e  # go to better start place
 <a href="#">one</a>  # for one
 
 vit  # visually inside the tag
-U  # change register to capital 
+U  # change lowercase to capital 
 
 # and there for non visual analog
-gUit  # change register to capital
+gUit  # change lowercase to capital
 j.
 j.
 
@@ -1129,7 +1081,7 @@ Ctrl-v3j  # empty vertical block for del empty space
 x...  # del empty space
 gv  # repeat vertical block
 r|  # change empty block to the vertical line
-yyp  # copy first string and past it for not empty pattern
+yyp  # copy first string and past it for not empty pattern( make dublicate)
 Vr-  # change not empty pattern to the horizontal line
 
 Result:
@@ -1394,4 +1346,18 @@ mH  # make global mark in current file
 
 `H  # go back to first file with yuor sessioned mark
 
-#
+#101 Work with registers(temporary buffers)
+
+"ayiw  "# copy current word into register 'a'
+"bdd   "# delete another current string and save it into register 'b'
+"ap    "# insert word from 'a' register to new place
+"bp    "# inset string from 'b' register to new place
+
+#102 quote0(register) vs nonamed(register), yank vs cut
+
+yiw  # yank word "one" into quote0 register(yank register?)
+diw  # del/cut word "two" into nonamed register
+p  # put - "two"
+"0P  "# put "one"
+
+:reg "0  "# show yank register
