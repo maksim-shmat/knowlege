@@ -420,7 +420,7 @@ change file2
 
 open file1 and then
 :e file2
-CTRL+^  # go to previous file
+CTRL+^(carret)  # go to previous file
 
 #38 Global substitutes
 
@@ -1353,11 +1353,50 @@ mH  # make global mark in current file
 "ap    "# insert word from 'a' register to new place
 "bp    "# inset string from 'b' register to new place
 
-#102 quote0(register) vs nonamed(register), yank vs cut
+#102 quote0(register) vs nonamed<quote_quote>("")(register), yank vs cut
 
 yiw  # yank word "one" into quote0 register(yank register?)
 diw  # del/cut word "two" into nonamed register
 p  # put - "two"
 "0P  "# put "one"
 
+# quote0 register with a-z registers
+
+"ayiw  "# yank word into a quote0 register
+"aP  "# put from 'a' quot0 register
 :reg "0  "# show yank register
+
+#103 "_ (black whole) register
+
+yiw  # yank word "one"
+"_diw  "# del/cut into black whole and don't touch nonamed("") register
+P  # put from no touched register
+
+#104 change places of two word
+# How cnange places two parts or sentence?
+
+fc  # find word [c]oax
+de  # del/cut to buffer e
+mm  # make mark m
+ww  # go to two word 
+ve  # visual edit and go to end of word
+p  # put after cursor
+`m  # go back to the mark m
+P  # put before cursor
+
+#105 Copy one word and replace it another
+
+yiw  # yank word
+jww  # go to next word
+ciw<Ctrl-r>0 Esc  # put from quote0 register
+
+#106 Copy/paste paragraph and put it after previous, cursor ready to write.
+
+yap  # yank a paragraph
+gP  # put paragraph after previous paragraph, and move cursor to position for ready to write.
+
+#107 System cut/paste
+
+Ctrl-C  # system cut
+Ctrl-Shift-V  # system paste
+

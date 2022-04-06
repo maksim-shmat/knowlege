@@ -81,3 +81,40 @@ FDM - Frequency Division Multiplexing
 
 TCP - Transmisson Control Protocol
 
+UDP - User Datagram Protocol
+
+DOM - Document Object Model
+
+STP - Shilded Twisted Pair
+
+UTP - Unshilded Twisted Pair
+
+SMF - Single Mode Fiber
+
+MMF - Multi Mode Fiber
+
+LED - Light Emitted Diode
+
+FCS - Frame Check Sequence
+
+==================
+
+FDM - Frequency Division Multiplexing
+
+WDM - Wave Division Multiplexing
+
+TDM - Time Division Multiplexing
+
+===================
+EDFA - Erlium Doped Fiber Amplifier
+
+OXC - Optical Cross Connector
+
+ROADM - Reconfigurable Optical Ad-Drop Multiplexor
+
+===================
+
+LSTM - Long-Short-Term Memory (neural networks)
+
+CNN - Convolutional Neural Networks
+

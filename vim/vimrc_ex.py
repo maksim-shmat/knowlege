@@ -195,4 +195,8 @@ cnoremap <expr> %% getcmdtype() == ':' ? expand('%:h').'/' : '%%'
 
 then in ex-mode CLI type %%
 
-#11
+#11 set paste cmd to button F5
+
+:set pastetoggle=<F5>
+
+#12
