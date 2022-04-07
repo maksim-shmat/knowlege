@@ -1400,3 +1400,19 @@ gP  # put paragraph after previous paragraph, and move cursor to position for re
 Ctrl-C  # system cut
 Ctrl-Shift-V  # system paste
 
+#108 Macros
+
+qa  # start recording into 'a' register
+A;<Esc>  # add semicolon
+Ivar <Esc> # add 'var'
+q  # stop recording
+
+# check register 'a'
+:reg a
+
+# enter macros
+@a  # enter marcos 'a' from cusor place
+or
+@@
+
+
