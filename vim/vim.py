@@ -1414,5 +1414,83 @@ q  # stop recording
 @a  # enter marcos 'a' from cusor place
 or
 @@
+or 10@a  # ten ones repeat
 
+# example for add spaces around '+'
 
+x = "("+a+", "+b+", "+c+", "+d+", "+e+")";
+f+  # find '+'
+s + <Esc>  # substitute '+' to space'+'space
+qq;.q  # qq - start writing macro into q register,';'- go to next,'.'-  repeat last comand, 'q' - stop write marcro
+22@q  # repeat marcor 22 ones, but need 10, in error that marcos stoped
+result:
+x = "(" + a + ", " + b + ", " + c + ", " + d + ", " + e + ")";
+
+#109 Change dots to brackets and make capital leters
+1. one
+2. two
+3. three
+4. four
+
+qa  # start write macros to 'a' register
+0f.  # go to start string and find '.'
+r)  # change '.' to ')'
+w~  # chnage word to first capital leter
+j  #
+q  # stop writing macros
+3@a  # third fulfil 'a' macros3@a  # third fulfil 'a' macros3@a  # third fulfil 'a' macros
+result:
+1) One
+2) Two
+3) Three
+4) Four
+
+#110 Parallel work of macros
+
+qa  # start marcos to 'a' register
+0f.r)w~  # change dot to bracket and change to capital letter
+q  # stop writing macros
+
+#111 Change macros aftre writing
+
+:reg a  # for 'a' register
+qA  # Append to end of macros
+j  # add move
+q  # stop macros
+
+# 112 macros with iterator
+
+from:
+partridge in a pear tree
+turtle doves
+French hens
+calling birds
+golden rings
+
+to:
+1) partrige in a pear tree
+2) turtle doves
+3) French hens
+4) calling birds
+5) golden rings
+"""
+:let i=0  # def variable 'i'
+:echo i  # check value of variable
+0
+
+:let i += 1  # increase value
+:echo i  # check
+1
+"""
+:let i=1
+qa
+I<C-r>=i<Cr>)
+<Esc>
+:let i += 1
+q
+
+go cursor to start position
+jVG  # all text
+:'<,'>normal @a  # go macros for all text
+
+#113
