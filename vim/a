@@ -55,28 +55,28 @@ b - up
 2w - 2 right
 hjkl, 2h, 2j, 2k, 2l
 
-44g  # go to 44 string
-10enter  # go to 10 string down
+44G  # go to 44 string
+10ENTER  # go to 10 string down
 
 ``  # go to previous place
 ''  # go to previous place on the start string
 
 #9 marks
 
-:mark  # show me all of my bookmarks
+:mark  # Show me all of my bookmarks
 :delmarks 2 zoru n-mark  # delete bookmarks
 m bookmark_name  # set a bookmark
 
 # temporary marks (for current seance)
-m{a-xa-z} # mark
+m{a-xA-Z} # mark
 a-x - local 26 marks
-a-z - global 26 marks
+A-Z - global 26 marks
 
 'x  # 'go to start string with local mark x
 `x  # go to local mark x where is it
 
-mx  # insert global mark x
-`x  # go to global mark x 
+mX  # insert global mark X
+`X  # go to global mark X 
 
 ``  # go to previous temp mark
 ''  # go to start string on the previous temp mark
@@ -85,16 +85,16 @@ mx  # insert global mark x
 `.  # go to place last change
 
 
-#10 abbreviation
+#10 Abbreviation
 
-:ab inc illigitimi non carborundum  # set an abbreviation
+:ab inc Illigitimi Non Carborundum  # set an abbreviation
 and then just write inc for print full name
 :una inc  # unset the abbreviation
 
-#11 autocomplete
+#11 Autocomplete
 
-- write word multiple times, e.g. antarctica
-- type ant and then use ctrl+n (or ctrl+p)
+- write word multiple times, e.g. Antarctica
+- type Ant and then use Ctrl+N (or Ctrl+P)
 
 #12 work with numbers of lines
 
@@ -108,7 +108,7 @@ and then just write inc for print full name
 
 :5, 10m 15  # move lines from t threugh 10 and insert it atrer line 15
 
-#13 wrapmargin - how many characters into string
+#13 Wrapmargin - how many characters into string
 
 :set wm=79
 :set wm=0  # remove wrapmargin
@@ -125,12 +125,12 @@ and then just write inc for print full name
 :.=  # number of strings where cursor
 :/pattern/=  # number of string where pattern
 
-#14 moving on the text
+#14 Moving on the text
 
-w or w(without punctuation)  # (word) move by one word to the right
-b or b(without punctuation)  # (word) move to backward
+w or W(without punctuation)  # (word) move by one word to the right
+b or B(without punctuation)  # (word) move to backward
 2w and 2b
-e or e(without punctuation)  # go to end word
+e or E(without punctuation)  # go to end word
 
 (  # go to start this sentence.
 )  # go to start next sentence.
@@ -145,21 +145,21 @@ e or e(without punctuation)  # go to end word
 d)  # del from cursor to end sentence
 2y}  # yanked two next block
 
-ctrl + o  # takes your back to older position
-ctrl + i  # to newer position
+Ctrl + o  # takes your back to older position
+Ctrl + i  # to newer position
 
 %  # cursor on the braket % go to another one braket, from ( -->)
 
-#15 moving with g
+#15 Moving with G
 
-1g  # start page
-42g  # string n.42
-g  # go to the bottom
-gg  # go to the top
-+  # go to first new line
--  # go to first backward line
+1G  # Start page
+42G  # string n.42
+G  # Go to the bottom
+gg  # Go to the top
++  # Go to first new line
+-  # Go to first backward line
 
-#16 redaction
+#16 Redaction
 
 a  # append, with num
 c  # change, with num
@@ -168,40 +168,40 @@ e  # edit
 p  # put, with num
 y  # yank
 s  # substitute, add simbol (or both with 2s) 
-s  # substitute whole string
-r  # replace
-i  # insert
-o  # open
+S  # substitute whole string
+R  # replace
+I  # insert
+O  # open
 
 ~ or 22~  # change register
 
 cw  # change word
 c2b  # change word to backward on the two words
 c0  # change words to the start of string from cursor  (but cc ?)
-c$ (equal c)  # change words to the end of sting from the cursor (but cc ?)
+c$ (equal C)  # change words to the end of sting from the cursor (but cc ?)
 cc  # change string
-c  # change from cursor to the end string
+C  # change from cursor to the end string
 
-#17 delete
+#17 Delete
 
 dw  # delete word from cursor, with whitespace
 de  # delete word from cursor, without space
 2dd  # delete two strings
-d == d$  # delete string from cursor to end string
+D == d$  # delete string from cursor to end string
 
 x  # delete char to rite from cursor
-x  # delete char to left from cursor
-2x and 3x  # etc.
+X  # delete char to left from cursor
+2x and 3X  # etc.
 
 :%d  # del all into file
 
-#18 p - put
+#18 P - put
 
 first d or vd  # deleted text save to 'put' buffer
 p  # and then p to put text from buffer in a new place
    # or paste after string where is cursor
 
-p  # big p - put text befrore cursor
+P  # big P - put text befrore cursor
    # or paste before string where is cursor
 
 #19 replace two char
@@ -212,51 +212,51 @@ and xp  -> move
 # replace one char
 gr
 
-#20 yanked - copy to buffer
+#20 Yanked - copy to buffer
 
 y  # copy after cursor
 3yk  # copy 3 string to up
 3y  # copy 3 string to beneath
 y$  # copy string from cursor
 yw  # yank word
-yy or y  # copy string
+yy or Y  # copy string
 
-#21 amalgamate strings
+#21 Amalgamate strings
 
-with a
+With a
 screen editor
 
-j  # amalgamate both string
-or 2j
-with a screen editor
+J  # amalgamate both string
+or 2J
+With a screen editor
 
-#22 screenscrolling
+#22 Screenscrolling
 
-^f  # down screen
-^b  # up screen
-^d  # down halfscreen
-^u  # up halfscreen
-zenter  # down one screen
-200zenter  # go to 200 line
+^F  # down screen
+^B  # up screen
+^D  # down halfscreen
+^U  # up halfscreen
+zENTER  # down one screen
+200zENTER  # go to 200 line
 z.  # this line to center of screen
 z-  # this line to bottom of screen
 
-#23 reload screen for remove sys message
+#23 Reload screen for remove sys message
 
-^l  # reload page
+^L  # reload page
 
-#24 steps into one screen
+#24 Steps into one screen
 
-h  # go to up
-m  # go to center
-l  # go to bottom
-3h  # go to 3 lines to up
-4l  # go to 4 lines to down
+H  # go to up
+M  # go to center
+L  # go to bottom
+3H  # go to 3 lines to up
+4L  # go to 4 lines to down
 
 ^  # go to first not empty char in string
 3|  # go to 3 |1|2|3<-
 
-#25 search
+#25 Search
         
         :/d?spam  # search d?spam
 
@@ -279,18 +279,18 @@ l  # go to bottom
 
         :set path+=path/**  # add path for :find, ** - mean recursively
 
-#26 open file with pattern
+#26 Open file with pattern
 $ vi +/pattern file
-or posix(linux) style -> $ vi -c/pattern file
+or POSIX(Linux) style -> $ vi -c/pattern file
 for pattern with spaces use -> $ vi +/'pat tern' file
                                $ vim -c/pat\ tern file
-for ease use your own pattern e.g mark, and then find your pattern.
+For ease use your own pattern e.g MARK, and then find your pattern.
 
-#27 list all swap files
+#27 List all swap files
 
 $ vi -r
 
-#28 save file to buffer
+#28 Save file to buffer
 
 :pre  or :preserve
 
@@ -312,12 +312,12 @@ $ vi -r
 
 "zd)  # "del from cursor to end sentence and add to 'z' buffer
 2)  go to two sentence down and
-"zy)  # "add new sentence to 'z' buffer
+"Zy)  # "add new sentence to 'z' buffer
 
 # work with @-functions of buffer
 
 just write in a text field:
-cwbubsyexample^[  # that means cw bubsyexample ctrl-v esc
+cwbubsyexample^[  # that means cw bubsyexample CTRL-V ESC
 then del and move it to the buffer:
 "gdd    #"
 and then go to start a word, and replace it with buffer
@@ -327,10 +327,10 @@ emmm...
 
 # past from named buffer
 
-"dp  # "put buffer 'd' before cursor
+"dP  # "put buffer 'd' before cursor
 "ap  # "put buffer 'a' after cursor
 
-#32 work with ex, ex-mode
+#32 Work with ex, ex-mode
 
 :6  # got to sixths string
 
@@ -368,7 +368,7 @@ emmm...
 
 @:  # repeat last ex-cmd
 @@  # repeat-repeat last ex-cmd
-@:  # after @@ backward one step, or use ctrl-o
+@:  # after @@ backward one step, or use Ctrl-o
 
 #33 global find
 
@@ -376,13 +376,13 @@ emmm...
 :g!/pattern  # find and go to words without pattern
 :60, 123g/pattern/p  # into diapazon
 
-#34 combined commands with pipe
+#34 Combined commands with pipe
 
 :1,3d | s/thier/their/  # del and then rewrite
 
 :1,5 m 10 | g/pattern/nu  # move and then view str with pattern and num str
 
-#34 save as new file with new name
+#34 Save as new file with new name
 
 :w newfile.py
 
@@ -393,7 +393,7 @@ emmm...
 :1, 10w newfile  # thats both commands make two insertions into file
 :340, $w >> newfile
 
-#35 read another file from opened file with vim
+#35 Read another file from opened file with vim
 
 :read filename  # inserted core file into current place of cursor
 :r filename
@@ -404,7 +404,7 @@ emmm...
 
 :/pattern/r  /home/tim/data  # insert after pattern str
 
-#36 open both or more files.
+#36 Open both or more files.
 
 $ vi file1 file2
 :args(or :ar)  # how many files was open
@@ -416,13 +416,13 @@ change file2
 :x  # save and quit
 :e!  # or remove all changes
 
-#37 open more files from one's opened
+#37 Open more files from one's opened
 
 open file1 and then
 :e file2
-ctrl+^(carret)  # go to previous file
+CTRL+^(carret)  # go to previous file
 
-#38 global substitutes
+#38 Global substitutes
 
 :s/old/new/
 :s/old/nen/g  # g is global
@@ -430,8 +430,7 @@ ctrl+^(carret)  # go to previous file
 
 :1, $s/old/new/g  # substitute in all file
 :%s/old/new/g  # substitute ina all file
-:%s/old/new/gc  # g - global and c - confirm all changes
-
+:%s/old/nes/gc  # g - global and c - confirm all changes
 :e!  # remove old version from buffer i.e remove changes
 
 :g/pattern/s/old/new/g
@@ -440,11 +439,11 @@ ctrl+^(carret)  # go to previous file
 :g/editer/s//editor/g  # both equivalent
 :%s/editor/editor/g
 
-#39 regular expression for vim
+#39 Regular expression for vim
 
   - any symbol (p.p = pip, pep etc)
 *  - bugs* = bugss, bug, bugs, bugsss etc
-^  - ^part = part at the begining a string, else ^ is carret
+^  - ^Part = Part at the begining a string, else ^ is carret
 $  - here:$ = here: at the end of string, else $ is dollar
 \  - next simbol is casual, \. - merely dot, \\ - is backslash
 \| - set variants (house\|home)
@@ -461,19 +460,19 @@ $  - here:$ = here: at the end of string, else $ is dollar
 \{-,m}
 
 \i - any symbol from isindent
-\i - any symbol from isindent, but without numbers
+\I - any symbol from isindent, but without numbers
 
 \k - any keyword from iskeyword
-\k - any keyword but witout numbers
+\K - any keyword but witout numbers
 
 \f - any filename from isfname
-\f - any filename from isfname, but without numbers
+\F - any filename from isfname, but without numbers
 
 \p - any printable symbol
-\p - but without numbers
+\P - but without numbers
 
 \s - spaces with taps
-\s - all that not spaces and tabs
+\S - All that not spaces and tabs
 
 \b - backspace
 
@@ -489,19 +488,19 @@ $  - here:$ = here: at the end of string, else $ is dollar
 
 
 
-[ ] - [ab] = a or b, p[aeiou]t = pat, pet, pit, pot, put
+[ ] - [AB] = A or B, p[aeiou]t = pat, pet, pit, pot, put
 
-/[tt]he = the or the
+/[Tt]he = The or the
 
-[^0-9] = that carret means - not, anybody but not number
+[^0-9] = that carret means - NOT, anybody but not number
 [[:alpha:]!] = a, l, p, h, or !
 [[.ch.]] = ch only, but not c and h
 [[=e=]] = e, franch e with`, and other e deviation
 
 [:alnum:] - char and num
-[:alpha:] - alphabetical symb
+[:alpha:] - Alphabetical symb
 [:blank:] - space and tab
-[:cntrl:] - control symb
+[:cntrl:] - Control symb
 [:digit:] - num only
 [:graph:] - all visual symb, without spaces or tabs
 [:lower:] - lowercase
@@ -511,34 +510,34 @@ $  - here:$ = here: at the end of string, else $ is dollar
 [:upper:] - upercase
 [:xdigit:] - sixteenth num
 
-\( \) - save to the buffer, \(that\) or \(this\) = that to buffer1, this to b2
-:s/\(that\) or \(this\)/\2 or \1/  # changing to this or that (result: this or that)
-:s/\(that\) or \(this\)/\u\2 or \l\1/  # changing places and change low/up cases (result: this or that)
+\( \) - save to the buffer, \(That\) or \(this\) = That to buffer1, this to b2
+:s/\(That\) or \(this\)/\2 or \1/  # changing to this or That (result: this or That)
+:s/\(That\) or \(this\)/\u\2 or \l\1/  # changing places and change low/up cases (result: This or that)
 
 :s/\(abcd/)\1/alphabet-soup  # changeing abcd to alphabet-soup
 
 \< - start of word, \<ac = action
 \> - end of word, ac\> = maninac
 
-& - same name, :%s/cuchinski/&, zax/ = :%s/cuchinski/cuchinski;, zax/
+& - same name, :%s/Cuchinski/&, Zax/ = :%s/Cuchinski/Cuchinski;, Zax/
 :1, 10s/.*/(&)/  - make ->(every str into brakets)<- from 1-10 str
 
-\u - upercase, :%s/yes, doctor/\uyes, \udoctor (result: yes, doctor)
-\l - lower case 
+\u - Upercase, :%s/yes, doctor/\uyes, \udoctor (result: Yes, Doctor)
+\l - Lower Case 
 
-\u, \l - upper/lower cases 
-:%s/fortran/\ufortran/  (result: fortran)
-:%s/fotran/\u&/  (same)
+\U, \L - UPPER/LOWER CASES 
+:%s/Fortran/\UFortran/  (result: FORTRAN)
+:%S/Fotran/\U&/  (same)
 
 -----------------------
-# case1: change child to children, with the same punctuation
-# in the text is: child , child, child,, child., etc
-# and we need is: childred , children, children,, children., etc
+# Case1: change child to children, with the same punctuation
+# In the text is: child , child, child,, child., etc
+# And we need is: childred , children, children,, children., etc
 :%s/child\([ ,.;:!?]\)/children\1/g  # \( \)-save to buffer1 punctuation
-:%s/\<child\>/children/g  # that is for not change words as fairchild
+:%s/\<child\>/children/g  # That is for not change words as Fairchild
 -----------------------
 
-# case2: change half word
+# Case2: change half word
 mgibox routine.
 mgrbox routine.
 mgabox routine.
@@ -557,81 +556,81 @@ mgisquare routine.
 mgrsquare routine.
 mgasquare routine.
 
-#case3: move paragraphs
-.rh "syntax"  # name of paragraphs
+#Case3: move paragraphs
+.Rh "SYNTAX"  # name of paragraphs
 blahblah.
-.rh "description"
+.Rh "DESCRIPTION"
 blah
 blah.
-.rh "parameters"
+.Rh "PARAMETERS"
 blah
     blah.
 
-:g /synatx/.,/description/-1 move /parameters/-1  # -1 for print 1str less
+:g /SYNATX/.,/DESCRIPTION/-1 move /PARAMETERS/-1  # -1 for print 1str less
 result:
-description go up above syntax
+DESCRIPTION go up above SYNTAX
 
 # ir need del paragraph\
 
-:g/description/.parameters/-1d
+:g/DESCRIPTION/.PARAMETERS/-1d
 
-#case4: change double spaces to one space
+#Case4: change double spaces to one space
 :%s/  */ /g
 
-#case5: change one or more spaces after . or : to two spaces
+#Case5: change one or more spaces after . or : to two spaces
 :%s/\([:.]\)  */\1  /g
 
-#case6: del all empty strings
+#Case6: del all empty strings
 :g/^$/d
 
-#case7: del all empty and tab-tab or space-space strings
+#Case7: del all empty and tab-tab or space-space strings
 :g/^[ tab]*$/d
 :g/^[ tab][ tab]*$/d
 
-#case8: del all spaces on the start string
+#Case8: del all spaces on the start string
 :%s/^  *\(.*\)/\1/
 
-#case9: del all spaces on the end string
+#Case9: del all spaces on the end string
 :%s/\(.*\)  *$/\1/
 
-#case10: insert [  >] into start all strings
+#Case10: Insert [  >] into start all strings
 :%s/^/>  /
 
-#case11: add . to end next six strings
+#Case11: Add . to end next six strings
 
 :.,+5s/$/./
 
-#case12: change parts of sentens between defice ->[-]<-
+#Case12: change parts of sentens between defice ->[-]<-
 
 :%s/\(.*\) - \(.*\)/\2 - \1/
 
-#case13: change all leters on the upercase
+#Case13: change all leters on the UPERCASE
 
-:%s/.*/\u&/  # faster
-:%s/./\u&/g  # little bit slower
+:%s/.*/\U&/  # faster
+:%s/./\U&/g  # little bit slower
 
-#case14: reverse positions of strings
+#Case14: Reverse positions of strings
 :g/.*/mo0
 :g/^/mo0
 
-#case15: where is not typing "paid in full" print "overdue"
-:g!/paid in full/s/$/ overdue/
-:v/paid in full/s/$/ overdue/
+#Case15: Where is not typing "Paid in full" print "Overdue"
+:g!/Paid in full/s/$/ Overdue/
+:v/Paid in full/s/$/ Overdue/
 
-#case16: every string not start with number move to end of text
+#Case16: Every string not start with number move to end of text
 
 :g!/^[[:digit:]]/m$
 :g/^[^[:digit:]]/m$
 
-#case17: remove numbers into head of paragraphs, from start of strings
+#Case17: Remove numbers into head of paragraphs, from start of strings
 
 :%s/^[1-9][0-9]*\.[1-9][0-9.]* //
 
-#case18: change word fortran to fortran (acronym formula translation)
+#Case18: Change word Fortran to FORTRAN (acronym FORmula TRANslation)
 
-:%s/\(for\)\(tran\)/\u\1\2\e (acronym of \u\1\emula \u\2\eslation)/g
+:%s/\(For\)\(tran\)/\U\1\2\E (acronym of \U\1\Emula \U\2\Eslation)/g
 
-#case19 make 10 copies 12-17 str to end of file
+#Case19 Make 10 copies 12-17 str to end of file
 :1,10g/^/ 12, 17t$
 
 #40 :set
@@ -641,11 +640,11 @@ description go up above syntax
 :set laststatus=2  # show status: filename [+], strings amount, percentage.
 :set laststatus=1  # off show status
 
-#41 vim and unix
+#41 vim and UNIX
 
-:!date  go to bash, see date, press enter, and go back to vim
+:!date  go to bash, see date, press Enter, and go back to vim
 
-:sh  # go to bash, enter, back vim
+:sh  # go to bash, Enter, back vim
 
 :r !sort jill.csv  # open file, sort and write info from jill.csv
 
@@ -659,7 +658,7 @@ or !5!sort
 
 go cursor to the string for change cases
 !)  # then write for change lower to upper cases
-tr '[:lower:]' '[:upper:]' enter
+tr '[:lower:]' '[:upper:]' ENTER
 
 #42 map
 
@@ -670,17 +669,17 @@ then map it command
 :map v dwelp  # v is used in vim, use another button!
 touch v for change plces any two words
 
-#43 prefixes
+#43 Prefixes
 
 vim -o file1 file2 - open all files into same windows, or open empty window if files less than
 or vim -o5 file1 file2 - two windows is visual and three is hiden
 
-vim -o file1 file2 - open all into vertical windows
+vim -O file1 file2 - open all into vertical windows
 
 -z - closed mode, without bash support or other helps
-# and [rvim] same, with stop seans since ^z
+# and [rvim] same, with stop seans since ^Z
 
-#44 remote server commands vith vim...
+#44 Remote server commands vith vim...
 
 -remote file
 -remote-silent file
@@ -694,26 +693,26 @@ vim -o file1 file2 - open all into vertical windows
 -remote-wait-silent file
 -serverlist
 
-#45 where am i?
-ctrl + g  # number of current string and path to file
+#45 Where am I?
+Ctrl + G  # number of current string and path to file
 
-#46 completition text or command
+#46 Completition text or command
 first type e.g. :e
-then tap ctrl + d
+then tap Ctrl + D
 
-#47 through the windows
+#47 Through the windows
 
-ctrl + w + w
-ctrl + w + j (down)
-ctrl + w + b (bottom)
-ctrl + w + t (top)
+Ctrl + w + w
+Ctrl + w + j (down)
+Ctrl + w + b (bottom)
+Ctrl + w + t (top)
 
-#48 jump to a subject
+#48 Jump to a subject
 
-position the cursor on a tag (e.g. |bars|) and hit ctrl-].
-jump back:  type ctrl-o.  repeat to go further back.
+Position the cursor on a tag (e.g. |bars|) and hit CTRL-].
+Jump back:  Type CTRL-O.  Repeat to go further back.
 
-#49 split windows
+#49 Split windows
 
 :split  # two windows for one file
 :vsplit  # vertical two window for one file
@@ -736,38 +735,38 @@ or :split jill.py
 
 # windows
 
-ctrl-w v (and :e jill.txt) # open vertical window
+Ctrl-w v (and :e jill.txt) # open vertical window
 or :vsplit jill.txt
    :vsp jill.txt
 
-ctrl-w s (and :e jill.py) # open horizontal window
+Ctrl-w s (and :e jill.py) # open horizontal window
 or :split jill.py
    :sp jill.py
 
-ctrl-w c  # close current window
+Ctrl-w c  # close current window
 or :close  # for close current window
    :clo
 or :only  # for close other windows
    :on
 
-ctrl-ww  # go to next window
-ctrl-w h,j,k,l  # go to the: left, down, up, right
+Ctrl-ww  # go to next window
+Ctrl-w h,j,k,l  # go to the: left, down, up, right
 
-ctrl-w r  # move window to -->
-ctrl-w r  # move window from there <--
-ctrl-w x
+Ctrl-w r  # move window to -->
+Ctrl-w R  # move window from there <--
+Ctrl-w x
 
 # change size of windows
 
-ctrl-w =  # coequal
+Ctrl-w =  # coequal
 
-ctrl-w _  # max height current window
-22ctrl-w _  # increase height to 22 lines
+Ctrl-w _  # max height current window
+22Ctrl-w _  # increase height to 22 lines
 
-ctrl-w |  # default width
-20ctrl-w |  # increase width to 20 lines
+Ctrl-w |  # default width
+20Ctrl-w |  # increase width to 20 lines
 
-ctrl-w >,<  # change width
+Ctrl-w >,<  # change width
 
 :resize -4  # decrease window onto four lines
 :cmdheight  # for resize bottom ex-window
@@ -775,18 +774,18 @@ ctrl-w >,<  # change width
 
 z22  3 set window 22 lines
 
-#50 tags open tag into new window
+#50 Tags open tag into new window
 
 open :help
 write any tag e.g "bars"
 type:
 :stag! bars  # article "bars" will be opened in a new window
 
-#51 open file under the cursor(link?) into new tab
-^wgf
-^wgf  # and cursor after filename
+#51 Open file under the cursor(link?) into new tab
+^Wgf
+^WgF  # and cursor after filename
 
-#52 open file in a new tab
+#52 Open file in a new tab
 
 :tabnew jill.py
 or :tabnew  # empty file
@@ -794,23 +793,23 @@ or :tabnew  # empty file
 :tabclose  # close current tab
 :tabonly  # close all another without this tab
 
-ctrl + pgup, pgdn  # change tab in terminal
+Ctrl + PgUp, PgDn  # change tab in terminal
 
-#53 [+] convolution
+#53 [+] Convolution
 
-za, za - change all, one
-zc, zc - close all, one
-zd, zd - del all, one
-ze - del all
+zA, za - change all, one
+Zc, zc - close all, one
+zD, zd - del all, one
+zE - del all
 zf - make convolution from cursor line to move cmd
-countzf - make conv from curlor line to count lines
-zm - foldlevel opetion == 0
-zn, zn, zi - foldenable option on/off
-zo, zo - open conv all(enclose), one
+countzF - make conv from curlor line to count lines
+zM - foldlevel opetion == 0
+zN, zn, zi - foldenable option on/off
+zO, zo - open conv all(enclose), one
 zj, zk - move cursor to next conv
 zm, zr - -1 or +1 foldlevel option
 
-3zf - convolution three lines
+3zF - convolution three lines
 or 2zfj - conv two lines down
 zfgg - conv whole file if cursor is bottom
 
@@ -823,130 +822,130 @@ zfgg - conv whole file if cursor is bottom
 
 then (zr) (zm) - open/closed
 
-#54 autofoldering prog.lang.
+#54 Autofoldering prog.lang.
 
 set foldcolumn=3
-ze - remove all previous folders
+zE - remove all previous folders
 
 :set foldenable
 :set foldmethod=syntax
 
-#55 autocomplete
+#55 Autocomplete
 
-:imap tab <c-p> - autocomplete to tab e.g.
+:imap Tab <C-P> - autocomplete to Tab e.g.
 
-ctrl-x ctrl-l - autocomplete whole string
-ctrl-n, ctrl-p - up/down in list of variants
-and ctrl-e - esc
+Ctrl-x Ctrl-l - autocomplete whole string
+Ctrl-n, Ctrl-p - up/down in list of variants
+and Ctrl-e - esc
 
-ctrl-x ctrl-n - autocomplete with keyword
+Ctrl-x Ctrl-n - autocomplete with keyword
 
-ctrl-x ctrl-k - autocomplete with dictionary
+Ctrl-x Ctrl-k - autocomplete with dictionary
 
-ctrl-x ctrl-t - autocomplete with tesaurus
+Ctrl-x Ctrl-t - autocomplete with tesaurus
 
-ctrl-x ctrl-i - autocomplete with include files
+Ctrl-x Ctrl-i - autocomplete with include files
 
-ctrl-x ctrl-] - autocomplete with tags
+Ctrl-x Ctrl-] - autocomplete with tags
 
-ctrl-x ctrl-f - autocomplete with filename
+Ctrl-x Ctrl-f - autocomplete with filename
 
-ctrl-x ctrl-d - autocomplete with macros name
+Ctrl-x Ctrl-d - autocomplete with macros name
 
-ctrl-x ctrl-v - comand line completition
+Ctrl-x Ctrl-v - comand line completition
 
-#56 digraphs for diacritics marks
+#56 Digraphs for diacritics marks
 
-ctrl-k c , = „ß
-ctrl-k c . = ‰ã
-ctrl-k a ! = „†
+Ctrl-k c , = √ß
+Ctrl-k c . = ƒã
+Ctrl-k a ! = √†
 
-# greec
+# Greec
 
-ctrl-k p * = ÔÄ
+Ctrl-k p * = œÄ
 
 # ?
 
-ctrl-k ?i = ‚ø
+Ctrl-k ?I = ¬ø
 
-ctrl-k ss = „ü
+Ctrl-k ss = √ü
 
 # digraphs with set digraph
 
 :set digraph
 
-c backspace , = „á
-a bs ! = „†
-- bs = == ‚Ø upper score, or upper dash
+c Backspace , = √á
+A BS ! = √†
+- BS = == ¬Ø UPPER SCORE, or UPPER DASH
 
-' bs ' = ‚¥
-( bs a = ‰É
-< bs a = Áé
-, bs c = „ß
-> bs o = „¥
-! bs a = „†
-- bs o = ‚∫
-a bs - = ‰Å
-o bs / = „∏
-? bs n = „±
-: bs e = „´
+' Bs ' = ¬¥
+( Bs a = ƒÉ
+< Bs a = «é
+, Bs c = √ß
+> Bs o = √¥
+! Bs a = √†
+- Bs o = ¬∫
+a Bs - = ƒÅ
+o Bs / = √∏
+? Bs n = √±
+: Bs e = √´
 
 :digraph  - list of digraphs
 
-#57 show dir/files and edit files in another window
+#57 Show dir/files and edit files in another window
 
 o - open file
 
-#58 make .html from .txt
+#58 Make .html from .txt
 
 go to jill.txt
 write:
 :runtime!syntax/2html.vim  # make entire file
 
-:25, 44tohtml  # make chank file
+:25, 44TOhtml  # make chank file
 
-#59 difference
+#59 Difference
 
 $ vimdiff old_file new_file
 or
 $ vim -d old_file new_file
 
-#60 undo/redo
+#60 Undo/redo
 
 :2undo or 2u
 
-:3redo or 2ctrl-r
+:3redo or 2Ctrl-R
 
 #61 fast change two symbols, leter
 xp - erdo --> redo
 
-#62 fast change two sentence
+#62 Fast change two sentence
 
 ddp - up sentence to down
 
 #63 window last commands
-:ctrl-f
+:Ctrl-F
 back from window:
-ctrl-c
+Ctrl-C
 
-#64 if you traped in :ex mode
+#64 If you traped in :ex mode
 
-q - move you to :ex mode
+Q - move you to :ex mode
 write:
 :vi  # go out from :ex mode
 
-#65 join short sentence
+#65 Join short sentence
 
-j or 3j
+J or 3J
 
-#66 add spaces around plus
+#66 Add spaces around plus
 
 f+  # find + in sentence, if need find to backward press - ,
-s + <esc>  # rm + and add space, plus, space, esc
+s + <Esc>  # rm + and add space, plus, space, esc
 ;  # find next plus
 . repeat
 
-#67 fast find
+#67 Fast find
 
 cursor on the word
 *
@@ -958,10 +957,10 @@ f[char]  # e.g. fo for find [o]
 ,  # previous
 
 # find previous char
-f[char]
+F[char]
 
 t[char]  # find place before [char]
-t[char]  # find backward place after [char]
+T[char]  # find backward place after [char]
 
 #68 delete back, or there and back again
 
@@ -979,11 +978,11 @@ daw
 #70 addition and subtraction
 
 cursor on the number or will be able next number in left into str
-and ctrl-a
-40 11ctrl-a --> 51
-40 -10ctrl-x --> 30
+and Ctrl-a
+40 11Ctrl-a --> 51
+40 -10Ctrl-x --> 30
 
-but! number with 0 e.g 007 it is 8-char(octal numeric system) system, and then
+But! number with 0 e.g 007 it is 8-char(octal numeric system) system, and then
 007 + 001 = 010(in 8-char sys) 010 --> means 8
 
 :set nrformats=  # that option interpret all number in 
@@ -991,62 +990,60 @@ but! number with 0 e.g 007 it is 8-char(octal numeric system) system, and then
 
 #71 del into insert mode, and into bash
 
-ctrl-h  # del a char to the left of cursor
+Ctrl-h  # del a char to the left of cursor
 
-ctrl-w  # del a word to the left of cursor
+Ctrl-w  # del a word to the left of cursor
 
-ctrl-u  # del a part of string to the left of cursor
+Ctrl-u  # del a part of string to the left of cursor
 
-#72 one bullet for command 
+#72 One bullet for command 
 
 insert mode, write text...
-ctrl-o (and zz e.g.)  # up screen
+Ctrl-o (and zz e.g.)  # up screen
 
 #73 insert buffer one time insert mode
 
 insert mode, write text
 
-ctrl-r + buffer(a-z, 1-9)
+Ctrl-r + buffer(a-z, 1-9)
 # and how yanked?
 
-#74 arithmetic calculations
+#74 Arithmetic calculations
 
 write:
  6 clutches, each costing $12, total $
 then:
-ctrl-r=  6*12enter
+Ctrl-r=  6*12ENTER
 result:
  6 clutches, each costing $12, total $72
 
 #75 insert unicode and ad hoc characters
 
 in insert mode:
-ctrl-v + 123  # three characters
+Ctrl-v + 123  # three characters
 
-ctrl-vu + 1234 or 99bf # unicode „ø È¶ø
+Ctrl-vu + 1234 or 99bf # Unicode √ø È¶ø
 
 # if you need asc what the symbol in this text - put cursor on the ??? 
 # and insert <ga>
 
-ctrl-k + 12  == ‚Ω  # for both symbols(digraphs)
-ctrl-k + bo  == „Åº
-ctrl-l + v%  == é
+Ctrl-k + 12  == ¬Ω  # for both symbols(digraphs)
+Ctrl-k + bo  == „Åº
+Ctrl-l + V%  == –é
 :digraphs
 :h digraph-table  # all digraphs
 
-#76 visual mode
+#76 Visual mode
 
 v - one char
 
-v - string
+V - string
 
-ctrl-v - block
+Ctrl-v - block
 
 gv - repeat last 
 
 o - go to brink visual block
-
-gn - after search ?something visual it
 
 # receipte how change visual block
 start visual
@@ -1054,103 +1051,103 @@ vbb  # go to words back, but start not there where need
 o  # leap to another brink
 e  # go to better start place
 
-#77 settings for python
+#77 Settings for Python
 
 :set shiftwidth=4 softtabstop=4 expandtab
 
-#78 how check word inside symbols?
+#78 How check word inside symbols?
 
 <a href="#">one</a>  # for one
 
 vit  # visually inside the tag
-u  # change lowercase to capital 
+U  # change lowercase to capital 
 
 # and there for non visual analog
-guit  # change lowercase to capital
+gUit  # change lowercase to capital
 j.
 j.
 
-#79 how to make a table with lines
-first we have a table without lines g.e:
+#79 How to make a table with lines
+First we have a table without lines g.e:
 
-chapter            page
-normal mode         15
-insert mode         32
-visual mode         88
+Chapter            Page
+Normal mode         15
+Insert mode         32
+Visual mode         88
 
-then:
+Then:
 go cursor to the empty place between colones
-ctrl-v3j  # empty vertical block for del empty space
+Ctrl-v3j  # empty vertical block for del empty space
 x...  # del empty space
 gv  # repeat vertical block
 r|  # change empty block to the vertical line
 yyp  # copy first string and past it for not empty pattern( make dublicate)
-vr-  # change not empty pattern to the horizontal line
+Vr-  # change not empty pattern to the horizontal line
 
-result:
+Result:
 
-chapter    |  page
+Chapter    |  Page
 ------------------
-normal mode|  15
-insert mode|  32
-visual mode|  88
+Normal mode|  15
+Insert mode|  32
+Visual mode|  88
 
 #80 change the collone in the table
 
-ctrl-v, move the cursor to visual collone
+Ctrl-v, move the cursor to visual collone
 c  # change
 print new words
-esc
-result:
-all words in collone is changed to new words
+Esc
+Result:
+All words in collone is changed to new words
 
-#81 visual block text with not equal strings
-ctr-v jj$  # to the end of strings
+#81 Visual block text with not equal strings
+Ctr-v jj$  # to the end of strings
 
 # and add ; to the end of string
 
-a;  # go to end of string (or text object) and add semicolon
-esc
-result:
-all strings with ; to the end.
+A;  # go to end of string (or text object) and add semicolon
+Esc
+Result:
+All strings with ; to the end.
 
 #82 normal cmd
 
-# how to add ; to every string in a visual block
-make diapazon in visual mode:
-jvg
-and then press colon<:>
+# How to add ; to every string in a visual block
+Make diapazon in visual mode:
+jVG
+And then press colon<:>
 :'<,'>normal .
-result:
+Result:
 <;> semicolon will be end of every string of visual block
 
-#83 how to add ; to every string to whole file
-:%normal a;
+#83 How to add ; to every string to whole file
+:%normal A;
 
 :%normal i#  # comment every string in file
 
-#84 autocomplete to ex-mode
+#84 Autocomplete to ex-mode
 
-:col ctrl-d  # autocomplete variants
+:col Ctrl-d  # autocomplete variants
 colder    colorscheme
 
-:colorscheme ctrl-d
+:colorscheme Ctrl-d
 blackboard desert morning shine etc.
 
-or <tab>  # for autocomplete variants, step by step
+or <Tab>  # for autocomplete variants, step by step
 
-#84 open command line for ex-mode
+#84 Open command line for ex-mode
 
 q:  # open list of last commands
 :q  # exit from list command line
-ctrl-f  # change list of commands
+Ctrl-f  # change list of commands
 
-#85 start bash into vim
+#85 Start bash into vim
 
 :shell  # start
 $ exit  # go back to vim
 
-ctrl-z  # vim to sleep and go bash
+Ctrl-z  # vim to sleep and go bash
 $fg  # go back to the vim
 
 #86 sort and filtering
@@ -1163,9 +1160,9 @@ john,smith,john@example.com
 :2, $!sort -t',' -k2  # sort from 2 str to end, delimeter is <,>, for 2-d colone
 
 # insert cursor place to ex-modet comand line, if you need from cursor to the end of file
-!g  # :.,$!  and then add filter to the exclamation mark, e.g. <sort>
+!G  # :.,$!  and then add filter to the exclamation mark, e.g. <sort>
 
-#87 make a vim script file
+#87 Make a vim script file
 
 touch file jill.vim
 write strings of commands into file
@@ -1188,7 +1185,7 @@ vim/file1.html vim/file2.py vim/file3.txt
 
 :ls # how many files in buffers now?
 
-ctrl-^  # go to another file in buffers
+Ctrl-^  # go to another file in buffers
 
 :bprev or :bp # go to previous file
 :bnext or :bn # go to next file
@@ -1198,13 +1195,13 @@ ctrl-^  # go to another file in buffers
 
 :buffer 2  # go to buffer #2
 or
-:buffer {bufname} # :buffer ji for jill.vim, or use tab for autocomplete name
+:buffer {bufname} # :buffer ji for jill.vim, or use Tab for autocomplete name
 
 :bufdo  # for all files
 
-:bdelete n1 n2 n3  # delete buffers
+:bdelete N1 N2 N3  # delete buffers
 or
-: n, m bdelete
+: N, M bdelete
 :5,10bd  # del buffers form 5 to 10
 :bd 5 6 7 9 10  # del and not touch buffer 8
 
@@ -1215,11 +1212,11 @@ or
 :lcd /one/two/three/  # change working directory for current window
 :windo lcd /one/two/three  # define working dir for all windows in this tab
 
-#90 work with vim-tabs(not terminal-tabs)
+#90 Work with vim-tabs(not terminal-tabs)
 
 :tabe[dit] {filename}  # open filename in new tab
 
-ctrl-w t  # move current window to new tab
+Ctrl-w T  # move current window to new tab
 
 :tabc[lose]  # close current tab and there all windows
 
@@ -1228,27 +1225,27 @@ ctrl-w t  # move current window to new tab
 2gt  ------------# go to second tab
 or :tabn[ext] 2  # go to second tab
 
-gt  ---------------# go to backward
+gT  ---------------# go to backward
 or :tabp[revious]  # go o backward
 
 :tabmove 0  # go tab to the top of stack
 :tabmove    # go tab to the bottom of stack
 
-#91 open vim file manager netrw
+#91 Open vim file manager netrw
 
 :edit.
 :e .  # open file manager for current dir
 
-:explore  # open file manager for current buffer
-:e
+:Explore  # open file manager for current buffer
+:E
 
-:sexplore  # new horizontal window
-:vexplore  # new vertical window
+:Sexplore  # new horizontal window
+:Vexplore  # new vertical window
 
-ctrl-w c  # exit
+Ctrl-w c  # exit
 
 if you open file manager uppon file 
-ctrl-^  # back again to file
+Ctrl-^  # back again to file
 
 #92 move to screen strings
 gj  # down
@@ -1262,17 +1259,17 @@ g$  # end
 w, b  # start word
 e, ge  # end word
 
-w, b  # for complex word (e.g. we're - one word)
-e, ge  # ~
+W, B  # for complex word (e.g. we're - one word)
+E, gE  # ~
 
 #94 find comma and delete all before dot.
 
-i`ve been expecting you, mister bond.
+I`ve been expecting you, Mister Bond.
 f,
 dt.
-i`ve been expecting you.
+I`ve been expecting you.
 
-#95 del chunk of text
+#95 Del chunk of text
 
 v  # go to visual mode
 /pattern  # find from cursor to word
@@ -1283,8 +1280,8 @@ d  # delete for example
 
 print('hello, world')
 
-va(  # visual with brackets ('hello, world')
-vi(  # visual inside brackets 'hello, world'
+va(  # visual with brackets ('Hello, World')
+vi(  # visual inside brackets 'Hello, World'
 if need more just add i[ or a' whethever   '
 
 or
@@ -1294,14 +1291,14 @@ ci'  '# change inside quotes
 
 ciw  # change insice word
 daw  # ~ plus one space
-ciw  # change inside word object
-daw  # ~ plus one space
+ciW  # change inside word object
+daW  # ~ plus one space
 cis  # change inside string
 das  # ~ plus one space
 cip  # change inside paragraph
 dap  # ~ plus one empty string
 
-#98 change curly brackets to square brakets
+#98 Change curly brackets to square brakets
 
 cursor on the first braket
 dt{  # delete, find {
@@ -1310,17 +1307,17 @@ r]  # change } to ]
 ``  # go back to first {
 r[  # change { to [
 
-#99 go to previous place
+#99 Go to previous place
 
 :jumps  # list of places
 
-ctrl-o  # back
-ctrl-i  # forward
+Ctrl-o  # Back
+Ctrl-i  # Forward
 
 e.g.
 :e jill.py  # open new file
-ctrl-o  # go back to first file
-ctrl-i  # go to new file again
+Ctrl-o  # go back to first file
+Ctrl-i  # go to new file again
 
 :changes  # list of changes
 
@@ -1335,21 +1332,21 @@ g,  # go to the place of before changes
 ~/django2/knowlege/python/jill.py
 
 gf  # go to file in address
-ctrl-o  # go back to first file
+Ctrl-o  # go back to first file
 
 #101 paths to find
 
 :set path?  # how paths includes?
 
-#102 global find (but you need include all paths for potencial find)
+#102 Global find (but you need include all paths for potencial find)
 
-mh  # make global mark in current file
+mH  # make global mark in current file
 
-:vimgrep /dispotcher/ **  # find dispatcher in whole file system
+:vimgrep /Dispotcher/ **  # find Dispatcher in whole file system
 
-`h  # go back to first file with yuor sessioned mark
+`H  # go back to first file with yuor sessioned mark
 
-#101 work with registers(temporary buffers)
+#101 Work with registers(temporary buffers)
 
 "ayiw  "# copy current word into register 'a'
 "bdd   "# delete another current string and save it into register 'b'
@@ -1361,22 +1358,22 @@ mh  # make global mark in current file
 yiw  # yank word "one" into quote0 register(yank register?)
 diw  # del/cut word "two" into nonamed register
 p  # put - "two"
-"0p  "# put "one"
+"0P  "# put "one"
 
 # quote0 register with a-z registers
 
 "ayiw  "# yank word into a quote0 register
-"ap  "# put from 'a' quot0 register
+"aP  "# put from 'a' quot0 register
 :reg "0  "# show yank register
 
 #103 "_ (black whole) register
 
 yiw  # yank word "one"
 "_diw  "# del/cut into black whole and don't touch nonamed("") register
-p  # put from no touched register
+P  # put from no touched register
 
 #104 change places of two word
-# how cnange places two parts or sentence?
+# How cnange places two parts or sentence?
 
 fc  # find word [c]oax
 de  # del/cut to buffer e
@@ -1385,29 +1382,29 @@ ww  # go to two word
 ve  # visual edit and go to end of word
 p  # put after cursor
 `m  # go back to the mark m
-p  # put before cursor
+P  # put before cursor
 
-#105 copy one word and replace it another
+#105 Copy one word and replace it another
 
 yiw  # yank word
 jww  # go to next word
-ciw<ctrl-r>0 esc  # put from quote0 register
+ciw<Ctrl-r>0 Esc  # put from quote0 register
 
-#106 copy/paste paragraph and put it after previous, cursor ready to write.
+#106 Copy/paste paragraph and put it after previous, cursor ready to write.
 
 yap  # yank a paragraph
-gp  # put paragraph after previous paragraph, and move cursor to position for ready to write.
+gP  # put paragraph after previous paragraph, and move cursor to position for ready to write.
 
-#107 system cut/paste
+#107 System cut/paste
 
-ctrl-c  # system cut
-ctrl-shift-v  # system paste
+Ctrl-C  # system cut
+Ctrl-Shift-V  # system paste
 
-#108 macros
+#108 Macros
 
 qa  # start recording into 'a' register
-a;<esc>  # add semicolon
-ivar <esc> # add 'var'
+A;<Esc>  # add semicolon
+Ivar <Esc> # add 'var'
 q  # stop recording
 
 # check register 'a'
@@ -1423,13 +1420,13 @@ or 10@a  # ten ones repeat
 
 x = "("+a+", "+b+", "+c+", "+d+", "+e+")";
 f+  # find '+'
-s + <esc>  # substitute '+' to space'+'space
+s + <Esc>  # substitute '+' to space'+'space
 qq;.q  # qq - start writing macro into q register,';'- go to next,'.'-  repeat last comand, 'q' - stop write marcro
 22@q  # repeat marcor 22 ones, but need 10, in error that marcos stoped
 result:
 x = "(" + a + ", " + b + ", " + c + ", " + d + ", " + e + ")";
 
-#109 change dots to brackets and make capital leters
+#109 Change dots to brackets and make capital leters
 1. one
 2. two
 3. three
@@ -1443,21 +1440,21 @@ j  #
 q  # stop writing macros
 3@a  # third fulfil 'a' macros3@a  # third fulfil 'a' macros3@a  # third fulfil 'a' macros
 result:
-1) one
-2) two
-3) three
-4) four
+1) One
+2) Two
+3) Three
+4) Four
 
-#110 parallel work of macros
+#110 Parallel work of macros
 
 qa  # start marcos to 'a' register
 0f.r)w~  # change dot to bracket and change to capital letter
 q  # stop writing macros
 
-#111 change macros aftre writing
+#111 Change macros aftre writing
 
 :reg a  # for 'a' register
-qa  # append to end of macros
+qA  # Append to end of macros
 j  # add move
 q  # stop macros
 
@@ -1466,14 +1463,14 @@ q  # stop macros
 from:
 partridge in a pear tree
 turtle doves
-french hens
+French hens
 calling birds
 golden rings
 
 to:
 1) partrige in a pear tree
 2) turtle doves
-3) french hens
+3) French hens
 4) calling birds
 5) golden rings
 """
@@ -1487,92 +1484,16 @@ to:
 """
 :let i=1
 qa
-i<c-r>=i<cr>)
-<esc>
+I<C-r>=i<Cr>)
+<Esc>
 :let i += 1
 q
 
 go cursor to start position
-jvg  # all text
+jVG  # all text
 :'<,'>normal @a  # go macros for all text
 
 #113 amend macros
 
 :put a  # change the macros as simple string
-change string --> i=irÄ˝aÄ˝aÄ˝a:let i Äkb+= 1
-0  # go to start string
-"ay$  "# insert macros to register
-dd  # del from current text
 
-#114 patterns about
-
-add into pattern:
-\c  # for on upper/lower case filling in pattern
-\c  # for off u/l case filling
-
-#115 new regular expression
-
-#\([0-9a-fa-f]\{6}\|[0-9a-fa-f]\{3}\)  # old style with shielding
-
-/\v#([0-9a-fa-f]{6}|[0-9a-fa-f]{3})  # search 16-char codes of color
-or
-/\v#(\x{6}|\x{3})  # the same
-
-# how to search a.k.a.?
-
-/a.k.a  # nope, backward and a.k.a.
-
-/a\.k\.a\.  # ok, old style
-
-/\va.k.a.  # new style
-
-?\v  # for exactly search
-\v  # for regular expression, abbrogate meaning special characters
-
-#116 how to find repeated words e.g i'm the the man
-
-/\v<(\w+)\_s+\1>
-
-()<--\1
-()()<--\1\2
-()()...<--\1...\9
-()()()...<--\0  for all reg ex
-
-< >  # that's a start and end of word, if you need <the> and not they, there
-g.e. 
-/\v<the>  # search <the>, but not they
-
-\_s  # that's a spaces and new lines
-
-#117 search/find word under cursor
-
-shift-*  # forwarc search word under cursor
-shift-#  # backward search word under cursor
-or
-g*
-g#
-
-#118 how not include quotes in search?
-
-?\v"[^"]+"  "# with quotes
-?\v"\zx[^"]+\ze"  "# without quotes
-or
-?\v"@<=[^"]+"@=  "#
-
-#119 how to insert cursor to end of searches result?
-
-/example/e  # search and put cursor to the end of result
-if you not know 
-/example  # simple search
-//e  # and then put cursor to the end of result if you need
-
-#120 how to change Xhtml to XHTML?
-
-/\VX(ht)?ml\C  # find without register fillings
-gUgn
-n
-.
-n.
-.
-
-#
