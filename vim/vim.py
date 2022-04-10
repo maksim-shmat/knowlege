@@ -258,6 +258,8 @@ l  # go to bottom
 
 #25 search
         
+        q/  # search from history
+        
         :/d?spam  # search d?spam
 
 	d?spam  # del text from cursor to the word spam
@@ -439,6 +441,10 @@ ctrl+^(carret)  # go to previous file
 
 :g/editer/s//editor/g  # both equivalent
 :%s/editor/editor/g
+or
+g&  # after cmd g.e. 1) :s/target/replacement/g 2) g& (same :%s//~&)
+or
+:&&
 
 #39 regular expression for vim
 
@@ -1575,4 +1581,29 @@ n
 n.
 .
 
-#
+#121 how count results
+/\example\
+:%s///gn  # how much results
+or
+/\example\
+:vimgrep //g %
+:cnext
+:cprev
+
+#122 Replace fields in .csv file
+
+last name,first name,email
+neil,burgh,few@bumbshell.org
+dou,hores, johnathan@escrow.com
+
+/\v^([^,]*),([^,]*),([^,]*)$  # for three fields, all symbols without comma
+
+:%s//\3,\2,\1  # replace fields 1,2,3 to 3,2,1
+
+#123 Change html headers: <h2> to <h1>, <h3> to <h2>, arithmetic work
+
+/\v\<\/?h\zs\d  # <?h from start digital
+
+:%s//\=submatch(0)-1/g  # minus 1
+
+#124
