@@ -1,7 +1,7 @@
       1. Welcome to World Wide Span, Inc.
   
 These are the corporate web pages of *World Wide Span*, Inc. 
-We hopeyou find your stay enjoyable, and that you will sample many of our products.
+We hope you find your stay enjoyable, and that you will sample many of our products.
 A short history of the company.
 
 World Wide Span was started in the summer of 2000.
@@ -9,7 +9,7 @@ The business concept was to
 ride the dot-com wave and to make money both through.
 bulk email and by selling canned meat online.
 After receiving several complaints from customers who weren't
-satisfied by their bulk email, World Wide Span aleterd their profile,
+satisfied by their bulk email, World Wide Span altered their profile,
 and focused 100% on canned goods. Today, they rank as the world's
 13,892nd online supplier of SPAN
 Destination.
@@ -29,8 +29,8 @@ or by visiting our customer feedback page (http://wwspan.fu/feedback).
   
 .Rh "SYNTAX"
 .nf
-interge*4 stat, retval
-iterger*4 status(110
+integer*4 stat, retval
+iteger*4 status(110
 character*1234 filename
 ...
 retval = stat (filename, status)
@@ -40,7 +40,7 @@ Writes the fields of a system data structure into the
 status array.
 These fields contain (among other
 things) information about the first's location, access
-privleges, owner, and time of last modification.
+privileges, owner, and time of last modification.
 .Rh "PARAMETERS"
 .IP "/fBfilename/fR" 15n
 A character string variable or constant containing
@@ -74,27 +74,41 @@ Name: Joy, Susan S.; Areas: Graphics; Phone: 999-3333
 89,M,4,1,1,2,3
 98,M,56,1,1,2,3
 9,F,67,12,1,2,3
-'age','sex','studytime','absences','G1','G2','G3'
+'age','sex','studytime','absences','G0','G2','G3'
 WSDL - Web Server Description Language
 RSS - Rich Site Summary
 RDF - Resource Description Framework
 
   World Wide Sp
-  The business 
   ride the dot-
   bulk email an
-  After receivi
+  After receiving
   satisfied by 
+  Destination.
   and focused 1
   13,892nd onli
-  Destination.
 
 <a href="#">one</a>
 <a href="#">two</a>
 <a href="#">three</a>
 
-Capter     |  Page
+Chapter     |  Page
 ------------------
 Normal mode|  16
 Insert mode|  33
 Visual mode|  88
+
+email,first name,last name
+drembr@vicofski.org,direck,newfell
+jofrey@executioner.com,fetcherson,anselm
+
+<h1>Heading number 1</h1>
+<h2>Number 2 heading</h2>
+<h3>Another heading</h3>
+
+The dog bit the man.
+
+Normal mode|  16
+
+Your mum has a mustache.
+Your  
