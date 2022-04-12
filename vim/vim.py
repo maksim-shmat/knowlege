@@ -8,6 +8,9 @@
 :help  # read documentation
 :h operator  # documentation is awesome
 
+:h $MYVIMRC
+/usr/share/vim/vim81/defaults.vim  # file with defaults settings or .vimrc
+
 # Sands of Time
 
 :erlier 4m - in 4 min back
@@ -33,7 +36,7 @@ Ctrl + S
 
 Ctrl + Q
 
-#5 If ''' is trubles roll page from up to down
+#5 If ''' is l=trubles roll page from up to down
 
 gg, down-down to bottom of page
 
@@ -276,7 +279,9 @@ l  # go to bottom
         
         :set ic  # set ignore case
         :set noic  # unset ignore case
-        :set hls  # highlite search results
+        :set ic?  # check
+
+        :set hls  # highlight search results
         :set is  # incsearch, show partial matches for a search phrases
 
         :set path+=path/**  # add path for :find, ** - mean recursively
@@ -842,6 +847,7 @@ ze - remove all previous folders
 :imap tab <c-p> - autocomplete to tab e.g.
 
 ctrl-x ctrl-l - autocomplete whole string
+
 ctrl-n, ctrl-p - up/down in list of variants
 and ctrl-e - esc
 
@@ -860,6 +866,16 @@ ctrl-x ctrl-f - autocomplete with filename
 ctrl-x ctrl-d - autocomplete with macros name
 
 ctrl-x ctrl-v - comand line completition
+
+# autocomplete in insert mode
+Ctrl-p or Ctrl-n
+Ctrl-n  # next
+Ctrl-p  # previous
+Down/Up
+Ctrl-y  # yes
+Ctrl-e  # exit
+Ctrl-h or BackSpace(<BS>)  # del example
+Ctrl-l  # add example
 
 #56 digraphs for diacritics marks
 
@@ -1168,7 +1184,7 @@ john,smith,john@example.com
 
 :2, $!sort -t',' -k2  # sort from 2 str to end, delimeter is <,>, for 2-d colone
 
-# insert cursor place to ex-modet comand line, if you need from cursor to the end of file
+# insert cursor place to ex-mode comand line, if you need from cursor to the end of file
 !g  # :.,$!  and then add filter to the exclamation mark, e.g. <sort>
 
 #87 make a vim script file
@@ -1606,4 +1622,125 @@ dou,hores, johnathan@escrow.com
 
 :%s//\=submatch(0)-1/g  # minus 1
 
-#124
+#124 Replace both words
+
+The dog bit the man.
+
+:let swapper={"dog":"man","man":"dog"}  # make a dict
+:echo swapper["dog"]
+man
+:echo swapper["man"]
+dog
+
+/\v(<man>|<dog>)  # find both words
+
+:%s//\={"dog":"man","man":"dog"}[submatch(1)]/g
+
+#125 Change words into many files of current dir
+
+/work\ze with  # change only work word
+:vimgrep // **/*.py  # find in current dir
+
+:vimgrep /about/g jill.py forcword.py clock.py # find 'about' in files for all results
+or
+:vimgrep /about/g *.py # for .py files
+or first make args and then first between them
+:args *.py
+:vim /about/g ##
+
+# find in file and then find global
+/[Dd]on't  '# find in file
+:vim //g *.py  # find in dir
+
+:cnext, :cprev, :exit  # show all files how finded
+or :5cnext
+
+:cfirst, :slast
+
+:cnfile, :cpfile  # go to first/last to next/prev files
+
+:copen, :cclose or :exit or :q  # quickfix list of files how finded
+
+:cc 11  # go to result 11
+
+:cdo {cmd}  # cmd for all strings of quickfix list
+:cfdo {cmd}  # cmd one time for all files in quickfix list
+
+:colder  # undo for quickfix list
+:cnewer  # redo for quickfix list
+
+:set hidden  # for exit from changable files without write
+
+:cfdo %s//job/gc  # change work to job with accnowlegments
+
+:cfdo update  # for save changes
+or
+:cfdo %s//job/g | update
+
+#126 Clarify html from tags
+
+/\v\<\/?\w+>
+:g//d
+
+or another way hold tags and del other
+:v/href/d  # :v == :vglobal (invert global)
+
+#126 Set all comments
+
+qaq  # clear register 'a'
+:reg a
+
+:g/chore/yank A
+:reg a
+
+open new window for write new file
+"ap  "# insert comments into new file
+or
+:g/chore/t$  # add all chore comments to the end file
+
+#127 Sort words into block
+
+html{
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+cursor on the {
+vi{  # visual into { }
+:'<,'>sort
+
+:g/{/ .+1,/}/-1 sort  # sort all blocks into file
+
+# make a spaces from a start strings into { } blocks
+
+:g/{/ .+1,/}/-1 >
+
+#128 spell checking
+
+write, make an error:
+Ctrl-x s  # change
+
+:set spell
+:set spelllang=en_us  # if you need US English
+
+:set spell
+:set spelllang=ru
+Ctrl-x Ctrl-k
+
+[s, ]s  # go/back by errors  ??? NOT WORKING
+z=  # list of examples for change
+zg  # add current word to dict
+zw  # delete current word from dict
+zug # undo delete or add to dictionary
+
+#129 Autocomplete fool line
+
+ba
+Ctrl-x Ctrl-l
+result:
+background-color: #ef66ef; 
+

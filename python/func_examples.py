@@ -165,4 +165,9 @@ results:
     a eqwl 25, b eqwl 5, and c eqwl 24
     a eqwl 100, b eqwl 5, and c eqwl 50
 
+#14 VarArgs (Variable number of Arguments)
 
+def total(initial=5, *numbers, **keywords):
+    count = initial
+    for number in numbers:
+        count += numbers
