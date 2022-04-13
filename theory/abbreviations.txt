@@ -118,3 +118,22 @@ LSTM - Long-Short-Term Memory (neural networks)
 
 CNN - Convolutional Neural Networks
 
+LLc - Logical Line Control
+
+CSMA/CD - Carrier Sense Multiple Access with Collision Detection
+
+STA, STP RSTP - Spanking Tree Algorithm, Protocol, Rest STP
+
+BPDU - Bidge Protocol Data Unit
+
+LAS, LAG - Link Aggregation Sublayer, Link Aggregation Group
+
+LACP - Virtual Local Area Network
+
+TCI - Tag Control Information
+
+GARP - Generic Attribute Registration Protocol
+
+GVRP - GARP VLAN Registration Protocol
+
+
