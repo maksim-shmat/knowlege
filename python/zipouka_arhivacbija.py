@@ -16,3 +16,27 @@ if __name__ == '__main__':
     for path in paths:
         zip_file.write(str(path))
         path.unlink()
+
+# another example
+
+import os
+import time
+
+source = ['"Files for backup"', 'And_more']  # make a list for backup
+target_dir = <path>  # dir for backups
+
+today = target_dir + os.sep + time.strftime('%Y%m%d')  # date is name for archive
+now = time.strftime('%H%M%S')
+
+if not os.path.exists(today):  # make a dir if it's not exist
+    os.mkdir(today)
+print('Directory created succesfully', today)
+
+target = today + os.set + now + '.zip'  # name of zip file
+
+zip_command = "zip -qr {0} {1}".format(target, ' '.join(source)) # zipped files
+if os.system(zip_command) == 0:
+    print('Backup copy created', target)
+else:
+    print('Backup copy FAILED, KARL?')
+
