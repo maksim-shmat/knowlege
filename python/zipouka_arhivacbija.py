@@ -17,7 +17,7 @@ if __name__ == '__main__':
         zip_file.write(str(path))
         path.unlink()
 
-# another example
+# another example. Not use call os, use zipfile()
 
 import os
 import time
@@ -28,6 +28,11 @@ target_dir = <path>  # dir for backups
 today = target_dir + os.sep + time.strftime('%Y%m%d')  # date is name for archive
 now = time.strftime('%H%M%S')
 
+comment = input('Enter comment: ')  # add comment to zip archive
+if len(comment) == 0:
+    target = today + os.sep + now + '.zip'
+else:
+    target = today = os.sep + now + '_' + comment.replace(' ', '_') + '.zip'
 if not os.path.exists(today):  # make a dir if it's not exist
     os.mkdir(today)
 print('Directory created succesfully', today)
@@ -39,4 +44,5 @@ if os.system(zip_command) == 0:
     print('Backup copy created', target)
 else:
     print('Backup copy FAILED, KARL?')
+
 
