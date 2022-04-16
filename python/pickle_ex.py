@@ -117,4 +117,23 @@ picklefile.close()
 print(type(df))
 print(df)
 
-######5
+#5 new Apr 16
+
+import pickle
+
+shoplistfile = 'jill.data'
+shoplist = ['apples', 'mango', 'peackocks']
+
+f = open(shoplistfile, 'wb')
+pickle.dump(shoplist, f)  # put object into file
+f.close()
+
+del shoplist  # del variable
+
+# unpickling
+
+f = open(shoplistfile, 'rb')
+storedlist = pickle.load(f)  # load object from file
+print(storedlist)
+
+#6
