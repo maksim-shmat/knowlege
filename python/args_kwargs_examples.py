@@ -87,4 +87,18 @@ print_params(1, 2)
 ()
 {}
 
-#2
+#2 powersum
+
+def powersum(power, *args):
+    '''Return sum args, in power.'''
+    total = 0
+    for i in args:
+        total += pow(i, power)
+    return total
+
+>>> powersum(2, 3, 4)  # 3*3=9, 4*4=16; 9+16=25
+25
+>>> powersum(2, 10)
+100
+
+#3

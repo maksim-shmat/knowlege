@@ -1,5 +1,5 @@
 """About work with files."""
-
+'''
 ######1 Read text file
 
 fileObject = open('jill.py', 'r')
@@ -113,4 +113,23 @@ data = file.read()
 occurrences = data.count("love")
 print('Number of occurences of the word : ', occurrences)
 file1.close()
-######
+'''
+#12 Finally and slow load
+
+import time
+
+try:
+    f = open('jill.txt')
+    while True:
+        line = f.readline()
+        if len(line) == 0:
+            break
+        print(line, end='')
+        time.sleep(2)
+except KeyboardInterrupt:
+    print('!! You aborted read file.')  # for Ctrl-C interruption
+finally:
+    f.close()
+    print('(Cleance: Close file)')
+
+#13

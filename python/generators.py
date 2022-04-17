@@ -1,3 +1,7 @@
+"""Generators about."""
+
+#1
+
 def four(limit):
     x = 0
     while x < limit:
@@ -90,4 +94,12 @@ print(next(r))
 
 print(r.send("Hello, world!"))
 
-#7
+#7 generator of lists
+
+listone = [2, 3, 4]
+listtwo = [2*i for i in listone if i > 2]
+print(listtwo)
+results:
+    [6, 8]
+
+#8 

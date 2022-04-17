@@ -209,4 +209,17 @@ squares = {i:"{} squared is {}".format(i, i ** 2) for i in range(10)}
 squares[8]
 print(squares)
 
-#31
+#1 f strings for Python >3.6, for old versions .format
+
+first_name = "ada"
+last_name = "lovelace"
+full_name = f"{first_name} {last_name}"
+or
+full_name = "{} {}".format(first_name, last_name)  # for old Python
+
+message = f"Hello, {full_name.title()}!"
+print(message)
+results:
+    Hello, Ada Lovelace!
+
+#2
