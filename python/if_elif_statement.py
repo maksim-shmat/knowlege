@@ -1,10 +1,8 @@
-"""About if and."""
+"""About if/elif."""
 '''
 a = 5
 b = 2
-
 # nested if 
-
 if a==5:
     if b>0:
         print('a is 5 and',b,'is greater than zero.')
