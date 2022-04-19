@@ -211,4 +211,30 @@ else:
 name = input('What is your name?') or '<unrknown>'
 print(name)
 
-#5
+#5 Print bmw with uppercase
+
+cars = ['audi', 'bmw', 'subaru', 'toyota']
+
+for car in cars:
+    if car == 'bmw':
+        print(car.upper())
+    else:
+        print(car.title())
+
+#6 Different prices
+
+age = 12
+if age < 4:
+    price = 0
+elif age < 18:
+    price = 25
+elif age < 65:
+    price = 40
+elif age >= 65:
+    price = 20
+else:  # in all other cases, bugs and RCE(Remote Code Execution)
+    price = 40
+
+print(f"Your admission cost is ${price}.")
+
+#7
