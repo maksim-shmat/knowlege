@@ -8,10 +8,10 @@ from 100_prisoners.py.
 import random
 
 def main():
-    NUM_DRAWERS = 10
-    NUM_REPETITIONS = int(1E5)
+    NUM_DRAWERS = 100
+    NUM_REPETITIONS = int(1E4) # 1e4(10_000), 1e5(100_000)
 
-    print('{:15}: {:5} ({})'.format('approach', 'winds', 'ratio'))
+    print('{:15}: {:5} ({})'.format('approach', 'wins', 'ratio'))
     for approach in PrisonersGame.approaches:
         num_victories = 0
         for _ in range(NUM_REPETITIONS):
