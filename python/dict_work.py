@@ -514,5 +514,64 @@ print(f"You ordered a {pizza['crust']}-crust pizza "  # quote one
         "with the following toppings:")  # quote two for sum line
 for topping in pizza['toppings']:
     print("\t" + topping)
+results:
+    Your ordered a thick-crust pizza with the following toppings:
+        mushrooms
+        extra cheese
 
-#23
+#23 Key with more than one values
+
+favorite_languages = {
+        'jen':['python', 'ruby'],
+        'sarah': ['c'],
+        'edward': ['ruby', 'go'],
+        'phil': ['python', 'haskell'],
+        }
+for name, languages in favorite_languages.items():
+    print(f"\n{name.title()}'s favorite languages are:")
+    if len(languages) = 1:  # for one value write 'language'
+        print(f"\n{name.title()}'s favorite language are:")
+    for language in languages:
+        print(f"\t{language.title()}")
+results:
+    Jen`s favorite languages are:
+        Python
+        Ruby
+    
+    Sarah`s favorite language are:
+        
+        C
+
+#24 Dict into dict
+
+users = {
+        'aeinstein': {
+            'first': 'albert',
+            'last': 'einstein',
+            'location': 'princeton',
+            },
+
+        'mcurie': {
+            'first': 'marie',
+            'last': 'curie',
+            'location': 'paris',
+            },
+        }
+
+for username, user_info in users.items():
+    print(f"\nUsername: {username}")
+    full_name = f"{user_info['first']} {user_info['last']}"
+    location = user_info['location']
+    print(f"\tFull name: {full_name.title()}")
+    print(f"\tLocation: {location.title()}")
+
+results:
+    Username: aeinstein
+        Full name: Albert Einstein
+        Location: Princeton
+
+    Username: mcurie
+        Full name: Marie Curie
+        Location: Paris
+
+#25

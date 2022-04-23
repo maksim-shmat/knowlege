@@ -1737,7 +1737,7 @@ zg  # add current word to dict
 zw  # delete current word from dict
 zug # undo delete or add to dictionary
 
-#129 Autocomplete fool line
+#129 autocomplete fool line
 
 ba
 Ctrl-x Ctrl-l
