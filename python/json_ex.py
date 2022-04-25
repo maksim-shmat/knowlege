@@ -193,4 +193,31 @@ jsonFile = open("data.json", "w")
 jsonFile.write(jsonString)
 jsonFile.close()
 
-######13
+##13 write json
+
+import json
+
+numbers = [2, 3, 5, 7, 11, 13]
+
+filename = 'jill.json'
+with open(filename, 'w') as f:
+    json.dump(numbers, f)
+
+##14 Save/Load
+
+import json
+
+filename = 'jill.json'
+
+try:
+    with open(filename) as f:
+        username = json.load(f)  # load if name save lately
+except FileNotFoundError:
+    username = input("What is your name? ")  # in another case asc name
+    with open(filename, 'w') as f:
+        json.dump(username, f)
+        print(f"We'll remember you when you come back, {username}!")
+    else:
+        print(f"Welcome back, {username}!")
+
+##15

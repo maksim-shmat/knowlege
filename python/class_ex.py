@@ -71,7 +71,7 @@ print(s[4])  # 9
 s[4] = 2
 print(s[4])  # 2
 print(s[5])  # 11
-'''
+
 #3 
 
 class CounterList(list):
@@ -95,5 +95,108 @@ print(cl)  # [9, 8, 7, 3, 2, 1, 0]
 print(cl.counter)     # 0
 print(cl[4] + cl[2])  # 9
 print(cl.counter)     # 2
+'''
+##4 Changeable parameter
 
-#4
+class Car():
+    
+    def __init__(self, make, model, year, gas_tank=''):
+        """Init atributes car info."""
+        self.make = make
+        self.model = model
+        self.year = year
+        self.gas_tank = gas_tank
+        self.odometer_reading = 0
+
+    def get_descriptive_name(self):
+        """Return formatted describe."""
+        long_name = f"{self.year} {self.make} {self.model}"
+        return long_name.title()
+
+    def fell_gas_tank(self):
+        """Benzin."""
+        print("This gas tank is big.")
+
+    def read_odometer(self):
+        """Return mileage of car."""
+        print(f"This car has {self.odometer_reading} miles on it.")
+
+    def update_odometer(self, mileage):
+        """For not rollback odometer."""
+        if mileage >= self.odometer_reading:
+            self.odometer_reading = mileage
+        else:
+            print("You can't roll back an odometer!")
+
+    def increment_odometer(self, miles):
+        """Add values to odometer."""
+        self.odometer_reading += miles
+
+my_new_car = Car('audi', 'a4', 2019)
+print(my_new_car.get_descriptive_name())
+my_new_car.fell_gas_tank()
+my_new_car.odometer_reading = 23
+my_new_car.read_odometer()
+
+my_used_car = Car('subaru', 'outback', 2015)
+print(my_used_car.get_descriptive_name())
+
+my_used_car.update_odometer(23_500)
+my_used_car.read_odometer()
+my_used_car.fell_gas_tank()
+my_used_car.increment_odometer(100)
+my_used_car.read_odometer()
+
+
+class Battery():  # not inherit from Car
+    """Simply model acb of Ecar."""
+    
+    def __init__(self, battery_size=75):
+        """Init attrs of acb."""
+        self.battery_size = battery_size
+
+    def describe_battery(self):
+        """Info about power of acb."""
+        print(f"This car has a {self.battery_size}-kWh battery.")
+
+    def get_range(self):
+        """How many miles move you car in one acb."""
+        if self.battery_size == 75:
+            range = 260
+        elif self.battery_size == 100:
+            range = 315
+
+        print(f"This car can go about {range} miles on a full charge.")
+
+class ElectricCar(Car):
+    """Specific for electrocars parameters."""
+
+    def __init__(self, make, model, year):
+        """Init parent class atributes."""
+        super().__init__(make, model, year)
+        self.battery = Battery()
+
+    def fil_gas_tank(self):  # It's name cover name in the parent class
+        """Electromobile not have gas_tank."""
+        print("This car doesn't need a gas tank!")
+
+my_tesla = ElectricCar('tesla', 'model s', 2019)
+print(my_tesla.get_descriptive_name())
+my_tesla.fil_gas_tank()
+my_tesla.battery.describe_battery()
+my_tesla.battery.get_range()
+
+Results:
+2019 Audi A4
+This gas tank is big.
+This car has 23 miles on it.
+2015 Subaru Outback
+This car has 23500 miles on it.
+This gas tank is big.
+This car has 23600 miles on it.
+2019 Tesla Model S
+This car doesn`t need a gas tank!
+This car has a 75-kWh battery.
+This car can go about 260 miles on a full charge.
+
+##5

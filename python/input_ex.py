@@ -542,4 +542,17 @@ print(name_age[name_choice])
 x = float(input('Enter a float : '))
 print('You entered : ', x)
 
-######2  
+#2 input with long string
+
+prompt = "If you tell us who you are, we can personalize the messages you see."
+prompt += "\nWhat is your first name?"  # add more to variable 'prompt'
+name = input(prompt)
+print(f"\nHello, {name}!")
+
+resutls:
+    If you tell us who you are, we can personalize the messages you see.
+    What is you first name? Vibldr
+
+    Hello, Vibldr!
+
+#3

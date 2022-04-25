@@ -113,7 +113,7 @@ data = file.read()
 occurrences = data.count("love")
 print('Number of occurences of the word : ', occurrences)
 file1.close()
-'''
+
 #12 Finally and slow load
 
 import time
@@ -131,5 +131,43 @@ except KeyboardInterrupt:
 finally:
     f.close()
     print('(Cleance: Close file)')
+'''
+##13
 
-#13
+filename = 'jill.txt'
+
+with open(filename) as file_object:
+    lines = file_object.readlines()
+
+for line in lines:
+        print(line.rstrip())
+
+pi_string = ''
+for line in lines:
+    pi_string += line.rstrip()
+
+print(pi_string)
+print(f"{pi_string[:52]}...")
+print(len(pi_string))
+
+##14 len of words in file and exceptp FileNotFoundError:
+
+def count_words(filename):
+    """Count words in file."""
+
+    try:
+        with open(filename, encoding='utf-8') as f:
+            contents = f.read()
+    except FileNotFoundError:
+        print(f"Sorry, the file {filename} does not exist.")  # or pass
+    else:
+        # Count words in file
+        words = contents.split()
+        num_words = len(words)
+        print(f"The file {filename} has about {num_words} words.")
+
+filenames = ['jill.txt', 'jill.py']
+for filename in filenames:
+    count_words(filename)
+
+##15 
