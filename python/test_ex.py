@@ -35,4 +35,27 @@ implementing the functionality.
 4. Rewrite (or refactor) the code that it actually does what it`s supposed to,
 all the while making sure that your test keeps succeeding.
 
-#3
+#3 unittest for files name_function_for_names.py and names_for_test_ex.py
+
+import unittest
+from name_function_for_names import get_formatted_name
+
+class NamesTestCase(unittest.TestCase):
+    """Tests for 'name_function_for_names.py'."""
+
+    def test_first_last_name(self):
+        """Names how: 'Janis Joplin' is work right?"""
+        formatted_name = get_formatted_name('janis', 'joplin')
+        self.assertEqual(formatted_name, 'Janis Joplin')
+
+if __name__ == '__main__':
+    unittest.main()
+
+Results:
+    .
+----------------------------------------------------------------------
+Ran 1 test in 0.000s
+
+OK
+
+#4

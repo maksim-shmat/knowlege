@@ -207,17 +207,35 @@ with open(filename, 'w') as f:
 
 import json
 
-filename = 'jill.json'
+def get_stored_username():
+    """Get saved username, if it exists."""
 
-try:
-    with open(filename) as f:
-        username = json.load(f)  # load if name save lately
-except FileNotFoundError:
+    filename = 'jill.json'
+    try:
+        with open(filename) as f:
+            username = json.load(f)  # load if name save lately
+    except FileNotFoundError:
+        return None
+    else:
+        return username
+
+def get_new_username():
+    """Asc now name of user."""
     username = input("What is your name? ")  # in another case asc name
+    filename = 'jill.json'
     with open(filename, 'w') as f:
         json.dump(username, f)
-        print(f"We'll remember you when you come back, {username}!")
-    else:
+    return username
+    
+def greet_user():
+    """Greeting user for his name."""
+    username = get_stored_username()
+    if username:
         print(f"Welcome back, {username}!")
+    else:
+        username = get_new_username()
+        print(f"We'll remember you when you come back, {username}!")
+
+greet_user()
 
 ##15
