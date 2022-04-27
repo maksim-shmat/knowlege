@@ -1,6 +1,6 @@
 """Tests about."""
 
-#1 Test before coding
+##1 Test before coding
 
 from area import rect_area
 
@@ -14,7 +14,7 @@ if answer == correct_answer:
 else:
     print("Test failed")
 
-#2 How is testing?
+##2 How is testing?
 
 1. Figure out the new fearure you want. Possibly document it and then write
 a test for it.
@@ -35,7 +35,7 @@ implementing the functionality.
 4. Rewrite (or refactor) the code that it actually does what it`s supposed to,
 all the while making sure that your test keeps succeeding.
 
-#3 unittest for files name_function_for_names.py and names_for_test_ex.py
+##3 unittest for files name_function_for_names.py and names_for_test_ex.py
 
 import unittest
 from name_function_for_names import get_formatted_name
@@ -48,14 +48,65 @@ class NamesTestCase(unittest.TestCase):
         formatted_name = get_formatted_name('janis', 'joplin')
         self.assertEqual(formatted_name, 'Janis Joplin')
 
+    def test_first_last_middle_name(self):
+        """Names now: 'Wolfgang Amadeus Mozart' is worked?"""
+        formatted_name = get_formatted_name(
+                'wolfgang', 'mozart', 'amadeus')
+        self.assertEqual(formatted_name, 'Wolfgang Amadeus Mozart')
+
 if __name__ == '__main__':
     unittest.main()
 
 Results:
     .
 ----------------------------------------------------------------------
-Ran 1 test in 0.000s
+Ran 2 tests in 0.000s
 
 OK
 
-#4
+##4 assert methods from unittest
+
+assertEqual(a, b)  # check that a == b
+assertNotEqual(a, b)  # check that a != b
+assertTrue(x)  # check that x is true
+assetFalse(x)  # check that x is False
+assertIn('?', list)  # check that '?' into list
+assertNotIn('?', list)  #check that '?' not into list
+
+##5 Test for survey.py
+
+import unittest
+from survey import AnonymousSurvey
+
+class TestAnonymousSurvey(unittest.TestCase):
+    """Tests for class AnonymousSurvey"""
+
+    def test_store_single_response(self):
+        """Check that one answer is save right."""
+        question = "What language did you first learn to speak?"
+        my_survey = AnonymousSurvey(question)
+        my_survey.store_response('English')
+        self.assertIn('English', my_survey.responses)
+
+    def test_stor_three_responses(self):
+        """Check that 3 answers will be saved right."""
+        question = "What language did you first learn to speak?"
+        my_survey =AnonymousSurvey(question)
+        responses = ['English', 'Spanish', 'Mandarin']
+        for response in responses:
+            my_survey.store_response(response)
+
+        for response in responses:
+            self.assertIn(response, my_survey.responses)
+
+if __name__ == '__main__':
+    unittest.main()
+
+Results:
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+
+##6
