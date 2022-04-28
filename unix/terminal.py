@@ -1,5 +1,7 @@
 """ About linux terminal."""
 
+mkdir  # make a direcory
+
 #1 Open new window
 
 Shift+Ctrl + T  # open new tab

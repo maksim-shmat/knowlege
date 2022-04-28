@@ -1,19 +1,17 @@
 """ How make good commits?"""
 
-build:   changes that affect the build system or external dependencies (example
-scopes:  gulp, broccoli, npm)
-Ci:      changes to our CI configuration files and scripts (example scopes: Travis,Circle, BrowserStack, SauceLabs)
-
 docs:     documentation only changes
 feat:     a new feature
 fix:      a bug fix
 perf:     a code change that improves performance.
 refactor: a code change that neither fixes a bug nor adds a future
-style:    changes that do not affect the meaning of the code (white-space,
-    formatting, missing semi-colons, etc)
+style:    changes that do not affect the meaning of the code (white-space, formatting, miss semi-colons)
 chore:    updating grunt tasks etc; no production code change.
 test:     adding missing tests or correcting existing tests
 
+build:   changes that affect the build system or external dependencies
+scopes:  gulp, broccoli, npm)
+Ci:      changes to our CI configuration files and scripts (example scopes: Travis,Circle, BrowserStack, SauceLabs)
 
 man gitignore  # справочка
 

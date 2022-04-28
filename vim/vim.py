@@ -183,7 +183,7 @@ c2b  # change word to backward on the two words
 c0  # change words to the start of string from cursor  (but cc ?)
 c$ (equal c)  # change words to the end of sting from the cursor (but cc ?)
 cc  # change string
-c  # change from cursor to the end string
+C  # change from cursor to the end string
 
 #17 delete
 
