@@ -11,7 +11,7 @@ class Ship():
         self.screen_rect = ai_game.screen.get_rect()
 
         # Load image of ship and get the rectangle.
-        self.image = pygame.image.load('images/ship.png')
+        self.image = pygame.image.load('/home/jack/django2/knowlege/python/alien_invasion/images/ship.png')
         self.rect = self.image.get_rect()
 
         # Every new ship will be appeared in a bottom line of the screen.

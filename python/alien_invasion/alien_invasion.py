@@ -5,6 +5,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 
+
 class AlienInvasion:
     """Class for manage resources of game."""
 
@@ -19,7 +20,7 @@ class AlienInvasion:
         self.ship = Ship(screen)  # ! Not attribute screen. And where it is?
 
         # Set background color. Default is black.
-        self.bg_color = (230, 230, 230)  # light gray color
+       # self.bg_color = (230, 230, 230)  # light gray color
         # RGB (255, 0, 0) - red
         #     (0, 255, 0) - green
         #     (0, 0, 255) - blue
@@ -27,17 +28,22 @@ class AlienInvasion:
     def run_game(self):
         """Start game."""
         while True:
-            # Check keyboard.
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
+            self._check_events()
+            self._update_screen()
 
-            # Generate new screen after end 'for' cicle
-            self.screen.fill(self.settings.bg_color)
-            self.ship.blitme()
+    def _check_events(self):
+        """Handle press buttons of keyboard."""
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
 
-            # Shoe the last generated screen
-            pygame.display.flip()
+    def _update_screen(self):
+        """Update rectangle and show new screen."""
+        self.screen.fill(self.settings.bg_color)
+        self.ship.blitme()
+
+        pygame.display.flip()
+
 
 if __name__ == '__main__':
     # make an exemplar and start the game
