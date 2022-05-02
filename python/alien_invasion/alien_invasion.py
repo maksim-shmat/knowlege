@@ -4,6 +4,7 @@ import sys
 import pygame
 from settings import Settings
 from ship import Ship
+from bullet import Bullet
 
 
 class AlienInvasion:
@@ -16,8 +17,13 @@ class AlienInvasion:
 
         self.screen = pygame.display.set_mode(
                 (self.settings.screen_width, self.settings.screen_height))
+       # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+       # !Man, in a fullscreen moving object drop pixels, and CPU culler is UP.
+       # self.settings.screen_width = self.screen.get_rect().width
+       # self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self.screen)
+        self.bullets = pygame.sprite.Group()
 
         # Set background color. Default is black.
        # self.bg_color = (230, 230, 230)  # light gray color
@@ -30,6 +36,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self.ship.update()
+            self.bullets.update()
             self._update_screen()
 
     def _check_events(self):
@@ -38,24 +45,41 @@ class AlienInvasion:
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RIGHT:
-                   #self.ship.rect.x += 1  # for one pixel to right
-                   self.ship.moving_right = True
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = True
-
+                self._check_keydown_events(event)
             elif event.type == pygame.KEYUP:
-                if event.key == pygame.K_RIGHT:
-                #   self.ship.rect.x -= 1  # for one pixel to left
-                    self.ship.moving_right = False
-                elif event.key == pygame.K_LEFT:
-                    self.ship.moving_left = False
+                self._check_keyup_events(event)
+
+    def _check_keydown_events(self, event):
+        """Reaction for pressing buttons."""
+        if event.key == pygame.K_RIGHT:
+           #self.ship.rect.x += 1  # for one pixel to right
+           self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.K_q:
+            sys.exit()
+        elif event.key == pygame.K_SPACE:
+            self._fire_bullet()
+
+    def _check_keyup_events(self, event):
+        """Reaction for unpressing buttons."""
+        if event.key == pygame.K_RIGHT:
+        #   self.ship.rect.x -= 1  # for one pixel to left
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
+
+    def _fire_bullet(self):
+        """Make a new bullet and include it to the group bullets."""
+        new_bullet = Bullet(self)
+        self.bullets.add(new_bullet)
 
     def _update_screen(self):
         """Update rectangle and show new screen."""
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
-
+        for bullet in self.bullets.sprites():
+            bullet.draw_bullet()
         pygame.display.flip()
 
 

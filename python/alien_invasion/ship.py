@@ -8,7 +8,9 @@ class Ship():
     def __init__(self, ai_game):
         """Init ship and make a start position."""
         self.screen = ai_game
+        self.settings = ai_game
         self.screen_rect = ai_game.get_rect()
+       # self.x = float(self.rect.x)  # for exactly value
         self.moving_right = False
         self.moving_left = False
 
@@ -21,10 +23,13 @@ class Ship():
 
     def update(self):
         """Update the ship position with True/False triger."""
-        if self.moving_right:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
+#            self.x += self.settings.ship_speed
             self.rect.x += 1
-        if self.moving_left:
+        if self.moving_left and self.rect.left > 0:
+           # self.x -= self.settings.ship_speed
             self.rect.x -= 1
+       # self.rect.x = self.x
 
     def blitme(self):
         """Design the ship in a current position."""
