@@ -88,7 +88,17 @@ class AlienInvasion:
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
-       # print(len(self.bullets))  # show in terminal how bullets in a game
+        # print(len(self.bullets))  # show in terminal how bullets in a game
+
+        # check collide bullet with target
+        # if collide checked that remove bullet and target
+        collisions = pygame.sprite.groupcollide(
+                self.bullets, self.aliens, True, True)
+        # or False, True for cumulative effect
+        if not self.aliens:
+            # Make a new fleet and remove existed bullets
+            self.bullets.empty()
+            self._create_fleet()
 
     def _create_fleet(self):
         """Make fleet of aliens."""
@@ -119,8 +129,23 @@ class AlienInvasion:
         alien.rect.y = alien.rect.height + 2 * alien.rect.height * row_number
         self.aliens.add(alien)
 
+    def _check_fleet_edges(self):
+        """React to the touch, if alien on the brink or screen."""
+        for alien in self.aliens.sprites():
+            if alien.check_edges():
+                self._change_fleet_direction()
+                break
+
+    def _change_fleet_direction(self):
+        """Descend all fleet and move to the backward."""
+        for alien in self.aliens.sprites():
+            alien.rect.y += self.settings.fleet_drop_speed
+        self.settings.fleet_direction *= -1
+
     def _update_aliens(self):
-        """Update position of all aliens into the fleet."""
+        """Update position of all aliens into the fleet after 
+        fleet is moved to the brink of screen."""
+        self._check_fleet_edges()
         self.aliens.update()
 
     def _update_screen(self):

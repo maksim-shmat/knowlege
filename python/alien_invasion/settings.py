@@ -20,3 +20,6 @@ class Settings():
 
         # Alien parametes
         self.alien_speed = 1.0
+        self.fleet_drop_speed = 10
+        # fleet_direction = 1 is mean a move to right, and -1 to left
+        self.fleet_direction = 1
