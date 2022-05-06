@@ -1,8 +1,12 @@
 """Look at this, is a game about aliens."""
 
 import sys
+from time import sleep
+
 import pygame
+
 from settings import Settings
+from game_stats import GameStats
 from ship import Ship
 from bullet import Bullet
 from alien import Alien
@@ -18,22 +22,23 @@ class AlienInvasion:
 
         self.screen = pygame.display.set_mode(
                 (self.settings.screen_width, self.settings.screen_height))
-       # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
-       # !Man, in a fullscreen moving object drop pixels, and CPU culler is UP.
-       # self.settings.screen_width = self.screen.get_rect().width
-       # self.settings.screen_height = self.screen.get_rect().height
+           # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+           # !Man, in a fullscreen moving object drop pixels, and CPU culler is UP.
+           # self.settings.screen_width = self.screen.get_rect().width
+           # self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
+        self.stats = GameStats(self)
         self.ship = Ship(self.screen)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
 
         self._create_fleet()
 
-        # Set background color. Default is black.
-       # self.bg_color = (230, 230, 230)  # light gray color
-        # RGB (255, 0, 0) - red
-        #     (0, 255, 0) - green
-        #     (0, 0, 255) - blue
+            # Set background color. Default is black.
+            # self.bg_color = (230, 230, 230)  # light gray color
+            # RGB (255, 0, 0) - red
+            #     (0, 255, 0) - green
+            #     (0, 0, 255) - blue
 
     def run_game(self):
         """Start game."""
@@ -69,7 +74,7 @@ class AlienInvasion:
     def _check_keyup_events(self, event):
         """Reaction for unpressing buttons."""
         if event.key == pygame.K_RIGHT:
-        #   self.ship.rect.x -= 1  # for one pixel to left
+            #   self.ship.rect.x -= 1  # for one pixel to left
             self.ship.moving_right = False
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = False
@@ -84,26 +89,29 @@ class AlienInvasion:
         """Update position of bullets and remove an old bullets."""
         self.bullets.update()
 
-        # Remove bullets after brink of screen
+            # Remove bullets after brink of screen
         for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
-        # print(len(self.bullets))  # show in terminal how bullets in a game
+            # print(len(self.bullets))  # show in terminal how bullets in a game
+        self._check_bullet_alien_collisions()
 
-        # check collide bullet with target
-        # if collide checked that remove bullet and target
+    def _check_bullet_alien_collisions(self):
+        """Handling collisions bullets with targets."""
+            # check collide bullet with target
+            # if collide checked that remove bullet and target
         collisions = pygame.sprite.groupcollide(
                 self.bullets, self.aliens, True, True)
-        # or False, True for cumulative effect
+            # or False, True for cumulative effect
         if not self.aliens:
-            # Make a new fleet and remove existed bullets
+                # Make a new fleet and remove existed bullets
             self.bullets.empty()
             self._create_fleet()
 
     def _create_fleet(self):
         """Make fleet of aliens."""
-        # make an alien and count how many aliens in a row
-        # interval between aliens equals one width of alien
+            # make an alien and count how many aliens in a row
+            # interval between aliens equals one width of alien
         alien = Alien(self)
         alien_width, alien_height  = alien.rect.size
         available_space_x = self.settings.screen_width - (2 * alien_width)
@@ -115,13 +123,13 @@ class AlienInvasion:
                 (3 * alien_height) - ship_height)
         number_rows = available_space_y // (2 * alien_height)
 
-        # Make a fleet of aliens.
+            # Make a fleet of aliens.
         for row_number in range(number_rows):
             for alien_number in range(number_aliens_x):
                 self._create_alien(alien_number, row_number)
 
     def _create_alien(self, alien_number, row_number):
-        # Make an alien and put her in a row
+            # Make an alien and put her in a row
         alien = Alien(self)
         alien_width, alien_height = alien.rect.size
         alien.x = alien_width + 2 * alien_width * alien_number
@@ -141,12 +149,47 @@ class AlienInvasion:
         for alien in self.aliens.sprites():
             alien.rect.y += self.settings.fleet_drop_speed
         self.settings.fleet_direction *= -1
+        
+    def _ship_hit(self):
+        """Handle collide ship and alien."""
+            # Decrease ships_left
+        self.stats.ships_left -= 1
+
+            # Clear list of aliens and bullets
+        self.aliens.empty()
+        self.bullets.empty()
+
+            # Create new fleet and put ship in a centre
+        self._create_fleet()
+        self.ship.center_ship()
+
+            # Pause
+        sleep(0.5)
+
+    def _check_aliens_bottom(self):
+        """Does alien goes to the bottom of the screen?"""
+        screen_rect = self.screen.get_rect()
+        for alien in self.aliens.sprites():
+            if alien.rect.bottom >= screen_rect.bottom:
+                # doubled reaction how target collide with ship
+                self._ship_hit()
+                break
 
     def _update_aliens(self):
         """Update position of all aliens into the fleet after 
         fleet is moved to the brink of screen."""
         self._check_fleet_edges()
         self.aliens.update()
+
+            # check collisions "target-ship".
+        if pygame.sprite.spritecollideany(self.ship, self.aliens):
+            # print("Ship hit!!!")  # message on the terminal
+            self._ship_hit()
+
+            # check, if aliens goes to the bottom of the screen
+        self._check_aliens_bottom()
+         
+
 
     def _update_screen(self):
         """Update rectangle and show new screen."""
