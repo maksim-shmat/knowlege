@@ -944,7 +944,7 @@ xp - erdo --> redo
 
 #62 fast change two sentence
 
-ddp - up sentence to down
+ddp - from botom line of sentence to down
 
 #63 window last commands
 :ctrl-f
@@ -975,7 +975,7 @@ cursor on the word
 n,n
 
 # find char
-f[char]  # e.g. fo for find [o]
+f[char]  # e.g. <fo> for find [o]
 ;  # next
 ,  # previous
 
