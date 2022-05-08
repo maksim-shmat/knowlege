@@ -33,5 +33,5 @@ class Alien(Sprite):
     def update(self):
         """Moving aliens to the right or left sides."""
         self.x += (self.settings.alien_speed *
-                self.settings.fleet_direction)
+               self.settings.fleet_direction)
         self.rect.x = self.x
