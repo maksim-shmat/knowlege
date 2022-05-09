@@ -8,6 +8,8 @@ class GameStats():
         self.settings = ai_game.settings
         self.reset_stats()
         self.game_active = False
+        # Record don't be reseted
+        self.high_score = 0
 
     def reset_stats(self):
         """Init stats, changeable in a game process."""
