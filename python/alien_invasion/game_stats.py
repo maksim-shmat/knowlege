@@ -15,3 +15,4 @@ class GameStats():
         """Init stats, changeable in a game process."""
         self.ships_left = self.settings.ship_limit
         self.score = 0
+        self.level = 1

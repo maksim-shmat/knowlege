@@ -19,6 +19,7 @@ class Scoreboard():
         # Preparing of start image for score
         self.prep_score()
         self.prep_high_score()
+        self.prep_level()
 
     def prep_high_score(self):
         """Make high score into graphical view."""
@@ -45,13 +46,26 @@ class Scoreboard():
         self.score_rect.right = self.screen_rect.right - 20
         self.score_rect.top = 20
 
+    def prep_level(self):
+        """Show level in a graphical view."""
+        level_str = str(self.stats.level)  # add word 'Level' befor .font.render. Use .format?
+        self.level_image = self.font.render(level_str, True,
+                self.text_color, self.settings.bg_color)
+
+        # Shows level under currently score.
+        self.level_rect = self.level_image.get_rect()
+        self.level_rect.right = self.score_rect.right
+        self.level_rect.top = self.score_rect.bottom + 10
+        
     def show_score(self):
-        """Return score to the screen."""
+        """Return score to the screen, and how many ships is it"""
         self.screen.blit(self.score_image, self.score_rect)
         self.screen.blit(self.high_score_image, self.high_score_rect)
+        self.screen.blit(self.level_image, self.level_rect)
 
     def check_high_score(self):
         """Check new high score."""
         if self.stats.score > self.stats.high_score:
             self.stats.high_score = self.stats.score
             self.prep_high_score()
+
