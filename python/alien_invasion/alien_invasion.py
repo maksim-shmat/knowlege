@@ -26,8 +26,8 @@ class AlienInvasion:
                 (self.settings.screen_width, self.settings.screen_height))
            # self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
            # !Man, in a fullscreen moving object drop pixels, and CPU culler is UP.
-           # self.settings.screen_width = self.screen.get_rect().width
-           # self.settings.screen_height = self.screen.get_rect().height
+        #self.settings.screen_width = self.screen.get_rect().width
+        #self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
 
         # Make an exemplar for save statistics
@@ -84,6 +84,7 @@ class AlienInvasion:
             self.stats.game_active = True
             self.sb.prep_score()
             self.sb.prep_level()
+            self.sb.prep_ships()
 
             # Clear lists of aliens and bullets
             self.aliens.empty()
@@ -199,8 +200,9 @@ class AlienInvasion:
     def _ship_hit(self):
         """Handle collide ship and alien."""
         if self.stats.ships_left > 0:
-                # Decrease ships_left
+                # Decrease ships_left and rewrite scoreboard
             self.stats.ships_left -= 1
+            self.sb.prep_ships()
                 # Clear list of aliens and bullets
             self.aliens.empty()
             self.bullets.empty()

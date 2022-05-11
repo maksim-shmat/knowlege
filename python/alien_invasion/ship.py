@@ -1,23 +1,24 @@
 """File for game alien_invasion. Backend for picture 'ship.png'."""
 
 import pygame
+from pygame.sprite import Sprite
 
-class Ship():
+
+class Ship(Sprite):
     """Class for manage the ship."""
 
     def __init__(self, ai_game):
         """Init ship and make a start position."""
-        self.screen = ai_game
-        self.settings = ai_game
-        self.screen_rect = ai_game.get_rect()
-       # self.x = float(self.rect.x)  # for exactly value
+        super().__init__()
+        self.screen = ai_game.screen
+        self.settings = ai_game.settings
+        self.screen_rect = self.screen.get_rect()
+        #self.x = float(self.rect.x)  # for exactly value
         self.moving_right = False
         self.moving_left = False
-
         # Load image of ship and get the rectangle.
         self.image = pygame.image.load('/home/jack/django2/knowlege/python/alien_invasion/images/ship2.png')
         self.rect = self.image.get_rect()
-
         # Every new ship will be appeared in a bottom line of the screen.
         self.rect.midbottom = self.screen_rect.midbottom
 
