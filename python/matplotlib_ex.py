@@ -1,10 +1,11 @@
 """Matplotlib examples."""
 
+'''
 #1
 
 import numpy as np
 import matplotlib.pyplot as plt
-'''
+
 x = np.linspace(0, 10, 100)
 y = (6 * x - 30) ** 2
 
@@ -13,6 +14,7 @@ plt.show()
 
 
 #2 generate 100 numbers from 0 to 10
+
 numbers = 10 * np.random.random(100)
 plt.plot(numbers, 'bo')  # bo - blue and dots
 plt.show()
@@ -60,6 +62,12 @@ plt.show()
 
 #6 Plotting Styles
 
+# check available styles
+>>> import matplotlib.pyplot as plt
+>>> plt.style.available
+['Solarize_Light2', '_classic_test_patch', '_mpl-gallery', '_mpl-gallery-nogrid', 'bmh', 'classic', 'dark_background', 'fast', 'fivethirtyeight', 'ggplot', 'grayscale', 'seaborn', 'seaborn-bright', 'seaborn-colorblind', 'seaborn-dark', 'seaborn-dark-palette', 'seaborn-darkgrid', 'seaborn-deep', 'seaborn-muted', 'seaborn-notebook', 'seaborn-paper', 'seaborn-pastel', 'seaborn-poster', 'seaborn-talk', 'seaborn-ticks', 'seaborn-white', 'seaborn-whitegrid', 'tableau-colorblind10']
+plt.style.use('seaborn')
+or
 #from matplotlib import style
 #style.use('ggplot')
 
@@ -187,8 +195,9 @@ Z = z_function(X,Y)
 ax.plot_surface(X,Y,Z)
 
 plt.show()
-'''
+
 #16 Matplotlib with Pandas
+
 import pandas as pd
 import matplotlib.pyplot as plt
 
@@ -204,4 +213,43 @@ df.plot()
 plt.plot(df['Age'], 'bo')  # dots on the line if use with df.plot() 
 plt.show()
 
-#
+#17 squares in a line
+
+import matplotlib.pyplot as plt
+
+
+input_values = [1, 2, 3, 4, 5]
+squares = [1, 4, 9, 16, 25]
+
+plt.style.use('seaborn')
+fig, ax = plt.subplots()
+ax.plot(input_values, squares, linewidth=3)
+
+# Set header and marks of axes
+ax.set_title("Square Numbers", fontsize=24)
+ax.set_xlabel("Value", fontsize=14)
+ax.set_ylabel("Square of Value", fontsize=14)
+
+plt.show()
+'''
+# 18 squares with dots
+
+import matplotlib.pyplot as plt
+
+
+x_values = [1, 2, 3, 4, 5]
+y_values = [1, 4, 9, 16, 25]
+
+plt.style.use('Solarize_Light2')
+fig, ax = plt.subplots()
+ax.scatter(x_values, y_values, s=100)
+
+# Set header and mark of axes
+ax.set_title("Square Numbers", fontsize=24)
+ax.set_xlabel("Value", fontsize=14)
+ax.set_ylabel("Square of Value", fontsize=14)
+
+# Set font value for ticks on the axes.
+ax.tick_params(axis='both', which='major', labelsize=14)
+
+plt.show()
