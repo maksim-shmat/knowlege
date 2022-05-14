@@ -65,7 +65,7 @@ plt.show()
 # check available styles
 >>> import matplotlib.pyplot as plt
 >>> plt.style.available
-['Solarize_Light2', '_classic_test_patch', '_mpl-gallery', '_mpl-gallery-nogrid', 'bmh', 'classic', 'dark_background', 'fast', 'fivethirtyeight', 'ggplot', 'grayscale', 'seaborn', 'seaborn-bright', 'seaborn-colorblind', 'seaborn-dark', 'seaborn-dark-palette', 'seaborn-darkgrid', 'seaborn-deep', 'seaborn-muted', 'seaborn-notebook', 'seaborn-paper', 'seaborn-pastel', 'seaborn-poster', 'seaborn-talk', 'seaborn-ticks', 'seaborn-white', 'seaborn-whitegrid', 'tableau-colorblind10']
+['Solarize_Light2', NO'_classic_test_patch', NO'_mpl-gallery', NO'_mpl-gallery-nogrid', NO'bmh', 'classic', 'dark_background', 'fast', 'fivethirtyeight', 'ggplot', 'grayscale', 'seaborn', 'seaborn-bright', 'seaborn-colorblind', 'seaborn-dark', 'seaborn-dark-palette', 'seaborn-darkgrid', 'seaborn-deep', 'seaborn-muted', 'seaborn-notebook', 'seaborn-paper', 'seaborn-pastel', 'seaborn-poster', 'seaborn-talk', 'seaborn-ticks', 'seaborn-white', 'seaborn-whitegrid', 'tableau-colorblind10']
 plt.style.use('seaborn')
 or
 #from matplotlib import style
@@ -231,8 +231,8 @@ ax.set_xlabel("Value", fontsize=14)
 ax.set_ylabel("Square of Value", fontsize=14)
 
 plt.show()
-'''
-# 18 squares with dots
+
+#18 squares with dots for lists
 
 import matplotlib.pyplot as plt
 
@@ -253,3 +253,31 @@ ax.set_ylabel("Square of Value", fontsize=14)
 ax.tick_params(axis='both', which='major', labelsize=14)
 
 plt.show()
+'''
+#19 squares with dots for cycle
+
+import matplotlib.pyplot as plt
+
+
+x_values = list(range(1, 1001))
+y_values = [x**2 for x in x_values]
+
+plt.style.use('tableau-colorblind10')
+fig, ax = plt.subplots()
+#ax.scatter(x_values, y_values, s=10)  # default color
+#ax.scatter(x_values, y_values, c='purple', s=10)  # user's color
+
+# gradient for higher values
+ax.scatter(x_values, y_values, c=y_values, cmap=plt.cm.Blues, s=10)
+
+# Set header and mark of axes
+ax.set_title("Square Numbers", fontsize=24)
+ax.set_xlabel("Value", fontsize=14)
+ax.set_ylabel("Square of Value", fontsize=14)
+
+# Set diapazon of each axes
+ax.axis([0, 1100, 0, 1100000])
+
+plt.show()
+
+
