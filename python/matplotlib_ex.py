@@ -253,7 +253,7 @@ ax.set_ylabel("Square of Value", fontsize=14)
 ax.tick_params(axis='both', which='major', labelsize=14)
 
 plt.show()
-'''
+
 #19 squares with dots for cycle
 
 import matplotlib.pyplot as plt
@@ -280,4 +280,7 @@ ax.axis([0, 1100, 0, 1100000])
 
 plt.show()
 
-
+# for autosave change plt.show() to
+# plt.savefig('jill.png', bbox_inches='tight')  #  bbox for cut edges
+'''
+#20
