@@ -1,4 +1,4 @@
-'age','sex','studytime','absences','G1','G2','G3'
+AGE,SEX,STUDYTIME,ABSENCES,G1,G2,G3
 08,F,67,12,1,2,3
 10,M,64,2,1,2,3
 12,F,53,1,1,2,3
