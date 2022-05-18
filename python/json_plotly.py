@@ -11,15 +11,17 @@ with open(filename) as f:
     all_eq_data = json.load(f)
 
 all_eq_dicts = all_eq_data['High']  # 'High' I read this tag from apple_readable.json
-#mags, lons, lats = [], [], []
-#for eq_dict in all_eq_dicts:
-#    mag = eq_dict['properties']['mag']  # if the dict make more dicts
-#    lon = eq_dict['geometry']['coordinates'][0]
-#    lat = eq_dict['geometry']['coordinates'][1]
-#    mags.append(mag)
-#    lons.append(lon)
-#    lats.append(lat)
-#
+mags, lons, lats, hover_texts = [], [], [], []
+for eq_dict in all_eq_dicts:
+    mag = eq_dict['properties']['mag']  # if the dict make more dicts
+    lon = eq_dict['geometry']['coordinates'][0]
+    lat = eq_dict['geometry']['coordinates'][1]
+    title = eq_dict['properties']['title']
+    mags.append(mag)
+    lons.append(lon)
+    lats.append(lat)
+    hover_texts.append(title)
+
 #print(len(all_eq_dicts))
 #print(mags[:10])
 #print(lons[:5])
@@ -32,6 +34,7 @@ data = [{
     'type': 'scattergeo',
     'lon': lons,
     'lat': lats,
+    'text': hover_texts,
     'marker': {
         'size': [5*mag for mag in mags],  # bigger marker
         'color': mags,
@@ -44,4 +47,3 @@ my_layout = Layout(title='Global Earthquakes')
 
 fig = {'data': data, 'layout': my_layout}
 ofline.plot(fig, filename='global_earthquakes.html')
-
