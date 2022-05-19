@@ -27,10 +27,24 @@ for key in sorted(repo_dict.keys()):
 print(response_dict.keys())
 
 print("\nSelectec information about first repository:")
-print(f"Name: {repo_dict['name']}")
-print(f"Owner: {repo_dict['owner']['login']}")
-print(f"Stars: {repo_dict['stargazers_count']}")
-print(f"Repository: {repo_dict['html_url']}")
-print(f"Created: {repo_dict['created_at']}")
-print(f"Updated: {repo_dict['updated_at']}")
-print(f"Description: {repo_dict['description']}")
+#for repo_dict in repo_dicts:
+#    print(f"Name: {repo_dict['name']}")
+#    print(f"Owner: {repo_dict['owner']['login']}")
+#    print(f"Stars: {repo_dict['stargazers_count']}")
+#    print(f"Repository: {repo_dict['html_url']}")
+#    print(f"Created: {repo_dict['created_at']}")
+#    print(f"Updated: {repo_dict['updated_at']}")
+#    print(f"Description: {repo_dict['description']}")
+
+# Results:
+#Repository: https://github.com/shadowsocks/shadowsocks
+#Created: 2012-04-20T13:10:49Z
+#Updated: 2022-05-19T01:03:22Z
+#Description: None
+#Name: DeepFaceLab
+#Owner: iperov
+#Stars: 32616
+#Repository: https://github.com/iperov/DeepFaceLab
+#Created: 2018-06-04T13:10:00Z
+#Updated: 2022-05-19T00:59:40Z
+#Description: DeepFaceLab is the leading software for creating deepfakes.
