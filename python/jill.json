@@ -1,1 +1,16 @@
-[2, 3, 5, 7, 11, 13]
+{
+    "by": "colinprince",
+    "descendants": 10,
+    "id": 31428984,
+    "kids": [
+        31442186,
+        31439526,
+        31440766,
+        31441903
+    ],
+    "score": 33,
+    "time": 1652917550,
+    "title": "Technology-Free Hotels",
+    "type": "story",
+    "url": "https://www.insidehook.com/article/travel/technology-free-hotels-hospitality"
+}
