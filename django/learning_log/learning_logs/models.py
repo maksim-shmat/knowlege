@@ -1,6 +1,8 @@
 from django.db import models
 
+
 # Create your models here.
+# All Django Model Field there: https://docs.djangoproject.com/en/2.2/ref/models/fields/
 
 class Topic(models.Model):
     """Theme which user is study e.g."""
