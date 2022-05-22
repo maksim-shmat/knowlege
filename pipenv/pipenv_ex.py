@@ -1,5 +1,17 @@
 """About  pipenv that mean pip + venv in one place."""
 
+--------------------
+# next 9
+Short instruction:
+    $ cd myproject
+    $ pipenv install
+    $ pipenv install <package>
+    
+    $ pipenv shell  # or pipenv run
+    $ python --version
+    $ deactivate
+
+---------------------
 $ pipenv graph # show a graph of your installed dependencies 
 $ pipenv graph --reverse  # all dependencies
 $ pipenv -h  # help
@@ -59,15 +71,6 @@ Specify your target Python version in your Pipfile [requests] section.
 
 pipenv install  is fully compatable with pip install
 
-# next 9
-Short instruction:
-    $ cd myproject
-    $ pipenv install
-    $ pipenv install <package>
-    
-    $ pipenv shell
-    $ python --version
-    $ deactivate
 
 # next 10
 Upgrade:
