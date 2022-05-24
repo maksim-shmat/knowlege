@@ -9,4 +9,6 @@ urlpatterns = [
         path('', views.index, name='index'),
         # Page with list of all themes
         path('topics/', views.topics, name='topics'),
+        # Page with info about different theme
+        path('topics/<int:topic_id>/', views.topic, name='topic'),
 ]
