@@ -156,6 +156,45 @@ into topics.html:
 
 Voila!
 
-#20
+#20 How to add new topic? Make it.
 
+make a forms.py in the same place where models.py
+
+# Make URL for new topic
+learning_logs/urls.py:
+    path('new_topic/', views.new_topic, name='new_topic'),
+
+# Make a view for new topic
+views.py
+
+# Make a template 
+new_topic.html
+
+# Make a link at the topics
+topics.html:
+    <a href="{%url 'learning_logs:new_topic' %}">Add a new topic:</a>
+
+#21 How to add new note? Make it.
+
+add to forms.py:
+    import Entry
+
+    class EntryForm(rorms.ModelForm):
+        class Meta:
+            model = Entry
+            fields = ['text']
+            labels = {'text': 'Entry:'}
+            widgets = {'text': forms.Textarea(attrs={'cols': 80})}
+
+# Add a URL for new note
+urls.py:
+    path('new_entry/<int: topic_id>/', views.new_entry, name='new_entry'),
+
+# Add a view for new note
+views.py:
+    from .forms import EntryForm
+
+    def new_entry(request, topic_id):
+        """Add new note to the theme."""
+        topic = Topic.objects.get(id=topic_id)
 
