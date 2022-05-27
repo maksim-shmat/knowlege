@@ -75,7 +75,7 @@ admin.site.register(Topic)
 From base:
     python manage.py runserver
 
-#14 Add URL
+#14 Add an URL
 on the file urls.py how is default in the larning_log/
 
 from django.url import path, include
@@ -160,7 +160,7 @@ Voila!
 
 make a forms.py in the same place where models.py
 
-# Make URL for new topic
+# Make an URL for new topic
 learning_logs/urls.py:
     path('new_topic/', views.new_topic, name='new_topic'),
 
@@ -186,7 +186,7 @@ add to forms.py:
             labels = {'text': 'Entry:'}
             widgets = {'text': forms.Textarea(attrs={'cols': 80})}
 
-# Add a URL for new note
+# Add an URL for new note
 urls.py:
     path('new_entry/<int: topic_id>/', views.new_entry, name='new_entry'),
 
@@ -197,4 +197,97 @@ views.py:
     def new_entry(request, topic_id):
         """Add new note to the theme."""
         topic = Topic.objects.get(id=topic_id)
+        if request.method != 'POST':
+            form = EntryForm()
+        else:
+            form = EntryForm(data=request.POST)
+            if form.is_valid():
+                new_entry = form.save(commit=False)
+                new_entry.topic = topic
+                new_entry.save()
+                return redirect('learning_logs:topic', topic_id=topic_id)
+        context = {'topic': topic, 'form': form}
+        return render(request, 'learning_logs/new_entry.html', context)
 
+# Add template
+new_entry.py
+
+# Make a link for the new_entry
+topic.html:
+    <p>
+      <a href="{% url 'learning_logs:new_entry' topic.id %}">add new entry</a>
+    </p>
+
+#22 Add edit notes posibility.
+
+# Add an URL for edit_entry
+learning_logs/urls.py
+
+# Make edit_entry() function
+views.py:
+    from .models import Entry
+
+    def edit_entry(request, entry_id):
+        """Edit existed note."""
+        entry = Entry.objects.get(id=entry_id)
+        topic = entry.topic
+
+        if request.method != 'POST':
+            # First query; form is get data from currently note.
+            form = EntryForm(instance=entry)
+        else:
+            # Send data of POST; handle data.
+            form = EntryForm(instance=entry, data=request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('learnig_logs:topic', topic_id=topic.id)
+        context = {'entry': entry, 'topic': topic, 'form': form}
+        return render(request, 'learning_logs/edit_entry.html', context)
+
+# Make a template
+edit_entry.html
+
+# Add URL for edit_entry
+topic.html
+
+#23 Make a new app - users. http://localhost:8000/users/login/
+python manage.py startapp users
+ls users
+
+# Add app 'users' to settings.py, for make login/logout page
+INSTALLED_APPS:
+    'users',
+
+# Add URL 'users' into urls.py
+path('', include('learning_logs.usls'))  # before 'learning_logs.urls'
+
+# Make a new file into learning_log/users/
+urls.py:
+    from django.urls import path, include
+
+    app_name = 'users'
+    urlpatterns = [
+            path('', include('django.contrib.auth.urls')),
+    ]
+
+# Make a template for users
+Django by default find template for login/logout in /registrations/
+Make it directory, learning_log/users/templates/registration/
+And then make login.html
+
+# Make a link to the home page
+base.html:
+    <a href ="{% url 'learning_logs:topics' %}">Topics</a> -
+    {% if user.is_authenticated %}
+      >>> Hello, {{ user.username }}.
+    {% else %}
+      <a href="{% url 'users:login' %}">log in</a>
+    {% endif %}
+
+# Go to http://localhost:8000/admin/
+log out
+
+# Go to http://localhost:8000/users/login/
+log in
+
+#
