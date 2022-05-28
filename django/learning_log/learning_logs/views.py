@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
 from .models import Topic, Entry
 from .forms import TopicForm, EntryForm
@@ -9,12 +10,14 @@ def index(request):
     """Home page of app Learining Log"""
     return render(request, 'learning_logs/index.html')
 
+@login_required
 def topics(request):
     """Show list of themes."""
     topics = Topic.objects.order_by('date_added')
     context = {'topics': topics}
     return render(request, 'learning_logs/topics.html', context)
 
+@login_required
 def topic(request, topic_id):
     """Show one theme and all binded notes."""
     topic = Topic.objects.get(id=topic_id)
@@ -22,6 +25,7 @@ def topic(request, topic_id):
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
 
+@login_required
 def new_topic(request):
     """Definition of new topic."""
     if request.method != 'POST':
@@ -37,6 +41,7 @@ def new_topic(request):
     context = {'form': form}
     return render(request, 'learning_logs/new_topic.html', context)
 
+@login_required
 def new_entry(request, topic_id):
     """Add new note to the theme."""
     topic = Topic.objects.get(id=topic_id)
@@ -53,6 +58,7 @@ def new_entry(request, topic_id):
     context = {'topic': topic, 'form': form}
     return render(request, 'learning_logs/new_entry.html', context)
 
+@login_required
 def edit_entry(request, entry_id):
     """Edit existed note."""
     entry = Entry.objects.get(id=entry_id)
