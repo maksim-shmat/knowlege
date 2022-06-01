@@ -1,4 +1,4 @@
-"""Game of 15."""
+"""Game of 15, with output."""
 
 from random import randint
 
@@ -55,7 +55,7 @@ class Puzzle:
         else:
             diff = 100
         for _ in range(diff):
-            lst = self.valid_moves()
+            lst = self.valid_movies()
             lst1 = []
             for j in lst:
                 lst1.append(int(j.strip()))
@@ -76,7 +76,7 @@ class Puzzle:
             return self.items[pos - 1], self.items[pos + 1],\
                     self.items[pos + 4]
         elif pos in [14, 15]:
-            return self.item[pos - 1], self.items[pos + 1],\
+            return self.items[pos - 1], self.items[pos + 1],\
                     self.items[pos - 4]
         elif pos == 1:
             return self.items[pos + 1], self.items[pos + 4]
@@ -102,11 +102,11 @@ class Puzzle:
 g = Puzzle()
 g.build_board(int(input('Enter the difficulty: 0 1 2\ns '
     '=> highest 0 => lowest\n')))
-f.main_frame()
+g.main_frame()
 print('Enter 0 to exit')
 while True:
     print('Hello user:\nTo change the position just enter the no. near it')
-    lst = g.valid_moves()
+    lst = g.valid_movies()
     lst1 = []
     for i in lst:
         lst1.append(int(i.strip()))
@@ -116,7 +116,7 @@ while True:
     if x == 0:
         break
     elif x not in lst1:
-        print('Wrong move')
+        print('Wrong movie')
     else:
         g.change(x)
     g.main_frame()
