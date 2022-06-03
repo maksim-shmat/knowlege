@@ -37,7 +37,7 @@ class GameField(object):
         self.spawn()
         self.spawn()
 
-    def move(self. direction):
+    def move(self, direction):
         def move_row_left(row):
             def tighten(row):  # squeese not-zero elements together
                 new_row = [i for i in row if i != 0]
@@ -63,14 +63,14 @@ class GameField(object):
             return tighten(merge(tighten(row)))
 
         moves = {}
-    moves['Left'] = lambda field:\  #?
-            [move_row_left(row) for row in field]
-        moves['Right'] = lambda field:\  #?
-            invert(moves['Left'](invert(field)))
-        moves['Up'] = lambda field:\  #?
-            transpose(moves['Left'](transpose(field)))
-        moves['Down'] = lambda field:\  #?
-            transpose(moves['Right'](transpose(field)))
+        moves['Left'] = lambda field:\
+                [move_row_left(row) for row in field]
+        moves['Right'] = lambda field:\
+                invert(moves['Left'](invert(field)))
+        moves['Up'] = lambda field:\
+                transpose(moves['Left'](transpose(field)))
+        moves['Down'] = lambda field:\
+                transpose(moves['Right'](transpose(field)))
 
         if direction in moves:
             if self.move_is_possible(direction):
@@ -84,7 +84,7 @@ class GameField(object):
         return any(any(i >= self.win_value for i in row) for row in self.field)
 
     def is_gameover(self):
-        return not any(self.move_is_possible(move) for move in avtions)
+        return not any(self.move_is_possible(move) for move in actions)
     
     def draw(self, screen):
         help_string1 = '(W)Up (S)Down (A)Left (D)Right'
@@ -97,11 +97,11 @@ class GameField(object):
 
         def draw_hor_separator():
             top = '<top' + ('>----------' * self.width + 'top>')[1:]
-            mid = '|<mid' + ('>|----------' * self.width + 'mid>|')[1:]
+            mid = '<mid' + ('>----------' * self.width + 'mid>')[1:]
             bot = '<bot' + ('>----------' * self.width + 'bot>')[1:]
             separator = defaultdict(lambda: mid)
             separator[0], separator[self.height] = top, bot
-            if not basattr(draw_hor_separator, "counter"):
+            if not hasattr(draw_hor_separator, "counter"):
                 draw_hor_separator.counter = 0
             cast(separator[draw_hor_separator.counter])
             draw_hor_separator.counter += 1
@@ -125,38 +125,34 @@ class GameField(object):
                 cast(help_string1)
             cast(help_string2)
 
-        def spawn(self):
-            new_element = 4 if randrange(100) > 89 else 2
-            (i, j) = choice([(i, j) for i in range(self.width) for j in range(self.height) if self.field[i][j] == 0])
-            self.field[i][j] = new_element
+    def spawn(self):
+        new_element = 4 if randrange(100) > 89 else 2
+        (i, j) = choice([(i, j) for i in range(self.width) for j in range(self.height) if self.field[i][j] == 0])
+        self.field[i][j] = new_element
 
-        def move_is_possible(self, direction):
-            def row_is_left_movable(row):
-                def change(i):  # true if there'll be change in i-th tile
-                    if row[i] == 0 and row[i + 1] != 0:  # Move
-                        return True
-                    if row[i] != 0 and row[i + 1] == row[i]:  # Move
-                        return True
-                    return False
-                return any(change(i) for i in range(len(row) - 1))
-            
-            check = {}
-            check['Left'] = lambda field:\  # ?
-                any(row_is_left_movable(row) for row in field)
-
-            check['Right'] = lambda field:\  # ?
-                check['Left'](invert(field))
-
-            check['Up'] = lambda field:\  # ?
-                check['Left'](transpose(field))
-
-            check['Down'] lambda field:\  # ?
-                check['Right'](transpose(field))
-            
-            if direction in check:
-                return check[direction](self.field)
-            else:
+    def move_is_possible(self, direction):
+        def row_is_left_movable(row):
+            def change(i):  # true if there'll be change in i-th tile
+                if row[i] == 0 and row[i + 1] != 0:  # Move
+                    return True
+                if row[i] != 0 and row[i + 1] == row[i]:  # Move
+                    return True
                 return False
+            return any(change(i) for i in range(len(row) - 1))
+        
+        check = {}
+        check['Left'] = lambda field: any(row_is_left_movable(row) for row in field)
+
+        check['Right'] = lambda field: check['Left'](invert(field))
+
+        check['Up'] = lambda field: check['Left'](transpose(field))
+
+        check['Down'] = lambda field: check['Right'](transpose(field))
+        
+        if direction in check:
+            return check[direction](self.field)
+        else:
+            return False
 
 def main(stdscr):
     curses.use_default_colors()
@@ -189,3 +185,15 @@ def main(stdscr):
             return 'Exit'
         if game_field.move(action):  # move successful
             if game_field.is_win():
+                return 'Win'
+            if game_field.is_gameover():
+                return 'Gameover'
+        return 'Game'
+
+    state_actions['Game'] = game
+
+    state = 'Init'
+    while state != 'Exit':
+        state = state_actions[state]()
+
+curses.wrapper(main)
