@@ -21,6 +21,9 @@ def topics(request):
 def topic(request, topic_id):
     """Show one theme and all binded notes."""
     topic = Topic.objects.get(id=topic_id)
+    # Check that the theme is owned currently user.
+    if topic.owner != request.user:
+        raise Http404
     entries = topic.entry_set.order_by('-date_added')
     context = {'topic': topic, 'entries': entries}
     return render(request, 'learning_logs/topic.html', context)
@@ -35,7 +38,9 @@ def new_topic(request):
         # Sent data POST; handle it.
         form = TopicForm(data=request.POST)
         if form.is_valid():
-            form.save()
+            new_topic = form.save(commit=False)
+            new_topic.owner = request.user
+            new_topic.save()
             return redirect('learning_logs:topics')
     # Return empty or not valid form
     context = {'form': form}
@@ -63,6 +68,8 @@ def edit_entry(request, entry_id):
     """Edit existed note."""
     entry = Entry.objects.get(id=entry_id)
     topic = entry.topic
+    if topic.owner != request.user:
+        raise Http404
 
     if request.method != 'POST':
         # First query; form is get a data from currently note.

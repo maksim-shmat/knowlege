@@ -96,9 +96,9 @@ class GameField(object):
             screen.addstr(string + '\n')
 
         def draw_hor_separator():
-            top = '<top' + ('>----------' * self.width + 'top>')[1:]
-            mid = '<mid' + ('>----------' * self.width + 'mid>')[1:]
-            bot = '<bot' + ('>----------' * self.width + 'bot>')[1:]
+            top = '+' + ('+------' * self.width + '+')[1:]
+            mid = '+' + ('+------' * self.width + '+')[1:]
+            bot = '+' + ('+------' * self.width + '+')[1:]
             separator = defaultdict(lambda: mid)
             separator[0], separator[self.height] = top, bot
             if not hasattr(draw_hor_separator, "counter"):
@@ -107,7 +107,7 @@ class GameField(object):
             draw_hor_separator.counter += 1
 
         def draw_row(row):
-            cast(''.join('|{: ^5} '.format(num) if num > 0 else '|  ' for num in row) + '|')
+            cast(''.join('|{: ^5} '.format(num) if num > 0 else '|      ' for num in row) + '|')
         screen.clear()
         cast('SCORE: ' + str(self.score))
         if 0 != self.highscore:

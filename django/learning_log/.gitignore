@@ -1,5 +1,7 @@
 django/learning_log/learning_log/settings.py
 settings.py
+ll_env/
+*.sqlite3
 
 
 # Byte-compiled / optimized / DLL files

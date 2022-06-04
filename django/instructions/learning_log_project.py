@@ -290,4 +290,408 @@ log out
 # Go to http://localhost:8000/users/login/
 log in
 
-#
+#24 After log in make log out page
+add to base.html:
+    {% if usr.is_authenticated %}
+        >>> Hello, {{ user.username }}.
+        <a href="{% url 'users:logout' %}">log out</a>
+    {% else %}
+
+# Make template for logout in templates/gegistration
+logged_out.html
+
+#24 Make an own registration page
+
+# Make URL http://localhost:8000/users/register/
+users/urls.py:
+    from . import views
+    
+    path('register/', views.register, name='register'),
+
+# Make a view
+/users/views.py:
+    def register(request):
+        """It's registered new user."""
+        if request.method != 'POST':
+            # Show empty registration form
+            form = UserCreationForm()
+        else:
+            # Handling data from form
+            form = UserCreationForm(data=request.POST)
+
+            if form.is_valid():
+                new_user = form.save()
+                # Enter and redirect on the home page.
+                login(request, new_user)
+                return redirect('learning_logs:index')
+        # Show empty or not valid form.
+        context = {'form': form}
+        return render(request, 'users/register.html', context)
+
+# Make a template for register form
+/users/templates/register.html
+
+# Make link for registration page
+base.html:
+    <a href="{% url 'users:register' %}">Register</a> -
+
+#25 Restrict of access
+
+# import Django login_required and decoreate whith it topics()
+# It need for login restriction topics from not registered users
+learning_logs/views.py
+
+from django.contrib.auth.decorators import login_required
+
+@login_required
+def topics(request):
+    ...
+
+# change redirect for not registered users
+settings.py
+
+LOGIN_URL = '/users/login/'
+
+# And decorate with @login_required all confide pages
+views.py
+
+@login_required
+def topic(request, topic_id)
+...
+@login_required
+def new_topic(request)
+...
+@login_required
+def new_entry(request, topic_id)
+...
+@login_required
+def edit_entry(request, entry_id)
+...
+
+#26 Bind user and his own data
+models.py:
+    from django.contrib.auth.models import User
+
+    class Topic(models.Model):
+        text = model.CharField(max_length=200)
+        date_added = models.DateTimeField(auto_now_add=True)
+        owner = models.ForeignKey(User, on_delete=models.CASCADE)
+
+# First check how many users is it, and how their id
+
+(env)learning_log$ python manage.py shell
+
+>>> from django.contrib.auth.models import User
+>>> User.objects.all()
+<QuerySet [<User: ll_admin>, <User: eric>, <User: willie>]>
+>>> for user in User.objects.all():
+...    print(user.username, user.id)
+...
+ll_admin 1
+eric 2
+willie 3
+>>>
+
+# Migrate db with id for binding this data with concrete user
+python manage.py makemigrations learnig_logs
+
+It is impossible to add a non-nullable field 'owner' to topic without specifying a default. This is because the database needs something to populate existing rows.
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+ 2) Quit and manually define a default value in models.py.
+Select an option: 1  # for first variant
+Please enter the default value as valid Python.
+The datetime and django.utils.timezone modules are available, so it is possible to provide e.g. timezone.now as a value.
+Type 'exit' to exit this prompt
+>>> 1  # for ll_admin(with id 1)
+Migrations for 'learning_logs':
+  learning_logs/migrations/0003_topic_owner.py
+    - Add field owner to topic
+
+# Make migration
+(env)learning_log$ python manage.py migrate
+
+# Check for all ok
+python manage.py shell
+>>> from learning_logs.models import Topic
+>>> for topic in Topic.objects.all():
+...    print(topic, topic.owner)
+
+# If you need clear all data in db
+python manage.py flush  # and start from zero
+
+#27 How owner may see only his themes?
+views.py:  
+    # Make restriction views for not owners
+    @login_required
+    def topics(request):
+        topics = Topic.objects.filter(owner=request.user).order_by('date_added')
+
+# Make a checker owner or not sees currently topic
+views.py:
+    from django.http import Http404
+
+    @login_required
+    def topics(request, topic_id):
+        topic = Topic.objects.get(id=topic_id)
+        if topic.owner != request.user:
+            raise Http404
+
+# Safe edit_entry page
+views.py:
+    @login_required
+    def edit_entry(request, entry_id):
+        entry = Entry.objects.get(id=entry_id)
+        topic = entry.topic
+        if topic.owner != request.user:
+            raise Http404
+
+#28 Add binding new topic with his owner
+views.py:
+    @login_required
+    def new_topic(request):
+        if request.method != 'POST':
+            form = TopicForm()
+        else:
+            form = TopicForm(data=request.POST)
+            if form.is_valid():
+                new_topic = form.save(commit=False)
+                new_topic.owner = request.user
+                new_topic.save()
+                return redirect('learning_logs:topics')
+
+#29 Install django-bootstrap4 for frontend
+(env)learning_log$ pip3 install django-bootstrap4
+
+# add bootstrap to settings.py
+settings.py:
+    INSTALLED_APPS = [
+            # My apps
+            'learning_logs',
+            'users',
+
+            # Another apps
+            'bootstrap4',
+
+            # Default django apps
+            'django.contrib.admin',
+    ]
+
+# Change base.html for bootstrap
+base.html:
+    {% load bootstrap4 %}
+    
+    <!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1,
+        shrink-to-fit=no">
+        <title>Learning Log</title>
+
+        {% bootstrap_css %}
+        {% bootstrap_javascript jquery='full' %}
+      </head>
+      <body>  # make a navigation bar
+        <nav class="navbar navbar-expand-md navbar-light bg-light mb-4 border">
+          <a class="navbar-brand" href="{% url 'learning_logs:index'%}">
+          Learning Log</a>
+          <button class="navbar=toggler" type="button" data-toggle="collapse"
+          data-target="#navbarCollapse" aria-controls="navbarCollapse"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span></button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'learning_logs:topics'%}">
+                Topics</a></li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <span class="navbar-text">Hello, {{ user.username }}.</span>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:logout' %}">Log out</a
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:register' %}">Register</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'users:login' %}">Log in</a></li>
+              {% endif %}
+            </ul>
+          </div>
+        </nav>
+
+        <main role="main" class="container">
+          <div class="pb-2 mb-2 border-bottom">
+            {% block page_header %}{% endblock page_header %}
+          </div>
+          <div>
+            {% block content %}{% endblock content %}
+          </div>
+        </main>
+      </body>
+    </html
+
+# Make a 'jumbotron' with buttstrap4
+index.html:
+    {% extends "learning_logs/base.html" %}
+
+    {% block page_header %}
+      <div class='jumbotron'>
+        <h1 class="display-3">Track your learning.>/h1>
+
+        <p class="lead">Make your own Learning Log, and keep a list of the
+        topics you`re learning about. Whenever you learn something new
+        about a topic, make an entry summarizing what you`ve learned.</p>
+
+        <a class="btn btn-lg btn-primary" href="{% url 'users:register' %}"
+        role="button">Register &raquo;</a>
+      </div>
+    {% endblock page_header %}
+
+# Bootstrapped login page
+login.html:
+    {% load bootstrap4 %}
+
+    {% block page_header %}
+      <h2>Log in to your account.</h2>
+    {% endblock page_header %}
+
+    {% block content %}
+      <form method="post" action="{% url 'users:login' %}" class="form">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% buttons %}
+          <button name="submit" class="btn btn-primary">Log in </button>
+        {% endbuttons %}
+
+        <input type="hidden" name="next"
+          value="{% url 'learning_logs:index' %}" />
+      </form>
+    {% endblock content %}
+
+# amelioration without bootstrapped toppics page
+toppics.html:
+    {% extends "learning_logs/base.html" %}
+
+    {% block page_header %}
+      <h1>Topics</h1>
+    {% endblock page_header %}
+
+    {% block content %}
+      <ul>
+        {% for topic in topics %}
+          <li><h3>
+            <a href="{% url 'learning_logs:topic' topic.id %}">{{ topic }}</a>
+            </h3></li>
+        {% empty %}
+          <li><h3>No topics have been added yet.</h3></li>
+        {% endfor %}
+      </ul>
+      
+      <h3><a href="{% url 'learning_logs:new_topic' %}">Add new topic</h3>
+    {% endblock content %}
+
+# Bootstrapped topic.html
+topic.html:
+    {% extends 'learning_logs/base.html' %}
+
+    {% block page_header %}
+      <he>{{ topic }}</h3>
+    {% endblock page_header %}
+
+    {% block content %}
+      <p>
+    <a href = "{% url 'learning_logs:new_entry' topic.id %}">Add new entry</a>
+      </p>
+
+      {% for entry in entries %}
+        <div class="card mb-3">
+          <h4 class="card-header">
+            {{ entry.date_added|date:'M d, Y H:i' }}
+            <small><a href="{% url 'learning_logs:edit_entry' entry.id %}">
+            edit entry</a></small>
+          </h4>
+          <div class="card-body">
+            {{ entry.text|linebreaks }}
+          </div>
+        </div>
+      {% endfor %}
+    {% endblock content %}
+
+#30 Deploy
+(env) learning_log$ pip install psycopg2==2.7.*
+(env) learning_log$ pip install django_Heroku
+(env) learning_log$ pip install gunicorn
+
+(env) learning_log$ pip freeze > requirements.txt  # for Heroku
+
+(env) learning_log$ python --version  # check Python version for requirement.txt
+
+# change settings for Heroku
+
+    # My settings
+LOGIN_URL = 'users:login'
+
+    # Settings for Heroku
+import django_heroku
+django_heroku.settings(locals())
+
+# Make a Procfile where manage.py
+Procfile
+
+web: gunicorn leaning_log.wsgi --log-file -
+
+# Go to heroku.com and check your account
+
+# Heroku tell that need Python 3.10 and Postgress locally
+
+# Then install installer for Heroku
+$ sudo snap install heroku --classic
+
+pip install psycopg2
+pip install gunicorn
+pip install django-heroku
+
+# copy examples or file pack from github
+$ git clone https://github.com/heroku/python-getting-started.git
+
+# Install Python 3.10
+sudo apt install software-properties-common -y
+sudo add-apt-repository ppa:deadsnakes/ppa
+sudo apt install python3.10
+(if you need remove then, $ sudo apt autoremove python3.10 --purge)
+
+# Make files when needed
+runtime.txt
+with note:
+python-3.10.4
+
+Procfile
+with note:
+web: gunicorn gettingstarted.wsgi --log-file -  # for learning_log/wsgi.py
+
+requirements.txt
+pip freeze > requirements.txt
+
+# Heroku need PostgreSQl, and I use sqlite in this project. It's fail for deploy? Again.
+But I have postrgres
+sudo apt-get install postgresql
+which psql
+$ psql
+psql (12.11 (Ubuntu 12.11-0ubuntu0.20.04.1), server 10.14 (Ubuntu 10.14-0ubuntu0.18.04.1))
+Type "help" for help.
+
+jack=# \q  # exit
+
+# Ok, change settings for Heroku
+settings.py
+# My settings
+LOGIN_URL = 'users:login'
+
+# Heroku settings
+django_heroku.settings(locals())  # it's exactly needed? Read Heroku instructions.
