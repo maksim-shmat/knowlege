@@ -16,7 +16,7 @@ else:
     MEDIA_URL = '/media/'
     MEDIA_ROOT = Path(BASE_DIR, '/var/www/ /media/')
 
-###### wirk with git
+###### work with git
 pip freeze > requirements.txt
 make .gitignore
 

@@ -36,7 +36,7 @@ git branch -M king
 Go to github and create new project "Beralusian_Kingdom" without README.md and
 copy link
 git remote add origin git@github.com:maksim-shmat/Beralusian_Kingdom.git
-git push -u origin king
+git push -u origin ming
 git remote add nahui https://github.com... # name remote repo
 if you change repo in site github
 use git pull before git push

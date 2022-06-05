@@ -623,6 +623,7 @@ topic.html:
       {% endfor %}
     {% endblock content %}
 
+=================================================
 #30 Deploy
 (env) learning_log$ pip install psycopg2==2.7.*
 (env) learning_log$ pip install django_Heroku
@@ -676,6 +677,7 @@ with note:
 web: gunicorn gettingstarted.wsgi --log-file -  # for learning_log/wsgi.py
 
 requirements.txt
+# Jun 5. Ok need move project to Heroku, from git style
 pip freeze > requirements.txt
 
 # Heroku need PostgreSQl, and I use sqlite in this project. It's fail for deploy? Again.
@@ -695,3 +697,144 @@ LOGIN_URL = 'users:login'
 
 # Heroku settings
 django_heroku.settings(locals())  # it's exactly needed? Read Heroku instructions.
+
+# Deploy
+heroku create
+(learning_log) jack@Cesar:~/django2/knowlege/django/learning_log$ heroku create
+ ›   Warning: heroku update available from 7.60.1 to 7.60.2.
+Creating app... done, ⬢ pacific-wave-01085
+https://pacific-wave-01085.herokuapp.com/ | https://git.heroku.com/pacific-wave-01085.git
+
+# What parameter need give to heroku for your same name? Not pasific-shmasific?
+# git init now
+git init
+git add .
+git commit -m "first commit"
+
+# Trubles little bit 
+git push heroku main
+(learning_log) jack@Cesar:~/django2/knowlege/django/learning_log$ git push heroku main
+error: src refspec main does not match any
+error: failed to push some refs to 'https://git.heroku.com/hidden-savannah-17691.git'
+
+# ok rename hidden-savannah-17691(default) to my project name
+heroku git:remote -a learning_log
+(learning_log) jack@Cesar:~/django2/knowlege/django/learning_log$ heroku git:remote -a learning_log
+ ›   Warning: heroku update available from 7.60.1 to 7.60.2.
+ ›   Error: Couldn`t find that app.
+ ›
+ ›   Error ID: not_found
+
+# ok create with my project name
+
+(learning_log) jack@Cesar:~/django2/knowlege/django/learning_log$ heroku create -a learning_log
+ ›   Warning: heroku update available from 7.60.1 to 7.60.2.
+Creating ⬢ learning_log... !
+ ▸    Name must start with a letter, end with a letter or digit and can only
+ ▸    contain lowercase letters, digits, and dashes. You`ve reached the app
+ ▸    limit of 5 apps for unverified accounts. Delete some apps or add a
+ ▸    credit card to verify your account.
+
+# ok install plagin for del repos
+$ heroku plugins:install heroku-repo
+$ heroku repo:reset --app appname
+
+# Nope, ok may destroy app
+(learning_log) jack@Cesar:~/django2/knowlege/django/learning_log$ heroku apps:destroy
+ ›   Warning: heroku update available from 7.60.1 to 7.60.2.
+ ▸    WARNING: This will delete ⬢ hidden-savannah-17691
+ ▸    including all add-ons.
+ ▸    To proceed, type hidden-savannah-17691 or re-run this
+ ▸    command with --confirm hidden-savannah-17691
+
+> hidden-savannah-17691
+Destroying ⬢ hidden-savannah-17691 (including all add-ons)... done
+
+# Ok! But my app with underscore and this is not legal on heroku, what is next?
+Try rename directory from learning_log to learnig-log for heroku recoginsions
+
+# Jun 5. Ok need move project to Heroku, from git style
+# Create a new Git repository:
+cd my-project/
+git init
+heroku git:remote -a fast-bastion-34271
+ning_log) jack@Cesar:~/django2/knowlege/django/learning-log$ heroku git:remote -a fast-bastion-34271
+ ›   Warning: heroku update available from 7.60.1 to 7.60.2.
+set git remote heroku to https://git.heroku.com/fast-bastion-34271.git
+
+# Success?
+# Deploy your application:
+git branch  # if it 'master' change to 'main'
+git branch -M main
+
+git add .
+(learning_log) jack@Cesar:~/django2/knowlege/django/learning-log$ git commit -am "make it better(for heroku routine)"
+On branch main
+nothing to commit, working tree clean
+(learning_log) jack@Cesar:~/django2/knowlege/django/learning-log$ git push heroku main
+Enumerating objects: 52, done.
+Counting objects: 100% (52/52), done.
+Delta compression using up to 8 threads
+Compressing objects: 100% (46/46), done.
+Writing objects: 100% (52/52), 12.13 KiB | 6.07 MiB/s, done.
+Total 52 (delta 4), reused 0 (delta 0)
+remote: Compressing source files... done.
+remote: Building source:
+remote: 
+remote: -----> Building on the Heroku-20 stack
+remote: -----> Determining which buildpack to use for this app
+remote: -----> Python app detected
+remote: -----> Using Python version specified in runtime.txt
+remote: -----> Installing python-3.10.4
+remote: -----> Installing pip 22.0.4, setuptools 60.10.0 and wheel 0.37.1
+remote: -----> Installing dependencies with Pipenv 2020.11.15
+remote:        Installing dependencies from Pipfile.lock (db4242)...
+remote: -----> Installing SQLite3
+remote: -----> Discovering process types
+remote:        Procfile declares types -> web
+remote: 
+remote: -----> Compressing...
+remote:        Done: 76.3M
+remote: -----> Launching...
+remote:        Released v5
+remote:        https://fast-bastion-34271.herokuapp.com/ deployed to Heroku
+remote: 
+remote: Verifying deploy... done.
+To https://git.heroku.com/fast-bastion-34271.git
+ * [new branch]      main -> main
+
+# Success! Deploy, man!
+# Check:
+heroku ps
+(learning_log) jack@Cesar:~/django2/knowlege/django/learning-log$ heroku ps
+ ›   Warning: heroku update available from 7.60.1 to 7.60.2.
+Free dyno hours quota remaining this month: 550h 0m (100%)
+Free dyno usage for this app: 0h 0m (0%)
+For more information on dyno sleeping and how to upgrade, see:
+https://devcenter.heroku.com/articles/dyno-sleeping
+
+=== web (Free): gunicorn gettingstarted.wsgi --log-file - (1)
+web.1: crashed 2022/06/05 07:33:54 +0300 (~ 14m ago)
+
+# Open URL that heroku get you
+heroku open
+
+============================
+# Prepare db in Heroku
+
+# Little trubles, not start site on Heroku, need Django... What?
+# Ok
+# Django on the (pipenv)
+# need Pipenv.lock?
+$ pipenv install -r requirements.txt
+$ pipenv lock
+$ git add .
+$ git commit
+$ git push heroku main
+
+# little fail with one lib, on heroku python3.10, and this lib is old
+# change runtime.txt
+python-3.7.13
+# ahah with python 3.7 not working django4
+# ok change runtime.txt to python3.8.13
+

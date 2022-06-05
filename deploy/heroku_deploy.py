@@ -1,6 +1,7 @@
 """ About deploying."""
 
-###### sign up Heroku account
+# Summary
+sign up Heroku account
 
 $ sudo snap install heroku --classic
 
@@ -11,10 +12,6 @@ $ heroku login
 - install gunicorn as our web server
 - make a one-line change to settings.py file
 
-###### add from heroku.com for start
-$ git clone https://github.com/heroku/python-getting-started.git
-$ cd python-getting-started
-(it add runtime.txt and requirement.txt)
 ######
 # Pipfile
 [requires]
