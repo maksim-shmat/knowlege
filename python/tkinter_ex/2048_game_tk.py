@@ -78,7 +78,7 @@ class Board:
     # slide squares in row to the left:
     def slide_squares(self, row):
         new = [''] * 4
-        icmd = -1
+        icmb = -1
         inew = 0
         for x in row:
             if x:
