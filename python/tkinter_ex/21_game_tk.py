@@ -138,22 +138,6 @@ class Game:
                               bg = 'lemon chiffon')
         self.lost_lbl.place(relx=0.85, rely=0.93, anchor=W)
 
-    # computer picks a number:
-    def puter_plays(self):
-        if self.score == 20:
-            x = 1
-        elif self.score == 19:
-            x = random.choice([1, 2, 3])
-        self.score += x
-        self.score_msg.config(text=self.score)
-        if self.score == 21:
-            m = 'Computer won!'
-            self.lost += 1
-            self.lost_lbl.config(text='Lost: ' + str(self.lost))
-        else:
-            m = 'Compute chose ' + str(x) + ', your turn'
-        self.msg.config(text=m)
-        return
 
     # play one game:
     def play_game(self):
@@ -175,6 +159,25 @@ class Game:
         self.play_btn.config(state='normal')
         return
 
+
+    # computer picks a number:
+    def puter_plays(self):
+        if self.score == 20:
+            x = 1
+        elif self.score == 19:
+            x = random.choice([1, 2])
+        else:
+            x = random.choice([1, 2, 3])
+        self.score += x
+        self.score_msg.config(text=self.score)
+        if self.score == 21:
+            m = 'Computer won!'
+            self.lost += 1
+            self.lost_lbl.config(text='Lost: ' + str(self.lost))
+        else:
+            m = 'Compute chose ' + str(x) + ', your turn'
+        self.msg.config(text=m)
+        return
 
     # user picks a number:
     def user_plays(self):
@@ -216,7 +219,7 @@ class Game:
 
     # indicate that submit button was pressed:
     def submit(self):
-        self.versub.set(0)
+        self.varsub.set(0)
 
 root = Tk()
 root.title('21 game')
