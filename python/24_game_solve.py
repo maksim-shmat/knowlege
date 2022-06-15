@@ -33,7 +33,7 @@ def choose4():
 def ask4():
     """Get four random digits > 0 from the player."""
     digits = ''
-    while len(digits) != 4 or not all(d in '123456789' for f in digits):
+    while len(digits) != 4 or not all(d in '123456789' for d in digits):
         digits = input('Enter the digits to solve for: ')
         digits = ''.join(digits.strip().split())
     return list(digits)
