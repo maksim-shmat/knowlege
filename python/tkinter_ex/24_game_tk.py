@@ -34,26 +34,26 @@ class Game:
 
         self.hdg = Label(self.top_fr,
                          text='  24 Game  ',
-                         font='arial 22 bold',
+                         font='RosyBrown1',
                          fg='navy',
                          bg='lemon chiffon')
         self.hdg.place(relx=0.5, rely=0.5, anchor=CENTER)
 
         self.close_btn = Button(self.top_fr,
                                 text='Quit',
-                                bg=5,
+                                bd=5,
                                 bg='navy',
                                 fg='lemon chiffon',
-                                font='arial 12 bold',
+                                font='RosyBrown1',
                                 command=self.close_window)
         self.close_btn.place(relx=0.07, rely=0.5, anchor=W)
 
         self.clear_btn = Button(self.top_fr,
                                 text='Clear',
                                 bd=5,
-                                bg='navy'
+                                bg='navy',
                                 fg='lemon chiffon',
-                                font='arial 12 bold',
+                                font='RosyBrown1',
                                 command=self.clear_screen)
         self.clear_btn.place(relx=0.92, rely=0.5, anchor=E)
 
@@ -66,7 +66,7 @@ class Game:
 
         self.msg = Label(self.btm_fr,
                          text=self.msga,
-                         font='arial 16 bold',
+                         font='RosyBrown1',
                          fg='navy',
                          bg='lemon chiffon')
         self.msg.place(relx=0.5, rely=0.1, anchor=CENTER)
@@ -75,19 +75,19 @@ class Game:
                                    text='My Digits',
                                    width=12,
                                    bd=5,
-                                   bg='navy'
+                                   bg='navy',
                                    fg='lemon chiffon',
-                                   font='arial 12 bold',
+                                   font='RosyBrown1',
                                    command=self.get_digits)
         self.user_dgt_btn.place(relx=0.07, rely=0.2, anchor=W)
 
         self.rdm_dgt_btn = Button(self.btm_fr,
                                   text='Random Digits',
                                   width=12,
-                                  bg=5,
+                                  bd=5,
                                   bg='navy',
-                                  fg='arial 12 bold',
-                                  font='arial 12 bold',
+                                  fg='RosyBrown1',
+                                  font='RosyBrown1',
                                   command=self.gen_digits)
         self.rdm_dgt_btn.place(relx=0.92, rely=0.2, anchor=E)
 
@@ -97,14 +97,14 @@ class Game:
                                  fg='navy',
                                  bd=4,
                                  relief=RIDGE,
-                                 font='arial 12 bold')
+                                 font='RosyBrown1')
         self.dgt_fr.place(relx=0.5, rely=0.27, anchor=CENTER)
 
         self.digit_ent = Entry(self.dgt_fr,
                                justify='center',
-                               font='arial 16 bold',
-                               fg='navy'
-                               disabledforeground='lemon choffon',
+                               font='RosyBrown1',
+                               fg='navy',
+                               disabledforeground='lemon chiffon',
                                bd=4,
                                width=6)
         self.digit_ent.grid(row=0,
@@ -119,7 +119,7 @@ class Game:
                                    bd=5,
                                    bg='navy',
                                    fg='lemon chiffon',
-                                   font='arial 12 bold',
+                                   font='RosyBrown1',
                                    command=self.check_soln)
         self.chk_soln_btn.place(relx=0.07, rely=.42, anchor=W)
 
@@ -130,7 +130,7 @@ class Game:
                                     bd=5,
                                     bg='navy',
                                     fg='lemon chiffon',
-                                    font='arial 12 bold',
+                                    font='RosyBrown1',
                                     command=self.show_soln)
         self.show_soln_btn.place(relx=0.92, rely=.42, anchor=E)
 
@@ -140,18 +140,18 @@ class Game:
                                   fg='navy',
                                   bd=4,
                                   relief=RIDGE,
-                                  font='arial 12 bold')
+                                  font='RosyBrown1')
         self.soln_fr.place(relx=0.07, rely=0.58, anchor=W)
 
         self.soln_ent = Entry(self.soln_fr,
                               justify='center',
-                              font='arial 16 bold',
+                              font='RosyBrown1',
                               fg='navy',
                               disabledforeground='navy',
                               bg='lemon chiffon',
                               disabledbackground='lemon chiffon',
                               state='disabled',
-                              bg=4,
+                              bd=4,
                               width=15)
         self.soln_ent.grid(row=0,
                            column=0,
@@ -164,7 +164,7 @@ class Game:
                                    fg='navy',
                                    bd=4,
                                    relief=RIDGE,
-                                   font='arial 12 bold')
+                                   font='RosyBrown1')
         self.solns_fr.place(relx=0.92, rely=0.5, anchor='ne')
 
         self.solns_all = ScrolledText(self.solns_fr,
@@ -303,4 +303,45 @@ class Game:
         self.solns_all.insert('end', txt)       # show solutions
         self.solns_all.config(state='disabled')
 
-        self.chk
+        self.chk_soln_btn.config(state='disabled')
+        self.show_soln_btn.config(state='disabled')
+        self.soln_ent.config(state='disabled')
+        return
+
+    def err_msg(self, msg):
+        messagebox.showerror('Error Message', msg)
+        return
+
+    def clear_screen(self):
+        '''Restore screen to it's initial state.'''
+        self.digits = ''
+        self.digit_ent.config(state='normal')
+        self.user_dgt_btn.config(state='normal')
+        self.rdm_dgt_btn.config(state='normal')
+        self.digit_ent.delete(0, 'end')
+        self.chk_soln_btn.config(state='disabled')
+        self.show_soln_btn.config(state='disabled')
+        self.soln_ent.config(state='normal')
+        self.soln_ent.delete(0, 'end')
+        self.soln_ent.config(state='disabled')
+        self.msg.config(text=self.msga)
+        self.clear_solns_all()
+        return
+
+    def clear_solns_all(self):
+        '''Clear the 'Solutions' frame.
+        Note: state must be 'normal' to change data.'''
+        self.solns_all.config(state='normal')
+        self.solns_all.delete(1.0, 'end')
+        self.solns_all.config(state='disabled')
+        return
+
+    def close_window(self):
+        self.window.destroy()
+
+root = Tk()
+root.title('24 Game')
+root.geometry('600x600+100+50')
+root.resizable(False, False)
+g = Game(root)
+root.mainloop()
