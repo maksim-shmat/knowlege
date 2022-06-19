@@ -838,3 +838,110 @@ python-3.7.13
 # ahah with python 3.7 not working django4
 # ok change runtime.txt to python3.8.13
 
+# Next trubles: with collect static something
+# fix it
+$ heroku config:set DISABLE_COLLECTSTATIC=1
+
+# start a gunicorn server
+$ heroku ps
+
+$ heroku open
+# not working
+
+# Migrate db
+$ heroku run python manage.py migrate
+
+# Trubles with bootstrap and 'No module named 'learning_log.settings'
+# not success
+# May need work with settings # .os ect.
+
+===========================
+# Work remotely on the server with bash
+$ heroku run bash
+$ ls
+$ python manage.py createsuperuser  # for open admin site
+https://fast-bastion-34271.herokuapp.com/admin/
+
+$ exit
+
+# Rename URL
+$ heroku apps: rename maksim-shmat
+
+$ heroku git:remote -a maksim-shmat
+remote:        https://maksim-shmat.herokuapp.com/ deployed to Heroku
+
+
+# for sequrity
+settings:
+    # settings Heroku
+    import django_heroku
+    django_heroku.settings(locals())
+
+    if os.environ.get('DEBUG') == 'TRUE':
+        DEBUG = True
+    elif os.environ.get('DEBUG') == 'FALSE':
+        DEBUG = False
+
+# and then nedd commit and reinstall all dependencies on the server
+git add .
+git commit -am 'Set DEBUG based on environment variables.'
+git status
+git push heroku main
+
+# after that change DEBUG to False
+
+heroku config:set DEBUG='FALSE'
+
+# if you need debugging info change DEBUG flag to True
+
+heroku config:set DEBUG='TRUE'
+
+======================
+# make a crafted 404.html
+# create dir
+learning_log/templates/
+# add 404.html
+
+#change settings.py
+TEMPLATES = [
+        {
+            'BACKEND': 'django.templat.backends.django.DjangoTemplates',
+            'DIRS': [os.path.join(BASE_DIR, 'templates')],
+            'APP_DIRS': True,
+            ...
+=======================
+# Work with settings and db for Heroku
+# Add settings for postgres
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'postgresql',
+        'USER': 'postgresql',
+        'PASSWORD': 'postgresql',
+        'HOST': 'db',
+        'PORT': 5432
+    }
+}
+
+# Add postgres to Heroku
+heroku addons:create heroku-postgresql:hobby-dev
+
+# check
+heroku addons
+
+Add-on                                          Plan       Price  State
+──────────────────────────────────────────────  ─────────  ─────  ───────
+heroku-postgresql (postgresql-contoured-94473)  hobby-dev  free   created
+ └─ as DATABASE
+
+heroku-postgresql (postgresql-shallow-38822)    hobby-dev  free   created
+ └─ as HEROKU_POSTGRESQL_BLACK
+
+The table above shows add-ons and the attachments to the current app (maksim-shmat) or other apps.
+
+# What? Two postgresql?
+# Ok del second db from Heroku site
+# Next, connect postgress
+# runserver how it is -- error
+# Ok change BASE_DIR(default note) to BASE_DIR ...(__file__)))
