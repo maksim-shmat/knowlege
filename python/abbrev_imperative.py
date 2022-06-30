@@ -1,4 +1,5 @@
 """Make abreviations from the list of words."""
+# not working how needed.
 
 def shortest_abbreviation_length(line, list_size):
     words = line.split()

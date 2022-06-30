@@ -1,5 +1,6 @@
 """Work with abbreviations, functional style."""
 
+# not working how needed. Est.
 import operator
 from itertools import (accumulate,
                        repeat)
