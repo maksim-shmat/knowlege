@@ -386,4 +386,40 @@ Results:
         robot pendant
         phone case
 
-#19
+#19 example how use function for check internet
+import httplib
+
+def check_web_server(host, port, path):  # or use kwargs (port=80, path='/', host='www.python.org')
+    h = httplib.HTTPConnection(host, port)
+    h.request('GET', path)
+    resp = h.getresponse()
+    print('HTTP Response:')
+    print('    status =', resp.status)
+    print('    reason =', resp.reason)
+    print('HTTP Headers: ')
+    for hdr in resp.getheaders():
+        print('    %s: %s' % hdr)
+
+Results:
+>>> check_web_server('www.python.org', 80, '/')
+HTTP Response:
+    status = 200
+    reason = OK
+HTTP Headers:
+    content-length: 16793
+    accept-ranges: bytes
+    server: Apache/2.2.3 (Debian) DAV/2 SVN/1.4.2 mod_ssl/2.2.3 OpenSSL/0.9.8c
+    last-modified: Sun, 27 Apr
+    etag: "6008a-4199-df35c889"
+    date: Sun, 27 Apr
+    content-type: text/html
+
+#20 Get object of function but not function
+
+import datetime
+
+class DiaryEntry(model.Model):
+    entry = models.TextField()
+    date = models.DateField(default=datetime.date.today)  # but not datetime()
+
+#21

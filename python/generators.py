@@ -1,5 +1,18 @@
 """Generators about."""
 
+#0
+>>> data = [x + 1 for x in range(10)]
+>>> data
+[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+#0.1
+>>> even_numbers = [x for x in range(10) if x %2 == 0]
+>>> even_numbers
+[0, 2, 4, 6, 8]
+
+but for big numbers:
+    >>> even_numbers = (x for x in range(10000) if x % 2 == 0)
+
 #1
 
 def four(limit):

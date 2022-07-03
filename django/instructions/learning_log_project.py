@@ -940,8 +940,31 @@ heroku-postgresql (postgresql-shallow-38822)    hobby-dev  free   created
 
 The table above shows add-ons and the attachments to the current app (maksim-shmat) or other apps.
 
-# What? Two postgresql?
-# Ok del second db from Heroku site
 # Next, connect postgress
 # runserver how it is -- error
 # Ok change BASE_DIR(default note) to BASE_DIR ...(__file__)))
+# runserver -- error
+# Try migrate  -- no connection with postgres db
+Need check settings examples
+# pipenv install psycopg2-binary (then we have psycopg2 and psycopg2-binary)
+Is it needed? Idk. Yeah ydk. Learn it.
+
+# For secure settings need django-environ and .env hidden file
+make .env file and bring SECRET_KEY into.
+on the settings.py change
+SECRET_KEY = os.environ.get('SECRET_KEY')
+
+ENVIRONMENT = os.environ.get('ENVIRONMENT', default='development')
+
+ALLOWED_HOSTS = ['maksim-shmat.herokuapp.com', 'localhost', '127.0.0.1']
+
+# Next. Jun 26
+$ heroku run python manage.py migrate
+ModuleNotFoundError: No module named 'learning_log.settings'
+
+# Check deployment settings configuration
+(env)$ python manage.py check --deploy --settings=learning_log.settings
+
+# Hmm trubles may with learning-log an learning_log
+learning-log/learning_log.settings
+ok mv learning-log to learning_log

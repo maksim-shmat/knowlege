@@ -1,4 +1,14 @@
 """About if/elif."""
+
+#1
+data = input("Enter 'y' or 'n': ")
+if data[0] == 'y':
+    print("You typed 'y'.")
+elif data[0] == 'n':
+    print("You typed 'n'.")
+else:
+    print("Invalid key entered!")
+
 '''
 a = 5
 b = 2

@@ -25,7 +25,7 @@ def find_abbreviations(command_table):
     abbreviations = dict()
     for command, min_abbr_len in command_table.items():
         for l in range(min_abbr_len, len(command)+1):
-            abbr = command[:l].lower()
+            abbr = command[:1].lower()
             abbreviations[abbr] = command.upper()
         return abbreviations
 

@@ -1,5 +1,8 @@
 """ Methods Arguments: Default, optional, *args, **kwargs."""
 
+# * - is a tuple
+# ** - is a dict
+
 ###### Python method definition and call syntax with * and **
 
 def address(city,state,country):
@@ -101,4 +104,41 @@ def powersum(power, *args):
 >>> powersum(2, 10)
 100
 
-#3
+#3 Args convenient
+
+host_info = ('www.python.org', 80, '/')  # tuple
+
+def check_web_server(host, port, path):
+    pass
+
+# call function
+check_web_server(host_info[0], host_info[1], host_info[2])  # Not good
+
+# use args
+check_web_server(*host_info)  # That's my girl!
+
+#4 Kwargs convenient
+
+host_info = {'host': 'www.python.org', 'port': 80, 'path': '/'}  # dict
+
+def check_web_server(host, port, path):
+    pass
+
+# call function
+check_web_server(**host_info)  # indentical check_web_server(host='www.python.org, port=80, path='/')
+
+#5 Count daily sales
+
+def daily_sales_total(*all_sales):  # * - it is for all calls
+    total = 0.0
+    for each_sale in all_sales:
+        total += float(each_sale)
+    return total
+
+# call function, all calls access
+
+daily_sales_total()
+daily_sales_total(10.00)
+daily_sales_total(5.00, 1.50, '123.79')
+
+#6

@@ -71,4 +71,15 @@ from functools import reduce
 joh = reduce(lambda x, y: x + y, numbers)
 print(joh)  # 1161
 
-#2
+#2 Three equivalent examples
+
+sorted(list_of_people, key=lambda person: person.last_name)  # compact
+-----------
+def get_last_name(person):  # if need use function in a future
+    return person.last_name
+sorted(list_of_people, key=get_last_name)
+-----------
+get_last_name = lambda person: person.last_name  # for example
+sorted(list_of_people, key=get_last_name)
+
+#3
