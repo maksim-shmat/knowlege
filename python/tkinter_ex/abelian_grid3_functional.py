@@ -34,7 +34,7 @@ def main():
                 ('=', addSand(s2)(s1))
             ]),
             '',
-            f's3 + s3_id == s3 -> {addSand(s3)(s3_id) == s3)',
+            f's3 + s3_id == s3 -> {addSand(s3)(s3_id) == s3}',
             showSandPiles([
                 (' ', s3),
                 ('+', s3_id),
@@ -128,7 +128,7 @@ def indexNeighbours(w):
         return [
                 j for j in [i - w, i + w]
                 if - 1 < j < iSqr
-        ] + ([i = 1] if 0 != col ele []) + (
+        ] + ([i - 1] if 0 != col else []) + (
                 [1 + i] if lastCol != col else []
         )
     return go
@@ -154,3 +154,63 @@ def showSandPiles(pairs):
     ])
 
 # ----------- GENERIC ----------
+
+# chunksOf :: Int -> [a] -> [[a]]
+def chunksOf(n):
+    '''A series of lists of length n, subdividing the contents of xs.
+    Where the length of xs is not evenly divible, the final list will be
+    shorter than n.
+    '''
+    def go(xs):
+        ys = list(xs)
+        return(
+                ys[i:n + i] for i in range(0, len(ys), n)
+                ) if 0 < n else None
+    return go
+
+# concat :: [[a]] -> [a]
+def concat(xs):
+    '''The concatenation of all
+    elements in a list.
+    '''
+    return [x for lst in xs for x in lst]
+
+# findIndex :: (a -> Bool) -> [a] -> Maybe Int
+def findIndex(p):
+    '''Just the first index at which an
+    element in xs matches p,
+    or Nothing if no elements match.
+    '''
+    def go(xs):
+        return next(
+                (i for (i, x) in enumerate(xs) if p(x)),
+                None
+        )
+    return go
+
+# iterate :: (a -> a) -> a -> Gen [a]
+def iterate(f):
+    '''An infinite list of repeated
+    applications of f to x.
+    '''
+    def go(x):
+        v = x
+        while True:
+            yield v
+            v = f(v)
+    return go
+
+# maybe :: b -> (a -> b) -> Maybe a -> b
+def maybe(v):
+    '''Either the default value v, if x is None,
+    or the application of f to x.
+    '''
+    def go(f):
+        def g(x):
+            return v if None is x else f(x)
+        return g
+    return go
+
+# MAIN ---
+if __name__ == '__main__':
+    main()

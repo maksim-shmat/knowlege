@@ -44,12 +44,12 @@ def run(area, by_frame=False):
                         make_sandpile(area, (x, y-1), 1)
                     make_sandpile(area, (x, y), -4)
 
-        while any([any([pile in group]) for group in area]):
-            if by_frame:
-                clear()
-            run_frame()
-            if by_frame:
-                show_area(area); sleep(.05)
+    while any([any([pile>=4 for pile in group]) for group in area]):
+        if by_frame:
+            clear()
+        run_frame()
+        if by_frame:
+            show_area(area); sleep(.05)
 
 def show_area(area):
     display = [' '.join([str(item) if item else ' ' for item in group])
