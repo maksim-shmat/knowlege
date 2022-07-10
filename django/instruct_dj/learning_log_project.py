@@ -965,6 +965,21 @@ ModuleNotFoundError: No module named 'learning_log.settings'
 # Check deployment settings configuration
 (env)$ python manage.py check --deploy --settings=learning_log.settings
 
-# Hmm trubles may with learning-log an learning_log
-learning-log/learning_log.settings
-ok mv learning-log to learning_log
+# Hmm, first make db and then ask Django how use it.
+Make PostgreSql db
+ok make it
+sudo -u postgres psql
+[sudo] password for jack:
+psql (12.11 (Ubuntu 12.11-0ubuntu0.20.04.1), server 10.14 (Ubuntu 10.14-0ubuntu0.18.04.1))
+Type "help" for help.
+
+postgres=# CREATE USER jack WITH PASSWORD '*******';
+ERROR:  role "jack" already exists
+postgres=# CREATE DATABASE learning_log OWNER jack;
+CREATE DATABASE
+postgres=# \q
+And then change settings.py, where db named 'postgres'
+
+Aaaa I`m mean. learning_log.settings not found then it is git ignore file,
+and on the Heroku is not it file.
+Aaand? How add settings safety?

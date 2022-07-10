@@ -200,3 +200,16 @@ This car has a 75-kWh battery.
 This car can go about 260 miles on a full charge.
 
 ##5
+from time import ctime
+
+class MyClass(object):
+    def __init__(self, date):
+        print("instance created at:", date)
+
+m = myClass(ctime())
+print(m)
+
+Results:
+    instance created at: Wed Aut 15 00.23.18 20xx
+
+#6

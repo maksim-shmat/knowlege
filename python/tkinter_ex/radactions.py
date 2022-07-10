@@ -1,3 +1,5 @@
+"""Messages for file rad.py."""
+
 def message1():
     print('spamSpamSPAM')
 
