@@ -983,3 +983,6 @@ And then change settings.py, where db named 'postgres'
 Aaaa I`m mean. learning_log.settings not found then it is git ignore file,
 and on the Heroku is not it file.
 Aaand? How add settings safety?
+
+# Need rm settings.py from gitignore and push it for heroku
+but first make secrets.json
