@@ -91,4 +91,15 @@ signed_cookies = decorator_from_middleware_with_args(SignedCookiesMiddleware)
 def foo(request, ...):
     ...
 
-######
+#1
+from some_exterior_auth_lib import get_user
+
+class ExteriorAuthMiddleware(object):
+    
+    def process_request(self, request):
+        token = request.COOKIES.get('auth_token')
+        if token is None and not request.path.startswith('/login'):
+            return HttpResponseRedirect('/login/')
+        request.exterior_user = get_user(token)
+
+#2

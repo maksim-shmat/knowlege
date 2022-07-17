@@ -122,5 +122,28 @@ class EditContact(TemplateView):
             'contact_form': contact_form,
         })
 
-######
+#1
+from django.shortcuts import render_to_response
+from django.http import Http404
+from myproject.myapp.models import Person
+
+def person_detail(request, id):
+    try:
+        person = Person.objects.get(pk=id)
+    except Person.DoesNotExist:
+        raise Http404
+
+    return render_to_response("person/detail.html", {"person": person})
+
+# and make it ease with get_object_or_404
+
+from django.shortcuts import render_to_response, get_object_or_404
+from myproject.myapp.models import Person
+
+def person_detail(request, id):
+    person = get_object_or_404(Person, pk=id)
+
+    return render_to_response("person/detail.html", {"person": person})
+
+#2
 
