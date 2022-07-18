@@ -1,6 +1,5 @@
 """Logging about."""
 
-'''
 ######1 Import logging Library
 
 import logging
@@ -214,7 +213,6 @@ logger.addHandler(handler)
 
 logger.error('This is an ERROR message')
 logger.critical('This is an CRITICAL message')
-'''
 #10 
 
 import logging
