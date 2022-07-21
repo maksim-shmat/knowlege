@@ -1,4 +1,11 @@
-"""Work with addition chains."""
+"""Work with addition chains.
+
+For each n in {7, 14, 21, 29, 32, 42, 64} display the following: L(n),
+the count of Brauer chains of length L(n), an example of such a Brauer
+chain, the count of non-brauer chains of length L(n),
+an example of such a chain.
+(NB: counts may be 0).
+"""
 
 # N = 370 count is too long 2-3 min
 '''
@@ -61,7 +68,7 @@ def bauer(n):
         in_chain[x] = True
         pos += 1
 
-        if in_chain[n - x]:  # found solution
+        if in_chain[n - x]:
             if pos == best_len:
                 cnt += 1
             else:
