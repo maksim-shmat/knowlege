@@ -15,6 +15,9 @@ Window bluetooth setings need be opened!
 2. Send file from android.
 3. Check the message that you give file
 
+#4 check enviroment
+$ env
+
 #5 Search the last file
 
 ls -l --sort time

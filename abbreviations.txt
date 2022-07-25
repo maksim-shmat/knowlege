@@ -26,6 +26,8 @@ ASGI - Asyncronous Gateway Interface
 
 2. Web
 
+AJAX- Asynchronous JavaScript And XML
+
 OTN - Optical Transport Networks
 
 DWDM - Dense Wavelength Division Multiplexing

@@ -249,38 +249,9 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = models.Property
 
-### 
-class PropertyAdmin(admin.ModelAdmin):
-    form = PropertyForm
 
-admin.site.register(models.Property, PropertyAdmin)
 
 ###
-class PropertyAdmin(admin.ModelAdmin):
-    form = PropertyForm
-    fieldsets = (
-            (None, {'fields': (('address', 'slug'),
-                               ('city', 'state','zip'))}),
-            ('Sales Information', {'fields': ('status', 'price')}),
-            ('Size', {'fields': ('square_feet',
-                                 'acreage')}),
-        )
-
-###
-class PropertyAdmin(admin.ModelAdmin):
-    form = PropertyForm
-    fieldsets = (
-            (None, {'fields': (('address', 'slug'),
-                               ('city', 'state', 'zip'))}),
-            ('Sales information', {'fields': ('status', 'price')}),
-            ('Size', {'fields': ('square_feet', 'acreage')}),
-    )
-    inlines = (
-            PropertyFeatureInline,
-            InterestedPartyInline,
-    )
-
-### declare slug
 class PropertyAdmin(admin.ModelAdmin):
     form = PropertyForm
     fieldsets = (
@@ -295,6 +266,7 @@ class PropertyAdmin(admin.ModelAdmin):
     )
     prepopulated_fields = {'slug': ('address', 'zip')}
 
+admin.site.register(models.Property, PropertyAdmin)
 ###
 class FeatureAdmin(admin.ModelAdmin):
     fieldsets = (
@@ -306,4 +278,19 @@ class FeatureAdmin(admin.ModelAdmin):
 
 admin.site.register(models.Feature, FeatureAdmin)
 
-######
+#1 fieldsets
+
+class Person(models.Model):
+    firstname = models.CharField(max_length=50)
+    lastname = models.CharField(max_length=50)
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=2)
+
+
+class PersonAdmin(admin.ModelAdmin):
+    fieldsets = [
+            ("Name", {"fileds": ("firstname", "lastname")}),
+            ("Location", {"fields": ("city", "state")})
+    ]
+
+#2
