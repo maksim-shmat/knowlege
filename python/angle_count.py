@@ -1,4 +1,4 @@
-""" Count degrees."""
+""" Count angles."""
 
 def getDifference(b1, b2):
     r = (b2 - b1) % 360.0
