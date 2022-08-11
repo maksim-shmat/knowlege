@@ -419,4 +419,3 @@ print(re.sub(emphasis_pattern1, r'<em>\1</em>', '*This*is*it*!'))  # '<em>This*i
 emphasis_pattern2 = r'\*\*(.+?)\*\*'
 print(re.sub(emphasis_pattern2, r'<em>\1</em>', '**This**is**it**!'))  # '<em>This</em>is<em>it</em>!'
 
-#11
