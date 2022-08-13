@@ -1,0 +1,358 @@
+    LibreOffice
+
+.ods - open document spreadsheet
+.odt - open document text
+.odp - open document presentations
+.odb - open data bases
+.odg - open document graphics
+.odc - open document charts
+.odf - open document formulas
+
+VBA - Visual Basic for Applications
+
+
+#Sentence philosofy
+
+WYSIWYG - What You See Is What You Get
+UNIX(for) - You Asked For It, You Got It
+
+1. Python/Django
+
+WSGI - Web Server Gateway Interface
+
+CGI - Common Gateway Interface
+
+ASGI - Asyncronous Gateway Interface
+
+2. Web
+
+AJAX- Asynchronous JavaScript And XML
+
+OTN - Optical Transport Networks
+
+DWDM - Dense Wavelength Division Multiplexing
+
+NIC - Network Interface Card
+
+ARP - Address Resolution Protocol
+
+LCN - Logical Channel Number
+
+prg - propagation
+trns - transmission
+
+ITU - International Telecommunication Union
+
+ISO - International Standard Organization
+
+OLE - Object Linking and Embedding
+
+DPI - dots per inch
+
+EPS - Encapsulated PostScript
+
+TSA - Time Stamping Authority
+
+FTP - File Tansfer Protocol
+
+SFTP - Secure File Transper Protocol
+
+VCS - Version Control System
+
+LAN - Local Area Network
+
+OSI - Open System Inter Connection
+
+API - Application Programm Interface
+
+PDU - Protocol Data Unit
+
+SSL - Secure Socket Layer
+
+PTT - Round Tip Time
+
+SIR - Sustained Information Rate
+
+IIR - Instantaneous Information Rate
+
+PIR - Peak Information Rate
+
+QoS - Quality of Service
+
+WFQ - Weighted Fair Queueing
+
+FDM - Frequency Division Multiplexing
+
+TCP - Transmisson Control Protocol
+
+UDP - User Datagram Protocol
+
+DOM - Document Object Model
+
+STP - Shilded Twisted Pair
+
+UTP - Unshilded Twisted Pair
+
+SMF - Single Mode Fiber
+
+MMF - Multi Mode Fiber
+
+LED - Light Emitted Diode
+
+FCS - Frame Check Sequence
+
+==================
+
+FDM - Frequency Division Multiplexing
+
+WDM - Wave Division Multiplexing
+
+TDM - Time Division Multiplexing
+
+===================
+EDFA - Erlium Doped Fiber Amplifier
+
+OXC - Optical Cross Connector
+
+ROADM - Reconfigurable Optical Ad-Drop Multiplexor
+
+===================
+
+LSTM - Long-Short-Term Memory (neural networks)
+
+CNN - Convolutional Neural Networks
+
+LLC - Logical Line Control
+
+CSMA/CD - Carrier Sense Multiple Access with Collision Detection
+
+STA, STP RSTP - Spanking Tree Algorithm, Protocol, Rest STP
+
+BPDU - Bidge Protocol Data Unit
+
+LAS, LAG - Link Aggregation Sublayer, Link Aggregation Group
+
+LACP - Virtual Local Area Network
+
+TCI - Tag Control Information
+
+GARP - Generic Attribute Registration Protocol
+
+GVRP - GARP VLAN Registration Protocol
+
+GMRP - GARP Multicast Registration Protocol
+
+CET - Career Etherner Transport
+
+CFM - Connectivity Fault Management
+
+MEP - Maintenence End Point
+
+MIP - Maintenence Intermediate Point
+
+CCM - Continuity Check Message
+
+PB - Provider Bride
+
+PBB - Provider Backbone Bridges
+
+S-VID - Service VLAN ID
+
+C-VID - Customer VLAN ID
+
+I-SID - Information Service Identification
+
+SPB - Shorted Path Bridging
+
+SPBV - Shorted Path Bridging VLAN
+
+SPBM - Shorted Path Bridging MAC
+
+HTTP - Hypertext Transfer Protocol
+
+IP - Internet Protocol
+
+ICMP - Internet Control Message Protocol
+
+ICANN - Internet Corporation for Assigned Names and Numbers
+
+NAT - Network Address Translation
+
+CIDR - Classless Inter-Domain Routing
+
+URL - Uniform Resource Locator
+
+ISP - Internet Service Provider
+
+WSDL - Web Service Description Language
+
+RSS - Rich Site Summary
+
+RDF - Resource Description Framework
+
+ARP - Address Resolution Framework
+
+SWIG - Simple Wrapper and Interface Generator (for Python from C)
+
+BIND - Barkely Internet Name Domain
+
+DHCP - Dynamic Hest Configuration Protocol
+
+MTU - Maximum Transmission Unit
+
+ICMP - Internet Control Message Protocol
+
+MUD - Multi-Users Dungeon/Domain/Dimension
+
+MOO - MUD with object-oriented
+
+MUSH - Multi-Users Shared Hallucination
+
+SHA - Secure Hash Algorithm
+
+ARQ - Automatic Repeat reQuest
+
+SMB - Server Message Block
+
+RCE - Remote Code Execution
+
+grep(g/re/p) - global, regular epression, print
+
+DVA - Distance Vector Algorithm
+
+LSA - Link State Algorithm
+
+RIP - Routing Information Protocol
+
+OSPF - Open Shortest Path First
+
+IS-IS - Internet System to Internet System
+
+EGP - Exterior Gateway Protocol
+
+BGP - Border Gateway Protocol
+==========
+PEP - Python Enhancement Protocol
+==========
+IGMP - Internet Group Management Protocol
+
+RPF - Reverse Path Forvarding
+
+SDN - Software Defined Networks
+==========
+ACID - Atomicity, Consistency, Isolation, Durability
+BASE - Basically Available, Soft-state, Eventual consistency
+==========
+SDN - Software Defined Networks
+
+ONF - Open Networking Foundation
+
+ONOS - Open Network Operating System
+
+BDDP - Broadcast Domain Discovery Protocol
+
+LLDP - Link Layer Discovery Protocol
+
+PCE - Path Computation Element
+
+NFV - Network Function Virtualisation
+
+IANA - Internet Assigned Numbers Authority
+
+APIPA - Automatic Private IP Addressing
+
+SNMA - Solicited-Node Multicast Address
+
+GRE - Generic Routing Encapsulation
+
+IXP - Internet eXchange Point
+
+NAP - Network Access Point
+
+SaaS - Software As a Service
+
+PaaS - Platform As a Service
+
+IaaS - The Infrastructure as a Sevice
+
+SVC - Switched Vitrual Circuit
+
+PVC - Permanent Virtual Circuit
+
+NLMA - Non Broadcast Multiple Access
+
+ATM - Asynchronous Transfer Mode
+
+HDLC - High-Level Data Link Control
+
+PPP - Point to Point Protocol
+
+MLPPP - Multi-Link PPP
+
+LCP - Link Control Protocol
+
+NCP - Network Control Protocol
+
+PAP - Password Authentication Protocol
+
+CHAP - Challenge Authentication Protocol
+=========
+WSGI - Web Server Gateway Interface
+=========
+RAS - Remote Access Server
+
+PPTP - Point to Point Tunneling Protocol
+
+MNP - Microcom Networking Protocol
+
+LAP-M - Link Access Protocol for  Modems
+
+SDC - Synchronous Data Compression
+
+3. Data Bases
+
+SQL - Structured Query Language
+
+ORM - Object-Relational Mapper
+
+===========
+UI - User Interface
+
+BUD - Bottlenecks, Unnecessary work, Duplicate work
+
+CSV - Comma Separated Values
+
+XML - eXtensible Markup Language
+
+JSON - JavaScript Object Notation
+
+FUBAR - Fouled Up Beyond All Recognition
+
+CLI - Command Line Interface
+
+ASCII - American Standard Code for Information Interchange
+
+CA - Certification Authorities
+
+TLS - Transport Layer Security | Cryptographic way to protect data transit
+
+YAGNI - Your Ain't Gonna Need It
+
+SOLID - S - the single responsibility principle
+        O - the Open/Close principle
+        L - the Liskov substitution principle
+        I - the interface segregation principle
+        D - the dependency inversion principle
+
+NTP(NGINX) - Network Time Protocol
+
+VoIP - Voice over Internet Protokcol
+
+DTLS - Datagram Transport Layer Security
+
+LBYL - Look Before You Leap
+
+EAFP - Easier to Ask Forgiveness than Permission
+
+ETL - Extrct, Transform, Load
+
