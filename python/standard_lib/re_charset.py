@@ -35,3 +35,24 @@ test_patterns(
          ('a.*b', 'a followed by anything, ending in b'),
          ('a.*?b', 'a followed by anything, ending in b')],
 )
+
+# Special sypbols
+from  re_test_patterns import test_patterns
+
+test_patterns(
+        'A prime #1 example!',
+        [(r'\d+', 'sequence of digits'),  # r - row for backward slash
+         (r'\D+', 'sequence of non_digits'),
+         (r'\s+', 'sequence of whitespace'),
+         (r'\S+', 'sequence of non-whitespace'),
+         (r'\w+', 'alphanumeric characters'),
+         (r'\W+', 'non-alphanumeric')],
+)
+
+# for find chunk of regular expression need double slashing
+from re_test_patterns import test_patterns
+
+test_patterns(
+        r'\d+ \D+ \s+',
+        [(r'\\.\+', 'escape code')],
+)
