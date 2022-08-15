@@ -56,3 +56,21 @@ test_patterns(
         r'\d+ \D+ \s+',
         [(r'\\.\+', 'escape code')],
 )
+
+# Ancors for find
+
+from re_test_patterns import test_patterns
+
+test_patterns(
+        'This is some text -- with punctuation.',
+        [(r'^\w+', 'word at start of string'),  # ^ start logical or phis. str
+         (r'\A\w+', 'word at start of string'), # $ end of logic. or phis str
+         (r'\w+\S*$', 'word near end of string'),  # \A start of logic. str 
+         (r'\w+\S*\Z', 'word near end of string'), # \Z end of logical str
+         (r'\w*t\w*', 'word containing t'),  # \b empty str in start/end str
+         (r'\bt\w+', 't at start of word'),  # \B empty str not in start or end of string
+         (r'\w+t\b', 't at end of word'),
+         (R'\Bt\B', 't, not start or end of word')],
+)
+
+# 
