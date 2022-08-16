@@ -73,4 +73,107 @@ test_patterns(
          (R'\Bt\B', 't, not start or end of word')],
 )
 
-# 
+# match() against search() for auto ancor to start string
+
+import re
+
+text = 'This is some text -- with punctuation.'
+pattern = 'is'
+
+print('Text :', text)
+print('Pattern:', pattern)
+
+m = re.match(pattern, text)
+print('Match :', m)
+s = re.search(pattern, text)
+print('Search :', s)
+
+# fullmatch() for whole string == pattern
+
+import re
+
+text = 'This is some text -- with punctuation.'
+pattern = 'is'
+
+print('Text :', text)
+print('Pattern :', pattern)
+
+m = re.search(pattern, text)
+print('Search :', m)
+
+s = re.fullmatch(pattern, text)
+print('Full match :', s)
+
+# search substring
+
+import re
+
+text = 'This is some text -- with punctuation.'
+pattern = re.compile(r'\b\w*is\w*\b')
+
+print('Text:', text)
+print()
+
+pos = 0
+while True:
+    match = pattern.search(text, pos)
+    if not match:
+        break
+    s = match.start()
+    e = match.end()
+    print('  {:>2d}  : {:>2d} = "{}"'.format(
+        s, e - 1, text[s:e]))
+    # go to forward in string 'text' for next search
+    pos = e
+
+# groups
+
+from re_test_patterns import test_patterns
+
+test_patterns(
+        'abbaaabbbbaaaaa',
+        [('a(ab)', 'a followed by literal ab'),
+         ('a(a*b*)', 'a followed by 0-n a and 0-n b'),
+         ('a(ab)*', 'a followed by 0-n ab'),
+         ('a(ab)+', 'a followed by 1-n ab')],
+)
+
+# groups with match()
+
+import re
+
+text = 'This is some text -- with punctuation.'
+
+print(text)
+print()
+
+patterns = [
+        (r'^(\w+)', 'word at start of string'),
+        (r'(\w+)\S*$', 'word at end, with optional punctuation'),
+        (r'(\bt\w+)\W+(\w+)', 'word starting with t, another word'),
+        (r'(\w+t)\b', 'word ending with t'),
+]
+
+for pattern, desc in patterns:
+    regex = re.compile(pattern)
+    match = regex.search(text)
+    print("'{}' ({})\n".format(pattern, desc))
+    print('  ', match.groups())
+    print()
+
+# group individual
+
+import re
+
+text = 'This is some text -- with puctuation.'
+
+print('Input text :', text)
+
+# word start with 't' and then nex word
+regex = re.compile(r'(\bt\w+)\W+(\w+)')
+print('Pattern :', regex.pattern)
+
+match = regex.search(text)
+print('Entire match :', match.group(0))
+print('Word starting with "t":', match.group(1))
+print('Word after "t" word :', match.group(2))
