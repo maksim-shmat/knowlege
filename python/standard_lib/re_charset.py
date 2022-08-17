@@ -1,5 +1,5 @@
 """Find set of characters."""
-
+"""
 from re_test_patterns import test_patterns
 
 test_patterns(
@@ -177,3 +177,76 @@ match = regex.search(text)
 print('Entire match :', match.group(0))
 print('Word starting with "t":', match.group(1))
 print('Word after "t" word :', match.group(2))
+
+# group named
+
+import re
+
+text = 'This is some text -- with punctuation.'
+print(text)
+print()
+patterns = [
+        r'^(?P<first_word>\w+)',
+        r'(?P<last_word>\w+)\S*$',
+        r'(?P<t_word>\bt\w+)\W+(?P<other_word>\w+)',
+        r'(?P<ends_with_t>\w+t)\b',
+]
+for pattern in patterns:
+    regex = re.compile(pattern)
+    match = regex.search(text)
+    print("'{}'".format(pattern))
+    print('  ', match.groups())
+    print('  ', match.groupdict())
+    print()
+"""
+# test_patterns(), make module re_test_patterns_groups.py from code of beneath
+
+import re
+
+def test_patterns(text, patterns):
+    """Get text and list of patterns as arguments, make a search all
+    results every pattern in text and return result to stdout.
+    """
+    for pattern, desc in patterns:
+        print('{!r} ({})\n'.format(pattern, desc))
+        print(' {!r}'.format(text))
+        for match in re.finditer(pattern, text):
+            s = match.start()
+            e = match.start()
+            prefix = ' ' * (s)
+            print(
+                    ' {}{!r}{} '.format(prefix,
+                                        text[s:e],
+                                        ' ' * (len(text) - e)),
+                    end=' ',
+            )
+            print(match.groups())
+            if match.groupdict():
+                print('{}{}'.format(
+                    ' ' * (len(text) - s),
+                    match.groupdict()),
+                )
+        print()
+    return
+
+# groups nested
+
+from re_test_patterns_groups import  test_patterns
+# make module re_test_patterns_group.py from code upper
+test_patterns(
+        'abbaabbba',
+        [(r'a((a*)(b*))', 'a followed by 0-n a and 0-n b')],
+)
+
+# re_groups_alternative.py for re_test_patterns_groups.py
+
+from re_test_patterns_groups import test_patterns
+
+# feel the difference with pipe mark (|)
+test_patterns(
+        'abbaabbba',
+        [(r'a((a+)|(b+))', 'a then seq. of a or seq. of b'),
+         (r'a((a|b)+)', 'a then seq. of [ab]')],
+)
+
+

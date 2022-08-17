@@ -179,3 +179,16 @@ What in heaven`s name are you talking about?
 #1
 Security through obscurity - безопасность через неясность
 
+45 + 2 - addiction
+
+10 - 9 - substraction
+
+3 * 3 - multiplication
+
+84 / 2 - division
+
+2 ** 8 - exponent
+
+11 % 2 - remainder of the division
+
+11 // 2 - floor division

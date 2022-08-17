@@ -356,3 +356,10 @@ EAFP - Easier to Ask Forgiveness than Permission
 
 ETL - Extrct, Transform, Load
 
+REST - Representational State Transfer
+
+NaN - Not a Number
+
+JIT - Just In Time (compiler)
+
+PVM - Python Virtual Machine
