@@ -1,5 +1,5 @@
 """Find set of characters."""
-"""
+'''
 from re_test_patterns import test_patterns
 
 test_patterns(
@@ -198,7 +198,7 @@ for pattern in patterns:
     print('  ', match.groups())
     print('  ', match.groupdict())
     print()
-"""
+    
 # test_patterns(), make module re_test_patterns_groups.py from code of beneath
 
 import re
@@ -249,4 +249,63 @@ test_patterns(
          (r'a((a|b)+)', 'a then seq. of [ab]')],
 )
 
+# groups noncapturing
+from re_test_patterns_groups import test_patterns
 
+test_patterns(
+        'abbaabbba',
+        [(r'a((a+)|(b_))', 'capturing form'),
+         (r'a((?:a+)|(?:b+))', 'noncapturing')],
+)
+'''
+# For compile(), search() match()
+# flag IGNORECASE
+import re
+
+text = 'This is some text -- with punctuation.'
+pattern = r'\bT\w+'
+with_case = re.compile(pattern)
+without_case = re.compile(pattern, re.IGNORECASE)
+
+print('Text:\n {!r}'.format(text))
+print('Pattern:\n {}'.format(pattern))
+print('Case-sensitive:')
+for match in with_case.findall(text):
+    print('  {!r}'.format(match))
+print('Case-insensitive:')
+for match in without_case.findall(text):
+    print('  {!r}'.format(match))
+
+# flag MULTILINE
+
+import re
+text = 'This is some text -- with punctuation.\nA second line.'
+pattern = r'(^\w+)|(\w+\S*$)'
+single_line = re.compile(pattern)
+multiline = re.compile(pattern, re.MULTILINE)
+
+print('Text:\n  {!r}'.format(text))
+print('Pattern:\n  {}'.format(pattern))
+print('Single Line :')
+for match in single_line.findall(text):
+    print('  {!r}'.format(match))
+print('Multiline    :')
+for match in multiline.findall(text):
+    print('  {!r}'.format(match))
+
+# flag DOTALL
+
+import re
+text = "This is some text -- with punctuation.\nA second line."
+pattern = r'.+'
+no_newlines = re.compile(pattern)
+dotall = re.compile(pattern, re.DOTALL)
+
+print('Text:\n   {!r}'.format(text))
+print('Pattern:\n  {}'.format(pattern))
+print('No newlines :')
+for match in no_newlines.findall(text):
+    print('  {!r}'.format(match))
+print('Dotall      :')
+for match in dotall.findall(text):
+    print('  {!r}'.format(match))
