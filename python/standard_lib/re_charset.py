@@ -257,7 +257,7 @@ test_patterns(
         [(r'a((a+)|(b_))', 'capturing form'),
          (r'a((?:a+)|(?:b+))', 'noncapturing')],
 )
-'''
+
 # For compile(), search() match()
 # flag IGNORECASE
 import re
@@ -309,3 +309,98 @@ for match in no_newlines.findall(text):
 print('Dotall      :')
 for match in dotall.findall(text):
     print('  {!r}'.format(match))
+
+'''
+# re compact mode, check correct emails
+
+import re
+
+address = re.compile('[\w\d.+-]+@([\w\d.]+\.)+(com|org|edu)')
+
+candidates = [
+        u'first.last@example.com',
+        u'first.last+category@gmail.com',
+        u'valid-address@mail.example.com',
+        u'not-valid@example.foo',
+]
+
+for candidate in candidates:
+    match = address.search(candidate)
+    print('{:<30} {}'.format(
+        candidate, 'Matches' if match else 'No match')
+)
+
+# re verbose mode, for check correct emails
+
+import re
+
+address = re.compile(
+        '''
+        [\w\d.+-]+  # Name of user
+        @
+        ([\w\d.]+\.)+  # Prefix from name of domen
+        (com|org|edu)  # TODO: keep other domens of high level
+        ''',
+        re.VERBOSE)
+
+candidates = [
+        u'first.last@example.com',
+        u'first.last+category@gmail.com',
+        u'valid-address@mail.example.com',
+        u'not-valid@example.foo',
+]
+        
+for candidate in candidates:
+    match = address.search(candidate)
+    print('{:<30}  {}'.format(
+        candidate, 'Matches' if match else 'No match'),
+)
+
+# regular expression with more text, for check correct emails
+
+import re
+
+address = re.compile(
+        """
+
+        # Name may contain letters and be include a dot '.'
+        # in shortly names
+        ((?P<name>
+            ([\w.,]+\s+)*[\w.,]+)
+            \s*
+            # email addresses be into < >, but if name if finded
+            # because angle braket be this
+            <
+        )? # Full name neded
+
+        # email this: username@domain.tld
+        (?P<email>
+          [\w\d.+-]+  # Name of user
+          @
+          ([\w\d.]+\.)+  # Prefix from name of domen
+          (com|org|edu)  # list of domens how is needed us
+        )
+        >?  # Closed angle bracket
+        """,
+        re.VERBOSE)
+
+candidates = [
+        u'first.last@example.com',
+        u'firts.last+category@gmail.com',
+        u'valid-address@mail.example.com',
+        u'not-valid@example.foo',
+        u'First Last <first.last@example.com>',
+        u'No Brackets firts.last@example.com',
+        u'First Last',
+        u'Firts Middle Last <first.last@example.com>',
+        u'<first.last@example.com>',
+]
+
+for candidate in candidates:
+    print('Candidate:', candidate)
+    match = address.search(candidate)
+    if match:
+        print(' Name :', match.groupdict()['name'])
+        print(' Email:', match.groupdict()['email'])
+    else:
+        print(' No match')
