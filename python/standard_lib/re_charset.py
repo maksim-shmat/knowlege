@@ -310,7 +310,7 @@ print('Dotall      :')
 for match in dotall.findall(text):
     print('  {!r}'.format(match))
 
-'''
+
 # re compact mode, check correct emails
 
 import re
@@ -335,12 +335,12 @@ for candidate in candidates:
 import re
 
 address = re.compile(
-        '''
+        """
         [\w\d.+-]+  # Name of user
         @
         ([\w\d.]+\.)+  # Prefix from name of domen
         (com|org|edu)  # TODO: keep other domens of high level
-        ''',
+        """,
         re.VERBOSE)
 
 candidates = [
@@ -404,3 +404,130 @@ for candidate in candidates:
         print(' Email:', match.groupdict()['email'])
     else:
         print(' No match')
+'''
+# flags embeded
+
+import re
+
+text = 'This is some text -- with punctuation.'
+
+pattern = r'(?i)\bT\w+'  # i == IGNORECASE, and more: a == ASCII
+                                                    # m == MULTILINE
+                                                    # s == DOTALL
+                                                    # x == VERBOSE
+regex = re.compile(pattern)
+
+print('Text       :', text)
+print('Pattern    :', pattern)
+print('Matches    :', regex.findall(text))
+
+# look ahead both part of the pattern, positive look
+
+import re
+
+address = re.compile(
+        """
+        # Name is are letters and dots'.'
+        ((?P<name>
+        ({\w.,]+\s+)*[\w.,]+
+        )
+        \s+
+    )
+    (?= (<.*>$)  # into angle brackets
+    |
+    ([^<].*[^>]$)  # not into angle brackets
+)
+<?
+(?P<email>
+  [\w\d.+-]+
+  @
+  ([\w\d.]+\.)+
+  (com|org|edu)
+)
+>?
+""",
+re.VERBOSE)
+
+candidates = [
+        u'First Last <first.last@example.com>',
+        u'No Brackets first.last@example.com',
+        u'Open Bracket <first.last@example.com',
+        u'Close Bracket first.last@example.com>',
+]
+
+for candidate in candidates:
+    print('Candidate:', candidate)
+    match = address.search(candidate)
+    if match:
+        print(' Name :', match.groupdict()['name'])
+        print(' Email:', match.groupdict()['email'])
+    else:
+        print(' No match')
+
+# negative look in backward for ignore 'noreply' e.g.
+
+import re
+
+address = re.compile(
+        """
+        ^
+        # Address: username@domain.tld
+        # Ignore addresses noreply
+        (?!noreply@.*$)
+        [\w\d.+-]+  # Name of the user
+        @
+        ([\w\d.]+\.)+  # Prefix domain name
+        (com|org|edu)
+
+        $
+        """,
+        re.VERBOSE)
+
+candidates = [
+        u'first.last@example.com',
+        u'noreply@example.com',
+]
+for candidate in candidates:
+    print('Candidate:', candidate)
+    match = address.search(candidate)
+    if match:
+        print('Match:', candidate[match.start():match.end()])
+    else:
+        print(' No match')
+
+# negative look behind
+
+import re
+
+address = re.compile(
+        """
+        ^
+        # Adress: username@domain.tld
+        [\w\d.+-]+  # Name of the user
+
+        # Ignore noreply
+        (?<!noreply)
+
+        @
+        ([\w\d.]+\.)+
+        (com|org|edu)
+
+        $
+        """,
+        re.VERBOSE)
+
+candidates = [
+        u'first.last@example.com',
+        u'noreply@example.com',
+]
+
+for candidate in candidates:
+    print('Candidate:', candidate)
+    match = address.search(candidate)
+    if match:
+        print(' Match:', candidate[match.start():match.end()])
+        print()
+    else:
+        print('No match')
+
+#
