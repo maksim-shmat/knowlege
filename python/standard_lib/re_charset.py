@@ -404,7 +404,7 @@ for candidate in candidates:
         print(' Email:', match.groupdict()['email'])
     else:
         print(' No match')
-'''
+
 # flags embeded
 
 import re
@@ -530,4 +530,177 @@ for candidate in candidates:
     else:
         print('No match')
 
-#
+# look behind with (?<=pattern)
+
+import re
+
+twitter = re.compile(
+        """
+        # user ID from Twitter: @username
+        (?<=@)
+        ([\w\d_]+)  # username
+        """,
+        re.VERBOSE)
+
+text = """This text includes two Twitter handles.
+One for @ThePSF, and one @kingsman.
+"""
+print(text)
+for match in twitter.findall(text):
+    print('Handle:', match)
+
+# backward refer to group
+
+import re
+
+address = re.compile(
+        r"""
+
+        # Name
+        (\w+)  # First Name
+        \s+
+        (([\w.]+)\s+)?  # Father's Name
+        (\w+)  # Last Name
+
+        \s+
+
+        <
+
+        # Address: firstname.lastname@domain.tld
+        (?P<email>
+        \1  # firstname
+        \.
+        \4  # lastname
+        @
+        ([\w\d.]+\.)+  # domain prefix
+        (com|org|edu)  # highlevel domain name
+    )
+    
+    >
+    """,
+    re.VERBOSE | re.IGNORECASE)
+
+candidates = [
+        u'First Last <first.last@example.com>',
+        u'Different Name <first.last@example.com>',
+        u'First Middle Last <first.last@example.com>',
+        u'First M. Last <first.last@example.com>',
+]
+
+for candidate in candidates:
+    print('Candidate:', candidate)
+    match = address.search(candidate)
+    if match:
+        print(' Match name :', match.group(1), match.group(4))
+        print(' Match email:', match.group(5))
+    else:
+        print(' No match')
+print()
+# refer to named group with (?P=name)
+
+import re
+
+address = re.compile(
+        """
+
+        # FN/LN
+        (?P<first_name>\w+)
+        \s+
+        (([\w.]+)\s+)?  # Father's Name or Initials
+        (?P<last_name>\w+)
+
+        \s+
+
+        <
+
+        # Address: fn.ln@domain.tld
+        (?P<email>
+          (?P=first_name)
+          \.
+          (?P=last_name)
+          @
+          ([\w\d.]+\.)+  # Domain name prefix
+          (com|org|edu)
+        )
+
+        >
+        """,
+        re.VERBOSE | re.IGNORECASE)
+
+candidates = [
+        u'First Last <first.last@example.com>',
+        u'Different Name <first.last@example.com>',
+        u'First Middle Last <first.last@example.com>',
+        u'First M. Last <first.last@example.com>',
+]
+
+for candidate in candidates:
+    print('Candidate:', candidate)
+    match = address.search(candidate)
+    if match:
+        print(' Match name :', match.groupdict()['first_name'],
+                end=' ')
+        print(match.groupdict()['last_name'])
+        print(' Match email:', match.groupdict()['email'])
+    else:
+        print(' No match')
+print()
+'''
+# id with (?(id)yes-expression|no-expression)
+
+import re
+
+address = re.compile(
+        """
+        ^
+        
+        # Name contain letters and dots
+        (?P<name>
+          ([\w.]+\s+)*[\w.]+
+        )?
+        \s*
+
+        # email into angle brackets, but if in the case be name
+        (?(name)
+          # name contain:
+          (?P<brackets>(?=(<.*>$)))
+          |
+          # name not find
+          (?=([^<].*[^>]$))
+        )
+
+        # find angle bracket if it both
+        (?(brackets)<|\s*)
+
+        # email: username@domain.tld
+        (?P<email>
+          [\w\d.+-]+  # username
+          @
+          ([\w\d.]+\.)+  # Domain name prefix
+          (com|org|edu)
+
+        # find angle bracket if it both
+        (?(brackets)>|\s*)
+
+        $
+        """,
+        re.VERBOSE)
+
+candidates = [
+        u'First Last <first.last@example.com>',
+        u'No Brackets first.last@example.com',
+        u'Open Bracket <first.last@example.com',
+        u'Close Bracket first.last@example.com>',
+        u'no.brackets@example.com',
+]
+
+for candidate in candidates:
+    print('Candidate:', candidate)
+    match = address.search(candidate)
+    if match:
+        print(' Match name :', match.groupdict()['name'])
+        print(' Match email:', match.groupdict()['email'])
+    else:
+        print(' No match')
+
+
