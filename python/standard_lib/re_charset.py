@@ -1,5 +1,6 @@
 """Find set of characters."""
-'''
+
+
 from re_test_patterns import test_patterns
 
 test_patterns(
@@ -645,7 +646,7 @@ for candidate in candidates:
     else:
         print(' No match')
 print()
-'''
+
 # id with (?(id)yes-expression|no-expression)
 
 import re
@@ -702,5 +703,3 @@ for candidate in candidates:
         print(' Match email:', match.groupdict()['email'])
     else:
         print(' No match')
-
-
