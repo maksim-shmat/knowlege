@@ -1,5 +1,8 @@
 """.vimrc about."""
 
+# string numbers ON
+$ echo "set number" >> vimrc
+
 $ vim -u NONE -N  # Don't load settings from .vimrc
 
 #1 Comments

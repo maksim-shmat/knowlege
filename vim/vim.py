@@ -1250,7 +1250,8 @@ ctrl-w t  # move current window to new tab
 2gt  ------------# go to second tab
 or :tabn[ext] 2  # go to second tab
 
-gt  ---------------# go to backward
+gt  ---------------# go to backward tab
+gT  # go to forward tab, or contrariwise?
 or :tabp[revious]  # go o backward
 
 :tabmove 0  # go tab to the top of stack
