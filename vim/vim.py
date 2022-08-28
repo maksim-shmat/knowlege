@@ -182,7 +182,7 @@ cw  # change word
 c2b  # change word to backward on the two words
 c0  # change words to the start of string from cursor  (but cc ?)
 c$ (equal c)  # change words to the end of sting from the cursor (but cc ?)
-cc  # change string
+cc (or S)  # change string
 C  # change from cursor to the end string
 
 #17 delete
@@ -1744,4 +1744,35 @@ ba
 Ctrl-x Ctrl-l
 result:
 background-color: #ef66ef; 
+
+#130 Page up/down
+ctrl - f/b  # up/down
+ctrl - e/y  # scroll line up/down
+
+Fn + F1 = help page in a split screen
+
+#131 writing
+
+shift + ~  # change register
+
+gum or gUm  # change register m-command(left, right, up, down)
+
+<m >m  # move left/right text m-command
+
+n<< n>>  # move n-strings left or right
+
+ge e  # move to left and right fot end word
+
+{ }  # move to next/previous paragraph
+
+( )  # move to next/previous sentence.
+
+n%  # go to percent of file
+
+%  # go to next bracket (from first)
+
+M  # center of screen
+
+nH  # n-string from up of screen
+nL  # n-string from bottom of screen
 
