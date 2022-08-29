@@ -132,4 +132,129 @@ incomplete      = 6
 new             = 7
 '''
 
-#6 
+#6  enum with tuple or dict
+
+import enum
+
+BugStatus = enum.Enum(
+        value = 'BugStatus',
+        names = [
+            ('new', 7),
+            ('incomplete', 6),
+            ('invalid', 5),
+            ('wont_fix', 4),
+            ('in_progress', 3),
+            ('fix_committed', 2),
+            ('fix_released', 1),
+        ],
+)
+
+print('All members:')
+for status in BugStatus:
+    print('{:15} {}'.format(status.name, status.value))
+
+'''RESULTS:
+    All members:
+new             7
+incomplete      6
+invalid         5
+wont_fix        4
+in_progress     3
+fix_committed   2
+fix_released    1
+'''
+
+#7 values as are tuples
+
+import enum
+
+class BugStatus(enum.Enum):
+    new = (7, ['incomplete',
+               'invalid',
+               'wont_fix',
+               'in_progress'])
+    incomplete = (6, ['new', 'wont_fix'])
+    invalid = (5, ['new'])
+    wont_fix = (4, ['new'])
+    in_progress = (3, ['new', 'fix_committed'])
+    fix_commited = (2, ['in_progress', 'fix_released'])
+    fix_released = (1, ['new'])
+
+    def __init__(self, num, transitions):
+        self.num = num
+        self.transitions = transitions
+
+    def can_transition(self, new_state):
+        return new_state.name in self.transitions
+
+print('Name:', BugStatus.in_progress)
+print('Value:', BugStatus.in_progress.value)
+print('Custom attribute:', BugStatus.in_progress.transitions)
+print('Using attribute:',
+        BugStatus.in_progress.can_transition(BugStatus.new))
+
+'''RESULTS:
+    Name: BugStatus.in_progress
+Value: (3, ['new', 'fix_committed'])
+Custom attribute: ['new', 'fix_committed']
+Using attribute: True
+'''
+
+#8 values as are dicts
+
+import enum
+
+class BugStatus(enum.Enum):
+    new = {
+            'num': 7,
+            'transitions': [
+                'incomplete',
+                'invalid',
+                'wont_fix',
+                'in_progress',
+            ],
+    }
+    incomplete = {
+            'num': 6,
+            'transitions': ['new', 'wont_fix'],
+    }
+    invalid = {
+            'num': 5,
+            'transitions': ['new'],
+    }
+    wont_fix = {
+            'num': 4,
+            'transitions': ['new'],
+    }
+    in_progress = {
+            'num': 3,
+            'transitions': ['new', 'fix_committed'],
+    }
+    fix_committed = {
+            'num': 2,
+            'transitions': ['in_progress', 'fix_released'],
+    }
+    fix_released = {
+            'num': 1,
+            'transitions': ['new'],
+    }
+
+    def __init__(self, vals):
+        self.num = vals['num']
+        self.transitions = vals['transitions']
+
+    def can_transition(self, new_state):
+        return new_state.name in self.transitions
+
+print('Name:', BugStatus.in_progress)
+print('Value:', BugStatus.in_progress.value)
+print('Custom attribute:', BugStatus.in_progress.transitions)
+print('Using attribute:',
+        BugStatus.in_progress.can_transition(BugStatus.new))
+
+'''RESULTS:
+    Name: BugStatus.in_progress
+Value: {'num': 3, 'transitions': ['new', 'fix_committed']}
+Custom attribute: ['new', 'fix_committed']
+Using attribute: True
+'''
