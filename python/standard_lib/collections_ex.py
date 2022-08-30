@@ -94,4 +94,66 @@ print('After : {}'.format(m['c']))
     After: E
 '''
 
-#4
+#4 chainmap update directly
+
+import collections
+
+a = {'a': 'A', 'c': 'C'}
+b = {'b': 'B', 'c': 'D'}
+
+m = collections.ChainMap(a, b)
+print('Before:', m)
+m['c'] = 'E'
+print('After :', m)
+print('a:', a)
+
+'''RESULTS:
+    Before: ChainMap({'a': 'A', 'c': 'C'}, {'b': 'B', 'c': 'D'})
+After : ChainMap({'a': 'A', 'c': 'E'}, {'b': 'B', 'c': 'D'})
+a: {'a': 'A', 'c': 'E'}
+'''
+
+#5 chainmap new child
+
+import collections
+
+a = {'a': 'A', 'c': 'C'}
+b = {'b': 'B', 'c': 'D'}
+
+m1 = collections.ChainMap(a, b)
+m2 = m1.new_child()
+
+print('m1 before:', m1)
+print('m2 before:', m2)
+
+m2['c'] = 'E'
+
+print('m1 after:', m1)
+print('m2 after:', m2)
+
+'''RESULTS:
+m1 before: ChainMap({'a': 'A', 'c': 'C'}, {'b': 'B', 'c': 'D'})
+m2 before: ChainMap({}, {'a': 'A', 'c': 'C'}, {'b': 'B', 'c': 'D'})
+m1 after: ChainMap({'a': 'A', 'c': 'C'}, {'b': 'B', 'c': 'D'})
+m2 after: ChainMap({'c': 'E'}, {'a': 'A', 'c': 'C'}, {'b': 'B', 'c': 'D'})
+'''
+
+#6 chainmap new child explicit
+
+import collections
+
+a = {'a': 'A', 'c': 'C'}
+b = {'b': 'B', 'c': 'D'}
+c = {'c': 'E'}
+
+m1 = collections.ChainMap(a, b)
+m2 = m1.new_child(c)
+
+print('m1["c"] = {}'.format(m1['c']))
+print('m2["c"] = {}'.format(m2['c']))
+
+# this code equivalent: m2 = collections.ChainMap(c, *m1.maps)
+'''RESULTS:
+m1["c"] = C
+m2["c"] = E
+'''
