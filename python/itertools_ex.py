@@ -8,7 +8,7 @@ print(zacum)
 print()
 
 ###### chain() glued several elements to one
-
+# list(sorted(itertools.chain(*data)))
 fchain = list(it.chain([1, 2, 3], [4, 5], [6]))
 print(fchain)
 print()

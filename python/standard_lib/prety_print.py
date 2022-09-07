@@ -166,3 +166,43 @@ WIDTH = 5
    'z'])]
 '''
 #7 pprint compact
+
+from pprint import pprint
+
+from pprint_data import data
+
+print('DEFAULT:')
+pprint(data, compact=False)
+print('\nCOMPACT:')
+pprint(data, compact=True)
+
+'''RESULTS:
+DEFAULT:
+[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
+ (2,
+  {'e': 'E',
+   'f': 'F',
+   'g': 'G',
+   'h': 'H',
+   'i': 'I',
+   'j': 'J',
+   'k': 'K',
+   'l': 'L'}),
+ (3, ['m', 'n']),
+ (4, ['o', 'p', 'q']),
+ (5, ['r', 's', 't', 'u', 'v', 'x', 'y', 'z'])]
+
+COMPACT:
+[(1, {'a': 'A', 'b': 'B', 'c': 'C', 'd': 'D'}),
+ (2,
+  {'e': 'E',
+   'f': 'F',
+   'g': 'G',
+   'h': 'H',
+   'i': 'I',
+   'j': 'J',
+   'k': 'K',
+   'l': 'L'}),
+ (3, ['m', 'n']), (4, ['o', 'p', 'q']),         # This is compact
+ (5, ['r', 's', 't', 'u', 'v', 'x', 'y', 'z'])]
+'''
