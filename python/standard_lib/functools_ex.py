@@ -373,3 +373,104 @@ results: 10
 
 #7 reduce initializer
 
+import functools
+
+def do_reduce(a, b):
+    print('do_reduce({}, {})'.format(a, b))
+    return a + b
+
+data = range(1, 5)
+print(data)
+result = functools.reduce(do_reduce, data, 99)
+print('result: {}'.format(result))
+
+'''RESULTS:
+range(1, 5)
+do_reduce(99, 1)
+do_reduce(100, 2)
+do_reduce(102, 3)
+do_reduce(105, 4)
+result: 109
+'''
+
+#8 singledispatch()
+
+import functools
+
+@functools.singledispatch
+def myfunc(arg):
+    print('default myfunc({!r})'.format(arg))
+
+@myfunc.register(int)
+def myfunc_int(arg):
+    print('myfunc_int({})'.format(arg))
+
+@myfunc.register(list)
+def myfunc_list(arg):
+    print('myfunc_list()')
+    for item in arg:
+        print(' {}'.format(item))
+
+myfunc('string argument')
+myfunc(1)
+myfunc(2.3)
+myfunc(['a', 'b', 'c'])
+
+'''RESULTS:
+default myfunc('string argument')
+myfunc_int(1)
+default myfunc(2.3)
+myfunc_list()
+ a
+ b
+ c
+'''
+
+#9 Ierarchy of classes
+
+import functools
+
+class A:
+    pass
+
+class B(A):
+    pass
+
+class C(A):
+    pass
+
+class D(B):
+    pass
+
+class E(C, D):
+    pass
+
+@functools.singledispatch
+def myfunc(arg):
+    print('default myfunc({})'.format(arg.__class__.__name__))
+
+@myfunc.register(A)
+def myfunc_A(arg):
+    print('myfunc_A({})'.format(arg.__class__.__name__))
+
+@myfunc.register(B)
+def myfunc_B(arg):
+    print('myfunc_B({})'.format(arg.__class__.__name__))
+
+@myfunc.register(C)
+def myfunc_C(arg):
+    print('myfunc_C({})'.format(arg.__class__.__name__))
+
+myfunc(A())
+myfunc(B())
+myfunc(C())
+myfunc(D())  # ???
+myfunc(E())  # ???
+
+'''RESULTS:
+myfunc_A(A)
+myfunc_B(B)
+myfunc_C(C)
+myfunc_B(D)  # !
+myfunc_C(E)  # !
+'''
