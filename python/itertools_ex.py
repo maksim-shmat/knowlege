@@ -108,3 +108,33 @@ zip_longest processes all of the values:
 '''
 
 #5  islice()
+
+from itertools import *
+
+print('Stop at 5:')
+for i in islice(range(100), 5):
+    print(i, end=' ')
+print('\n')
+
+print('Start at 5, Stop at 10:')
+for i in islice(range(100), 5, 10):
+    print(i, end=' ')
+print('\n')
+
+print('By tens to 100:')
+for i in islice(range(100), 0, 100, 10):
+    print(i, end=' ')
+print('\n')
+
+'''RESULTS:
+Stop at 5:
+0 1 2 3 4 
+
+Start at 5, Stop at 10:
+5 6 7 8 9 
+
+By tens to 100:
+0 10 20 30 40 50 60 70 80 90 
+'''
+
+#6 tee()
