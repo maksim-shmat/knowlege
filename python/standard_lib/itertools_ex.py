@@ -214,4 +214,277 @@ for i in starmap(lambda x, y: (x, y, x * y), values):
 4 * 9 = 36
 '''
 
-#9
+#9 count()
+
+from itertools import *
+
+for i in zip(count(1), ['a', 'b', 'c']):
+    print(i)
+
+'''RESULTS:
+(1, 'a')
+(2, 'b')
+(3, 'c')
+'''
+
+#10 count(start, step)
+
+import fractions
+from itertools import *
+
+start = fractions.Fraction(1, 3)
+step = fractions.Fraction(1, 3)
+
+for i in zip(count(start, step), ['a', 'b', 'c']):
+    print('{}: {}'.format(*i))
+
+'''RESULTS:
+1/3: a
+2/3: b
+1: c
+'''
+
+#11 cycle()
+
+from itertools import *
+
+for i in zip(range(7), cycle(['a', 'b', 'c'])):
+    print(i)
+
+'''RESULTS:
+(0, 'a')
+(1, 'b')
+(2, 'c')
+(3, 'a')
+(4, 'b')
+(5, 'c')
+(6, 'a')
+'''
+
+#12 repeat()
+
+from itertools import *
+
+for i in repeat('over-and-over', 5):
+    print(i)
+
+'''RESULTS:
+over-and-over
+over-and-over
+over-and-over
+over-and-over
+over-and-over
+'''
+
+#13 repeat() and zip()
+
+from itertools import *
+
+for i, s in zip(count(), repeat('over-and-over', 5)):
+    print(i, s)
+
+'''RESULTS:
+0 over-and-over
+1 over-and-over
+2 over-and-over
+3 over-and-over
+4 over-and-over
+'''
+
+#14 repeat and map()
+
+from itertools import *
+
+for i in map(lambda x, y: (x, y, x * y), repeat(2), range(5)):
+    print('{:d} * {:d} = {:d}'.format(*i))
+
+'''RESULTS:
+2 * 0 = 0
+2 * 1 = 2
+2 * 2 = 4
+2 * 3 = 6
+2 * 4 = 8
+'''
+
+#15 dropwhile()
+
+from itertools import *
+
+def should_drop(x):
+    print('Testing:', x)
+    return x < 1
+
+for i in dropwhile(should_drop, [-1, 0, 1, 2, -2]):
+    print('Yielding:', i)
+
+'''RESULTS:
+Testing: -1
+Testing: 0
+Testing: 1
+Yielding: 1
+Yielding: 2
+Yielding: -2
+'''
+
+#16 takewhile()
+
+from itertools import *
+
+def should_take(x):
+    print('Testing:', x)
+    return x < 2
+
+for i in takewhile(should_take, [-1, 0, 1, 2, -2]):
+    print('Yielding:', i)
+
+'''RESULTS:
+Testing: -1
+Yielding: -1
+Testing: 0
+Yielding: 0
+Testing: 1
+Yielding: 1
+Testing: 2
+'''
+
+#17 filter()
+
+from itertools import *
+
+def check_item(x):
+    print('Testing:', x)
+    return x < 1
+
+for i in filter(check_item, [-1, 0, 1, 2, -2]):
+    print('Yielding:', i)
+
+'''RESULTS:
+Testing: -1
+Yielding: -1
+Testing: 0
+Yielding: 0
+Testing: 1
+Testing: 2
+Testing: -2
+Yielding: -2
+'''
+
+#18 filterfalse()
+
+from itertools import *
+
+def check_item(x):
+    print('Testing:', x)
+    return x < 1
+
+for i in filterfalse(check_item, [-1, 0, 1, 2, -2]):
+    print('Yielding:', i)
+print()
+'''RESULTS:
+Testing: -1
+Testing: 0
+Testing: 1
+Yielding: 1
+Testing: 2
+Yielding: 2
+Testing: -2
+'''
+
+#19 compress()
+
+from itertools import *
+
+every_third = cycle([False, False, True])
+data = range(1, 10)
+
+for i in compress(data, every_third):
+    print(i, end=' ')
+print()
+
+'''RESULTS:
+3 6 9
+'''
+
+#20 groupby()
+
+import functools
+from itertools import *
+import operator
+import pprint
+
+@functools.total_ordering
+class Point:
+
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+    def __repr__(self):
+        return '({}, {})'.format(self.x, self.y)
+
+    def __eq__(self, other):
+        return (self.x, self.y) == (other.x, other.y)
+
+    def __gt__(self, other):
+        return (self.x, self.y) > (other.x, other.y)
+
+# Make a set of data from 'Point' exemplars
+data = list(map(Point,
+                cycle(islice(count(), 3)),
+                islice(count(), 7)))
+print('Data:')
+pprint.pprint(data, width=35)
+
+# atempt group data by X value
+print('Grouped, unsorted:')
+for k, g in groupby(data, operator.attrgetter('x')):
+    print(k, list(g))
+print()
+
+# Sort data
+
+data.sort()
+print('Sorted:')
+pprint.pprint(data, width=35)
+print()
+
+# Group sorted data by X value
+print('Grouped, sorted:')
+for k, g in groupby(data, operator.attrgetter('x')):
+    print(k, list(g))
+print()
+
+'''RESULTS:
+Data:
+[(0, 0),
+ (1, 1),
+ (2, 2),
+ (0, 3),
+ (1, 4),
+ (2, 5),
+ (0, 6)]
+Grouped, unsorted:
+0 [(0, 0)]
+1 [(1, 1)]
+2 [(2, 2)]
+0 [(0, 3)]
+1 [(1, 4)]
+2 [(2, 5)]
+0 [(0, 6)]
+
+Sorted:
+[(0, 0),
+ (0, 3),
+ (0, 6),
+ (1, 1),
+ (1, 4),
+ (2, 2),
+ (2, 5)]
+
+Grouped, sorted:
+0 [(0, 0), (0, 3), (0, 6)]
+1 [(1, 1), (1, 4)]
+2 [(2, 2), (2, 5)]
+'''
+
+#21 accumulate()
