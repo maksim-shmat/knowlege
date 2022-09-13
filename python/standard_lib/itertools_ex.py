@@ -488,3 +488,167 @@ Grouped, sorted:
 '''
 
 #21 accumulate()
+
+from itertools import *
+
+print(list(accumulate(range(5))))
+print(list(accumulate('abcde')))
+
+'''RESULTS:
+[0, 1, 3, 6, 10]
+['a', 'ab', 'abc', 'abcd', 'abcde']
+'''
+
+#22 custom accumulate()
+
+from itertools import *
+
+def f(a, b):
+    print(a, b)
+    return b + a + b
+
+print(list(accumulate('abcde', f)))
+
+'''RESULTS:
+a b
+bab c
+cbabc d
+dcbabcd e
+['a', 'bab', 'cbabc', 'dcbabcd', 'edcbabcde']
+'''
+
+#23 product()
+
+from itertools import *
+import pprint
+
+FACE_CARDS = ('J', 'Q', 'K', 'A')
+SUITS = ('H', 'D', 'C', 'S')
+
+DECK = list(
+    product(
+        chain(range(2, 11), FACE_CARDS),
+        SUITS,
+    )
+)
+
+for card in DECK:
+    print('{:>2}{}'.format(*card), end=' ')
+    if card[1] == SUITS[-1]:
+        print()
+
+'''RESULTS:
+ 2H  2D  2C  2S 
+ 3H  3D  3C  3S 
+ 4H  4D  4C  4S 
+ 5H  5D  5C  5S 
+ 6H  6D  6C  6S 
+ 7H  7D  7C  7S 
+ 8H  8D  8C  8S 
+ 9H  9D  9C  9S 
+10H 10D 10C 10S 
+ JH  JD  JC  JS 
+ QH  QD  QC  QS 
+ KH  KD  KC  KS 
+ AH  AD  AC  AS 
+'''
+# or change arguments for another chain
+
+from itertools import *
+import pprint
+
+FACE_CARDS = ('J', 'Q', 'K', 'A')
+SUITS = ('H', 'D', 'C', 'S')
+
+DECK = list(
+    product(
+        SUITS,
+        chain(range(2, 11), FACE_CARDS),
+    )
+)
+
+for card in DECK:
+    print('{:>2}{}'.format(card[1], card[0]), end=' ')
+    if card[1] == FACE_CARDS[-1]:
+        print()
+
+'''RESULTS:
+2H  3H  4H  5H  6H  7H  8H  9H 10H  JH  QH  KH  AH 
+ 2D  3D  4D  5D  6D  7D  8D  9D 10D  JD  QD  KD  AD 
+ 2C  3C  4C  5C  6C  7C  8C  9C 10C  JC  QC  KC  AC 
+ 2S  3S  4S  5S  6S  7S  8S  9S 10S  JS  QS  KS  AS 
+'''
+
+#24 product() repeat
+
+from itertools import *
+
+def show(iterable):
+    for i, item in enumerate(iterable, 1):
+        print(item, end=' ')
+        if (i % 3) == 0:
+            print()
+    print()
+
+print('Repeat 2:\n')
+show(list(product(range(3), repeat=2)))
+print('Repeat 3:\n')
+show(list(product(range(3), repeat=3)))
+
+'''REPEAT:
+Repeat 2:
+
+(0, 0) (0, 1) (0, 2) 
+(1, 0) (1, 1) (1, 2) 
+(2, 0) (2, 1) (2, 2) 
+
+Repeat 3:
+
+(0, 0, 0) (0, 0, 1) (0, 0, 2) 
+(0, 1, 0) (0, 1, 1) (0, 1, 2) 
+(0, 2, 0) (0, 2, 1) (0, 2, 2) 
+(1, 0, 0) (1, 0, 1) (1, 0, 2) 
+(1, 1, 0) (1, 1, 1) (1, 1, 2) 
+(1, 2, 0) (1, 2, 1) (1, 2, 2) 
+(2, 0, 0) (2, 0, 1) (2, 0, 2) 
+(2, 1, 0) (2, 1, 1) (2, 1, 2) 
+(2, 2, 0) (2, 2, 1) (2, 2, 2) 
+'''
+
+#25 permutations()
+
+from itertools import *
+
+def show(iterable):
+    first = None
+    for i, item in enumerate(iterable, 1):
+        if first != item[0]:
+            if first is not None:
+                print()
+            first = item[0]
+        print(''.join(item), end=' ')
+    print()
+
+print('All permutation:\n')
+show(permutations('abcd'))
+
+print('\nPairs:\n')
+show(permutations('abcd', r=2))
+
+'''RESULTS:
+All permutation:
+
+abcd abdc acbd acdb adbc adcb 
+bacd badc bcad bcda bdac bdca 
+cabd cadb cbad cbda cdab cdba 
+dabc dacb dbac dbca dcab dcba 
+
+Pairs:
+
+ab ac ad 
+ba bc bd 
+ca cb cd 
+da db dc 
+'''
+
+#26 combinations()
