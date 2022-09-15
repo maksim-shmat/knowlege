@@ -113,4 +113,162 @@ rshift(d, c) : 1
 xor(c, d) : 4
 '''
 
-#4
+#4 sequences
+
+from operator import *
+
+a = [1, 2, 3]
+b = ['a', 'b', 'c']
+
+print('a =', a)
+print('b =', b)
+
+print('\Constructive:')
+print('  concat(a, b):', concat(a, b))
+
+print('\nSearching:')
+print('  contains(a, 1)  :', contains(a, 1))
+print('  contains(b, "d"):', contains(b, "d"))
+print('  countOf(a, 1)   :', countOf(a, 1))
+print('  countOf(b, "d") :', countOf(b, "d"))
+print('  indexOf(a, 5)   :', indexOf(a, 1))
+
+print('\nAccess Items:')
+print('getitem(b, 1):', getitem(b, 1))
+print('getitem(b, slice(1, 3)):', getitem(b, slice(1, 3)))
+print('setitem(b, 1, "d"):', end=' '), setitem(b, 1, "d")
+print(b)
+print('setitem(a, slice(1, 3), [4, 5]:', end=' '), setitem(a, slice(1, 3), [4, 5])
+print(a)
+
+print('\nDestructive:')
+print('delitem(b, 1):', end=' '), delitem(b, 1)
+print(b)
+print('delitem(a, slice(1, 3)):', end=' '), delitem(a, slice(1, 3))
+print(a)
+
+'''RESULTS:
+a = [1, 2, 3]
+b = ['a', 'b', 'c']
+\Constructive:
+  concat(a, b): [1, 2, 3, 'a', 'b', 'c']
+
+Searching:
+  contains(a, 1)  : True
+  contains(b, "d"): False
+  countOf(a, 1)   : 1
+  countOf(b, "d") : 0
+  indexOf(a, 5)   : 0
+
+Access Items:
+getitem(b, 1): b
+getitem(b, slice(1, 3)): ['b', 'c']
+setitem(b, 1, "d"): ['a', 'd', 'c']
+setitem(a, slice(1, 3), [4, 5]: [1, 4, 5]
+
+Destructive:
+delitem(b, 1): ['a', 'c']
+delitem(a, slice(1, 3)): [1]
+'''
+
+#5 inplace
+
+from operator import *
+
+a = -1
+b = 5.0
+c = [1, 2, 3]
+d = ['a', 'b', 'c']
+print('a =', a)
+print('b =', b)
+print('c =', c)
+print('d =', d)
+print()
+
+a = iadd(a, b)
+print('a = iadd(a, b) =>', a)
+print()
+
+c = iconcat(c, d)
+print('c = iconcat(c, d) =>', c)
+
+'''RESULTS:
+a = -1
+b = 5.0
+c = [1, 2, 3]
+d = ['a', 'b', 'c']
+
+a = iadd(a, b) => 4.0
+
+c = iconcat(c, d) => [1, 2, 3, 'a', 'b', 'c']
+'''
+
+#6 attrgetter
+
+from operator import *
+
+class MyObj:
+    """Class example for attrgetter."""
+
+    def __init__(self, arg):
+        super().__init__()
+        self.arg = arg
+
+    def __repr__(self):
+        return 'MyObj({})'.format(self.arg)
+
+l = [MyObj(i) for i in range(5)]
+print('objects:', l)
+
+# Get value 'arg' from every object
+g = attrgetter('arg')
+vals = [g(i) for i in l]
+print('arg values:', vals)
+
+# Sort with arg
+l.reverse()
+print('reversed:', l)
+print('sorted:', sorted(l, key=g))
+
+'''RESULTS:
+objects: [MyObj(0), MyObj(1), MyObj(2), MyObj(3), MyObj(4)]
+arg values: [0, 1, 2, 3, 4]
+reversed: [MyObj(4), MyObj(3), MyObj(2), MyObj(1), MyObj(0)]
+sorted: [MyObj(0), MyObj(1), MyObj(2), MyObj(3), MyObj(4)]
+'''
+
+#7 itemgetter
+
+from operator import *
+
+l = [dict(val=-1 * i) for i in range(4)]
+print('Dictionaries:')
+print(' original:', l)
+g = itemgetter('val')
+vals = [g(i) for i in l]
+print(' values:', vals)
+print(' sorted:', sorted(l, key=g))
+
+print()
+l = [(i, i * -2) for i in range(4)]
+print('\nTuples:')
+print(' original:', l)
+g = itemgetter(1)
+vals = [g(i) for i in l]
+print('    values:', vals)
+print('    sorted:', sorted(l, key=g))
+
+'''RESULTS:
+Dictionaries:
+ original: [{'val': 0}, {'val': -1}, {'val': -2}, {'val': -3}]
+ values: [0, -1, -2, -3]
+ sorted: [{'val': -3}, {'val': -2}, {'val': -1}, {'val': 0}]
+
+
+Tuples:
+ original: [(0, 0), (1, -2), (2, -4), (3, -6)]
+    values: [0, -2, -4, -6]
+    sorted: [(3, -6), (2, -4), (1, -2), (0, 0)]
+'''
+
+#8
