@@ -271,4 +271,44 @@ Tuples:
     sorted: [(3, -6), (2, -4), (1, -2), (0, 0)]
 '''
 
-#8
+#8 operator classes
+
+from operator import *
+
+class MyObj:
+    """E.g."""
+
+    def __init__(self, val):
+        super(MyObj, self).__init__()
+        self.val = val
+
+    def __str__(self):
+        return 'MyObj({})'.format(self.val)
+
+    def __lt__(self, other):
+        """Less than."""
+        print('Testing {} < {}'.format(self, other))
+        return self.val < other.val
+
+    def __add__(self, other):
+        """Sum of values."""
+        print('Adding {} + {}'.format(self, other))
+        return MyObj(self.val + other.val)
+
+a = MyObj(1)
+b = MyObj(2)
+
+print('Comparison:')
+print(lt(a, b))
+print('\nArithmetic:')
+print(add(a, b))
+
+'''RESULTS:
+Comparison:
+Testing MyObj(1) < MyObj(2)
+True
+
+Arithmetic:
+Adding MyObj(1) + MyObj(2)
+MyObj(3)
+'''
