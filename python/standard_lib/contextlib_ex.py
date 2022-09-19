@@ -149,4 +149,158 @@ WithinContext.__del__
 shell returned 1
 '''
 
-#5 contextmanager() as decorator
+#5 contextlib ignore error
+
+import contextlib
+
+class NonFatalError(Exception):
+    pass
+
+def non_idempotent_operation():
+    raise NonFatalError(
+            'The operation failed because of existing state'
+    )
+
+try:
+    print('trying non-idempotent operation')
+    non_idempotent_operation()
+    print('succeeded!')
+except NonFatalError:
+    pass
+
+print('done')
+
+#5 contextlib.suppress() against try/except
+
+import contextlib
+
+class NonFatalError(Exception):
+    pass
+
+def non_idempotent_operation():
+    raise NonFatalError(
+            'The operation failed'
+    )
+with contextlib.suppress(NonFatalError):
+    print('trying non-idempotent operation')
+    non_idempotent_operation()
+    print('succeeded!')
+print('done')
+
+'''RESULTS: (For both #5)
+trying non-idempotent operation
+done
+trying non-idempotent operation
+done
+'''
+
+#6 redirect
+
+from contextlib import redirect_stdout, redirect_stderr # it's danger for safe
+import io
+import sys
+
+def misbehaving_function(a):
+    sys.stdout.write('(stdout) A: {!r}\n'.format(a))
+    sys.stderr.write('(stderr) A: {!r}\n'.format(a))
+
+capture = io.StringIO()
+with redirect_stdout(capture), redirect_stderr(capture):
+    misbehaving_function(5)
+
+print(capture.getvalue())
+
+'''RESULTS:
+(stdout) A: 5
+(stderr) A: 5
+'''
+
+#7 exitstack enter context
+
+import contextlib
+
+@contextlib.contextmanager
+def make_context(i):
+    print('{} entering'.format(i))
+    yield {}
+    print('{} exiting'.format(i))
+
+def variable_stack(n, msg):
+    with contextlib.ExitStack() as stack:
+        for i in range(n):
+            stack.enter_context(make_context(i))
+        print(msg)
+
+variable_stack(2, 'inside context')
+
+'''RESULTS:
+0 entering
+1 entering
+inside context
+1 exiting
+0 exiting
+'''
+
+#8 Handling errors for chunk of code
+
+import contextlib
+
+class Tracker:
+    """Base Class fro context manager how generate errors."""
+    
+    def __init__(self, i):
+        self.i = i
+
+    def msg(self, s):
+        print('s  {}({}): {}'.format(
+            self.__class__.__name__, self.i, s))
+
+    def __enter__(self):
+        self.msg('entering')
+
+
+class HandleError(Tracker):
+    """If get exception, count it handled."""
+
+    def __exit__(self, *exc_details):
+        received_exc = exc_details[1] is not None
+        if received_exc:
+            self.msg('handling exception {!r}'.format(
+                exc_details[1]))
+        self.msg('exiting {}'.format(received_exc))
+        # Return bulean for handle exception
+        return received_exc
+
+
+class PassError(Tracker):
+    """If get exception, move it farther."""
+
+    def __exit__(self, *exc_details):
+        received_exc = exc_details[1] is not None
+        if received_exc:
+            self.msg('passing exception {!r}'.format(
+                exc_details[1]))
+        self.msg('exiting')
+        # return False if exception not handled
+        return False
+
+
+class ErrorOnExit(Tracker):
+    """Generate exception."""
+
+    def __exit__(self, *exc_details):
+        self.msg('throwing error')
+        raise RuntimeError('from {}'.format(self.i))
+
+
+class ErrorOnEnter(Tracker):
+    """Generate exception."""
+
+    def __enter__(self):
+        self.msg('throwing error on enter')
+        raise RuntimeError('from {}'.format(self.i))
+
+    def __exit__(self, *exc_info):
+        self.msg('exiting')
+
+#9 exitstack() callback()
