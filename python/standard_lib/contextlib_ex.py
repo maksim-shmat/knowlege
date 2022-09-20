@@ -304,3 +304,104 @@ class ErrorOnEnter(Tracker):
         self.msg('exiting')
 
 #9 exitstack() callback()
+
+import contextlib
+
+def callback(*args, **kwargs):
+    print('closing callback({}, {})'.format(args, kwargs))
+
+with contextlib.ExitStack() as stack:
+    stack.callback(callback, 'arg1', 'arg2')
+    stack.callback(callback, arg3='val3')
+
+'''RESULTS:
+closing callback((), {'arg3': 'val3'})
+closing callback(('arg1', 'arg2'), {})
+'''
+
+#10 callback() ignore error
+
+import contextlib
+
+def callback(*args, **kwargs):
+    print('closing callback({}, {})'.format(args, kwargs))
+
+try:
+    with contextlib.ExitStack() as stack:
+        stack.callback(callback, 'arg1', 'arg2')
+        stack.callback(callback, arg3='val3')
+        raise RuntimeError('thrown error')
+except RuntimeError as err:
+    print('ERROR: {}'.format(err))
+
+'''RESULTS:
+closing callback((), {'arg3': 'val3'})
+closing callback(('arg1', 'arg2'), {})
+ERROR: thrown error
+'''
+#11 callback() as decorator
+
+import contextlib
+
+with contextlib.ExitStack() as stack:
+
+    @stack.callback
+    def inline_cleanup():
+        print('inline_cleanup()')
+        print('local_resource = {!r}'.format(local_resource))
+
+    local_resource = 'resource created in context'
+    print('within the context')
+
+'''RESULTS:
+within the context
+inline_cleanup()
+local_resource = 'resource created in context'
+'''
+
+#12 ExitStack() and pop_all()
+
+import contextlib
+
+from contextlib_context_managers import * # from #8
+
+def variable_stack(contexts):
+    with contextlib.ExitStack() as stack:
+        for c in contexts:
+            stack.enter_context(c)
+        # Return close() with new stack how need clear resources
+        return stack.pop_all().close
+    return None
+print('No errors:')
+cleaner = variable_stack([
+    HandleError(1),
+    HandleError(2),
+])
+cleaner()
+
+print('\nHandled error building context manager stack:')
+try:
+    cleaner = variable_stack([
+        HandleError(1),
+        ErrorOnEnter(2),
+    ])
+except RuntimeError as err:
+    print('caught error {}'.format(err))
+else:
+    if cleaner is not None:
+        cleaner()
+    else:
+        print('no cleaner returned')
+print('\nUnhandled error building context manager stack:')
+try:
+    cleaner = variable_stack([
+        PassError(1),
+        ErrorOnEnter(2),
+    ])
+except RuntimeError as err:
+    print('caught error {}'.format(err))
+else:
+    if cleaner is not None:
+        cleaner()
+    else:
+        print('no cleaner returned')
