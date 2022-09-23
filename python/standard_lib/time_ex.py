@@ -277,7 +277,7 @@ print()
 print('Earliest  :', datetime.date.min)
 print('Latest    :', datetime.date.max)
 print('Resolution:', datetime.date.resolution)
-
+print()
 '''RESULTS:
 Earliest  : 0001-01-01
 Latest    : 9999-12-31
@@ -285,3 +285,199 @@ Resolution: 1 day, 0:00:00
 '''
 
 #12 replace()
+
+import datetime
+
+d1 = datetime.date(2038, 3, 29)
+print('d1:', d1.ctime())
+
+d2 = d1.replace(year=2028)
+print('d2:', d2.ctime())
+print()
+
+'''RESULTS:
+d1: Mon Mar 29 00:00:00 2038
+d2: Wed Mar 29 00:00:00 2028
+'''
+
+#13 timedelta()
+
+import datetime
+
+print('microseconds:', datetime.timedelta(microseconds=1))
+print('milliseconds:', datetime.timedelta(milliseconds=1))
+print('seconds     :', datetime.timedelta(seconds=1))
+print('minutes     :', datetime.timedelta(minutes=1))
+print('hours       :', datetime.timedelta(hours=1))
+print('days        :', datetime.timedelta(days=1))
+print('weeks       :', datetime.timedelta(weeks=1))
+
+'''RESULTS:
+microseconds: 0:00:00.000001
+milliseconds: 0:00:00.001000
+seconds     : 0:00:01
+minutes     : 0:01:00
+hours       : 1:00:00
+days        : 1 day, 0:00:00
+weeks       : 7 days, 0:00:00
+'''
+
+#14 datetime math
+
+import datetime
+
+today = datetime.date.today()
+print('Today    :', today)
+
+one_day = datetime.timedelta(days=1)
+print('One day  :', one_day)
+
+yesterday = today - one_day
+print('Yesterday:', yesterday)
+
+tomorrow = today + one_day
+print('Tomorrow :', tomorrow)
+
+print()
+print('tomorrow - yesterday:', tomorrow - yesterday)
+print('yesterday - tomorrow:', yesterday - tomorrow)
+print()
+'''RESULTS:
+Today    : 2022-09-23
+One day  : 1 day, 0:00:00
+Yesterday: 2022-09-22
+Tomorrow : 2022-09-24
+
+tomorrow - yesterday: 2 days, 0:00:00
+yesterday - tomorrow: -2 days, 0:00:00
+'''
+
+#15 float days
+
+import datetime
+
+one_day = datetime.timedelta(days=1)
+print('1 day     :', one_day)
+print('5 days    :', one_day * 5)
+print('1.5 days  :', one_day * 1.5)
+print('1/4 day   :', one_day / 4)
+
+# Keep one hour for lunch
+work_day = datetime.timedelta(hours=7)
+meeting_length = datetime.timedelta(hours=1)
+print('meetings per day :', work_day / meeting_length)
+
+'''RESULTS:
+1 day     : 1 day, 0:00:00
+5 days    : 5 days, 0:00:00
+1.5 days  : 1 day, 12:00:00
+1/4 day   : 6:00:00
+meetings per day : 7.0
+'''
+
+#16 Comparing
+
+import datetime
+import time
+
+print()
+print('Times:')
+t1 = datetime.time(12, 55, 0)
+print(' t1:', t1)
+t2 = datetime.time(13, 5, 0)
+print(' t2:', t2)
+print('t1 < t2:', t1 < t2)
+print()
+print('Dates:')
+d1 = datetime.date.today()
+print('d1:', d1)
+d2 = datetime.date.today() + datetime.timedelta(days=1)
+print(' d2:', d2)
+print(' d1 > d2:', d1 > d2)
+print()
+'''RESULTS:
+Times:
+ t1: 12:55:00
+ t2: 13:05:00
+t1 < t2: True
+
+Dates:
+d1: 2022-09-23
+ d2: 2022-09-24
+ d1 > d2: False
+'''
+
+#17 datetime it is date and time
+
+import datetime
+
+print('Now    :', datetime.datetime.now())
+print('Today  :', datetime.datetime.today())
+print('UTC Now:', datetime.datetime.utcnow())
+print()
+
+FIELDS = [
+        'year', 'month', 'day',
+        'hour', 'minute', 'second',
+        'microsecond',
+]
+
+d = datetime.datetime.now()
+for attr in FIELDS:
+    print('{:15}: {}'.format(attr, getattr(d, attr)))
+
+'''RESULTS:
+Now    : 2022-09-23 03:42:45.478778
+Today  : 2022-09-23 03:42:45.478801
+UTC Now: 2022-09-23 01:42:45.478821
+
+year           : 2022
+month          : 9
+day            : 23
+hour           : 3
+minute         : 42
+second         : 45
+microsecond    : 478843
+'''
+
+#18 combine()
+
+import datetime
+
+t = datetime.time(1, 2, 3)
+print('t:', t)
+
+d = datetime.date.today()
+print('d:', d)
+
+dt = datetime.datetime.combine(d, t)
+print('dt:', dt)
+print()
+'''RESULTS:
+t: 01:02:03
+d: 2022-09-23
+dt: 2022-09-23 01:02:03
+'''
+
+#19 strftime()
+
+import datetime
+
+format = "%a %b %d %H:%M:%S %Y"
+
+today = datetime.datetime.today()
+print('ISO:', today)
+ 
+s = today.strftime(format)
+print('strftime:', s)
+
+d = datetime.datetime.strptime(s, format)
+print('strptime:', d.strftime(format))
+
+'''RESULTS:
+ISO: 2022-09-23 03:53:44.883965
+strftime: Fri Sep 23 03:53:44 2022
+strptime: Fri Sep 23 03:53:44 2022
+'''
+
+#20 format()
