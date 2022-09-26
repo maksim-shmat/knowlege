@@ -481,3 +481,31 @@ strptime: Fri Sep 23 03:53:44 2022
 '''
 
 #20 format()
+
+import datetime
+
+today = datetime.datetime.today()
+print('ISO :', today)
+print('format(): {:%a %b %d %H:%M:%S %Y}'.format(today))
+
+'''RESULTS:
+ISO : 2022-09-26 03:05:53.863057
+format(): Mon Sep 26 03:05:53 2022
+'''
+
+#21 timezone
+
+import datetime
+
+print()
+min6 = datetime.timezone(datetime.timedelta(hours=-6))
+plus6 = datetime.timezone(datetime.timedelta(hours=6))
+d = datetime.datetime.now(min6)
+
+print(min6, ':', d)
+print(datetime.timezone.utc, '      :', d.astimezone(datetime.timezone.utc))
+print(plus6, ':', d.astimezone(plus6))
+
+d_system = d.astimezone()
+print(d_system.tzinfo, '     :', d_system)
+
