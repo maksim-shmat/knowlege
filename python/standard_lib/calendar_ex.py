@@ -154,3 +154,59 @@ lu ma me je ve sa di
 '''
 
 #5 monthcalendar()
+
+import calendar
+
+import pprint
+
+print()
+pprint.pprint(calendar.monthcalendar(2022, 10))
+print()
+
+'''RESULTS:
+[[0, 0, 0, 0, 0, 1, 2],
+ [3, 4, 5, 6, 7, 8, 9],
+ [10, 11, 12, 13, 14, 15, 16],
+ [17, 18, 19, 20, 21, 22, 23],
+ [24, 25, 26, 27, 28, 29, 30],
+ [31, 0, 0, 0, 0, 0, 0]]
+'''
+
+#6 if meeting in every !second thursday
+
+import calendar
+import sys
+
+#year = int(sys.argv[1])
+
+# Show every month
+for month in range(1, 13):
+    # count week
+   # c = calendar.monthcalendar(year, month)
+    c = calendar.monthcalendar(2022, month)
+    first_week = c[0]
+    second_week = c[1]
+    third_week = c[2]
+
+    if first_week[calendar.THURSDAY]:
+        meeting_date = second_week[calendar.THURSDAY]
+    else:
+        meeting_date = third_week[calendar.THURSDAY]
+
+    print('{:>3}: {:>2}'.format(calendar.month_abbr[month],
+                                meeting_date))
+
+'''RESULTS:
+Jan: 13
+Feb: 10
+Mar: 10
+Apr: 14
+May: 12
+Jun:  9
+Jul: 14
+Aug: 11
+Sep:  8
+Oct: 13
+Nov: 10
+Dec:  8
+'''
