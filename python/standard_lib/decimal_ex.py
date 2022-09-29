@@ -280,3 +280,64 @@ Default precision: 3
 
 #10 instance context
 
+import decimal
+
+# Set context with restricted precision
+c = decimal.getcontext().copy()
+c.prec = 3
+
+# Make self constant
+pi = c.create_decimal('3.1415')
+
+print()
+print('PI :', pi)
+print('RESULTS:', decimal.Decimal('2.01') *pi)
+
+'''RESULTS:
+PI : 3.14
+RESULTS: 6.31
+'''
+
+#11 thread context
+
+import decimal
+import threading
+from queue import PriorityQueue
+
+class Multiplier(threading.Thread):
+    def __init__(self, a, b, prec, q):
+        self.a = a
+        self.b = b
+        self.prec = prec
+        self.q = q
+        threading.Thread.__init__(self)
+
+    def run(self):
+        c = decimal.getcontext().copy()
+        c.prec = self.prec
+        decimal.setcontext(c)
+        self.q.put((self.prec, a * b))
+
+a = decimal.Decimal('3.14')
+b = decimal.Decimal('1.234')
+
+# PriorityQueue return value with sort of precision
+q = PriorityQueue()
+threads = [Multiplier(a, b, i, q) for i in range(1, 6)]
+for t in threads:
+    t.start()
+
+for t in threads:
+    t.join()
+
+for i in range(5):
+    prec, value = q.get()
+    print('{}  {}'.format(prec, value))
+
+'''RESULTS:
+1  4
+2  3.9
+3  3.87
+4  3.875
+5  3.8748
+'''
