@@ -359,4 +359,140 @@ After saving state:
 
 '''
 
-#5 
+#5 random() generate float, but randint() generate integer
+
+import random
+
+print('[1, 100]:', end=' ')
+
+for i in range(3):
+    print(random.randint(1, 100), end=' ')
+
+print('\n[-5, 5]:', end=' ')
+for i in range(3):
+    print(random.randint(-5, 5), end=' ')
+print()
+
+'''RESULTS:
+[1, 100]: 93 30 76 
+[-5, 5]: -4 0 -5 
+'''
+
+#6 randrange() with step 5
+
+import random
+
+print()
+for i in range(3):
+    print(random.randrange(0, 101, 5), end=' ')
+print()
+
+'''RESULTS:
+0 60 30
+'''
+
+#7 random choice()
+
+import random
+import itertools
+
+outcomes = {
+        'heads': 0,
+        'tails': 0,
+}
+sides = list(outcomes.keys())
+
+for i in range(100):
+    outcomes[random.choice(sides)] += 1
+
+print('Heads:', outcomes['heads'])
+print('Tails:', outcomes['tails'])
+
+'''RESULTS:
+Heads: 46
+Tails: 54
+'''
+
+#8 random shuffle() better permutation against choice()
+
+import random
+import itertools
+
+FACE_CARDS = ('J', 'Q', 'K', 'A')
+SUITS = ('H', 'D', 'C', 'S')
+
+def new_deck():
+    return [
+            '{:>2}{}'.format(*c)
+            for c in itertools.product(
+                itertools.chain(range(2, 11), FACE_CARDS),
+                SUITS,
+            )
+    ]
+
+
+def show_deck(deck):
+    p_deck = deck[:]
+    while p_deck:
+        row = p_deck[:13]
+        p_deck = p_deck[13:]
+        for j in row:
+            print(j, end=' ')
+        print()
+
+# Make a new set of cards
+deck = new_deck()
+print('Initial deck:')
+show_deck(deck)
+
+# shuffle set of cards
+random.shuffle(deck)
+print('\nShuffled deck:')
+show_deck(deck)
+
+# Throw 5 card for 4 hands
+
+hands = [[], [], [], []]
+
+for i in range(5):
+    for h in hands:
+        h.append(deck.pop())
+
+# Show cards
+print('\nHands:')
+for n, h in enumerate(hands):
+    print('{}:'.format(n + 1), end=' ')
+    for c in h:
+        print(c, end=' ')
+    print()
+
+# Show cards in set after throwing
+print('\nRemaining deck:')
+show_deck(deck)
+
+'''RESULTS:
+Initial deck:
+ 2H  2D  2C  2S  3H  3D  3C  3S  4H  4D  4C  4S  5H 
+ 5D  5C  5S  6H  6D  6C  6S  7H  7D  7C  7S  8H  8D 
+ 8C  8S  9H  9D  9C  9S 10H 10D 10C 10S  JH  JD  JC 
+ JS  QH  QD  QC  QS  KH  KD  KC  KS  AH  AD  AC  AS 
+
+Shuffled deck:
+ 9C  JH  3D  7S  9D  KC  6C  4H  5S  AC  6S  2S 10S 
+ 3H  4S  QC  QS 10C  AH  2H  9S  AS 10D  JS  KD  7C 
+ JD  7H  3S  AD  6D  QD  KH  9H  4C  2C  4D  8D  QH 
+ 5C  2D  8S  JC  5D 10H  KS  3C  6H  5H  8C  7D  8H 
+
+Hands:
+1:  8H  6H  5D  5C  2C 
+2:  7D  3C  JC  QH  4C 
+3:  8C  KS  8S  8D  9H 
+4:  5H 10H  2D  4D  KH 
+
+Remaining deck:
+ 9C  JH  3D  7S  9D  KC  6C  4H  5S  AC  6S  2S 10S 
+ 3H  4S  QC  QS 10C  AH  2H  9S  AS 10D  JS  KD  7C 
+ JD  7H  3S  AD  6D  QD 
+'''
+
+#9
