@@ -495,4 +495,94 @@ Remaining deck:
  JD  7H  3S  AD  6D  QD 
 '''
 
-#9
+#9 random.sample()
+
+import random
+
+with open('/usr/share/dict/words', 'rt') as f:
+    words = f.readlines()
+words = [w.rstrip() for w in words]
+
+for w in random.sample(words, 5):
+    print(w)
+print()
+
+'''RESULTS:
+ploys
+kinematics
+anapest's
+wing
+suntanning
+'''
+
+#10 random class, both generate different results
+
+import random
+import time
+
+print('Default initialization:\n')
+
+r1 = random.Random()
+r2 = random.Random()
+
+for i in range(3):
+    print('{:04.3f} {:04.3f}'.format(r1.random(), r2.random()))
+
+print('\nSame seed:\n')
+
+seed = time.time()
+r1 = random.Random(seed)
+r2 = random.Random(seed)
+
+for i in range(3):
+    print('{:04.3f} {:04.3f}'.format(r1.random(), r2.random()))
+
+'''RESULTS:
+Default initialization:
+
+0.247 0.659
+0.830 0.990
+0.604 0.469
+
+Same seed:
+
+0.465 0.465
+0.071 0.071
+0.788 0.788
+'''
+
+#11 use system random, os.urandom()
+
+import random
+import time
+
+print('Default initialization:\n')
+
+r1 = random.SystemRandom()
+r2 = random.SystemRandom()
+
+for i in range(3):
+    print('{:04.3f} {:04.3f}'.format(r1.random(), r2.random()))
+
+print('\nSame seed:\n')
+
+seed = time.time()
+r1 = random.SystemRandom(seed)
+r2 = random.SystemRandom(seed)
+
+for i in range(3):
+    print('{:04.3f} {:04.3f}'.format(r1.random(), r2.random()))
+
+'''RESULTS:
+Default initialization:
+
+0.481 0.889
+0.593 0.395
+0.474 0.997
+
+Same seed:
+
+0.703 0.796
+0.263 0.173
+0.600 0.697
+'''
