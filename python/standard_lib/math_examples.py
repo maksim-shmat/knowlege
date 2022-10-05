@@ -58,4 +58,148 @@ NaN: nan
 Inf: inf
 '''
 
-#2 math integers
+#2 math floor to integers: trunc(), floor(), ceil - ., >, <
+
+import math
+
+HEADINGS = ('i', 'int', 'trunk', 'floor', 'ceil')
+print('{:^5} {:^5} {:^5} {:^5} {:^5}'.format(*HEADINGS))
+print('{:^5} {:-^5} {:-^5} {:-^5} {:-^5}'.format(
+    '', '', '', '', '',
+))
+
+fmt = '{:5.1f} {:5.1f} {:5.1f} {:5.1f} {:5.1f}'
+
+TEST_VALUES = [
+        -1.5,
+        -0.8,
+        -0.5,
+        -0.2,
+        0,
+        0.2,
+        0.5,
+        0.8,
+        1,
+]
+
+for i in TEST_VALUES:
+    print(fmt.format(
+        i,
+        int(i),
+        math.trunc(i),
+        math.floor(i),
+        math.ceil(i),
+))
+
+'''RESULTS:
+  i    int  trunk floor ceil
+      ----- ----- ----- -----
+ -1.5  -1.0  -1.0  -2.0  -1.0
+ -0.8   0.0   0.0  -1.0   0.0
+ -0.5   0.0   0.0  -1.0   0.0
+ -0.2   0.0   0.0  -1.0   0.0
+  0.0   0.0   0.0   0.0   0.0
+  0.2   0.0   0.0   0.0   1.0
+  0.5   0.0   0.0   0.0   1.0
+  0.8   0.0   0.0   0.0   1.0
+  1.0   1.0   1.0   1.0   1.0
+'''
+
+#3 modf()
+
+import math
+
+for i in range(6):
+    print('{}/2 = {}'.format(i, math.modf(i / 2.0)))
+    
+'''RESULTS:
+0/2 = (0.0, 0.0)
+1/2 = (0.5, 0.0)
+2/2 = (0.0, 1.0)
+3/2 = (0.5, 1.0)
+4/2 = (0.0, 2.0)
+5/2 = (0.5, 2.0)
+'''
+
+#4  frexp() use x=m*2**e and return mantice and exponent
+
+import math
+
+print('{:^7} {:^7} {:^7}'.format('x', 'm', 'e'))
+print('{:-^7} {:-^7} {:-^7}'.format('', '', ''))
+
+for x in [0.1, 0.5, 4.0]:
+    m, e = math.frexp(x)
+    print('{:7.2f} {:7.2f} {:7d}'.format(x, m, e))
+
+'''RESULTS:
+   x       m       e   
+------- ------- -------
+   0.10    0.80      -3
+   0.50    0.50       0
+   4.00    0.50       3
+'''
+
+#4 ldexp() against frexp()
+
+import math
+
+print('{:^7} {:^7} {:^7}'.format('m', 'e', 'x'))
+print('{:-^7} {:-^7} {:-^7}'.format('', '', ''))
+
+INPUTS = [
+        (0.8, -3),
+        (0.5, 0),
+        (0.5, 3),
+]
+
+for m, e in INPUTS:
+    x = math.ldexp(m, e)
+    print('{:7.2f} {:7d} {:7.2f}'.format(m, e, x))
+
+'''RESULTS:
+   m       e       x   
+------- ------- -------
+   0.80      -3    0.10
+   0.50       0    0.50
+   0.50       3    4.00
+'''
+
+#5 fabs() for absolute value of number
+
+import math
+
+print(math.fabs(-1.1))
+print(math.fabs(-0.0))
+print(math.fabs(0.0))
+print(math.fabs(1.1))
+
+'''RESULTS:
+1.1
+0.0
+0.0
+1.1
+'''
+
+#6 fsum(), 0.1 * 10 = 1, but not on the computer, need fsum()
+
+import math
+
+values = [0.1] * 10
+print('Input values:', values)
+print('sum()        : {:.20f}'.format(sum(values)))
+
+s = 0.0
+for i in values:
+    s += i
+print('for-loop     : {:.20f}'.format(s))
+print('math.fsum()  : {:.20f}'.format(math.fsum(values)))
+
+'''RESULTS:
+Input values: [0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1, 0.1]
+sum()        : 0.99999999999999988898
+for-loop     : 0.99999999999999988898
+math.fsum()  : 1.00000000000000000000
+'''
+
+#7 factorial()

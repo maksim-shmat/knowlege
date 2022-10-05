@@ -26,8 +26,6 @@ locate  # locate a file on the machine (locate [filename]
 
 updatedb # update the directory database
 
-grep    # search for the following words (can be used to check if a file
-        # contains specific info)
 $ grep -n about *  # show all files where is word 'about', -n - numbers or str
 
 # =====================
