@@ -203,3 +203,99 @@ math.fsum()  : 1.00000000000000000000
 '''
 
 #7 factorial()
+
+import math
+
+for i in [0, 1, 2, 3, 4, 5, 6]:
+    try:
+        print('{:2.0f} {:6.0f}'.format(i, math.factorial(i)))
+    except ValueError as err:
+        print('Error computing factorial({}): {}'.format(i, err))
+
+'''RESULTS:
+ 0      1
+ 1      1
+ 2      2
+ 3      6
+ 4     24
+ 5    120
+ 6    720
+'''
+
+#8 gamma() (n - 1) !
+
+import math
+
+for i in [0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6]:
+    try:
+        print('{:2.1f} {:6.2f}'.format(i, math.gamma(i)))
+    except ValueError as err:
+        print('Error computing gamma({}): {}'.format(i, err))
+
+'''RESULTS:
+Error computing gamma(0): math domain error
+1.1   0.95
+2.2   1.10
+3.3   2.68
+4.4  10.14
+5.5  52.34
+6.6 344.70
+'''
+
+#9 lgamma()
+
+import math
+
+for i in [0, 1.1, 2.2, 3.3, 4.4, 5.5, 6.6]:
+    try:
+        print('{:2.1f} {:.20f} {:.20f}'.format(
+            i,
+            math.lgamma(i),
+            math.log(math.gamma(i)),
+        ))
+    except ValueError as err:
+        print('Error computing lgamma({}): {}'.format(i, err))
+
+'''RESULTS:
+Error computing lgamma(0): math domain error
+1.1 -0.04987244125984036103 -0.04987244125983997245
+2.2 0.09694746679063825923 0.09694746679063866168
+3.3 0.98709857789473387513 0.98709857789473409717
+4.4 2.31610349142485727469 2.31610349142485727469
+5.5 3.95781396761871651080 3.95781396761871606671
+6.6 5.84268005527463252236 5.84268005527463252236
+'''
+
+#10 fmod() against %
+
+import math
+
+print('{:^4} {:^4} {:^5} {:^5}'.format(
+    'x', 'y', '%', 'fmod'))
+
+print('{:-^4} {:-^4} {:-^5} {:-^5}'.format(
+    '-', '-', '-', '-'))
+
+INPUTS = [
+        (5, 2),
+        (5, -2),
+        (-5, 2),
+]
+
+for x, y in INPUTS:
+    print('{:4.1f} {:4.1f} {:5.2f} {:5.2f}'.format(
+        x,
+        y,
+        x % y,
+        math.fmod(x, y),
+    ))
+
+'''RESULTS:
+x    y     %   fmod 
+---- ---- ----- -----
+ 5.0  2.0  1.00  1.00
+ 5.0 -2.0 -1.00  1.00
+-5.0  2.0  1.00 -1.00
+'''
+
+#11 gcd()
