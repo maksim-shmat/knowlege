@@ -298,4 +298,189 @@ x    y     %   fmod
 -5.0  2.0  1.00 -1.00
 '''
 
-#11 gcd()
+#11 gcd() great common divisioned?
+
+import math
+
+print(math.gcd(10, 8))
+print(math.gcd(10, 0))
+print(math.gcd(50, 225))
+print(math.gcd(11, 9))
+print(math.gcd(0, 0))
+
+'''RESULTS:
+2
+10
+25
+1
+0
+'''
+
+#12 pow() == **
+
+import math
+
+INPUTS = [
+        # Typical uses
+        (2, 3),
+        (2.1, 3.2),
+
+        # 1 Always
+        (1.0, 5),
+        (2.0, 0),
+
+        # NaN
+        (2, float('nan')),
+
+        # Squareroots
+        (9.0, 0.5),
+        (27.0, 1.0 / 3),
+]
+
+for x, y in INPUTS:
+    print('{:5.1f} ** {:5.3f} = {:6.3f}'.format(
+        x, y, math.pow(x, y)))
+
+'''RESULTS:
+2.0 ** 3.000 =  8.000
+  2.1 ** 3.200 = 10.742
+  1.0 ** 5.000 =  1.000
+  2.0 ** 0.000 =  1.000
+  2.0 **   nan =    nan
+  9.0 ** 0.500 =  3.000
+ 27.0 ** 0.333 =  3.000
+'''
+#13 math.sqrt()
+
+import math
+
+print(math.sqrt(9.0))
+print(math.sqrt(3))
+try:
+    print(math.sqrt(-1))
+except ValueError as err:
+    print('Cannot compute sqrt(-1):', err)
+
+'''RESULTS:
+3.0
+1.7320508075688772
+Cannot compute sqrt(-1): math domain error
+'''
+
+#14 math.log() find y if x = b ** y
+
+import math
+
+print(math.log(8))
+print(math.log(8, 2))
+print(math.log(0.5, 2))
+
+'''RESULTS:
+2.0794415416798357
+3.0
+-1.0
+'''
+
+#15 math.log10
+
+import math
+
+print('{:2} {:^12} {:^10} {:^20} {:8}'.format(
+    'i', 'x', 'accurate', 'inaccurate', 'mismatch',
+))
+print('{:-^2} {:-^12} {:-^10} {:-^20} {:-^8}'.format(
+    '', '', '', '', '',
+))
+
+for i in range(0, 10):
+    x = math.pow(10, i)
+    accurate = math.log10(x)
+    inacurate = math.log(x, 10)
+    match = '' if int(inacurate) == i else '*'
+    print('{:2d} {:12.1f} {:10.8f} {:20.18f} {:^5}'.format(
+        i, x, accurate, inacurate, match,
+    ))
+
+'''RESULTS:
+i       x        accurate       inaccurate      mismatch
+-- ------------ ---------- -------------------- --------
+ 0          1.0 0.00000000 0.000000000000000000      
+ 1         10.0 1.00000000 1.000000000000000000      
+ 2        100.0 2.00000000 2.000000000000000000      
+ 3       1000.0 3.00000000 2.999999999999999556   *  
+ 4      10000.0 4.00000000 4.000000000000000000      
+ 5     100000.0 5.00000000 5.000000000000000000      
+ 6    1000000.0 6.00000000 5.999999999999999112   *  
+ 7   10000000.0 7.00000000 7.000000000000000000      
+ 8  100000000.0 8.00000000 8.000000000000000000      
+ 9 1000000000.0 9.00000000 8.999999999999998224   *  
+'''
+
+#16 log2
+
+import math
+
+print('{:>2} {:^5} {:^5}'.format(
+    'i', 'x', 'log2',
+))
+print('{:-^2} {:-^5} {:-^5}'.format(
+    '', '', '',
+))
+
+for i in range(0, 10):
+    x = math.pow(2, i)
+    result = math.log2(x)
+    print('{:2d} {:5.1f} {:5.1f}'.format(
+        i, x, result,
+    ))
+
+'''RESULTS:
+i   x   log2 
+-- ----- -----
+ 0   1.0   0.0
+ 1   2.0   1.0
+ 2   4.0   2.0
+ 3   8.0   3.0
+ 4  16.0   4.0
+ 5  32.0   5.0
+ 6  64.0   6.0
+ 7 128.0   7.0
+ 8 256.0   8.0
+ 9 512.0   9.0
+'''
+
+#17 log1p() for rows Newton-Mercator
+
+import math
+
+x = 0.0000000000000000000000001
+print('x        :', x)
+print('1 + x    :', 1 + x)
+print('log(1+x) :', math.log(1 + x))
+print('log1p(x) :', math.log1p(x))
+
+'''RESULTS:
+x        : 1e-25
+1 + x    : 1.0
+log(1+x) : 0.0
+log1p(x) : 1e-25
+'''
+
+#18 math.exp()  (e**x)
+
+import math
+
+x = 2
+
+fmt = '{:.20f}'
+print(fmt.format(math.e ** 2))
+print(fmt.format(math.pow(math.e, 2)))
+print(fmt.format(math.exp(2)))
+
+'''RESULTS:
+7.38905609893064951876
+7.38905609893064951876
+7.38905609893065040694
+'''
+
+#19
