@@ -14,7 +14,6 @@ VBA - Visual Basic for Applications
 #Sentence philosofy
 
 WYSIWYG - What You See Is What You Get
-UNIX(for) - You Asked For It, You Got It
 
 1. Python/Django
 
@@ -56,6 +55,8 @@ TSA - Time Stamping Authority
 FTP - File Tansfer Protocol
 
 SFTP - Secure File Transper Protocol
+
+SMTP - Simple Mail Transfer Protocol
 
 VCS - Version Control System
 
@@ -122,7 +123,7 @@ LSTM - Long-Short-Term Memory (neural networks)
 
 CNN - Convolutional Neural Networks
 
-LLC - Logical Line Control
+LLC - Logical Line/Link Control
 
 CSMA/CD - Carrier Sense Multiple Access with Collision Detection
 
@@ -167,6 +168,7 @@ SPB - Shorted Path Bridging
 SPBV - Shorted Path Bridging VLAN
 
 SPBM - Shorted Path Bridging MAC
+MAC - Media Access Control
 
 HTTP - Hypertext Transfer Protocol
 
@@ -190,7 +192,8 @@ RSS - Rich Site Summary
 
 RDF - Resource Description Framework
 
-ARP - Address Resolution Framework
+ARP - Address Resolution Protocol
+
 
 SWIG - Simple Wrapper and Interface Generator (for Python from C)
 
@@ -229,6 +232,8 @@ OSPF - Open Shortest Path First
 IS-IS - Internet System to Internet System
 
 EGP - Exterior Gateway Protocol
+
+IGRP - Interior Gateway Routing Protocol
 
 BGP - Border Gateway Protocol
 ==========
@@ -363,3 +368,100 @@ NaN - Not a Number
 JIT - Just In Time (compiler)
 
 PVM - Python Virtual Machine
+
+============
+ISOC - Internet Society
+
+IAB - Internet Architecture Board
+
+RFC - Request for Comments
+
+IETF - Internet Engineering Task Force
+IRTF - Internet Research Task Force
+IESG - Internet Engineering Steering Group
+InterNIC - Internet Network Information Center
+IANA - Internet Assigned Numbers Authority
+ANSI - American National Standards Institute
+ECMA - European Computer Manufacturers Association
+IEEE - Institute of Electrical and Electronics Engineers
+
+==============
+
+FDDI - Fiber Distributed Data Interface
+
+CRC - Cyclical Redundancy Check
+
+IPX - Internet Packet Exchange
+
+CCITT - Comitè Consultatif International Tèlègraphique et Tèlèphoninque
+
+bps - bits per second
+
+MNP - Microcom Network Protocol
+
+LAPM - Link Access Protocol for Modems
+
+PSTN - Public Switched Telephone Network
+
+MAU or MSAU - MultiStation Access Unit
+
+ISDN - Integrated Services Digital Nerwork
+
+DLCI - Data Link Call Identifier
+
+CIR - Commited Information Rate
+
+SMDS - Switched Multimegabit Data Service
+
+VCI - Virtual Circuit Identifier
+VCI - Virtual Channel Indicator
+
+VPI - Virtual Path Identifier
+
+GFC - Generic Flow Control
+
+PTI - Payload Type Indicator
+
+CLP - Cell Loss Priority
+
+HEC - Header Error Check
+
+BUS - Broadcast and Unknown Server
+
+NHRP - Next Hope Routing Protocol
+
+MARS - Multicast Address Resolution Server
+
+IPNNI - Intergrated Private Network to Network Interface
+
+HDSL - High-Data-Rate Digital Subscriber Line
+ADSL - Asymmetric Digital Subscriber Line
+
+CAP - Carrierless amplitude/phase
+
+DMT - Discrete Multi Tone
+
+RADSL - Rate-Adaptive Digital Subscriber Line
+
+VDSL - Very-High-Data-Rate DSL
+SDSL - Single-Line DSL
+
+LMDS - Local Multipoint Distribution System
+
+PCF - Point Coordination Function
+DCF - Distributed Coordination Function
+
+IANA - Internet Assigned Numbers Authority
+
+IHL - Internet Header Length
+TOS - Type Of Service
+TTL - Time To Live
+
+SACK - Selective Acknowledgement
+
+UTC - Universal Time Coordinate
+GMT - Greenwich Mean Time
+
+RTMP - AppleTalk Routing Table Management Protocol
+
+
