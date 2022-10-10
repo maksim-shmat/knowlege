@@ -483,4 +483,306 @@ print(fmt.format(math.exp(2)))
 7.38905609893065040694
 '''
 
-#19
+#19 expm1() contrarivice log1p(), and it is for e**x - 1
+
+import math
+
+x = 0.0000000000000000000000001
+
+print(x)
+print(math.exp(x) - 1)
+print(math.expm1(x))
+
+'''RESULTS:
+1e-25
+0.0
+1e-25
+'''
+
+#20 radians() rad = grad*П/180
+
+import math
+
+print('{:^7} {:^7} {:^7}'.format(
+    'Degrees', 'Radians', 'Expected'))
+print('{:-^7} {:-^7} {:-^7}'.format(
+    '', '', ''))
+
+INPUTS = [
+        (0, 0),
+        (30, math.pi /6 ),
+        (45, math.pi / 4),
+        (60, math.pi / 3),
+        (90, math.pi / 2),
+        (180, math.pi),
+        (270, 3 / 2.0 * math.pi),
+        (360, 2 * math.pi),
+]
+
+for deg, expected in INPUTS:
+    print('{:7d} {:7.2f} {:7.2f}'.format(
+        deg,
+        math.radians(deg),
+        expected,
+    ))
+
+'''RESULTS:
+Degrees Radians Expected
+------- ------- -------
+      0    0.00    0.00
+     30    0.52    0.52
+     45    0.79    0.79
+     60    1.05    1.05
+     90    1.57    1.57
+    180    3.14    3.14
+    270    4.71    4.71
+    360    6.28    6.28
+'''
+
+#21 degrees() deg = rad * 180/П
+
+import math
+
+INPUTS = [
+        (0, 0),
+        (math.pi / 6, 30),
+        (math.pi / 4, 45),
+        (math.pi / 3, 60),
+        (math.pi / 2, 90),
+        (math.pi, 180),
+        (3 * math.pi / 2, 270),
+        (2 * math.pi, 360),
+]
+
+print('{:^8} {:^8} {:^8}'.format(
+    'Radians', 'Degrees', 'Expected'))
+print('{:-^8} {:-^8} {:-^8}'.format('', '', ''))
+for rad, expected in INPUTS:
+    print('{:8.2f} {:8.2f} {:8.2f}'.format(
+        rad,
+        math.degrees(rad),
+        expected,
+    ))
+
+'''RESULTS:
+Radians  Degrees  Expected
+-------- -------- --------
+    0.00     0.00     0.00
+    0.52    30.00    30.00
+    0.79    45.00    45.00
+    1.05    60.00    60.00
+    1.57    90.00    90.00
+    3.14   180.00   180.00
+    4.71   270.00   270.00
+    6.28   360.00   360.00
+'''
+
+#22 trigonometry: sine, cosine, tangent
+
+import math
+
+print('{:^7} {:^7} {:^7} {:^7} {:^7}'.format(
+    'Degrees', 'Radians', 'Sine', 'Cosine', 'Tangent'))
+print('{:-^7} {:-^7} {:-^7} {:-^7} {:-^7}'.format(
+    '-', '-', '-', '-', '-'))
+
+fmt = '{:7.2f} {:7.2f} {:7.2f} {:7.2f} {:7.2f}'
+
+for deg in range(0, 361, 30):
+    rad = math.radians(deg)
+    if deg in (90, 270):
+        t = float('inf')
+    else:
+        t = math.tan(rad)
+    print(fmt.format(deg, rad, math.sin(rad), math.cos(rad), t))
+
+'''RESULTS:
+Degrees Radians  Sine   Cosine  Tangent
+------- ------- ------- ------- -------
+   0.00    0.00    0.00    1.00    0.00
+  30.00    0.52    0.50    0.87    0.58
+  60.00    1.05    0.87    0.50    1.73
+  90.00    1.57    1.00    0.00     inf
+ 120.00    2.09    0.87   -0.50   -1.73
+ 150.00    2.62    0.50   -0.87   -0.58
+ 180.00    3.14    0.00   -1.00   -0.00
+ 210.00    3.67   -0.50   -0.87    0.58
+ 240.00    4.19   -0.87   -0.50    1.73
+ 270.00    4.71   -1.00   -0.00     inf
+ 300.00    5.24   -0.87    0.50   -1.73
+ 330.00    5.76   -0.50    0.87   -0.58
+ 360.00    6.28   -0.00    1.00   -0.00
+'''
+
+#23 hypot()
+
+import math
+
+print('{:^7} {:^7} {:^10}'.format('X', 'Y', 'Hypotenuse'))
+print('{:-^7} {:-^7} {:-^10}'.format('', '', ''))
+
+POINTS = [
+        (1, 1),
+        (-1, -1),
+        (math.sqrt(2), math.sqrt(2)),
+        (3, 4),
+        (math.sqrt(2) / 2, math.sqrt(2) / 2),
+        (0.5, math.sqrt(3) / 2),
+]
+
+for x, y in POINTS:
+    h = math.hypot(x, y)
+    print('{:7.2f} {:7.2f} {:7.2f}'.format(x, y, h))
+
+'''RESULTS:
+  X       Y    Hypotenuse
+------- ------- ----------
+   1.00    1.00    1.41
+  -1.00   -1.00    1.41
+   1.41    1.41    2.00
+   3.00    4.00    5.00
+   0.71    0.71    1.00
+   0.50    0.87    1.00
+'''
+
+#24 distance 2 points
+
+import math
+
+print('{:^8} {:^8} {:^8} {:^8} {:^8}'.format(
+    'X1', 'Y1', 'X2', 'Y2', 'Distance',
+))
+print('{:-^8} {:-^8} {:-^8} {:-^8} {:-^8}'.format(
+    '', '', '', '', '',
+))
+
+POINTS = [
+        ((5, 5), (6, 6)),
+        ((-6, -6), (-5, -5)),
+        ((0, 0), (3, 4)),
+        ((-1, -1), (2, 3)),
+]
+
+for (x1, y1), (x2, y2) in POINTS:
+    x = x1 - x2
+    y = y1 - y2
+    h = math.hypot(x, y)
+    print('{:8.2f} {:8.2f} {:8.2f} {:8.2f} {:8.2f}'.format(
+        x1, y1, x2, y2, h,
+    ))
+
+'''RESULTS:
+ X1       Y1       X2       Y2    Distance
+-------- -------- -------- -------- --------
+    5.00     5.00     6.00     6.00     1.41
+   -6.00    -6.00    -5.00    -5.00     1.41
+    0.00     0.00     3.00     4.00     5.00
+   -1.00    -1.00     2.00     3.00     5.00
+'''
+
+#25 inverse trigonometry: arcsine, arccosine, arctangent
+
+import math
+
+for r in [0, 0.5, 1]:
+    print('arcsine({:.1f})    = {:5.2f}'.format(r, math.asin(r)))
+    print('arccosine({:.1f})  = {:5.2f}'.format(r, math.acos(r)))
+    print('arctangent({:.1f}) = {:5.2f}'.format(r, math.atan(r)))
+    print()
+
+'''RESULTS:
+arcsine(0.0)    =  0.00
+arccosine(0.0)  =  1.57
+arctangent(0.0) =  0.00
+
+arcsine(0.5)    =  0.52
+arccosine(0.5)  =  1.05
+arctangent(0.5) =  0.46
+
+arcsine(1.0)    =  1.57
+arccosine(1.0)  =  0.00
+arctangent(1.0) =  0.79
+'''
+
+#26 hyperbolic: sinh, sosh, tanh
+
+import math
+
+print('{:^6} {:^6} {:^6} {:^6}'.format(
+    'X', 'sinh', 'cosh', 'tanh',
+    ))
+print('{:-^6} {:-^6} {:-^6} {:-^6}'.format('', '', '', ''))
+
+fmt = '{:6.4f} {:6.4f} {:6.4f} {:6.4f}'
+
+for i in range(0, 11, 2):
+    x = i / 10.0
+    print(fmt.format(
+        x,
+        math.sinh(x),
+        math.cosh(x),
+        math.tanh(x),
+    ))
+
+'''RESULTS:
+  X     sinh   cosh   tanh 
+------ ------ ------ ------
+0.0000 0.0000 1.0000 0.0000
+0.2000 0.2013 1.0201 0.1974
+0.4000 0.4108 1.0811 0.3799
+0.6000 0.6367 1.1855 0.5370
+0.8000 0.8881 1.3374 0.6640
+1.0000 1.1752 1.5431 0.7616
+'''
+
+#27 erf()
+
+import math
+
+print('{:^5} {:7}'.format('x', 'erf(x)'))
+print('{:-^5} {:-^7}'.format('', ''))
+
+for x in [-3, -2, -1, -0.5, -0.25, 0, 0.25, 0.5, 1, 2, 3]:
+    print('{:5.2f} {:7.4f}'.format(x, math.erf(x)))
+
+'''RESULTS:
+  x   erf(x) 
+----- -------
+-3.00 -1.0000
+-2.00 -0.9953
+-1.00 -0.8427
+-0.50 -0.5205
+-0.25 -0.2763
+ 0.00  0.0000
+ 0.25  0.2763
+ 0.50  0.5205
+ 1.00  0.8427
+ 2.00  0.9953
+ 3.00  1.0000
+'''
+
+#28 erfc() == 1 - erf(x)
+
+import math
+
+print('{:^5} {:7}'.format('x', 'erfc(x)'))
+print('{:-^5} {:-^7}'.format('', ''))
+
+for x in [-3, -2, -1, -0.5, -0.25, 0, 0.25, 0.5, 1, 2, 3]:
+    print('{:5.2f} {:7.4f}'.format(x, math.erfc(x)))
+
+'''RESULTS:
+  x   erfc(x)
+----- -------
+-3.00  2.0000
+-2.00  1.9953
+-1.00  1.8427
+-0.50  1.5205
+-0.25  1.2763
+ 0.00  1.0000
+ 0.25  0.7237
+ 0.50  0.4795
+ 1.00  0.1573
+ 2.00  0.0047
+ 3.00  0.0000
+'''
