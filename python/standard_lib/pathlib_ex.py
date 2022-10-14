@@ -125,3 +125,77 @@ stem  : pathlib_name
 '''
 
 #8 convinience
+
+import pathlib
+
+home = pathlib.Path.home()
+print('home: ', home)
+
+cwd = pathlib.Path.cwd()
+print('cwd :', cwd)
+
+'''RESULTS:
+home:  /home/jack
+cwd : /home/jack/django2/knowlege/python/standard_lib
+'''
+
+#9 iterdir()
+
+import pathlib
+
+p = pathlib.Path('.')
+
+for f in p.iterdir():
+    print(f)
+
+'''RESULTS:
+names all files in dir
+'''
+
+#10 glob() for pattern
+
+import pathlib
+
+print()
+p = pathlib.Path('..')
+
+for f in p.glob('*.dat'):
+    print(f)
+
+'''RESULTS:
+not show files in . dir, but show another
+'''
+
+#11 rglob() or **
+
+import pathlib
+
+print()
+p = pathlib.Path('..')
+
+for f in p.rglob('pathlib_*.py'):
+    print(f)
+
+'''RESUlTS:
+../standard_lib/pathlib_ex.py
+'''
+
+#12 read_bytes(), read_text(), write_bytes() write_text(), open()
+
+import pathlib
+
+f = pathlib.Path('example.txt')
+
+f.write_bytes('This is the content'.encode('utf-8'))
+
+with f.open('r', encoding='utf-8') as handle:
+    print('read from open(): {!r}'.format(handle.read()))
+
+print('read_text(): {!r}'.format(f.read_text('utf-8')))
+
+'''RESULTS:
+read from open(): 'This is the content'
+read_text(): 'This is the content'
+'''
+
+#13 mkdir
