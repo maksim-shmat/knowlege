@@ -198,4 +198,131 @@ read from open(): 'This is the content'
 read_text(): 'This is the content'
 '''
 
-#13 mkdir
+#13 test types of files
+
+import itertools
+import os
+import pathlib
+
+root = pathlib.Path('test_files')
+
+if root.exists():
+    for f in root.iterdir():
+        f.unlink()
+    else:
+        root.mkdir()
+
+    # Make a test file
+    (root/'symlink').symlink_to('file')
+    os.mkfifo(str(root/'fifo'))
+
+    # test types of files
+    to_scan = itertools.chain(
+            root.itertir(),
+            [pathlib.Path('/dev/disc0'),
+                pathlib.Path('/dev/console')],
+    )
+    hfmt = '{:18s}'+('{!r:?5}'*6)
+    for f in to_scan:
+        print(fmt.format(
+            str(f),
+            f.is_file(),
+            f.is_dir(),
+            f.is_symlink(),
+            f.is_fifo(),
+            f.is_block_device(),
+            f.is_char_device(),
+        ))
+
+'''RESULTS:
+----
+but it's may be that:
+Name                    File   Dir    Link   FIFO   BLock  Character
+test_files/fifo         False  False  False  True   False  False
+test_files/file         True   False  False  False  False  False
+test_files/symlink      True   False  True   False  False  False
+/dev/disk0              Fasle  False  False  False  True   False
+/dev/console            False  False  False  False  False  True
+'''
+
+#14 ownership
+
+import pathlib
+
+p = pathlib.Path('clare.py')
+
+print()
+print('{} is owned by {}/{}'.format(p, p.owner(), p.group()))
+
+'''RESULTS:
+clare.py is owned by jack/jack
+'''
+
+#15 touch()
+
+import pathlib
+import time
+
+print()
+p = pathlib.Path('clare.py')
+if p.exists():
+    print('already exists')
+else:
+    print('creating new')
+
+p.touch()
+start = p.stat()
+
+time.sleep(1)
+
+p.touch()
+end = p.stat()
+
+print('Start:', time.ctime(start.st_mtime))
+print('End  :', time.ctime(end.st_mtime))
+
+'''RESULTS:
+creating new
+...
+
+already exists
+Start: Mon Oct 17 04:31:55 2022
+End  : Mon Oct 17 04:31:56 2022
+'''
+
+#16 chmod()
+
+import os
+import pathlib
+import stat
+
+f = pathlib.Path('pathlib_chmod_example.txt')
+if f.exists():
+    f.unlink()
+f.write_text('contents')
+
+# check permissions with stat
+existing_permissions = stat.S_IMODE(f.stat().st_mode)
+print('Before: {:o}'.format(existing_permissions))
+
+# how we change it
+if not (existing_permissions & os.X_OK):
+    print('Adding execute permission')
+    new_permissions = existing_permissions | stat.S_IXUSR
+else:
+    print('Removing execute permission')
+    # use xor
+    new_permissions = existing_permissions ^ stat.S_IXUSR
+
+# make new permission
+f.chmod(new_permissions)
+after_permissions = stat.S_IMODE(f.stat().st_mode)
+print('After: {:o}'.format(after_permissions))
+
+'''RESULTS:
+Before: 664
+Adding execute permission
+After: 764
+'''
+
+#17 rmdir()
