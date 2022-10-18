@@ -324,5 +324,3 @@ Before: 664
 Adding execute permission
 After: 764
 '''
-
-#17 rmdir()
