@@ -185,4 +185,25 @@ but expected another result:
     /tmp/prefix_q62wd7zl_suffix
 '''
 
-#8 
+#8 tempfile settings
+
+import tempfile
+
+print('gettempdir():', tempfile.gettempdir())
+print('gettempprefix():', tempfile.gettempprefix())
+
+'''RESULTS:
+gettempdir(): /tmp
+gettempprefix(): tmp
+'''
+
+#9 if you need special tempdir
+
+import tempfile
+
+tempfile.tempdir = '/I/changed/this/path'
+print('gettempdir():', tempfile.gettempdir())
+
+'''RESULTS:
+gettempdir(): /I/changed/this/path
+'''
