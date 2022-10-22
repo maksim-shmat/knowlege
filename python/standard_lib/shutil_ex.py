@@ -184,4 +184,93 @@ xztar: xz'ed tar-file
 zip  : ZIP file
 '''
 
-#10 
+#10 make archive
+
+import logging
+import shutil
+import sys
+import tarfile
+
+logging.basicConfig(
+        format='%(message)s',
+        stream=sys.stdout,
+        level=logging.DEBUG,
+)
+logger = logging.getLogger('pymotw')
+
+print('Creating archive:')
+shutil.make_archive(
+        'example', 'gztar',
+        root_dir='..',
+        base_dir='shutil',
+        logger=logger,
+)
+
+print('\nArchive contents:')
+with tarfile.open('example.tar.gz', 'r') as t:
+    for n in t.getnames():
+        print(n)
+
+#11 get_unpack_formats()
+
+import shutil
+
+for format, exts, description in shutil.get_unpack_formats():
+    print('{:<5}: {}, names ending in {}'.format(
+        format, description, exts))
+
+'''RESULTS:
+bztar: bzip2'ed tar-file, names ending in ['.tar.bz2', '.tbz2']
+gztar: gzip'ed tar-file, names ending in ['.tar.gz', '.tgz']
+tar  : uncompressed tar file, names ending in ['.tar']
+xztar: xz'ed tar-file, names ending in ['.tar.xz', '.txz']
+zip  : ZIP file, names ending in ['.zip']
+'''
+
+#12 uhpack_archive
+
+import pathlib
+import shutil
+import sys
+import tempfile
+
+with tempfile.TemporaryDirectory() as d:
+    print('Unpacking archive:')
+    shutil.unpack_archive(
+            'example.tar.gz',
+            extract_dir=d,
+    )
+
+    print('\nCreated:')
+    prefix_len = len(d) + 1
+    for extracted in pathlib.Path(d).rglob('*'):
+        print(str(extracted)[prefix_len:])
+
+'''RESULTS:
+Unpacking archive:
+
+Created:
+shutil
+'''
+
+#13 shutil.disk_usage()
+
+import shutil
+
+total_b, used_b, free_b = shutil.disk_usage('.')
+
+gib = 2 ** 30 # GiB
+gb = 10 ** 9  # GB
+
+print('Total: {:6.2f} GB {:6.2f} GiB'.format(
+    total_b / gb, total_b / gib))
+print('Used: {:6.2f} GB {:6.2f} GiB'.format(
+    used_b/gb, used_b / gib))
+print('Free: {:6.2f} GB {:6.2f} GiB'.format(
+    free_b / gb, free_b / gib))
+
+'''RESULTS:
+Total: 496.76 GB 462.64 GiB
+Used:  58.02 GB  54.04 GiB
+Free: 413.43 GB 385.04 GiB
+'''
