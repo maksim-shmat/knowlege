@@ -62,7 +62,7 @@ VCS - Version Control System
 
 LAN - Local Area Network
 
-OSI - Open System Inter Connection
+OSI - Open System Interconnection
 
 API - Application Programm Interface
 
@@ -104,9 +104,8 @@ FCS - Frame Check Sequence
 
 ==================
 
-FDM - Frequency Division Multiplexing
 
-WDM - Wave Division Multiplexing
+WDM - Wavelength-Division Multiplexing
 
 TDM - Time Division Multiplexing
 
@@ -182,7 +181,7 @@ ICANN - Internet Corporation for Assigned Names and Numbers
 
 NAT - Network Address Translation
 
-CIDR - Classless Inter-Domain Routing
+CIDR - Classless InterDomain Routing
 
 URL - Uniform Resource Locator
 URI - Uniform Resource Identifier
@@ -232,8 +231,6 @@ LSA - Link State Algorithm
 RIP - Routing Information Protocol
 
 OSPF - Open Shortest Path First
-
-IS-IS - Internet System to Internet System
 
 EGP - Exterior Gateway Protocol
 
@@ -448,6 +445,7 @@ DMT - Discrete Multi Tone
 
 RADSL - Rate-Adaptive Digital Subscriber Line
 
+DSL - Digital Subsciber Line
 VDSL - Very-High-Data-Rate DSL
 SDSL - Single-Line DSL
 
@@ -517,6 +515,7 @@ EWMA - Exponentially Weighed Moving Average
 ROHC - Robust Header Compression
 
 LEO - Low-Earth Orbit
+MEO - Medium-Earth Orbite Satellite
 
 DTN - Delay-Tolerant Network
 DTN - Disruption-Tolerant Network
@@ -606,3 +605,133 @@ IDEA - International Data Encryption Algorithm
 RRSet - Resource Record Set
 
 DCMA - Digital Millenium Copyright Act
+
+NFC - Near Field Communication
+
+DNS - Domain Name Service
+
+CMTS - Cable Modem Termination System
+
+UMTS - Universal Mobile Telecommunications System
+
+WCDMA - Wideband Code Division Multiple Access
+
+CDMA - Code Division Multiple Access
+
+RNC - Radio Network Controller
+
+GPRS - General Packet Radio Service
+
+SGSN - Serving GPRS Support Node
+
+GMSC - Gateway Mobile Switching Center
+
+SIM - Subscriber Identity Module
+
+OFDM - Orthogonal Frequency Division Multiplexing
+
+VSAT - Very Small Apperture Terminal
+
+NRZ - Non Return to Zero
+
+AMI - Alternate Mark Inversion
+
+ASK - Amplitude Shift Keying
+FSK - Frequency Shift Keying
+PSK - Phase Shift Keying
+BPSK - Binary Phrase Shift Keying
+QPSK - Qudrature Phase Shift Keying
+
+QAM - Quadrature Amplitude Modulation
+
+modem - MO_dulator/DEM_odulator
+
+FTTH - Fiber To The Home
+
+PON - Passive Optical Network
+GPON - Gigabyte PON
+EPON - Ethernet PON
+
+PCM - Pulse Code Modulation
+
+SONET - Synchronous Optical Network
+
+SDH - Synchronous Digital Hierarchy
+
+SPE - Synchronous Payload Envelope
+
+MAHO - Mobile Assistent HandOff
+
+LDPC - Low-Density Parity Check
+
+PAR - Positive Acknowlegement with Retransmission
+
+NAK - Negative Acklowlegement
+
+SLIP - Serial Line Internet Protocol
+
+AAL5 - ATM Adaptation Layer 5
+
+RPR - Resilient Packet Ring
+
+MACA - Multiple Access with Collision Avoidance
+
+IEEE 802.3 - Ethernet
+
+OUI - Organizationally Unique Identifier
+
+KISS - Keep It Simple, Stupid
+
+CCK - Complementary Code Keying
+
+NAV - Network Allocation Vector
+
+APSD - Automatic Power Save Delivery
+
+SIFS - Short InterFrame Inerval
+
+AIFS - Arbitration InterFrame Space
+
+DIFS - DCF InterFrame Spacing
+
+EIFS - Extended InterFrame Spacing
+
+WiMAX(802.16) - Worldwide Interoperability for Microwave Access
+
+L2CAP - Logical Link Control and Adaptation Protocol
+
+PIN - Personal Indentification Number
+
+SCO - Sybchronous Connection Oriented
+
+ACL - Asynchronous Connectionless
+
+RFID - Radio Frequency Identification
+
+CFI - Canonical Format Indicator
+
+IS-IS - Intermediate System to Intermediate System
+
+DVRMP - Distance Vector Multicast Routing Protocol
+
+VLR - Visitor Location Register
+
+MANET - Mobile AD hoc NETworks
+
+AODV - Ad hoc On-demand Distance Vector
+
+DSR - Dynamic Source Routing
+
+GPSR - Greedy Perimeter Stateless Routing
+
+RED - Random Early Detection
+
+SLA - Service Level Agreement
+
+FCFS - First Come First Queueing
+
+DRR - Deficit Round Robin
+
+RSVP - Resource reSerVation Protocol
+
+SIPP(IPv6) - Simple Internet Protocol Plus
