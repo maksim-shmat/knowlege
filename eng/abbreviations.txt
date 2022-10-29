@@ -169,6 +169,8 @@ SPBV - Shorted Path Bridging VLAN
 
 SPBM - Shorted Path Bridging MAC
 MAC - Media Access Control
+MAC - Medium Access Control
+MAC - Message Authentication Code
 
 HTTP - Hypertext Transfer Protocol
 
@@ -183,6 +185,8 @@ NAT - Network Address Translation
 CIDR - Classless Inter-Domain Routing
 
 URL - Uniform Resource Locator
+URI - Uniform Resource Identifier
+URN - Uniform Resource Name
 
 ISP - Internet Service Provider
 
@@ -199,7 +203,7 @@ SWIG - Simple Wrapper and Interface Generator (for Python from C)
 
 BIND - Barkely Internet Name Domain
 
-DHCP - Dynamic Hest Configuration Protocol
+DHCP - Dynamic Host Configuration Protocol
 
 MTU - Maximum Transmission Unit
 
@@ -305,6 +309,7 @@ CHAP - Challenge Authentication Protocol
 WSGI - Web Server Gateway Interface
 =========
 RAS - Remote Access Server
+RAS - Registration/Admission/Status
 
 PPTP - Point to Point Tunneling Protocol
 
@@ -464,4 +469,140 @@ GMT - Greenwich Mean Time
 
 RTMP - AppleTalk Routing Table Management Protocol
 
+NDP - Neighbor Discovery Protocol
 
+MPLS - MultiProtocol Label Switching
+
+LSR - Label Switching Router
+LER - Label Edge Router
+
+FEC - Forwarding Equivalence Class
+FEC - Forward Error Correction
+
+ECMP - Equal Cost MultiPath
+
+PIM - Protocol Independent Multicast
+
+TPDU - Transport Protocol Data Unit
+
+DCCP - Datagram Congestion Control Protocol
+
+SCTP - Stream Control Transmission Protocol
+
+SST - Structured Stream Transport
+
+NSAP - Network Service Access Point
+TSAP - Transport Service Access Point
+
+PAWS - Protection Against Wrapped Sequence numbers
+
+XCP - eXplicit Congestion Protocol
+ECN - Explicit Congestion Notification
+
+AIMD - Additive Increase Multiplicative Decrease
+
+RPC - Remote Procedure Call
+
+PTP - Real-Time Transport Protocol
+RTCP - Real-Time Transport Control Protocol
+
+MSS - Maximum Segment Size
+
+RTO - Retransmission TimeOut
+
+SRTT - Smoothed Round-Trip Time
+
+EWMA - Exponentially Weighed Moving Average
+
+ROHC - Robust Header Compression
+
+LEO - Low-Earth Orbit
+
+DTN - Delay-Tolerant Network
+DTN - Disruption-Tolerant Network
+
+SOA - Start of Authority
+
+ESMTP - Extended SMTP
+
+CERN - Conseil Européen pour la Recherche Nucléaire
+
+SOAP - Simple Object Access Protocol
+
+JPEG - Joint Photographic Experts Group
+
+MPEG - Motion Picture Experts Group
+
+H.264 or AVC - Advanced Video Coding
+
+DCT - Discrete Cosine Transformation
+
+RTSP - Real Time Streaming Protocol
+
+SIP - Session Initiation Protocol
+
+CDN - Content Distribution Network
+
+P2P - Peer to Peer
+
+DHT - Distributed Hash Table
+
+DES - Data Encryption Standard
+
+NSA - National Security Agency (No Such Agency)
+
+NIST - National Institute of Standards and Technology
+
+AES - Advanced Encryption Standard
+
+KRA - KeyStream Reause Attack
+
+RSA - Rivest, Shamir, Adleman
+
+DSS - Digital Signature Standard
+
+MD5 - Message Digest 5
+
+ASN.1 - Abstract Syntax Notation 1
+
+SHA-1 - Secure Hash Algorithm 1
+
+PKI - Public Key Infrastructure
+
+CRL - Certificate Revocation List
+
+ISAKMP - Internet Security and Key Management Protocol
+
+IKE - Internet Key Exchange
+
+HMAC - Hashed Message Authentication Code
+
+ESP - Encapsulating Security Payload
+
+DMZ - DeMilitarized Zone
+
+WPA2 - WiFi Protected Access 2
+
+WEP - Wired Equivalent Privacy
+
+EAP - Extendable Authentication Protocol
+
+nonces - number used once
+
+MIC - Message Integrity Check
+
+TKIP - Temporary Key Integrity Protocol
+
+CCMP - Counter mode with Cipher block chaining Message authentication code Protocol
+
+KDC - Key Distribution Center
+
+TGS - Ticket Guaranting Server
+
+PGP - Pretty Good Privacy
+
+IDEA - International Data Encryption Algorithm
+
+RRSet - Resource Record Set
+
+DCMA - Digital Millenium Copyright Act
