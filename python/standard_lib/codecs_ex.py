@@ -106,4 +106,134 @@ Raw    : b'feff 0066 0072 0061 006e 00e7 0061 0069 0073'
 Decoded: 'français'
 '''
 
-#7
+#7 rot13
+
+import codecs
+import io
+
+buffer = io.StringIO()
+stream = codecs.getwriter('rot_13')(buffer)
+
+text = 'abcdefghijklmnopqrstuvwxyz'
+
+stream.write(text)
+stream.flush()
+
+print('Original:', text)
+print('ROT-13:', buffer.getvalue())
+
+'''RESULTS:
+Original: abcdefghijklmnopqrstuvwxyz
+ROT-13: nopqrstuvwxyzabcdefghijklm
+'''
+
+#8 zlib
+
+import codecs
+import io
+
+from codecs_to_hex import to_hex
+
+buffer = io.BytesIO()
+stream = codecs.getwriter('zlib')(buffer)
+
+text = b'abcdefghijklmnopqrstuvwxyz\n' * 50
+
+stream.write(text)
+stream.flush()
+
+print('Original length:', len(text))
+compressed_data = buffer.getvalue()
+print('ZIP compressed:', len(compressed_data))
+
+buffer = io.BytesIO(compressed_data)
+stream = codecs.getreader('zlib')(buffer)
+
+first_line = stream.readline()
+print('Read first line:', repr(first_line))
+
+uncompressed_data = first_line + stream.read()
+print('Uncompressed:', len(uncompressed_data))
+print('Same:', text == uncompressed_data)
+
+'''RESULTS:
+Original length: 1350
+ZIP compressed: 48
+Read first line: b'abcdefghijklmnopqrstuvwxyz\n'
+Uncompressed: 1350
+Same: True
+'''
+
+#9 incremental coding, bz2
+
+import codecs
+import sys
+
+from codecs_to_hex import to_hex
+
+text = b'abcdefjhijklmnopqrstuvwxyz\n'
+repetitions = 50
+
+print('Text length :', len(text))
+print('Repetitions :', repetitions)
+print('Expected len:', len(text) * repetitions)
+
+# Make a bulk of data
+encoder = codecs.getincrementalencoder('bz2')()
+encoded = []
+
+print()
+print('Encoding:', end=' ')
+last = repetitions - 1
+for i in range(repetitions):
+    en_c = encoder.encode(text, final=(i == last))
+    if en_c:
+        print('\nEncoded: {} bytes'.format(len(en_c)))
+        encoded.append(en_c)
+    else:
+        sys.stdout.write('.')
+
+all_encoded = b''.join(encoded)
+print()
+print('Total encoded length:', len(all_encoded))
+print()
+
+# Decode byte string for one byte
+decoder = codecs.getincrementaldecoder('bz2')()
+decoded = []
+
+print('Decoding:', end=' ')
+for i, b in enumerate(all_encoded):
+    final = (i + 1) == len(text)
+    c = decoder.decode(bytes([b]), final)
+    if c:
+        print('\nDecoded : {} characters'.format(len(c)))
+        print('Decoding:', end=' ')
+        decoded.append(c)
+    else:
+        sys.stdout.write('.')
+print()
+
+restored = b''.join(decoded)
+
+print()
+print('Total uncompressed length:', len(restored))
+
+'''RESULTS:
+Text length : 27
+Repetitions : 50
+Expected len: 1350
+
+Encoding: .................................................
+Encoded: 98 bytes
+
+Total encoded length: 98
+
+Decoding: .......................................................................................
+Decoded : 1350 characters
+Decoding: ..........
+
+Total uncompressed length: 1350
+'''
+
+#10 
