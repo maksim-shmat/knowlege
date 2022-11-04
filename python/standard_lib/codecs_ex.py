@@ -399,3 +399,52 @@ def find_invertcaps(encoding):
     if encoding == 'invertcaps':
         return codecs.CodecInfo(
                 name='invertcaps',
+                encode=InvertCapsCodec().encode,
+                decode=InvertCapsCodec().decode,
+                incrementalencoder=InvertCapsIncrementalEncoder,
+                incrementaldecoder=InvertCapsIncrementalDecoder,
+                streamreader=InvertCapsStreamReader,
+                streamwriter=InvertCapsStreamWriter,
+        )
+    return None
+
+codecs.register(find_invertcaps)
+
+if __name__ == '__main__':
+
+    # Encoder/Decoder without save it
+    encoder = codecs.getencoder('invertcaps')
+    text = 'abcDEF'
+    encoded_text, consumed = encoder(text)
+    print('Encoded "{}" to "{}", consuming {} characters'.format(
+        text, encoded_text, consumed))
+
+    # stream write object
+    import io
+    buffer = io.BytesIO()
+    writer = codecs.getwriter('invertcaps')(buffer)
+    print('StreamWriter for io buffer: ')
+    print(' writing "abcDEF"')
+    writer.write('abcDEF')
+    print('  buffer contents: ', buffer.getvalue())
+
+    # Incremental decoder
+    decoder_factory = codecs.getincrementaldecoder('invertcaps')
+    decoder = decoder_factory()
+    decoded_text_parts = []
+    for c in encoded_text:
+        decoded_text_parts.append(
+                decoder.decode(bytes([c]), final=False)
+        )
+    decoded_text_parts.append(decoder.decode(b'', final=True))
+    decoded_text = ''.join(decoded_text_parts)
+    print('IncrementalDecoder converte {!r} to {!r}'.format(
+        encoded_text, decoded_text))
+
+'''RESULTS:
+Encoded "abcDEF" to "b'ABCdef'", consuming 6 characters
+StreamWriter for io buffer: 
+ writing "abcDEF"
+  buffer contents:  b'ABCdef'
+IncrementalDecoder converte b'ABCdef' to 'abcDEF'
+'''
