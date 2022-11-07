@@ -50,3 +50,35 @@ b'Initial value for read buffer'
 '''
 
 #3 io.TextIOWrapper()
+
+import io
+
+# write on the buffer
+output = io.BytesIO()
+wrapper = io.TextIOWrapper(
+        output,
+        encoding= 'utf-8',
+        write_through=True,
+)
+wrapper.write('This goes into the buffer.')
+wrapper.write('ÁÇĒ')
+
+# get from the buffer
+print(output.getvalue())
+
+output.close()  # empty buffer memory
+
+# Init buffer for write
+input = io.BytesIO(
+        b'Initial value for read buffer with unicode characters' +
+        'ÁÇĒ'.encode('utf-8')
+)
+wrapper = io.TextIOWrapper(input, encoding='utf-8')
+
+# Read from the buffer
+print(wrapper.read())
+
+'''RESULTS:
+b'This goes into the buffer.\xc3\x81\xc3\x87\xc4\x92'
+Initial value for read buffer with unicode charactersÁÇĒ
+'''
