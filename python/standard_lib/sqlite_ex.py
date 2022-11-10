@@ -244,4 +244,215 @@ EXPEDTED RESULTS: write: $ python3 sqlite_ex.py 2 done
 3 [1] write about sqlite3
 '''
 
-#8 executemany()
+#8 executemany(), load from csv
+
+'''
+import csv
+import sqlite3
+import sys
+
+db_filename = 'todo.db'
+
+data_filename = sys.argv[1]
+
+SQL = """
+insert into task (details, priority, status, deadline, project)
+values (:details, :priority, 'active', :deadline, :project)
+"""
+
+with open(data_filename, 'rt') as csv_file:
+    csv_reader = csv.DictReader(csv_file)
+
+    with sqlite3.connect(db_filename) as conn:
+        cursor = conn.cursor()
+        cursor.executemany(SQL, csv_reader)
+        
+EXPECTED RESULTS: After write in CLI: $ python3 sqlite_ex.py tasks.csv
+                                         $ python3 sqlite_ex.py pymotw
+                              # need use code from #6 in different file
+1 [1] write about select          [done    ] (2029-04-11)
+5 [2] revise chapter intros       [active  ] (1010-09-99)
+2 [1] write about random          [done    ] (9999-99-99)
+6 [1] subtitle                    [active  ] (9999-99-99)
+4 [2] finish reviewing markup     [acitve  ] (9999-99-99)
+3 [1] write about swlite3         [active  ] (9999-99-99)
+'''
+
+#9 data types for SQLite from sqlite3
+
+import sqlite3
+import sys
+
+db_filename = 'todo.db'
+
+sql = "select id, details, deadline from task"
+
+def show_deadline(conn):
+    conn.row_factory = sqlite3.Row
+    cursor = conn.cursor()
+    cursor.execute(sql)
+    row = cursor.fetchone()
+    for col in ['id', 'details', 'deadline']:
+        print('  {:<8}  {!r:<26} {}'.format(
+            col, row[col], type(row[col])))
+    return
+
+print('Without type detection:')
+with sqlite3.connect(db_filename) as conn:
+    show_deadline(conn)
+
+print('\nWith type detection:')
+with sqlite3.connect(db_filename,
+                     detect_types=sqlite3.PARSE_DECLTYPES,
+                     ) as conn:
+    show_deadline(conn)
+
+'''RESULTS:
+Without type detection:
+  id        1                          <class 'int'>
+  details   'write about select'       <class 'str'>
+  deadline  '2016-04-25'               <class 'str'>
+
+With type detection:
+  id        1                          <class 'int'>
+  details   'write about select'       <class 'str'>
+  deadline  datetime.date(2016, 4, 25) <class 'datetime.date'>
+'''
+
+#10 custom types
+'''
+import pickle
+import sqlite3
+
+db_filename = 'todo.db'
+
+def adapter_func(obj):
+    """Change data from memory to view for db."""
+    print('adapter_func({})\n'.format(obj))
+    return pickle.dumps(obj)
+
+def converter_func(data):
+    """Change data from db to view for memory."""
+    print('convert_func({!r})\n'.format(data))
+    return pickle.loads(data)
+
+
+class MyObj:
+
+    def __init__(self, arg):
+        self.arg = arg
+
+    def __str__(self):
+        return 'MyObj({!r})'.format(self.arg)
+
+# Registration functions for change types
+sqlite3.register_adapter(MyObj, adapter_func)
+sqlite3.register_converter("MyObj", converter_func)
+
+# Make objects for save. Use lists of tuples for muve it to executemany().
+to_save = [
+        (MyObj('this is a value to save'),),
+        (MyObj(42),),
+]
+
+with sqlite3.connect(
+        db_filename,
+        detect_types=sqlite3.PARSE_DECLTYPES) as conn:
+    conn.execute("""
+create table if not exists obj (
+id    integer primary key autoincrement not null,
+data  MyObj
+)
+""")
+    cursor = conn.cursor()
+
+    # Insert objects into db
+    cursor.executemany("insert into obj (data) values (?)",
+                       to_save)
+    # Show objects saved in db in this time
+    cursor.execute("select id, data from obj")
+    for obj_id, obj in cursor.fetchall():
+        print('Retrieved', obj_id, obj)
+        print('  with type', type(obj))
+        print()
+
+RESULTS:
+Traceback (most recent call last):
+  File "<stdin>", line 362, in <module>
+sqlite3.OperationalError: database is locked
+
+shell returned 1
+'''
+
+#11 custom column type
+
+'''
+import pickle
+import sqlite3
+
+db_filename = 'todo.db'
+
+def adapter_func(obj):
+    """Change data from memory to view for db."""
+    print('adapter_func({})\n'.format(obj))
+    return pickle.dumps(obj)
+
+def converter_func(data):
+    """Change data from db to view for memory."""
+    print('converter_func({!r})\n'.format(data))
+    return pickle.loads(data)
+
+
+class MyObj:
+
+    def __init__(self, arg):
+        self.arg = arg
+
+    def __str__(self):
+        return 'MyObj({!r})'.format(self.arg)
+
+# Registeration
+sqlite3.register_adapter(MyObj, adapter_func)
+sqlite3.register_converter("MyObj", converter_func)
+
+# Make objects for save. list of tuples for executemany()
+to_save = [
+        (MyObj('this is a value to save'),),
+        (MyObj(42),),
+]
+
+with sqlite3.connect(
+        db_filename,
+        detect_types=sqlite3.PARSE_COLNAMES) as conn:
+    conn.execute("""
+    create table if not exists obj2 (
+    id   integer primary key autoincrement not null,
+    data text
+    )
+    """)
+
+    cursor = conn.cursor()
+
+    # Insert objects in db
+    cursor.executemany("insert into obj2 (dat) values (?)", to_save)
+
+    # Get obj
+    cursor.execute(
+            'select id, data as "pickle [MyObj]" from obj2',
+    )
+    for obj_id, obj in cursor.fetchall():
+        print('Retrived', obj_id, obj)
+        print('  with type', type(obj))
+        print()
+
+   RESULTS:
+Traceback (most recent call last):
+  File "<stdin>", line 426, in <module>
+sqlite3.OperationalError: database is locked
+
+shell returned 1
+'''
+
+#12 transaction commit
+
+
