@@ -1,11 +1,11 @@
 """sqlite about."""
 
-'''
 #1 cratedb
 
 import os
 import sqlite3
 
+'''
 db_filename = 'todo.db'
 
 db_is_new = not os.path.exists(db_filename)
@@ -163,10 +163,10 @@ Task table has these columns:
 
 #5 positional arguments - <?>, for safe
 
-'''
 import sqlite3
 import sys
 
+'''
 db_filename = 'todo.db'
 project_name = sys.argv[1]
 
@@ -192,10 +192,10 @@ EXPECTED RESULTS: After write in CLI: python3 sqlite_ex.py pymotw
 
 #6 named arguments - <:>, for safe
 
-'''
 import sqlite3
 import sys
 
+'''
 db_filename = 'todo.db'
 project_name = sys.argv[1]
 
@@ -223,10 +223,10 @@ EXPECTED RESULTS: Afer write in CLI: $ python3 sqlite_ex.py pymotw
 
 #7  update argument
 
-'''
 import sqlite3
 import sys
 
+'''
 db_filename = 'todo.db'
 id = int(sys.argv[1])
 status = sys.argv[2]
@@ -246,11 +246,11 @@ EXPEDTED RESULTS: write: $ python3 sqlite_ex.py 2 done
 
 #8 executemany(), load from csv
 
-'''
 import csv
 import sqlite3
 import sys
 
+'''
 db_filename = 'todo.db'
 
 data_filename = sys.argv[1]
@@ -320,10 +320,11 @@ With type detection:
 '''
 
 #10 custom types
-'''
+
 import pickle
 import sqlite3
 
+'''
 db_filename = 'todo.db'
 
 def adapter_func(obj):
@@ -386,10 +387,10 @@ shell returned 1
 
 #11 custom column type
 
-'''
 import pickle
 import sqlite3
 
+'''
 db_filename = 'todo.db'
 
 def adapter_func(obj):
@@ -455,4 +456,192 @@ shell returned 1
 
 #12 transaction commit
 
+import sqlite3
+'''
+db_filename = 'todo.db'
 
+def show_projects(conn):
+    cursor = conn.cursor()
+    cursor.execute('select name, description from project')
+    for name, desc in cursor.fetchall():
+        print('  ', name)
+
+with sqlite3.connect(db_filename) as conn1:
+    print('Before changes:')
+    show_projects(conn1)
+
+    # Insert to one cursor
+    cursor1 = conn1.cursor()
+    cursor1.execute("""
+    insert into project (name, description, deadline)
+    values ('virtualenvwrapper', 'Virtualenv Extensions',
+            '2011-11-11')
+    """)
+
+    print('\nAfter change in conn1:')
+    show_projects(conn1)
+
+# Select from another connection, without committing first
+    print('\nBefore commit:')
+    with sqlite3.connect(db_filename) as conn2:
+        show_projects(conn2)
+
+    # commit and show data from another connection
+    conn1.commit()
+    print('\nAfter commit:')
+    with sqlite3.connect(db_filename) as conn3:
+        show_projects(conn3)
+
+   RESULTS:
+Before changes:
+   pymotw
+
+After change in conn1:
+   pymotw
+   virtualenvwrapper
+
+Before commit:
+   pymotw
+Traceback (most recent call last):
+  File "<stdin>", line 489, in <module>
+sqlite3.OperationalError: database is locked
+
+shell returned 1
+'''
+
+#13 rollback() before commit
+
+import sqlite3
+
+db_filename = 'todo.db'
+
+def show_projects(conn):
+    cursor = conn.cursor()
+    cursor.execute('select name, description from project')
+    for name, desc in cursor.fetchall():
+        print('  ', name)
+
+with sqlite3.connect(db_filename) as conn:
+    print('Before changes:')
+    show_projects(conn)
+
+    try:
+        # Insert string
+        cursor = conn.cursor()
+        cursor.execute("""delete from project
+                       where name = 'virtualenvwrapper'
+                       """)
+        print('\nAfter delete:')
+        show_projects(conn)
+
+        raise RuntimeError('simulated error')
+    except Exception as err:
+        print('ERROR:', err)
+        conn.rollback()
+    else:
+        conn.commit()
+    print('\nAfter rollback:')
+    show_projects(conn)
+
+'''RESULTS:
+Before changes:
+   pymotw
+
+After delete:
+   pymotw
+ERROR: simulated error
+
+After rollback:
+   pymotw
+'''
+
+#14 isolation levels, DEFERRED
+# four threads, two write - two read.
+
+import logging
+import sqlite3
+import sys
+import threading
+import time
+
+'''
+logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s (%(threadName)-10s) %(message)s',
+)
+
+db_filename = 'todo.db'
+isolation_level = sys.argv[1]
+
+def writer():
+    with sqlite3.connect(
+            db_filename,
+            isolation_level=isolation_level) as conn:
+        cursor = conn.cursor()
+        cursor.execute('update task set priority = priority + 1')
+        logging.debug('waiting to synchronize')
+        ready.wait()  # synchronize threads
+        logging.debug('PAUSING')
+        time.sleep(1)
+        conn.commit()
+        logging.debug('CHANGES COMMITTED')
+
+def reader():
+    with sqlite3.connect(
+            db_filename,
+            isolation_level=isolation_level) as conn:
+        cursor = conn.cursor()
+        logging.debug('waiting to synchronize')
+        ready.wait()  # synchronize threads
+        logging.degug('CHANGES COMMITTED')
+
+def reader():
+    with sqlite3.connect(
+            db_filename,
+            isolation_level=isolation_level) as conn:
+        cursor = conn.cursor()
+        logging.debug('waiting to synchronize')
+        ready.wait()  # synchronize threads
+        logging.debug('wait over')
+        cursor.execute('select * from task')
+        logging.debug('SELECT EXECUTED')
+        cursor.fetchall()
+        logging.debug('results fetched')
+
+if __name__ == '__main__':
+    ready = threading.Event()
+
+    threads = [
+            threading.Thread(name='Reader 1', target=reader),
+            threading.Thread(name='Reader 2', target=reader),
+            threading.Thread(name='Writer 1', target=writer),
+            threading.Thread(name='Writer 2', target=writer),
+    ]
+
+    [t.start() for t in threads]
+
+    time.sleep(1)
+    logging.debug('setting ready')
+    ready.set()
+
+    [t.join() for t in threads]
+
+   EXPECTED RESULTS: After write in CLI: $ python3 sqlite_ex.py DEFERRED
+2016-08-20 17:46:26,972 (Reader 1  ) waiting to synchronize
+2016-08-20 17:46:26,972 (Reader 2  ) waiting to synchronize
+2016-08-20 17:46:26,972 (Writer 1  ) waiting to synchronize
+2016-08-20 17:46:27,977 (MainThread) setting ready
+2016-08-20 17:46:27.979 (Reader 1  ) wait over
+-/-                     (Writer 1  ) PAUSING
+                        (Reader 2  ) wait over
+                        (Reader 1  ) SELECT EXECUTED
+                        (Reader 1  ) results fetched
+                        (Reader 2  ) SELECT EXECUTED
+                        (Writer 1  ) results fetched
+                        (Writer 1  ) CHANGES COMMITTED
+                        (Writer 2  ) waiting to synchronize
+                        (Writer 2  ) PAUSING
+                        (Writer 2  ) CHANGES COMMITTED
+'''
+
+#15  
