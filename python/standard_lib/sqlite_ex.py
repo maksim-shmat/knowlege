@@ -555,7 +555,7 @@ After rollback:
    pymotw
 '''
 
-#14 isolation levels, DEFERRED
+#14 isolation levels, DEFERRED, IMMEDIATE, EXCLUSIVE
 # four threads, two write - two read.
 
 import logging
@@ -564,12 +564,11 @@ import sys
 import threading
 import time
 
-'''
 logging.basicConfig(
         level=logging.DEBUG,
         format='%(asctime)s (%(threadName)-10s) %(message)s',
 )
-
+'''
 db_filename = 'todo.db'
 isolation_level = sys.argv[1]
 
@@ -642,6 +641,40 @@ if __name__ == '__main__':
                         (Writer 2  ) waiting to synchronize
                         (Writer 2  ) PAUSING
                         (Writer 2  ) CHANGES COMMITTED
-'''
 
-#15  
+'''
+#15 iterdump
+
+import sqlite3
+
+schema_filename = 'todo_schema.sql'
+
+with sqlite3.connect(':memory:') as conn:
+    conn.row_factory = sqlite3.Row
+    print('Creating schema')
+    with open(schema_filename, 'rt') as f:
+        schema = f.read()
+    conn.executescript(schema)
+
+    print('Inserting initial data')
+    conn.execute("""
+    insert into project (name, description, deadline)
+    values ('pymotw', 'Python Module of the Week',
+            '2010-11-11')
+    """)
+    data = [
+            ('write about select', 'done', '2010-10-11',
+                'pymotw'),
+            ('write about random', 'waiting', '2010-10-10',
+                'pymotw'),
+            ('write about sqlite3', 'active', '2010-10-30',
+                'pymotw'),
+    ]
+    conn.executemany("""
+    insert into task (details, status, deadline, project)
+    values (?, ?, ?, ?)
+    """, data)
+
+    print('Dumping:')
+    for text in conn.iterdump():
+        print(text)
