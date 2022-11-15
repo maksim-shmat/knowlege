@@ -368,3 +368,115 @@ with open('podcasts.csv', 'rt') as f:
 print(prettify(root))
 
 #18 ElementTree_extend.py
+
+from xml.etree.ElementTree import Element,tostring
+from ElementTree_pretty import prettify
+
+top = Element('top')
+
+children = [
+        Element('child', num=str(i))
+        for i in range(3)
+]
+
+top.extend(children)
+
+print(prettyfy(top))
+
+#19 ElementTree_extend_node.py
+
+from xml.etree.ElementTree import (
+        Element, SubElement, tostring, XML,
+)
+from ElementTree_pretty import prettify
+
+top = Element('top')
+
+parent = SubElement(top, 'parent')
+
+children = XML(
+        '<root><child num="0" /><child num="1" />'
+        '<child num="2" /></root>'
+)
+parent.extend(children)
+
+print(prettify(top))
+
+#20 ElementTree_extend_node_copy.py
+
+from xml.etree.ElementTree import (
+        Element, SubElement, tostring, XML,
+)
+from ElementTree_pretty import prettify
+
+top = Element('top')
+
+parent_a = SubElement(top, 'parent', id='A')
+parent_b = SubElement(top, 'parent', id='B')
+
+# make a doughters nodes
+children = XML(
+        '<root><child num="0" /><child num="1" />'
+        '<child num="2" /></root>'
+)
+
+# check dublicates
+for c in children:
+    c.set('id', str(id(c)))
+
+
+# add node into first parent node
+parent_a.extend(children)
+
+print('A:')
+print(prettify(top))
+print()
+
+#21 ElementTree_write.py
+
+import io
+import sys
+from xml.etree.ElementTree import (
+        Element, SubElement, Comment, ElementTree,
+)
+
+top = Element('top')
+
+comment = Comment('Generated for PyMOTW')
+top.append(comment)
+
+child = SubElement(top, 'child')
+child.text = 'This child contains text.'
+
+child_with_tail = SubElement(top, 'child_with_tail')
+child_with_tail.text = 'This child has regular text.'
+
+child_with_tail.tail = 'And "tail" text.'
+
+child_with_entity_ref = SubElement(top, 'child_with_entity_ref')
+child_with_entity_ref.text = 'This & that'
+
+empty_child = SubElement(top, 'empty_child')
+
+ElementTree(top).write(sys.stdout.buffer)
+
+#22 ElementTree_write_method.py
+
+import io
+import sys
+from xml.etree.ElementTree import (
+        Element, SubElement, ElementTree,
+)
+
+top = Element('top')
+
+child = SubElement(top, 'child')
+child.text = 'Contains text.'
+
+empty_child = SubElement(top,'empty_child')
+
+for method in ['xml', 'html', 'text']:
+    print(method)
+    sys.stdout.flush()
+    ElementTree(top).write(sys.stdout.buffer, method=method)
+    print('\n')
