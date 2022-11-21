@@ -58,6 +58,8 @@ SFTP - Secure File Transper Protocol
 
 SMTP - Simple Mail Transfer Protocol
 
+ESMTP - Extended SMTP
+
 VCS - Version Control System
 
 LAN - Local Area Network
@@ -79,6 +81,7 @@ IIR - Instantaneous Information Rate
 PIR - Peak Information Rate
 
 QoS - Quality of Service
+QoS - Class of Service
 
 WFQ - Weighted Fair Queueing
 
@@ -95,6 +98,7 @@ STP - Shilded Twisted Pair
 UTP - Unshilded Twisted Pair
 
 SMF - Single Mode Fiber
+SMF - Session Management Function
 
 MMF - Multi Mode Fiber
 
@@ -170,6 +174,7 @@ SPBM - Shorted Path Bridging MAC
 MAC - Media Access Control
 MAC - Medium Access Control
 MAC - Message Authentication Code
+MAC - Mandatory Access Control
 
 HTTP - Hypertext Transfer Protocol
 
@@ -178,8 +183,6 @@ IP - Internet Protocol
 ICMP - Internet Control Message Protocol
 
 ICANN - Internet Corporation for Assigned Names and Numbers
-
-NAT - Network Address Translation
 
 CIDR - Classless InterDomain Routing
 
@@ -273,7 +276,9 @@ GRE - Generic Routing Encapsulation
 
 IXP - Internet eXchange Point
 
+NAT - Network Address Translation
 NAP - Network Access Point
+NAPT - Network Address Port Translation
 
 SaaS - Software As a Service
 
@@ -285,7 +290,7 @@ SVC - Switched Vitrual Circuit
 
 PVC - Permanent Virtual Circuit
 
-NLMA - Non Broadcast Multiple Access
+NBMA - Non Broadcast Multiple Access
 
 ATM - Asynchronous Transfer Mode
 
@@ -301,7 +306,7 @@ NCP - Network Control Protocol
 
 PAP - Password Authentication Protocol
 
-CHAP - Challenge Authentication Protocol
+CHAP - Challenge Handshake Authentication Protocol
 =========
 WSGI - Web Server Gateway Interface
 =========
@@ -315,8 +320,6 @@ MNP - Microcom Networking Protocol
 LAP-M - Link Access Protocol for  Modems
 
 SDC - Synchronous Data Compression
-
-3. Data Bases
 
 SQL - Structured Query Language
 
@@ -472,9 +475,12 @@ NDP - Neighbor Discovery Protocol
 MPLS - MultiProtocol Label Switching
 
 LSR - Label Switching Router
-LER - Label Edge Router
+LSP - Label Switching Path
+LER - Label Switching Edge Router
 
 FEC - Forwarding Equivalence Class
+FTN - FEC To Next hope
+
 FEC - Forward Error Correction
 
 ECMP - Equal Cost MultiPath
@@ -521,8 +527,6 @@ DTN - Delay-Tolerant Network
 DTN - Disruption-Tolerant Network
 
 SOA - Start of Authority
-
-ESMTP - Extended SMTP
 
 CERN - Conseil Européen pour la Recherche Nucléaire
 
@@ -612,7 +616,7 @@ DNS - Domain Name Service
 
 CMTS - Cable Modem Termination System
 
-UMTS - Universal Mobile Telecommunications System
+UMTS - Universal Mobile Telecommunications/Transport System
 
 WCDMA - Wideband Code Division Multiple Access
 
@@ -621,9 +625,11 @@ CDMA - Code Division Multiple Access
 RNC - Radio Network Controller
 
 GPRS - General Packet Radio Service
+EGPRS - EDGE Radio Access Network
 
 SGSN - Serving GPRS Support Node
 
+MSC - Mobile Switching Center
 GMSC - Gateway Mobile Switching Center
 
 SIM - Subscriber Identity Module
@@ -702,9 +708,9 @@ L2CAP - Logical Link Control and Adaptation Protocol
 
 PIN - Personal Indentification Number
 
-SCO - Sybchronous Connection Oriented
+SCO - Synchronous Connection Oriented
 
-ACL - Asynchronous Connectionless
+ACL - Asynchronous Connectionless Link
 
 RFID - Radio Frequency Identification
 
@@ -735,3 +741,152 @@ DRR - Deficit Round Robin
 RSVP - Resource reSerVation Protocol
 
 SIPP(IPv6) - Simple Internet Protocol Plus
+
+authorization - from lat. auctoritas, i.e - I'm an author of this.
+
+authentication - from lat. authenticus, i.e. - it is me.
+
+CIA - Confidentiality, Integrity, Availability
+
+Dos - Denial of Service
+DDos - Distributed Denial of Service
+
+malware - MALicious softWARE
+
+SAM - Security Accounts Manager
+
+DAC - Discretionary Access Control
+
+RBAC - Role-Based Access Control
+
+IDS - Intrusion Detection System
+IPS - Intrusion Prevention System
+
+SAD - Security Policy Database
+
+IRC - Internet Relay Chat
+
+DNSBL - DNS Black Lists
+
+================
+DFS - Depth-First Search
+BFS - Breadth-First Search
+
+================
+
+MIMO - Multiple In Multiple Out
+
+STBC - Space-Time Block Coding
+
+FHSS - Frequency Hopping Spread Spectrum
+
+WLAN - Wireless Local Area Network
+
+Wi-FI - Wireless Fidelity
+
+SSID - Service Set Identifier
+
+PAN - Personal Area Network
+
+AMPS - Advanced Mobile Phone System
+
+GSM - Global System for Mobile Communication
+
+BSC - Base Station Controller
+
+BTS - Base Transceiver Station
+
+HLR - Home Location Register
+
+AuC - Authentication Centre Database
+
+GMSK - Gaussian filtered Minimum Shift Keying
+
+IMSI - International Mobile Subscriber Identity
+
+GTP - GPRS Tunneling Protocol
+
+WAP - Wireless Access Protocol
+
+WML - WAP Markup Language
+
+W-CDMA - Wideband CDMA
+
+3GPP - 3rd Generation Partnership Project
+
+HSPA - High-Speed Packet Access
+
+IMS - IP Multimedia System
+
+LTE - Long Term Evolution
+
+SC-FDMA - Single-Carrier Frequency Division Multiple Access
+
+S-CSCF - Serving Call Session Control Function
+
+SOA - Care Of Address
+
+MAG - Mobility Access Gateway
+
+LMA - Local Mobility Anchor
+
+MN - Mobile Node
+
+eMBB - enhanced Mobile Broadband
+
+URLLC - Ultra Reliable and Low Latency Communications
+
+MIoT - Massive Internet of Things
+
+NSSF - Network Slice Selection Function
+
+AUSF - AUthentication Server Function
+
+SMF - Session Management Function
+
+5G-PPP - 5G Public Private Partnership
+
+MIME - Multipurpose Internet Mail Extensions
+
+POP3 - Post Office Protocol v.3
+
+IMAP - Internet Mail Access Protocol
+
+NMS - Network Management System
+
+SMS - Short Message Service
+
+MIB - Management Information Base
+
+SNMP - Simple Management Network Protocol
+
+RMON - Remote-network MONintoring
+
+SSH - Secure SHell
+
+================
+
+OLT - Optical Line Terminal
+
+ONU - Optical Network Unit
+
+LDP - Label Distribution Protocol
+
+PHP - Penultimate Hope Popping
+
+BFD - Bidilerectional Forwarding Detection
+
+VPN - Virtual Private Network
+CPVPN - Customer Provided VPN
+PPVPN - Provider Provisioned VPN
+V PVPN - Virtual Private Wire Service
+
+NSP - Native Service Processing
+
+VS - Virtual Switch
+
+ELF - Extremely Low Frequency
+
+EHF - Extremely High Frequency
+
+WLL - Wireless Local Loop

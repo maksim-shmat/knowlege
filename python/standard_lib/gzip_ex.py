@@ -129,4 +129,37 @@ b'nts of the'
 True
 '''
 
-#6 gzip BytsIO
+#6 gzip BytesIO for compressed threads
+
+import gzip
+from io import BytesIO
+import binascii
+
+uncompressed_data = b'The same line, over and over.\n' * 10
+print('UNCOMPRESSED:', len(uncompressed_data))
+print(uncompressed_data)
+
+buf = BytesIO()
+with gzip.GzipFile(mode='wb', fileobj=buf) as f:
+    f.write(uncompressed_data)
+
+compressed_data = buf.getvalue()
+print('COMPRESSED:', len(compressed_data))
+print(binascii.hexlify(compressed_data))
+
+inbuffer = BytesIO(compressed_data)
+with gzip.GzipFile(mode='rb', fileobj=inbuffer) as f:
+    reread_data = f.read(len(uncompressed_data))
+
+print('\nREREAD:', len(reread_data))
+print(reread_data)
+
+'''RESULTS:
+UNCOMPRESSED: 300
+b'The same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\n'
+COMPRESSED: 51
+b'1f8b080021b77a6302ff0bc94855284ecc4d55c8c9cc4bd551c82f4b2d5248cc4b0133f4b8424665916401d3e717802c010000'
+
+REREAD: 300
+b'The same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\nThe same line, over and over.\n'
+'''
