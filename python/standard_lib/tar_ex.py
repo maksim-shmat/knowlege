@@ -150,3 +150,139 @@ EXPECTED RESULTS:
 '''
 
 #9 tarfile add
+
+import tarfile
+
+print('creating archive')
+with tarfile.open('tarfile_add.tar', mode='w') as out:
+    print('adding README.txt')
+    out.add('README.txt')
+
+print()
+print('Contents:')
+with tarfile.open('tarfile_add.tar', mode='r') as t:
+    for member_info in t.getmembers():
+        print(member_info.name)
+
+'''RESULTS:
+creating archive
+adding README.txt
+
+Contents:
+README.txt
+'''
+
+#10 Other name for TarInfo obj with addfile()
+
+import tarfile
+
+print('creating archive')
+with tarfile.open('tarfile_addfile.tar', mode='w') as out:
+    print('adding README.txt as RENAMED.txt')
+    info = out.gettarinfo('README.txt', arcname='RENAMED.txt')
+    out.addfile(info)
+
+print()
+print('Contents:')
+with tarfile.open('tarfile_addfile.tar', mode='r') as t:
+    for member_info in t.getmembers():
+        print(member_info.name)
+
+'''RESULTS:
+Contents:
+README.txt
+creating archive
+adding README.txt as RENAMED.txt
+
+Contents:
+RENAMED.txt
+'''
+
+#11 tarfile addfile() from memory
+
+import io
+import tarfile
+
+text = 'This is the data to write to the archive.'
+data = text.encode('utf-8')
+
+with tarfile.open('addfile_string.tar', mode='w') as out:
+    info = tarfile.TarInfo('made_up_file.txt')
+    info.size = len(data)
+    out.addfile(info, io.BytesIO(data))
+
+print('Contents:')
+with tarfile.open('addfile_string.tar', mode='r') as t:
+    for member_info in t.getmembers():
+        print(member_info.name)
+        f = t.extractfile(member_info)
+        print(f.read().decode('utf-8'))
+
+'''RESULTS:
+Contents:
+made_up_file.txt
+This is the data to write to the archive.
+'''
+
+#12 tarfile append file to exist archive
+
+import tarfile
+
+print('creating archive')
+with tarfile.open('tarfile_append.tar', mode='w') as out:
+    out.add('README.txt')
+
+print('contents:',)
+with tarfile.open('tarfile_append.tar', mode='r') as t:
+    print([m.name for m in t.getmembers()])
+
+print('adding index.rst')
+with tarfile.open('tarfile_append.tar', mode='a') as out:
+    out.add('index.rst')
+
+print('contents:',)
+with tarfile.open('tarfile_append.tar', mode='r') as t:
+    print([m.name for m in t.getmembers()])
+
+'''RESULTS:
+creating archive
+contents:
+['README.txt']
+adding index.rst
+contents:
+['README.txt', 'index.rst']
+'''
+
+#13 tarfile work whith gzip/bzip2 compressed files 
+
+import tarfile
+import os
+
+fmt = '{:<30} {:<10}'
+print(fmt.format('FILENAME', 'SIZE'))
+print(fmt.format('README.txt', os.stat('README.txt').st_size))
+
+FILES = [
+        ('tarfile_compression.tar', 'w'),
+        ('tarfile_compression.tar.gz', 'w:gz'),
+        ('tarfile_compression.tar.bz2', 'w:bz2'),
+]
+
+for filename, write_mode in FILES:
+    with tarfile.open(filename, mode=write_mode) as out:
+        out.add('README.txt')
+
+    print(fmt.format(filename, os.stat(filename).st_size),
+            end=' ')
+    print([
+        m.name
+        for m in tarfile.open(filename, 'r:*').getmembers()
+    ])
+
+'''RESULTS:
+FILENAME                       SIZE      
+README.txt                     0         
+tarfile_compression.tar        10240      ['README.txt']
+tarfile_compression.tar.gz     210        ['README.txt']
+tarfile_compression.tar.bz2    189        ['README.txt']
+'''
