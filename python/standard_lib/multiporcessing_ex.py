@@ -146,7 +146,7 @@ import multiprocessing
 import time
 import sys
 
-
+'''
 def daemon():
     name = multiprocessing.current_process().name
     print('Starting:', name)
@@ -180,7 +180,7 @@ if __name__ == '__main__':
     d.join()
     n.join()
 
-'''RESULTS:
+RESULTS:
 Starting: non-daemon
 Exiting : non-daemon
 my_service Exiting
@@ -193,7 +193,7 @@ import multiprocessing
 import time
 import sys
 
-
+'''
 def daemon():
     name = multiprocessing.current_process().name
     print('Starting:', name)
@@ -227,7 +227,7 @@ if __name__ == '__main__':
     print('d.is_alive()', d.is_alive())
     n.join()
 
-'''RESULTS:
+RESULTS:
 Starting: non-daemon
 Exiting : non-daemon
 d.is_alive() True
@@ -238,7 +238,7 @@ d.is_alive() True
 import multiprocessing
 import time
 
-
+'''
 def slow_worker():
     print('Starting worker')
     time.sleep(0.1)
@@ -258,7 +258,7 @@ if __name__ == '__main__':
     p.join()
     print('JOINED:', p, p.is_alive())
 
-'''RESULTS:
+RESULTS:
 BEFORE: <Process name='Process-20' parent=266678 initial> False
 DURING: <Process name='Process-20' pid=266700 parent=266678 started> True
 TERMINATED: <Process name='Process-20' pid=266700 parent=266678 started> True
@@ -271,7 +271,7 @@ import multiprocessing
 import sys
 import time
 
-
+'''
 def exit_error():
     sys.exit(1)
 
@@ -313,7 +313,7 @@ if __name__ == '__main__':
         j.join()
         print('{:>15}.exitcode = {}'.format(j.name, j.exitcode))
 
-'''RESULTS:
+RESULTS:
 Starting process for exit_error
 Starting process for exit_ok
 Starting process for return_value
@@ -340,7 +340,7 @@ import multiprocessing
 import logging
 import sys
 
-
+'''
 def worker():
     print('Doing some work')
     sys.stdout.flush()
@@ -352,7 +352,7 @@ if __name__ == '__main__':
     p.start()
     p.join()
 
-'''RESULTS:
+RESULTS:
 [INFO/Process-26] child process calling self.run()
 Doing some work
 [INFO/Process-26] process shutting down
@@ -367,3 +367,211 @@ Doing some work
 '''
 
 #10 multiprocessing get_logger()
+
+import multiprocessing
+import logging
+import sys
+
+'''
+def worker():
+    print('Doing some work')
+    sys.stdout.flush()
+
+
+if __name__ == '__main__':
+    multiprocessing.log_to_stderr()
+    logger = multiprocessing.get_logger()
+    logger.setLevel(logging.INFO)
+    p = multiprocessing.Process(target=worker)
+    p.start()
+    p.join()
+'''
+#11 multiprocessing subcalss
+
+import multiprocessing
+
+
+class Worker(multiprocessing.Process):
+
+    def run(self):
+        print('In {}'.format(self.name))
+        return
+
+
+if __name__ == '__main__':
+    jobs = []
+    for i in range(5):
+        p = Worker()
+        jobs.append(p)
+        p.start()
+    for j in jobs:
+        j.join()
+
+'''
+RESULTS:
+In Worker-16
+In Worker-17
+In Worker-18
+In Worker-19
+In Worker-20
+worker 1 Exiting
+Process-13 Exiting
+my_service Exiting
+'''
+
+#12 multiprocessing queue (send message to process)
+
+import multiprocessing
+
+
+class MyFancyClass:
+
+    def __init__(self, name):
+        self.name = name
+
+    def do_something(self):
+        proc_name = multiprocessing.current_process().name
+        print('Doing something fancy in {} for {}!'.format(
+            proc_name, self.name))
+
+
+def worker(q):
+    obj = q.get()
+    obj.do_something()
+
+
+if __name__ == '__main__':
+    queue = multiprocessing.Queue()
+
+    p = multiprocessing.Process(target=worker, args=(queue,))
+    p.start()
+
+    queue.put(MyFancyClass('God of Fancy'))
+
+    # Wait how process is stoped
+    queue.close()
+    queue.join_thread()
+    p.join()
+
+#13 multiprocessing producer consumer
+
+import multiprocessing
+import time
+
+
+class Consumer(multiprocessing.Process):
+
+    def __init__(self, task_queue, result_queue):
+        multiprocessing.Process.__init__(self)
+        self.task_queue = task_queue
+        self.result_queue = result_queue
+
+    def run(self):
+        proc_name = self.name
+        while True:
+            next_task = self.task_queue.get()
+            if next_task is None:
+                # Stop doing insertion
+                print('{}: Exiting'.format(proc_name))
+                self.task_queue.task_done()
+                break
+            print('{}: {}'.format(proc_name, next_task))
+            answer = next_task()
+            self.task_queue.task_done()
+            self.result_queue.put(answer)
+
+
+class Task:
+
+    def __init__(self, a, b):
+        self.a = a
+        self.b = b
+
+    def __call__(self):
+        time.sleep(0.1)  # work imitation
+        return '{self.a} * {self.b} = {product}'.format(
+                self=self, product=self.a * self.b)
+
+    def __str__(self):
+        return '{self.a} * {self.b}'.format(self=self)
+
+
+if __name__ == '__main__':
+    # make a queue
+    tasks = multiprocessing.JoinableQueue()
+    results = multiprocessing.Queue()
+
+    # start consumers
+    num_consumers = multiprocessing.cpu_count() * 2
+    print('Creating {} consumer'.format(num_consumers))
+    consumers = [
+            Consumer(tasks, results)
+            for i in range(num_consumers)
+    ]
+    for w in consumers:
+        w.start()
+
+    # Put tasks into queue
+    num_jobs = 10
+    for i in range(num_jobs):
+        tasks.put(Task(i, i))
+
+    # Add stop work insertion for every consumer
+    for i in range(num_consumers):
+        tasks.put(None)
+
+    # Wait how all tasks are complete
+    tasks.join()
+
+    # Return results
+    while num_jobs:
+        result = results.get()
+        print('Results:', results)
+        num_jobs -= 1
+
+'''
+RESULTS:
+Creating 16 consumer
+Consumer-23: 1 * 1
+Consumer-22: 0 * 0
+Consumer-24: 2 * 2
+Consumer-25: 3 * 3
+Consumer-26: 4 * 4
+Consumer-27: 5 * 5
+Consumer-29: 7 * 7
+Consumer-28: 6 * 6
+Consumer-30: 8 * 8
+Consumer-31: 9 * 9
+Consumer-32: Exiting
+Consumer-33: Exiting
+Consumer-34: Exiting
+Consumer-35: Exiting
+Consumer-36: Exiting
+Consumer-37: Exiting
+Consumer-22: Exiting
+Consumer-25: Exiting
+Consumer-27: Exiting
+Consumer-29: Exiting
+Consumer-26: Exiting
+Consumer-28: Exiting
+Consumer-24: Exiting
+Consumer-31: Exiting
+Consumer-23: Exiting
+Consumer-30: Exiting
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+Results: <multiprocessing.queues.Queue object at 0x7f26a154e290>
+worker 1 Exiting
+Process-13 Exiting
+my_service Exiting
+'''
+
+#14 multiprocessing event
+
