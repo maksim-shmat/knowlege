@@ -575,3 +575,154 @@ my_service Exiting
 
 #14 multiprocessing event
 
+import multiprocessing
+import time
+
+
+def wait_for_event(e):
+    """Wait event before do something."""
+    print('wait_for_event: starting')
+    e.wait()
+    print('wait_for_event: e.is_set()->', e.is_set())
+
+
+def wait_for_event_timeout(e, t):
+    """Wait t seconds and then stop with time-out."""
+    print('wait_for_event_timeout: e.is_set()->', e.is_set())
+
+
+if __name__ == '__main__':
+    e = multiprocessing.Event()
+    w1 = multiprocessing.Process(
+            name='block',
+            target=wait_for_event,
+            args=(e,),
+    )
+    w1.start()
+
+    w2 = multiprocessing.Process(
+            name='nonblock',
+            target=wait_for_event_timeout,
+            args=(e, 2),
+    )
+    w2.start()
+
+    print('main: waiting before calling Event.set()')
+    time.sleep(3)
+    e.set()
+    print('main: event is set')
+
+'''
+RESULTS:
+main: waiting before calling Event.set()
+wait_for_event: starting
+wait_for_event_timeout: e.is_set()-> False
+worker 1 Exitinga        # tprrough i.e. wait-wait
+Exiting : daemon 273314  # from other code
+Process-13 Exiting       # other from above
+my_service Exiting       # The princess is in another castle
+main: event is set
+wait_for_event: e.is_set()-> True
+'''
+
+#15 multiprocessing lock
+
+import multiprocessing
+import sys
+
+def worker_with(lock, stream):
+    with lock:
+        stream.write('Lock acquired via with\n')
+
+def worker_no_with(lock, stream):
+    lock.acquire()
+    try:
+        stream.write('Lock acquired directly\n')
+    finally:
+        lock.release()
+
+
+lock = multiprocessing.Lock()
+w = multiprocessing.Process(
+        target=worker_with,
+        args=(lock, sys.stdout),
+)
+nw = multiprocessing.Lock()
+w = multiprocessing.Process(
+        target=worker_with,
+        args=(lock, sys.stdout),
+)
+nw = multiprocessing.Process(
+        target=worker_no_with,
+        args=(lock, sys.stdout),
+)
+
+w.start()
+nw.start()
+
+w.join()
+nw.join()
+
+'''
+RESULTS:
+Lock acquired via with
+Lock acquired directly
+'''
+
+#16 multiprocessing condition. Operations sync.
+
+import multiprocessing
+import time
+
+
+def stage_1(cond):
+    """Do first chunk of job and send message to stage_2 for next step."""
+    name = multiprocessing.current_process().name
+    print('Starting', name)
+    with cond:
+        print('{} done and ready for stage 2'.format(name))
+        cond.notify_all()
+
+
+def stage_2(cond):
+    """Wait how stage_1 is complete."""
+    name = multiprocessing.current_process().name
+    print('Starting', name)
+    with cond:
+        cond.wait()
+        print('{} running'.format(name))
+
+
+if __name__ == '__main__':
+    condition = multiprocessing.Condition()
+    s1 = multiprocessing.Process(name='s1',
+                                 target=stage_1,
+                                 args=(condition,))
+    s2_clients = [
+            multiprocessing.Process(
+                name='stage_2[{}]'.format(i),
+                target=stage_2,
+                args=(condition,),
+            )
+            for i in range(1, 3)
+    ]
+    for c in s2_clients:
+        c.start()
+        time.sleep(1)
+    s1.start()
+
+    s1.join()
+    for c in s2_clients:
+        c.join()
+
+'''
+RESULTS:
+Starting stage_2[1]
+Starting stage_2[2]
+Starting s1
+s1 done and ready for stage 2
+stage_2[1] running
+stage_2[2] running
+'''
+
+#17 multiprocessing semaphore
