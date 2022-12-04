@@ -726,3 +726,319 @@ stage_2[2] running
 '''
 
 #17 multiprocessing semaphore
+
+import random
+import multiprocessing
+import time
+
+
+class ActivePool:
+
+    def __init__(self):
+        super(ActivePool, self).__init__()
+        self.mgr = multiprocessing.Manager()
+        self.active = self.mgr.list()
+        self.lock = multiprocessing.Lock()
+
+    def makeActive(self, name):
+        with self.lock:
+            self.active.append(name)
+
+    def makeInactive(self, name):
+        with self.lock:
+            self.active.remove(name)
+
+    def __str__(self):
+        with self.lock:
+            return str(self.active)
+
+
+def worker(s, pool):
+    name = multiprocessing.current_process().name
+    with s:
+        pool.makeActive(name)
+        print('Activating {} now running {}'.format(
+            name, pool))
+        time.sleep(random.random())
+        pool.makeInactive(name)
+
+
+if __name__ =='__main__':
+    pool = ActivePool()
+    s = multiprocessing.Semaphore(3)
+    jobs = [
+            multiprocessing.Process(
+                target=worker,
+                name=str(i),
+                args=(s, pool),
+            )
+            for i in range(10)
+    ]
+
+    for j in jobs:
+        j.start()
+
+    while True:
+        alive = 0
+        for j in jobs:
+            if j.is_alive():
+                alive += 1
+                j.join(timeout=0.1)
+                print('Now running {}'.format(pool))
+        if alive == 0:
+            # All tasks is complete
+            break
+
+'''
+RESULTS:
+Activating 0 now running ['0']
+Activating 1 now running ['0', '1', '2']
+Activating 2 now running ['0', '1', '2']
+Now running ['0', '1', '2']
+Now running ['0', '1', '2']
+Now running ['0', '1', '2']
+Activating 3 now running ['0', '1', '3']
+Activating 4 now running ['0', '3', '4']
+Activating 5 now running ['3', '4', '5']
+Now running ['3', '4', '5']
+Now running ['3', '5', '6']
+Activating 6 now running ['3', '5', '6']
+Now running ['3', '5', '6']
+Activating 7 now running ['5', '6', '7']
+Now running ['5', '6', '7']
+Now running ['5', '6', '7']
+Activating 8 now running ['6', '7', '8']
+Activating 9 now running ['6', '8', '9']
+Now running ['6', '8', '9']
+Now running ['8', '9']
+Now running ['8', '9']
+Now running []
+'''
+
+#18 multiprocessing manager dict
+
+import multiprocessing
+
+
+def worker(d, key, value):
+    d[key] = value
+
+
+if __name__ == '__main__':
+    mgr = multiprocessing.Manager()
+    d = mgr.dict()
+    jobs = [
+            multiprocessing.Process(
+                target=worker,
+                args=(d, i, i * 2),
+            )
+            for i in range(10)
+    ]
+    for j in jobs:
+        j.start()
+    for j in jobs:
+        j.join()
+    print('Results:', d)
+
+'''
+RESULTS:
+Results: {1: 2, 0: 0, 2: 4, 3: 6, 4: 8, 6: 12, 7: 14, 9: 18, 5: 10, 8: 16}
+'''
+
+#19 multiprocessing namespaces
+
+import multiprocessing
+
+def producer(ns, event):
+    ns.value = 'This is the value'
+    event.set()
+
+
+def consumer(ns, event):
+    try:
+        print('Before event: {}'.format(ns.value))
+    except Exception as err:
+        print('Before event, error:', str(err))
+    event.wait()
+    print('After event:', ns.value)
+
+
+if __name__ == '__main__':
+    mgr = multiprocessing.Manager()
+    namespace = mgr.Namespace()
+    event = multiprocessing.Event()
+    p = multiprocessing.Process(
+            target=producer,
+            args=(namespace, event),
+    )
+    c = multiprocessing.Process(
+            target=consumer,
+            args=(namespace, event),
+    )
+
+    c.start()
+    p.start()
+
+    c.join()
+    p.join()
+
+'''
+RESULTS:
+Before event, error: 'Namespace' object has no attribute 'value'
+After event: This is the value
+'''
+
+#20 Join list encore for add to namespace, other it don't work
+
+import multiprocessing
+
+
+def producer(ns, event):
+    # Not Reload Global Value!
+    ns.my_list.append('This is the value')
+    event.set()
+
+
+def consumer(ns, event):
+    print('Before event:', ns.my_list)
+    event.wait()
+    print('After event :', ns.my_list)
+
+
+if __name__ == '__main__':
+    mgr = multiprocessing.Manager()
+    namespace = mgr.Namespace()
+    namespace.my_list = []
+
+    event = multiprocessing.Event()
+    p = multiprocessing.Process(
+            target=producer,
+            args=(namespace, event),
+    )
+    c = multiprocessing.Process(
+            target=consumer,
+            args=(namespace, event),
+    )
+
+    c.start()
+    p.start()
+
+    c.join()
+    p.join()
+
+'''
+RESULTS:
+Before event: []
+After event : []
+'''
+
+#21 multiprocessing pool
+
+import multiprocessing
+
+
+def do_calculation(data):
+    return data * 2
+
+
+def start_process():
+    print('Starting', multiprocessing.current_process().name)
+
+if __name__ == '__main__':
+    inputs = list(range(10))
+    print('Input   :', inputs)
+
+    builtin_outputs = map(do_calculation, inputs)
+    print('Built-in:', builtin_outputs)
+
+    pool_size = multiprocessing.cpu_count() * 2
+    pool = multiprocessing.Pool(
+            processes=pool_size,
+            initializer=start_process,
+    )
+    pool_outputs = pool.map(do_calculation, inputs)
+    pool.close()  # no more tasks
+    pool.join()
+
+    print('Pool    :', pool_outputs)
+
+'''
+RESULTS:
+Input   : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Built-in: <map object at 0x7f7ec9ef7eb0>  # EXPECTED RESULT: [0, 2, 4, 6, 8,
+                                                              10, 12, 14, 16,
+                                                              18]
+Starting ForkPoolWorker-74
+Starting ForkPoolWorker-75
+Starting ForkPoolWorker-76
+Starting ForkPoolWorker-77
+Starting ForkPoolWorker-78
+Starting ForkPoolWorker-79
+Starting ForkPoolWorker-80
+Starting ForkPoolWorker-81
+Starting ForkPoolWorker-82
+Starting ForkPoolWorker-83
+Starting ForkPoolWorker-84
+Starting ForkPoolWorker-85
+Starting ForkPoolWorker-86
+Starting ForkPoolWorker-87
+Starting ForkPoolWorker-88
+Starting ForkPoolWorker-89
+Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+'''
+
+#22 multiprocessing pool max tasks per child
+
+import multiprocessing
+
+
+def do_calculation(data):
+    return data * 2
+
+def start_process():
+    print('Starting', multiprocessing.current_process().name)
+
+
+if __name__ == '__main__':
+    inputs = list(range(10))
+    print('Input   :', inputs)
+
+    builtin_outputs = map(do_calculation, inputs)
+    print('Built-in:', builtin_outputs)
+
+    pool_size = multiprocessing.cpu_count() * 2
+    pool = multiprocessing.Pool(
+            processes=pool_size,
+            initializer=start_process,
+            maxtasksperchild=2,
+    )
+    pool_outputs = pool.map(do_calculation, inputs)
+    pool.close()
+    pool.join()
+
+    print('Pool    :', pool_outputs)
+
+'''
+RESULTS:
+Input   : [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+Built-in: <map object at 0x7f0c0edb0250>
+Starting ForkPoolWorker-90
+Starting ForkPoolWorker-91
+Starting ForkPoolWorker-92
+Starting ForkPoolWorker-93
+Starting ForkPoolWorker-94
+Starting ForkPoolWorker-95
+Starting ForkPoolWorker-96
+Starting ForkPoolWorker-97
+Starting ForkPoolWorker-98
+Starting ForkPoolWorker-99
+Starting ForkPoolWorker-100
+Starting ForkPoolWorker-101
+Starting ForkPoolWorker-102
+Starting ForkPoolWorker-103
+Starting ForkPoolWorker-104
+Starting ForkPoolWorker-105
+Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
+'''
+
+#23 
