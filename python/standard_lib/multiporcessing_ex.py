@@ -1041,4 +1041,111 @@ Starting ForkPoolWorker-105
 Pool    : [0, 2, 4, 6, 8, 10, 12, 14, 16, 18]
 '''
 
-#23 
+#23 multiprocessing mapreduce
+
+import collections
+import itertools
+import multiprocessing
+
+
+class SimpleMapReduce:
+    
+    def __init__(self, map_func, reduce_func, num_workers=None):
+        """
+        map_func - get arg and return tuple with key and value.
+        reduce_func - get key from map_func and values.
+        num_workers - count work processes in pull
+        """
+        self.map_func = map_func
+        self.recuce_func = reduce_func
+        self.pool = mulitiprocessing.Pool(num_workers)
+
+    def partition(self, mapped_values):
+        """Return set of tuples with key and set of values?"""
+        partitioned_data = collections.defaultdict(list)
+        for key, value in mapped_values:
+            partitioned_data[key].append(value)
+        return partitioned_data.items()
+
+    def __call__(self, inputs, chunksize=1):
+        """
+        inputs - data for handle
+        chunksize=1 - chunk for all processes
+        """
+        map_responses = self.pool.map(
+                self.map_func,
+                inputs,
+                chunksize=chunksize,
+        )
+        patitioned_data = self.partition(
+                itertools.chain(*map_responses)
+        )
+        reduced_values = self.pool.map(
+                self.reduce_func,
+                partitioned_data,
+        )
+        return reduced_value
+
+#24 multiprocessing wordcount with SimpleMapReduce for .rst (reStructuredText)
+
+import multiporcessing
+import string
+
+from multiprocessing_mapreduce import SimpleMapReduce  # code above
+
+def file_to_words(filename):
+    """Read file and return set of values."""
+    STOP_WORDS = set([
+        'a', 'an', 'and','are', 'as', 'be', 'by', 'for', 'if',
+        'in', 'is', 'it', 'of', 'or', 'py', 'rst', 'that', 'the',
+        'to', 'with',
+    ])
+    TR = str.maketrans({
+        p: ' '
+        for p in string.punctuation
+    })
+
+    print('{} reading {}'.format(
+        multiprocessing.current_process().name, filename))
+    output = []
+
+    with open(filename, 'rt') as f:
+        for line in f:
+            # skip comments
+            if line.lstrip().startswith('..'):
+                continue
+            line = line.translate(TR)  # slice marks of punctuations
+            for word in line.split():
+                word = word.lower()
+                if word.isalpha() and word not in STOP_WORDS:
+                    output.append((word, 1))
+    return output
+
+
+def count_words(item):
+    """Make set of data to tuple."""
+    word, occurences = item
+    return (word, sum(occurences))
+
+
+if __name__ == '__main__':
+    import operator
+    import glob
+
+    input_filter = glob.glob('*.rst')
+
+    mapper = SimpleMapReduce(file_to_words, count_words)
+    word_counts = mapper(input_files)
+    word_counts.sort(key=opetator.itemgetter(1))
+    word_counts.reverse()
+
+    print('\nTOP 20 WORDS BY FREQUENCY\n')
+    top20 = word_count[:20]
+    longest = max(len(word) for word, count in top20)
+    for word, count in top20:
+        print('{word:<{len}}: {count:5}'.format(
+            len=longest + 1,
+            word=word,
+            count=count)
+        )
+# python3 -u multiprocessing_wordcount.py  # for .rst
