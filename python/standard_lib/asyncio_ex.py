@@ -290,4 +290,292 @@ closing event loop
 future result: 'the result'
 '''
 
-#9
+#9 asynciio future await
+
+
+import asyncio
+
+'''
+def mark_done(future, result):
+    print('setting future result to {!r}'.format(result))
+    future.set_result(result)
+
+
+async def main(loop):
+    all_done = asyncio.Future()
+
+    print('scheduling mark_done')
+    loop.call_soon(mark_done, all_done, 'the result')
+
+    result = await all_done
+    print('returned result: {!r}'.format(result))
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop))
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:314: DeprecationWarning: There is no current event loop
+scheduling mark_done
+setting future result to 'the result'
+returned result: 'the result'
+'''
+
+#10 asyncio future callback
+
+import asyncio
+import functools
+
+'''
+def callback(future, n):
+    print('{}: future done: {}'.format(n, future.result()))
+
+
+async def register_callbacks(all_done):
+    print('registering callbacks on future')
+    all_done.add_done_callback(functools.partial(callback, n=1))
+    all_done.add_done_callback(functools.partial(callback, n=2))
+
+
+async def main(all_done):
+    await register_callbacks(all_done)
+    print('setting result of future')
+    all_done.set_result('the result')
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    all_done = asyncio.Future()
+    event_loop.run_until_complete(main(all_done))
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:349: DeprecationWarning: There is no current event loop
+<stdin>:351: DeprecationWarning: There is no current event loop
+registering callbacks on future
+setting result of future
+1: future done: the result
+2: future done: the result
+'''
+
+#11 asyncio create task
+
+import asyncio
+
+'''
+async def task_func():
+    print('in task_func')
+    return 'the result'
+
+
+async def main(loop):
+    print('creating task')
+    task = loop.create_task(task_func())
+    print('waiting for {!r}'.format(task))
+    return_value = await task
+    print('task completed {!r}'.format(task))
+    print('return value: {!r}'.format(return_value))
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop))
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:384: DeprecationWarning: There is no current event loop
+creating task
+waiting for <Task pending name='Task-2' coro=<task_func() running at <stdin>:370>>
+in task_func
+task completed <Task finished name='Task-2' coro=<task_func() done, defined at <stdin>:370> result='the result'>
+return value: 'the result'
+'''
+
+#12 asyncio cancel task
+
+import asyncio
+
+'''
+async def task_func():
+    print('in task_func')
+    return 'the result'
+
+
+async def main(loop):
+    print('creating task')
+    task = loop.create_task(task_func())
+
+    print('canceling task')
+    task.cancel()
+
+    print('canceled task {!r}'.format(task))
+    try:
+        await task
+
+    except asyncio.CancelledError:
+        print('caught error from canceled task')
+    else:
+        print('task result: {!r}'.format(task.result()))
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop))
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:426: DeprecationWarning: There is no current event loop
+creating task
+canceling task
+canceled task <Task cancelling name='Task-2' coro=<task_func() running at <stdin>:404>>
+caught error from canceled task
+'''
+
+#13 asyncio cancel task if cancel in waiting
+
+import asyncio
+
+'''
+async def task_func():
+    print('in task_func, sleeping')
+    try:
+        await asyncio.sleep(1)
+    except asyncio.CancelledError:
+        print('task_func was canceled')
+        raise
+    return 'the result'
+
+
+def task_canceller(t):
+    print('in task_canceller')
+    t.cancel()
+    print('canceled the task')
+
+
+async def main(loop):
+    print('creating task')
+    task = loop.create_task(task_func())
+    loop.call_soon(task_canceller, task)
+    try:
+        await task
+    except asyncio.CancelledError:
+        print('main() also sees task as canceled')
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop))
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:471: DeprecationWarning: There is no current event loop
+creating task
+in task_func, sleeping
+in task_canceller
+canceled the task
+task_func was canceled
+main() also sees task as canceled
+'''
+
+#14 asyncio ensure future
+
+import asyncio
+
+'''
+async def wrapped():
+    print('wrapped')
+    return 'result'
+
+
+async def inner(task):
+    print('inner: starting')
+    print('inner: waiting for {!r}'.format(task))
+    result = await task
+    print('inner: task returned {!r}'.format(result))
+
+
+async def starter():
+    print('starter: creating task')
+    task = asyncio.ensure_future(wrapped())
+    print('starter: waiting for inner')
+    await inner(task)
+    print('starter: inner returned')
+
+event_loop = asyncio.get_event_loop()
+try:
+    print('entering event loop')
+    result = event_loop.run_until_complete(starter())
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:511: DeprecationWarning: There is no current event loop
+entering event loop
+starter: creating task
+starter: waiting for inner
+inner: starting
+inner: waiting for <Task pending name='Task-2' coro=<wrapped() running at <stdin>:492>>
+wrapped
+inner: task returned 'result'
+starter: inner returned
+'''
+
+#15 asyncio wait
+
+import asyncio
+
+'''
+async def phase(i):
+    print('in phase {}'.format(i))
+    await asyncio.sleep(0.1 * i)
+    print('done with phase {}'.format(i))
+    return 'phase {} result'.format(i)
+
+
+async def main(num_phases):
+    print('in phase {}'.format(i))
+    await asyncio.sleep(0.1 * i)
+    print('done with phase {}'.format(i))
+    return 'phase {} result'.format(i)
+
+
+async def main(num_phases):
+    print('starting main')
+    phases = [
+            phase(i)
+            for i in range(num_phases)
+    ]
+    print('waiting for phases to complete')
+    completed, pending = await asyncio.wait(phases)
+    results = [t.result() for t in completed]
+    print('results {!r}'.format(results))
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(3))
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:561: DeprecationWarning: There is no current event loop
+starting main
+waiting for phases to complete
+<stdin>:556: DeprecationWarning: The explicit passing of coroutine objects to asyncio.wait() is deprecated since Python 3.8, and scheduled for removal in Python 3.11.
+in phase 1
+in phase 2
+in phase 0
+done with phase 0
+done with phase 1
+done with phase 2
+results ['phase 1 result', 'phase 0 result', 'phase 2 result']
+'''
+
+#16
