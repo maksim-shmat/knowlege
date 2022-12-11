@@ -801,3 +801,147 @@ TypeError: object Lock can't be used in 'await' expression
 '''
 
 #20 asyncio event
+
+import asyncio
+import functools
+
+'''
+def set_event(event):
+    print('setting event in callback')
+    event.set()
+
+
+async def coro1(event):
+    print('coro1 waiting for event')
+    await event.wait()
+    print('coro1 triggered')
+
+
+async def coro2(event):
+    print('coro2 waiting for event')
+    await event.wait()
+    print('coro2 triggered')
+
+
+async def main(loop):
+    # Make different event
+    event = asyncio.Event()
+    print('event start state: {}'.format(event.is_set()))
+
+    loop.call_later(
+            0.1, functools.partial(set_event, event)
+    )
+
+    await asyncio.wait([coro1(event), coro2(event)])
+    print('event end state: {}'.format(event.is_set()))
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop))
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:839: DeprecationWarning: There is no current event loop
+event start state: False
+<stdin>:835: DeprecationWarning: The explicit passing of coroutine objects to asyncio.wait() is deprecated since Python 3.8, and scheduled for removal in Python 3.11.
+coro2 waiting for event
+coro1 waiting for event
+setting event in callback
+coro2 triggered
+coro1 triggered
+event end state: True
+'''
+
+#21 asyncio condition
+
+import asyncio
+
+'''
+async def consumer(condition, n):
+    with await condition:
+        print('consumer {} is waiting'.format(n))
+        await condition.wait()
+        print('consumer {} triggered'.format(n))
+    print('ending consumer {}'.format(n))
+
+
+async def manipulate_condition(condition):
+    print('starting manipulate_condition')
+
+    # Pause for start consumers
+    await asyncio.sleep(0.1)
+
+    for i in range(1, 3):
+        with await condition:
+            print('notifying {} consumers'.format(i))
+            condition.notify(n=1)
+        await asyncio.sleep(0.1)
+
+    with await condition:
+        print('notifying remaining consumers')
+        condition.notify_all()
+
+    print('ending manipulate_condition')
+
+
+async def main(loop):
+    # Make a condition
+    condition = asyncio.Condition()
+
+    # Make a list of tasks which folow after condition
+    consumers = [
+            consumer(condition, i)
+            for i in range(5)
+    ]
+
+    # Make a task for use 'condition' value
+    loop.create_task(manipulate_condition(condition))
+
+    # Wait how consumers is end job
+    await asyncio.wait(consumers)
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    result = event_loop.run_until_complete(main(event_loop))
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:906: DeprecationWarning: There is no current event loop
+<stdin>:903: DeprecationWarning: The explicit passing of coroutine objects to asyncio.wait() is deprecated since Python 3.8, and scheduled for removal in Python 3.11.
+starting manipulate_condition
+Task exception was never retrieved
+future: <Task finished name='Task-3' coro=<consumer() done, defined at <stdin>:862> exception=TypeError("object Condition can't be used in 'await' expression")>
+Traceback (most recent call last):
+  File "<stdin>", line 863, in consumer
+TypeError: object Condition can't be used in 'await' expression
+Task exception was never retrieved
+future: <Task finished name='Task-6' coro=<consumer() done, defined at <stdin>:862> exception=TypeError("object Condition can't be used in 'await' expression")>
+
+EXPECTED RESULTS:
+starting manipulate_condition
+consumer 3 is waiting
+consumer 1 is waiting
+consumer 2 is waiting
+consumer 0 is waiting
+consumer 4 is waiting
+notifying 1 consumer
+consumer 3 triggered
+ending consumer3
+notifying 2 consumer
+consumer 1 triggered
+ending consumer 1
+consumer 2 triggered
+ending consumer 2
+notifying remaining consumers
+ending manipulate_condition
+consumer 0 triggered
+ending consumer 0
+consumer 4 triggered
+ending consumer 4
+'''
+
+#22 asyncio queue
