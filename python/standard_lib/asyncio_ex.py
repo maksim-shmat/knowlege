@@ -945,3 +945,422 @@ ending consumer 4
 '''
 
 #22 asyncio queue
+
+import asyncio
+
+'''
+async def consumer(n, g):
+    print('consumer {}: starting'.format(n))
+    while True:
+        print('consumer {}: has item {}'.format(n, item))
+        item = await q.get()
+        print('consumer {}: has item {}'.format(n, item))
+        if item is None:
+            # None - signal for stop working
+            q.task_done()
+            break
+        else:
+            await asyncio.sleep(0.01 * item)
+            q.task_done()
+    print('consumer {}: ending'.format(n))
+
+
+async def producer(q, num_workers):
+    print('producer: starting')
+    # Add tasks in queue for job imitation
+    for i in range(num_workers * 3):
+        await q.put(i)
+        print('producer: added task {} to the queue'.format(i))
+    # Add None in queue as signals for customers stop working
+    print('producer: adding stop signals to the queue')
+    for i in range(num_workers):
+        await q.put(None)
+    print('producer: waiting for queue to empty')
+    await q.join()
+    print('producer: ending')
+
+
+async def main(loop, num_consumers):
+    # Make queue that producer blocked while customers suck data
+    q = asyncio.Queue(maxsize=num_consumers)
+
+    # Make agenda for tasks of custumers
+    consumers = [
+            loop.create_task(consumer(i, 1))
+            for i in range(num_consumers)
+    ]
+    
+    # Make agenda for tasks of producers
+    prod = loop.create_task(producer(q, num_consumers))
+
+    # Wait how under programs is stoped
+    await asyncio.wait(consumers + [prod])
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop, 2))
+finally:
+    event_loop.close()
+
+EXPECTED RESULTS:
+
+consumer 0: starting
+consumer 0: waiting for item
+consumer 1: starting
+consumer 1: waiting for item
+producer: starting
+producer: added task 0 to the queue
+producer: added task 1 to the queue
+consumer 0: has item 0
+consumer 1: has item 1
+producer: added task 2 to the queue
+producer: added task 3 to the queue
+consumer 0: waiting for item
+consumer 0: has item 2
+producer: added task 4 to the queue
+consumer 1: waiting for item
+consumer 1: has item 3
+producer: added task 5 to the queue
+producer: adding stop signals to the queue
+consumer 0: waiting for item
+consumer 0: has item 4
+consumer 1: waitning for item
+consumer 1: has item 5
+producer: waiting for queue to empty
+consumer 0: waiting for item
+consumer 0: has item None
+consumer 0: ending
+consumer 1: waiting for item
+consumer 1: ending
+producer: ending
+'''
+
+# 23 asyncio echo server protocol
+
+import asyncio
+import logging
+import sys
+
+'''
+SERVER_ADDRESS = ('localhost', 10000)
+
+logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(name)s: %(message)s',
+        stream=sys.stderr,
+)
+log = logging.getLogger('main')
+
+event_loop = asyncio.get_event_loop()
+
+
+class EchoServer(asyncio.Protocol):
+
+    def connection_made(self, transport):
+        self.transport = transport
+        self.address = transport.get_extra_info('peername')
+        self.log = logging.getLogger(
+                'EchoServer_{}_{}'.format(*self.address)
+        )
+        self.log.debug('connection accepted')
+
+    def data_received(self, data):
+        self.log.debug('received {!r}'.format(data))
+        self.transport.write(data)
+        self.log.debug('sent {!r}'.format(data))
+
+    def eof_received(self):
+        self.log.debug('received EOF')
+        if self.transport.can_write_eof():
+            self.transport.write_eof()
+
+    def eof_received(self):
+        self.log.debug('received EOF')
+        if self.transport.can_write_eof():
+            self.transport.write_eof()
+
+# Make a server
+factory = event_loop.create_server(EchoServer, *SERVER_ADDRESS)
+server = event_loop.run_until_complete(factory)
+log.debug('starting up on {} port {}'.format(*SERVER_ADDRESS))
+
+# In to ETERNAL LOOP for handling all connections
+try:
+    event_loop.run_forever()
+finally:
+    log.debug('closing server')
+    server.close()
+    event_loop.run_until_complete(server.wait_closed())
+    log.debug('closing event loop')
+    event_loop.close()
+'''
+
+#24 asyncio echo client protocol
+
+import asyncio
+import functools
+import logging
+import sys
+
+'''
+MESSAGES = [
+        b'This is the message. ',
+        b'It will be sent ',
+        b'in parts.',
+]
+SERVER_ADDRESS = ('localhost', 10000)
+
+logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(name)s: %(message)s',
+        stream=sys.stderr,
+)
+log = logging.getLogger('main')
+
+event_loop = asyncio.get_event_loop()
+
+
+class EchoClient(asyncio.Protocol):
+
+    def __init__(self, message, future):
+        super().__init__()
+        self.messages = messages
+        self.log = logging.getLogger('EchoClient')
+        self.f = future
+
+    def connection_made(self, transport):
+        self.transport = transport
+        self.address = transport.get_extra_info('peername')
+        self.log.debug(
+                'connecting to {} port {}'.format(*self.address)
+        )
+        # transport.writelines() not good this
+        for msg in self.messages:
+            transport.write(msg)
+            self.log.debug('sending {!r}'.format(msg))
+        if transport.can_write_eof():
+            transport.write_eof()
+
+    def data_received(self, data):
+        self.log.debug('received {!r}'.format(data))
+
+    def eof_received(self):
+        self.log.debug('received EOF')
+        self.transport.close()
+
+        if not self.f.done():
+            self.f.set_result(True)
+
+    def connection_lost(self, exc):
+        self.log.debug('server closed connection')
+        self.transport.close()
+        if not self.f.done():
+            self.f.set_result(True)
+        super().connection.lost(exc)
+
+client_completed = asyncio.Future()
+
+client_factory = functools.partial(
+        EchoClient,
+        messages=MESSAGES,
+        future=client_completed,
+)
+factory_coroutine = event_loop.create_connection(
+        client_factory,
+        *SERVER_ADDRESS,
+)
+
+log.debug('waiting for client to complete')
+try:
+    event_loop.run_until_complete(factory_coroutine)
+    event_loop.run_until_complete(client_completed)
+finally:
+    log.debug('closing event loop')
+    event_loop.close()
+
+EXPECTED RESULTS:
+asyncio: Using selector: KqueueSelector
+main: waiting for client to comlete
+EchoClient: connecting to ::1 port 1000
+EchoClient: sending b'This is the message. '
+EchoClient: sending b'It will be sent '
+EchoClient: sending b'in parts.'
+EchoClient: received b'This is the message. It will be sent in parts.'
+EchoClient: received EOF
+EchoClient: server closed connection
+main: closing event loop
+'''
+
+#25 asyncio echo server coroutine
+
+import asyncio
+import logging
+import sys
+
+'''
+SERVER_ADDRESS = ('localhost', 10000)
+logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(name)s: %(message)s',
+        stream=sys.stderr,
+)
+log = logging.getLogger('main')
+
+event_loop = asyncio.get_event_loop()
+
+async def echo(reader, writer):
+    address = writer.get_extra_info('peername')
+    log = logging.getLogger('echo_{}_{}'.format(*address))
+    log.debug('connection accepted')
+
+    while True:
+        data = await reader.read(128)
+
+        if data:
+            log.debug('received {!r}'.format(data))
+            writer.write(data)
+            await writer.drain()
+            log.debug('sent {!r}'.format(data))
+        else:
+            log.debug('closing')
+            writer.close()
+            return
+
+# Make a server
+factory = asyncio.start_server(echo, *SERVER_ADDRESS)
+server = event_loop.run_until_complete(factory)
+log.debug('starting up on {} port {}'.format(*SERVER_ADDRESS))
+
+try:
+    event_loop.run_forever()
+except KeyboardInterrupt:
+    pass
+finally:
+    log.debug('closing server')
+    server.close()
+    event_loop.run_until_complete(server.wait_closed())
+    log.debug('closing event loop')
+    event_loop.close()
+
+RESULTS:
+<stdin>:1210: DeprecationWarning: There is no current event loop
+asyncio: Using selector: EpollSelector
+main: starting up on localhost port 10000
+^Cmain: closing server
+main: closing event loop
+'''
+
+#26 asyncio echo client coroutine
+
+import asyncio
+import logging
+import sys
+
+'''
+MESSAGES = [
+        b'This is the message. ',
+        b'It will be sent ',
+        b'in parts.',
+]
+SERVER_ADDRESS = ('localhost', 10000)
+
+logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(name)s: %(message)s',
+        stream=sys.stderr,
+)
+
+log = logging.getLogger('main')
+
+event_loop = asyncio.get_event_loop()
+
+async def echo_client(address, messages):
+
+    log = logging.getLogger('echo_client')
+
+    log.debug('connecting to {} port {}'.format(*address))
+    reader, writer = await asyncio.open_connection(*address)
+    # transport.writelines() not good for this situation
+    for msg in messages:
+        writer.write(msg)
+        log.debug('sending {!r}'.format(msg))
+    if writer.can_write_eof():
+        writer.write_eof()
+    await writer.drain()
+
+    log.debug('waiting for response')
+    while True:
+        data = await reader.read(128)
+        if data:
+            log.debug('received {!r}'.format(data))
+        else:
+            log.debug('closing')
+            writer.close()
+            return
+
+    try:
+        event_loop.run_until_complete(
+            echo_client(SERVER_ADDRESS, MESSAGES)
+        )
+    finally:
+        log.debug('closing event loop')
+        event_loop.close()
+
+RESULTS:
+<stdin>:1275: DeprecationWarning: There is no current event loop
+asyncio: Using selector: EpollSelector
+'''
+
+#27 SSL for client/server code above
+
+# for server
+# first:
+# $ openssl req -newkey rsa:2048 -nodes -keyout pymotw.kew -x509 -days 365 -out pymotw.crt
+
+# then change:
+# factory = asyncio.start_server(echo, *SERVER_ADDRESS)
+# server = event_loop.run_until_complete(factory)
+
+# Make sertificate with hostname pymotw.com, if other host code not correct
+# Then host checket in False
+
+ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
+ssl_context.check_hostname = Fasle
+ssl_context.load_cert_chain('pymotw.crt', 'pymotw.key')
+
+# Make server
+factory = asyncio.start_server(echo, *SERVER_ADDRESS, ssl=ssl_context)
+
+# And the change code for client
+# then where:
+# reader, writer = await asyncio.open_connection(*address)
+
+ssl_context = ssl.create_default_context(
+        ssl.Purpose.SERVER_AUTH,
+)
+ssl_context.check_hostname = False
+ssl_context.load_verify_location('pymotw.crt')
+reader, writer = await asyncio.open_connection(
+        *server_address, ssl=ssl_context)
+
+# Change work with eof to work with NULL
+
+#for msg in messages:
+#    writer.write(msg)
+#    log.debug('sending {!r}'.format(msg))
+#if writer.can_write_eof():
+#    writer.write_eof()
+#await writer.drain()
+
+# to:
+for msg in messages:
+    write.write(msg)
+    log.debug('sending {!r}'.format(msg))
+# SSL not work with EOF then for mark end of message use (b'\x00')
+writer.write(b'\x00')
+await writer.drain()
+
+# for client:
+
+async def echo
