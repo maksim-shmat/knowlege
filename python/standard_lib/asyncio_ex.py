@@ -1324,7 +1324,7 @@ asyncio: Using selector: EpollSelector
 
 # Make sertificate with hostname pymotw.com, if other host code not correct
 # Then host checket in False
-
+'''
 ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
 ssl_context.check_hostname = Fasle
 ssl_context.load_cert_chain('pymotw.crt', 'pymotw.key')
@@ -1363,4 +1363,194 @@ await writer.drain()
 
 # for client:
 
-async def echo
+async def echo(reader, writer):
+    address = writer.get_extra_info('peername')
+    log = logging.getLogger('echo_{}_{}'.format(*address))
+    log.debug('connection accepted')
+    while True:
+        data = await reader.read(128)
+        terminate = dat.endswith(b'\x00')
+        data = data.rstrip(b'\x00')
+        if data:
+            log.debug('received{!r}'.format(data))
+            writer.write(data)
+            await writer.drain()
+            log.debug('sent {!r}'.format(data))
+        if not data or terminate:
+            log.debug('message terminated, closing connection')
+            writer.close()
+            return
+
+'''
+
+#28 asyncio getaddrinfo
+
+import asyncio
+import logging
+import socket
+import sys
+
+'''
+TARGETS = [
+        ('pymotw.com', 'https'),
+        ('petricpetrushka.com', 'https'),
+        ('python.org', 'https'),
+]
+
+
+async def main(loop, targets):
+    for target in targets:
+        info = await loop.getaddrinfo(
+                *target,
+                proto=socket.IPPROTO_TCP,
+        )
+
+        for host in info:
+            print('{:20}: {}'.format(target[0], host[4][0]))
+
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop, TARGETS))
+finally:
+    event_loop.close()
+
+EXPECTED RESULTS:
+pymotw.com         : 66.33.211.242
+...
+'''
+#29 asincio get name info
+
+import asyncio
+import logging
+import socket
+import sys
+
+'''
+TARGETS = [
+        ('66.33.211.242', 443),
+        ('104.130.43.121', 443),
+]
+
+
+async def  main(loop, targets):
+    for target in targets:
+        info = await loop.getnameinfo(target)
+        print('{:15}: {} {}'.format(target[0], *info))
+
+event_loop = asyncio.get_event_loop()
+try:
+    event_loop.run_until_complete(main(event_loop, TARGETS))
+finally:
+    event_loop.close()
+
+EXPECTED RESULTS:
+66.33.211.242  : apache2-echo.catalina.dreamhost.com https
+104.130.43.121 : 104.130.43.121 https
+
+'''
+
+#30 asyncio subprocess protocol
+
+import asyncio
+import functools
+
+
+async def run_df(loop):
+    print('in run_df')
+
+    cmd_done = asyncio.Future(loop=loop)
+    factory = functools.partial(DFProtocol, cmd_done)
+    proc = loop.subprocess_exec(
+            factory,
+            'df', '-h1',
+            stdin=None,
+            sterr=None,
+    )
+    try:
+        print('launching process')
+        transport, protocol = await proc
+        print('waiting for process to completer')
+        await cmd_done
+    finally:
+        transport.close()
+
+    return cmd_done.result()
+
+
+class DFProtocol(asyncio.SubprocessProtocol):
+
+    FD_NAMES = ['stdin', 'stdout', 'stderr']
+
+    def __init__(self, done_future):
+        self.done = done_future
+        self.buffer = bytearray()
+        super().__init__()
+
+    def connection_made(self, transport):
+        print('process started {}'.format(transport.get_pid()))
+        self.transport = transport
+
+    def pipe_data_received(self, fd, data):
+        print('read {} bytes from {}'.format(len(data),
+            self.FD_NAMES[fd]))
+        if fd == 1:
+            self.buffer.extend(data)
+
+    def process_exited(self):
+        print('process exited')
+        return_code = self.transport.get_returncode()
+        print('return code {}'.format(return_code))
+        if not return_code:
+            cmd_output = bytes(self.buffer).decode()
+            retults = self._parse_results(cmd_output)
+        else:
+            results = []
+        self.done.set_results((return_code, results))
+
+    def _parse_results(self, output):
+        print('parsing results')
+        if not output:
+            return[]
+        lines = output.split.splitlines()
+        headers = lines[0].split()
+        devices = lines[1:]
+        retults = [
+                dict(zip(headers, line.split()))
+                for line in devices
+        ]
+        return results
+
+event_loop = asyncio.get_event_loop()
+try:
+    return_code, results = event_loop.run_until_complete(
+            run_df(event_loop)
+    )
+finally:
+    event_loop.close()
+
+if return_code:
+    print('error exit {}'.format(return_code))
+else:
+    print('\nFree space:')
+    for r in results:
+        print('{Mounted:25}: {Avail}'.format(**r))
+
+EXPECTED RESULTS:
+in run_df
+launching process
+process started 49675
+waiting for process to complete
+read 332 bytes from stdout
+process exited
+return code 0
+parsing results
+
+Free space:
+
+/                          : 233Gi
+/Volumes/hobointernal      : 157Gi
+/Volumes/hobo-tm           : 2.3Ti
+
+
+#32 asyncio subprocess coroutine
