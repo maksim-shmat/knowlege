@@ -1455,7 +1455,7 @@ EXPECTED RESULTS:
 import asyncio
 import functools
 
-
+'''
 async def run_df(loop):
     print('in run_df')
 
@@ -1551,6 +1551,138 @@ Free space:
 /                          : 233Gi
 /Volumes/hobointernal      : 157Gi
 /Volumes/hobo-tm           : 2.3Ti
-
+'''
 
 #32 asyncio subprocess coroutine
+
+import asyncio
+import asyncio.subprocess
+
+'''
+async def run_df():
+    print('in run_df')
+
+    buffer = bytearray()
+
+    create = asyncio.create_subprocess_exec(
+            'df', '-h1',
+            stdout=asyncio.subprocess.PIPE,
+    )
+    print('launching process')
+    proc = await create
+    print('process started {}'.format(proc.pid))
+
+    while True:
+        line = await proc.stdout.readline()  # or read()
+        print('read {!r}'.format(line))
+        if not line:
+            print('no more output from command')
+            break
+        buffer.extend(line)
+
+    print('waiting for process to complete')
+    await proc.wait()
+
+    return_code = proc.returncode
+    print('return code {}'.format(return_code))
+    if not return_code:
+        cmd_output = bytes(buffer).decode()
+        results = _parse_results(cmd_output)
+    else:
+        results = []
+    return (return_code, results)
+
+event_loop = asyncio.get_event_loop()
+try:
+    return_code, results = event_loop.run_until_complete(
+            run_df()
+    )
+finally:
+    event_loop.close()
+
+if return_code:
+    print('error exit {}'.format(return_code))
+else:
+    print('\nFree space:')
+    for r in results:
+        print('{Mounted:25}: {Avail}'.format(**r))
+
+RESULTS:
+<stdin>:1595: DeprecationWarning: There is no current event loop
+in run_df
+launching process
+process started 482377
+df: invalid option -- '1'
+Try 'df --help' for more information.
+read b''
+no more output from command
+waiting for process to complete
+return code 1
+error exit 1
+'''
+
+#33 asyncio subprocess coroutine write
+
+import asyncio
+import asyncio.subprocess
+
+'''
+async def to_upper(input):
+    print('in to_upper')
+
+    create = asyncio.create_subprocess_exec(
+            'tr', '[:lower:]', '[:upper:]',
+            stdout=asyncio.subprocess.PIPE,
+            stdin=asyncio.subprocess.PIPE,
+    )
+    print('launching process')
+    proc = await create
+    print('pid {}'.format(proc.pid))
+
+    print('communicating with process')
+    stdout, stderr = await proc.communicate(input.encode())
+
+    print('waiting for process to complete')
+    await proc.wait()
+
+    return_code = proc.returncode
+    print('return code {}'.format(return_code))
+    if not return_code:
+        results = bytes(stdout).decode()
+    else:
+        results = ''
+
+    return (return_code, results)
+
+MESSAGE = """
+This message will be converted
+to all caps.
+"""
+
+event_loop = asyncio.get_event_loop()
+try:
+    return_code, results = event_loop.run_until_complete(
+            to_upper(MESSAGE)
+    )
+finally:
+    event_loop.close()
+
+if return_code:
+    print('error exit {}'.format(return_code))
+else:
+    print('Original: {!r}'.format(MESSAGE))
+    print('Changed : {!r}'.format(results))
+
+RESULTS:
+<stdin>:1662: DeprecationWarning: There is no current event loop
+in to_upper
+launching process
+pid 483185
+communicating with process
+waiting for process to complete
+return code 0
+Original: '\nThis message will be converted\nto all caps.\n'
+Changed : '\nTHIS MESSAGE WILL BE CONVERTED\nTO ALL CAPS.\n'
+'''
+
+#34
