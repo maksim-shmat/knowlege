@@ -1685,4 +1685,64 @@ Original: '\nThis message will be converted\nto all caps.\n'
 Changed : '\nTHIS MESSAGE WILL BE CONVERTED\nTO ALL CAPS.\n'
 '''
 
-#34
+#34 asyncio signal
+
+import asyncio
+import functools
+import os
+import signal
+
+'''
+def signal_handler(name):
+    print('signal_handler({!r})'.format(name))
+
+event_loop = asyncio.get_event_loop()
+
+event_loop.add_signal_handler(
+        signal.SIGHUP,
+        functools.partial(signal_handler, name='SIGHUP'),
+)
+event_loop.add_signal_handler(
+        signal.SIGUSR1,
+        functools.partial(signal_handler, name='SIGUSR1'),
+)
+event_loop.add_signal_handler(
+        signal.SIGINT,
+        functools.partial(signal_handler, name='SIGING'),
+)
+
+async def send_signals():
+    pid = os.getpid()
+    print('starting send_signals for {}'.format(pid))
+
+    for name in ['SIGHUP', 'SIGHUP', 'SIGUSR1', 'SIGINT']:
+        print('sending {}'.format(name))
+        os.kill(pid, getattr(signal, name))
+        # get step up for handler of signals
+        print('yielding control')
+        await asyncio.sleep(0.01)
+    return
+
+try:
+    event_loop.run_until_complete(send_signals())
+finally:
+    event_loop.close()
+
+RESULTS:
+<stdin>:1699: DeprecationWarning: There is no current event loop
+starting send_signals for 484793
+sending SIGHUP
+yielding control
+signal_handler('SIGHUP')
+sending SIGHUP
+yielding control
+signal_handler('SIGHUP')
+sending SIGUSR1
+yielding control
+signal_handler('SIGUSR1')
+sending SIGINT
+yielding control
+signal_handler('SIGING')
+'''
+
+#35 asyncio executor thread for not adapted for asyncio programms
