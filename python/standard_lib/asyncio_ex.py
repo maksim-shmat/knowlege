@@ -1865,3 +1865,68 @@ PID 16429 run_blocking_tasks: exiting
 '''
 
 #37 asyncio debug
+
+import argparse
+import asyncio
+import logging
+import sys
+import time
+import warnings
+
+'''
+parser = argparse.ArgumentParser('debugging asyncio')
+parser.add_argument(
+        '-v',
+        dest='verbose',
+        default=False,
+        action='store_true',
+)
+args = parser.parse_args()
+
+logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(levelname)7s: %(message)s',
+        stream=sys.stderr,
+)
+LOG = logging.getLogger('')
+
+async def inner():
+    LOG.info('inner starting')
+    # user pause-blocker
+    time.sleep(0.1)
+    LOG.info('inner completed')
+
+
+async def outer(loop):
+    LOG.info('outer starting')
+    await asyncio.ensure_future(loop.create_task(inner()))
+    LOG.info('outer completed')
+
+
+event_loop = asyncio.get_event_loop()
+if args.verbose:
+    LOG.info('enabling debugging')
+
+    # On debugmode
+    event_loop.set_debug(True)
+
+    # low line for slow tasks = 100 msec
+    event_loop.slow_callback_duration = 0.001
+
+    # Worn errors about
+    warnings.simplefilter('always', ResourceWarning)
+
+LOG.info('entering event loop')
+event_loop.run_until_complete(outer(event_loop))
+
+RESULTS: Without debug mode
+<stdin>:1905: DeprecationWarning: There is no current event loop
+  DEBUG: Using selector: EpollSelector
+   INFO: entering event loop
+   INFO: outer starting
+   INFO: inner starting
+   INFO: inner completed
+   INFO: outer completed
+
+AND OTHER RESULTS: where you run with: $ python3 asyncio_debug.py -v
+'''
