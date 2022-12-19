@@ -281,3 +281,53 @@ main: done
 '''
 
 #8 futures process pool map
+
+from concurrent import futures
+import os
+
+'''
+def task(n):
+    return (n, os.getpid())
+
+
+ex = futures.ProcessPoolExecutor(max_workers=2)
+results = ex.map(task, range(5, 0, -1))
+for n, pid in results:
+    print('ran task {} in process {}'.format(n, pid))
+
+RESULTS:
+ran task 5 in process 526661
+ran task 4 in process 526662
+ran task 3 in process 526661
+ran task 2 in process 526661
+ran task 1 in process 526661
+'''
+
+#9 futures process pool broken
+
+from concurrent import futures
+import os
+import signal
+
+'''
+with futures.ProcessPoolExecutor(max_workers=2) as ex:
+    print('getting the pid for one worker')
+    f1 = ex.submit(os.getpid)
+    pid1 = f1.result()
+
+    print('killing process {}'.format(pid1))
+    os.kill(pid1, signal.SIGHUP)
+
+    print('submitting another task')
+    f2 = ex.submit(os.getpid)
+    try:
+        pid2 = f2.result()
+    except futures.process.BrokenProcessPool as e:
+        print('could not start new tasks: {}'.format(e))
+
+RESULTS:
+getting the pid for one worker
+killing process 527022
+submitting another task
+could not start new tasks: A process in the process pool was terminated abruptly while the future was running or pending.
+'''
