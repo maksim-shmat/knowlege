@@ -191,3 +191,197 @@ gopher : 70
 '''
 
 #8 socket getservebyport
+
+import socket
+from urllib.parse import urlunparse
+
+'''
+for port in [80, 443, 21, 70, 25, 143, 993, 110, 995]:
+    url = '{}://example.com/'.format(socket.getservbyport(port))
+    print(url)
+
+RESULTS:
+http://example.com/
+https://example.com/
+ftp://example.com/
+gopher://example.com/
+smtp://example.com/
+imap2://example.com/
+imaps://example.com/
+pop3://example.com/
+pop3s://example.com/
+'''
+
+#9 socket getprotobyname() for get port number
+
+import socket
+
+'''
+def get_constants(prefix):
+    """Make a dict."""
+    return{
+            getattr(socket, n):
+            n for n in dir(socket)
+            if n.startswith(prefix)
+    }
+
+protocols = get_constants('IPPROTO_')
+
+for name in ['icmp', 'udp', 'tcp']:
+    proto_num = socket.getprotobyname(name)
+    const_name = protocols[proto_num]
+    print('{:>4} -> {:2d} (socket.{:<12} = {:2d})'.format(
+        name, proto_num, const_name,
+        getattr(socket, const_name)))
+
+RESULTS:
+icmp ->  1 (socket.IPPROTO_ICMP =  1)
+ udp -> 17 (socket.IPPROTO_UDP  = 17)
+ tcp ->  6 (socket.IPPROTO_TCP  =  6)
+'''
+
+#10 socket getaddrinfo() for get server address
+
+import socket
+
+'''
+def get_constants(prefix):
+    """Make a dict"""
+    return {
+            getattr(socket, n): n
+            for n in dir(socket)
+            if n.startswith(prefix)
+    }
+
+families = get_constants('AF_')
+types = get_constants('SOCK_')
+protocols = get_constants('IPPROTO_')
+
+for response in socket.getaddrinfo('www.python.org', 'http'):
+
+    # Unpack tuple answer
+    family, socktype, proto, canonname, sockaddr = response
+
+    print('Family        :', families[family])
+    print('Type          :', types[socktype])
+    print('Protocol      :', protocols[proto])
+    print('Canonical name:', canonname)
+    print('Socket address:', sockaddr)
+    print()
+
+RESULTS:
+Traceback (most recent call last):
+  File "<stdin>", line 260, in <module>
+  File "/usr/lib/python3.10/socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+shell returned 1
+
+EXPECTED RESULTS:
+Family         : AF_INET
+Type           : SOCK_DGRAM
+Protocol       : IPPROTO_UDP
+Canonical name :
+Socket address : ('151.101.32.223', 80)
+
+Family         : AF_INET
+Type           : SOCK_STREAM
+Protocol       : IPPROTO_TCP
+Canonical name :
+Socket address : ('151.101.32.223', 80)
+
+Family         : AF_INET6
+Type           : SOCK_DGRAM
+Protocol       : IPPROTO_UDP
+Canonical name :
+Socket address : ('2a04:4e42:8::223', 80, 0, 0)
+
+Family         : AF_INET6
+Type           : SOCK_STREAM
+Protocol       : IPPROTO_TCP
+Canonical name :
+Socket address : ('2a04:4e42:8::223', 80, 0, 0)
+'''
+
+#11 socket getaddrinfo extra args
+
+import socket
+
+'''
+def get_constants(prefix):
+    """Make a dict."""
+    return {
+            getattr(socket, n): n
+            for n in dir(socket)
+            if n.startswith(prefix)
+    }
+
+families = get_constants('AF_')
+types = get_constants('SOCK_')
+protocols = get_constants('IPPROTO_')
+
+responses = socket.getaddrinfo(
+        host='www.python.org',
+        port='http',
+        family=socket.AF_INET,
+        type=socket.SOCK_STREAM,
+        proto=socket.IPPROTO_TCP,
+        flags=socket.AI_CANONNAME,
+)
+
+for response in responses:
+    # Unpack tuple answer
+    family, socktype, proto, canonname, sockaddr = response
+
+    print('Family        :', families[family])
+    print('Type          :', types[socktype])
+    print('Protocol      :', protocols[proto])
+    print('Canonical name:', canonname)
+    print('Socket address:', sockaddr)
+    print()
+
+RESULTS:
+Traceback (most recent call last):
+  File "<stdin>", line 324, in <module>
+  File "/usr/lib/python3.10/socket.py", line 955, in getaddrinfo
+    for res in _socket.getaddrinfo(host, port, family, type, proto, flags):
+socket.gaierror: [Errno -3] Temporary failure in name resolution
+
+shell returned 1
+
+EXPECTED RESULTS:
+
+Family        : AF_INET
+Type          : SOCK_STREAM
+Protocol      : IPPROTO_TCP
+Canonical name: prod.python.map.fastlylb.net
+Socket address: ('151.101.32.223', 80)
+'''
+
+#12 socket address packing
+
+import binascii
+import socket
+import struct
+import sys
+
+'''
+for string_address in ['192.168.1.1', '127.0.0.1']:
+    packed = socket.inet_aton(string_address)
+    print('Original:', string_address)
+    print('Packed  :', binascii.hexlify(packed))
+    print('Unpacked:', socket.inet_ntoa(packed))
+    print()
+
+RESULTS:
+Original: 192.168.1.1
+Packed  : b'c0a80101'
+Unpacked: 192.168.1.1
+
+Original: 127.0.0.1
+Packed  : b'7f000001'
+Unpacked: 127.0.0.1
+'''
+
+#13 socket ipv6 address packing
