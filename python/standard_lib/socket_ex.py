@@ -385,3 +385,135 @@ Unpacked: 127.0.0.1
 '''
 
 #13 socket ipv6 address packing
+
+import binascii
+import socket
+import struct
+import sys
+
+'''
+string_address = '2002:ac10:10a:1234:21e:52ff:fe74:40e'
+packed = socket.inet_pton(socket.AF_INET6, string_address)
+
+print('Original:', string_address)
+print('Packed  :', binascii.hexlify(packed))
+print('Unipacked:', socket.inet_ntop(socket.AF_INET6, packed))
+
+RESULTS:
+Original: 2002:ac10:10a:1234:21e:52ff:fe74:40e
+Packed  : b'2002ac10010a1234021e52fffe74040e'
+Unipacked: 2002:ac10:10a:1234:21e:52ff:fe74:40e
+'''
+
+#14 socket echo server
+
+import socket
+import sys
+
+'''
+# Create socket TCP/IP
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind socket to port
+server_address = ('localhost', 10000)
+print('starting up on {} port {}'.format(*server_address))
+sock.bind(server_address)
+
+sock.listen(1)
+
+while True:
+    print('waiting for a connection')
+    connection, client_address = sock.accept()
+    try:
+        print('connection from', client_address)
+
+        # Get data little by little and send it backward
+        while True:
+            data = connection.recv(16)
+            print('received {!r}'.format(data))
+            if data:
+                print('sending data back to the client')
+                connection.sendall(data)
+            else:
+                print('no data from', client_address)
+                break
+
+    finally:
+        connection.close()
+'''
+
+#15 socket echo client
+
+import socket
+import sys
+
+'''
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+server_address = ('localhost', 10000)
+print('connecting to {} port {}'.format(*server_address))
+sock.connect(server_address)
+
+try:
+    message = b'This is the message. It will be repeated.'
+    print('sending {!r}'.format(message))
+    sock.sendall(message)
+
+    amount_received = 0
+    amount_expected = len(message)
+
+    while amount_received <amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print('received {!r}'.format(data))
+
+finally:
+    print('closing socket')
+    sock.close()
+'''
+
+#16 socket echo client easy
+
+import socket
+import sys
+
+'''
+def get_constants(prefix):
+    """Make a dict."""
+    return {
+            getattr(socket, n): n
+            for n in dir(socket)
+            if n.startswith(prefix)
+    }
+
+families = get_constants('AF_')
+types = get_constants('SOCK_')
+protocols = get_constants('IPPROTO_')
+
+sock = socket.create_connection(('localhost', 10000))
+
+print('Family  :', families[sock.family])
+print('Type    :', types[sock.type])
+print('Protocol:', protocols[sock.proto])
+print()
+
+try:
+    # Send data
+    message = b'This is the message. It will be repeated.'
+    print('sending {!r}'.format(message))
+    sock.sendall(message)
+
+    amount_received = 0
+    amount_expected = len(message)
+
+    while amount_received < amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print('received {!r}'.format(data))
+
+finally:
+    print('closing socket')
+    sock.close()
+'''
+
+#17 socket echo server explicit
