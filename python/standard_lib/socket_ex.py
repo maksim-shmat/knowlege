@@ -517,3 +517,133 @@ finally:
 '''
 
 #17 socket echo server explicit
+# $ host hubert.hellfly.net
+# $ netstat -an | grep 10000
+# $ python3 socket_echo_server_explicit.py hubert.hellfly.net
+
+import socket
+import sys
+
+'''
+# Create socket for address
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind socket to address
+server_name = sys.argv[1]
+server_address = (server_name, 10000)
+print('starting up on {} port {}'.format(*server_address))
+sock.bind(server_address)
+sock.listen(1)
+
+while True:
+    print('waiting for a connection')
+    connection, client_address = sock.accept()
+    try:
+        print('client connected:', client_address)
+        while True:
+            data = connection.recv(16)
+            print('received {!r}'.format(data))
+            if data:
+                connection.sendall(data)
+            else:
+                break
+    finally:
+        connection.close()
+'''
+
+#18 socket echo client explicit
+# $ hostname
+# $ python3 ./socket_echo_client_explicit.py hubert.hellfly.net
+import socket
+import sys
+
+
+'''
+# Create socket TCP/IP
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect socket to port on the server
+server_address = (sys.argv[1], 10000)
+
+print('connecting to {} port {}'.format(*server_address))
+sock.connect(server_address)
+
+try:
+    message = b'This is the message. It will be repeated.'
+    print('sending {!r}'.format(message))
+    sock.sendall(message)
+
+    amount_received = 0
+    amount_expected = len(message)
+    while amount_received < amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print('received {!r}'.format(data))
+
+finally:
+    sock.close()
+'''
+
+#19 socket echo server any
+# netstat -an
+
+import socket
+import sys
+
+'''
+# Create TCP/IP
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Bind socket
+server_address = ('', 10000)
+sock.bind(server_address)
+print('starting up on {} port {}'.format(*sock.getsockname()))
+sock.listen(1)
+
+while True:
+    print('waiting for a connection')
+    connection, client_address = sock.accept()
+    try:
+        print('client connected:', client_address)
+        while True:
+            data = connection.recv(16)
+            print('received {!r}'.format(data))
+            if data:
+                connection.sendall(data)
+            else:
+                break
+    finally:
+        connection.close()
+'''
+
+#20 socket echo server dgram gor UDP
+
+import socket
+import sys
+
+'''
+# Create socket UDP
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+# Bind socket to the port
+server_address = ('lockalhost', 10000)
+print('starting up on {} port {}'.format(*server_address))
+sock.bind(server_address)
+
+while True:
+    print('\nwaiting to receive message')
+    data, address = sock.recvfrom(4096)
+
+    print('received {} bytes from {}'.format(
+        len(data), address))
+    print(data)
+
+    if data:
+        sent = sock.sendto(data, address)
+        print('send {} bytes back to {}'.format(
+            sent, address))
+'''
+
+#21 socket echo client dgram
+
+import socket
