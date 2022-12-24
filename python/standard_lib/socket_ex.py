@@ -647,3 +647,181 @@ while True:
 #21 socket echo client dgram
 
 import socket
+import sys
+
+'''
+# Create socket UDP
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+server_address = ('localhost', 10000)
+message = b'This is the message. It will be repeated.'
+
+try:
+    # Send data
+    print('sending {!r}'.format(message))
+    sent = sock.sendto(message, server_address)
+
+    # Get answer
+    print('waiting to receive')
+    data, server = sock.recvfrom(4096)
+    print('received {!r}'.format(data))
+    
+finally:
+    print('closing socket')
+    sock.close()
+'''
+
+#22 socket echo server UDS
+
+import socket
+import sys
+import os
+
+'''
+server_address = './uds_socket'
+
+# Check what socket exist
+try:
+    os.unlink(server_address)
+except OSError:
+    if os.path.exists(server_address):
+        raise
+
+# Create socket UDS
+sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+
+# Bind socket to address
+print('starting up on {}'.format(server_address))
+sock.bind(server_address)
+
+# Listen 
+sock.listen(1)
+
+while True:
+    # Wait connection
+    print('waiting for a connection')
+    connection, client_address = sock.accept()
+    try:
+        print('connection from', client_address)
+        # Get data as little chunks and send it backward
+        while True:
+            data = connection.recv(16)
+            print('received {!r}'.format(data))
+            if data:
+                print('sending data back to the client')
+                connection.sendall(data)
+            else:
+                print('no data from', client_address)
+                break
+    finally:
+        connection.close()
+'''
+
+#23 socket echo client UDS
+# Permission access
+# $ ls -l ./uds_socket
+# srwxr-xr-x 1 dhelmann dhellmann 0 Aug 22 11:20 uds_socket
+# $ sudo chown root ./uds_socket
+# $ ls -l ./uds_socket
+# srwxr-xr-x 1 root dhelman 0 Aug 22 11:20 uds_socket
+
+import socket
+import sys
+
+'''
+sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+
+server_address = './uds_socket'
+print('connecting to {}'.format(server_address))
+try:
+    sock.connect(server_address)
+except socket.error as msg:
+    print(msg)
+    sys.exit(1)
+
+try:
+    message = b'This is the message. It will be repeated.'
+    print('sending {!r}'.format(message))
+    sock.sendall(message)
+
+    amount_received = 0
+    amount_expected = len(message)
+
+    while amount_received < amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print('received {!r}'.format(data))
+
+finally:
+    print('closing socket')
+    sock.slose()
+'''    
+
+#24 socket socketpair
+
+import socket
+import os
+
+'''
+parent, child = socket.socketpair()
+
+pid = os.fork()
+
+if pid:
+    print('in parent, sending message')
+    child.close()
+    parent.sendall(b'ping')
+    response = parent.recv(1024)
+    print('response from child:', response)
+    parent.close()
+
+else:
+    print('in child, waiting for message')
+    parent.close()
+    message = child.recv(1024)
+    print('message from parent:', message)
+    child.sendall(b'pong')
+    child.close()
+
+RESULTS:
+in parent, sending message
+in child, waiting for message
+message from parent: b'ping'
+response from child: b'pong'
+'''
+
+#25 socket multicast sender
+
+import socket
+import struct
+import sys
+
+'''
+message = b'very important data'
+multicast_group = ('224.3.29.71', 10000)
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.settimeout(0.2)
+ttl = struct.pack('b', 1)
+sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, ttl)
+
+try:
+    print('sending {!r}'.format(message))
+    sent = sock.sendto(message, multicast_group)
+
+    while True:
+        print('waiting to receive')
+        try:
+            data, server = sock.recvfrom(16)
+        except socket.timeout:
+            print('timed out, no more responses')
+            break
+        else:
+            print('received {!r} from {}'.format(
+                data, server))
+finally:
+    print('closing socket')
+    sock.close()
+'''
+
+#26 socket multicast receiver
