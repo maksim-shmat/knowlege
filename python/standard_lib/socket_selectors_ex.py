@@ -133,6 +133,7 @@ import sys
 import queue
 
 
+'''
 # Create socket TCP/IP
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setblocking(0)
@@ -198,3 +199,158 @@ while inputs:
                         del message_queue[s]
 
     for s in writable:
+        try:
+            next_msg = message_queues[s].get_nowait()
+        except queue.Empty:
+            print('  ', s.getpeername(), 'queue empty',
+                    file=sys.stderr)
+            outputs.remove(s)
+        else:
+            print('sending {!r} to {}'.format(next_msg,
+                                              s.getpeername()),
+                                              file=sys.stderr)
+            s.send(next_msg)
+
+    # Handle exceptional chunks
+    for s in exceptional:
+        print('exception condition on ', s.getpeername(),
+              file=sys.stderr)
+        inputs.remove(s)
+        if s in outputs:
+            outputs.remove(s)
+        s.close()
+
+        del message_queues[s]
+'''
+
+#4 select echo multiclient
+
+import socket
+import sys
+
+
+'''
+messages = [
+        'This is the message.',
+        'It will be sent',
+        'in parts.',
+]
+server_address = ('localhost', 10000)
+
+# Create socket TCP/IP
+socks = [
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM),
+        socket.socket(socket.AF_INET, socket.SOCK_STREAM),
+]
+
+# Connect socket to the port which listened of server
+print('connecting to {} port {}'.format(*server_address),
+        file=sys.stderr)
+for s in socks:
+    s.connect(server_address)
+
+for message in messages:
+    outgoing_data = message.encode()
+
+    # Send message in both sockets
+    for s in socks:
+        print('{}: sending {!r}'.format(s.getsockname(),
+                                        outgoing_data),
+                                        file=sys.stderr)
+        s.send(outgoing_data)
+
+    # Read messages from both sockets
+    for s in socks:
+        data = s.recv(1024)
+        print('{}: received {!r}'.fomat(s.getsockname(), data),
+                file=sys.stderr)
+        if not data:
+            print('closing socket', s.getsockname(),
+                    file=sys.stderr)
+            s.close()
+'''
+
+#5 select echo server with timeout for code above
+'''
+readable, writable, exceptional = select.select(inputs,
+                                                outputs,
+                                                inputs,
+                                                timeout)
+if not (readable or writable or exceptional):
+    print('timed out, do some other work here', file=sys.stderr)
+    continue
+'''
+
+#6 select echo slow client for imitation slow sending packs in web
+
+import socket
+import sys
+import time
+
+'''
+# Crate socket TCP/IP
+sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+# Connect socket
+server_address = ('localhost', 10000)
+print('connecting to {} port {}'.format(*server_address),
+        file=sys.stderr)
+sock.connect(server_address)
+
+time.sleep(1)
+
+messages = [
+        'Part one of the message.',
+        'Part two of the message.',
+]
+amount_expected = len(''.join(messages))
+
+try:
+    # Send data
+    for message in messages:
+        data = message.encode()
+        print('sending {!r}'.format(data), file=sys.stderr)
+        sock.sendall(data)
+        time.sleep(1.5)
+
+    # Wait an answer
+    amount_received = 0
+
+    while amount_received < amount_expected:
+        data = sock.recv(16)
+        amount_received += len(data)
+        print('received {!r}'.format(data), file=sys.stderr)
+finally:
+    print('closing socket', file=sys.stderr)
+    sock.close()
+'''
+
+#7 select poll() echo server, it not support Windows
+
+import select
+import socket
+import sys
+import queue
+
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.setblocking(0)
+
+server_address = ('localhost', 10000)
+print('starting up on {} port {}'.format(*server_address),
+        file=sys.stderr)
+server.bind(server_address)
+
+server.listen(5)
+
+message_queues = {}
+
+# Stop unstopable blocker (in msec)
+TIMEOUT = 1000
+
+READ_ONLY = (
+        select.POLLIN |
+        select.POLLPRI |
+        select.POLLHUP |
+        select.POLLERR |
+)
+READ_WRITE = READ_ONLY | select.POLLOUT
