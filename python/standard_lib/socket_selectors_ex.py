@@ -332,6 +332,8 @@ import socket
 import sys
 import queue
 
+
+'''
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.setblocking(0)
 
@@ -351,6 +353,93 @@ READ_ONLY = (
         select.POLLIN |
         select.POLLPRI |
         select.POLLHUP |
-        select.POLLERR |
+        select.POLLERR
 )
 READ_WRITE = READ_ONLY | select.POLLOUT
+
+# Register object
+poller = select.poll()
+poller.register(server, READ_ONLY)
+
+fd_to_socket = {
+        server.fileno(): server,
+}
+
+while True:
+    # Wait how socet is ready
+    print('waiting for the next event', file=sys.stderr)
+    events = poller.poll(TIMEOUT)
+
+    for fd, flag in events:
+
+        s = fd_to_socket[fd]
+
+        # Handle incoming data
+        if flag & (select.POLLIN | select.POLLPRI):
+            
+            if s is server:
+                # readable socket ready for get connection
+                connection, client_address = s.accept()
+                print('connection', client_address,
+                        file=sys.stderr)
+                connection.setblocking(0)
+                fd_to_socket[connection.fileno()] = connection
+                poller.register(connection, READ_ONLY)
+
+                # Put queue to connection for bufferisation sending data
+                messagei_queues[connection] = queue.Queue()
+                
+            else:
+                data = s.recv(1024)
+                
+                if data:
+                    # Readable client socket have data for read
+                    print('received {!r} from {}'.format(
+                        data, s.getpeername()), file=sys.stderr,
+                    )
+                    message_queues[s].put(data)
+                    # Add output chanel for send answer
+                    poller.modify(s, READ_WRITE)
+
+                else:
+                    # Empty result as a close connection
+                    print('closing', client_address,
+                            file=sys.stderr)
+                    # Stop listenning incomming data
+                    poller.unregister(s)
+                    s.close()
+
+                    del message_queues[s]
+            
+        elif flag & select.POLLHUP:
+            # client disconnect
+            print('closing', client_address, '(HUP)',
+                    file=sys.stderr)
+            # Stop listenning incomming data for this connection
+            poller.unregister(s)
+            s.close()
+
+        elif flag & select.POLLOUT:
+            # socket ready for send data, if it is
+            try:
+                next_msg = message_queues[s].get_nowait()
+            except queue.Empty:
+                # In no messages for handling stop check ready socket for write
+                print(s.getpeername(), 'queue empty',
+                        file=sys.stderr)
+                poller.modify(s, READ_ONLY)
+            else:
+                print('sending {!r} to {}'.format(
+                    next_msg, s.getpeername()), file=sys.stderr,
+                )
+                s.send(next_msg)
+
+        elif flag & select.POLLERR:
+            print('exception on', s.getpeername(),
+                    file=sys.stderr)
+            # Stop listenning incomming data for this connection
+            poller.unregister(s)
+            s.close()
+
+            del message_queues[s]
+'''
