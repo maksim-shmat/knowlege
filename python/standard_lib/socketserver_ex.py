@@ -148,7 +148,7 @@ if __name__ == '__main__':
 
 import socketserver
 
-
+'''
 class EchoRequestHandler(socketserver.BaseRequestHandler):
 
     def handle(self):
@@ -183,5 +183,129 @@ if __name__ == '__main__':
     server.shutdown()
     s.close()
     server.socket.close()
-
+'''
 #3 socketserver threaded
+
+import threading
+import socketserver
+
+'''
+class ThreadedEchoRequestHandler(
+        socketserver.BaseRequestHandler,
+):
+
+    def handle(self):
+        # Echo message for client
+        data = self.request.recv(1024)
+        cur_thread = threading.currentThread()
+        response = b'%s: %s' % (cur_thread.getName().encode(),
+                                data)
+        self.request.send(response)
+        return
+
+
+class ThreadedEchoServer(socketserver.ThreadingMixIn,
+                         socketserver.TCPServer,
+                         ):
+    pass
+
+
+if __name__ == '__main__':
+    import socket
+
+    address = ('localhost', 0)  # 0 is random port, or write oneself
+    server = ThreadedEchoServer(address,
+                                ThreadedEchoRequestHandler)
+    ip, port = server.server_address
+
+    t = threading.Thread(target=server.serve_forever)
+    t.setDaemon(True)
+    t.start()
+    print('Server loop running in thread:', t.getName())
+
+    # connect to the server
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((ip, port))
+
+    # Send data
+    message = b'Hello, world'
+    print('Sending : {!r}'.format(message))
+    len_sent = s.send(message)
+
+    # Get answer
+    response = s.recv(1024)
+    print('Received: {!r}'.format(response))
+
+    # Clear resources
+    server.shutdown()
+    s.close()
+    server.socket.close()
+
+RESULTS:
+<stdin>:222: DeprecationWarning: setDaemon() is deprecated, set the daemon attribute instead
+<stdin>:224: DeprecationWarning: getName() is deprecated, get the name attribute instead
+Server loop running in thread: Thread-1 (serve_forever)
+Sending : b'Hello, world'
+<stdin>:200: DeprecationWarning: currentThread() is deprecated, use current_thread() instead
+<stdin>:201: DeprecationWarning: getName() is deprecated, get the name attribute instead
+Received: b'Thread-2 (process_request_thread): Hello, world'
+'''
+
+#4 socketserver forking
+
+import os
+import socketserver
+
+'''
+class ForkingEchoRequestHandler(socketserver.BaseRequestHandler):
+
+    def handle(self):
+        # Echo message for client
+        data = self.request.recv(1024)
+        cur_pid = os.getpid()
+        response = b'%d: %s' % (cur_pid, data)
+        self.request.send(response)
+        return
+
+
+class ForkingEchoServer(socketserver.ForkingMixIn,
+                        socketserver.TCPServer,
+                        ):
+    pass
+
+
+if __name__ == '__main__':
+    import socket
+    import threading
+
+
+    address = ('localhost', 0)
+    server = ForkingEchoServer(address,
+                               ForkingEchoRequestHandler)
+    ip, port = server.server_address
+
+    t = threading.Thread(target=server.serve_forever)
+    t.setDaemon(True)
+    t.start()
+    print('Server loop running in process:', os.getpid())
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((ip, port))
+
+    message = 'Hello, world'.encode()
+    print('Sending : {!r}'.format(message))
+    len_sent = s.send(message)
+
+    response = s.recv(1024)
+    print('Received: {!r}'.format(response))
+
+    server.shutdown()
+    s.close()
+    server.socket.close()
+
+RESULTS:
+<stdin>:288: DeprecationWarning: setDaemon() is deprecated, set the daemon attribute instead
+Server loop running in process: 628423
+Sending : b'Hello, world'
+Received: b'628425: Hello, world'
+'''
