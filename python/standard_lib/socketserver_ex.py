@@ -2,6 +2,7 @@
 
 #1 socketserver echo
 
+'''
 import logging
 import sys
 import socketserver
@@ -60,7 +61,7 @@ class EchoServer(socketserver.TCPServer):
         self.logger.info(
                 'Handling requests, press <Ctr-C> to quit'
         )
-        socketserver.TCPServer.server_forever(self, poll_interval)
+        socketserver.TCPServer.serve_forever(self, poll_interval)
         return
 
     def handle_request(self):
@@ -82,3 +83,105 @@ class EchoServer(socketserver.TCPServer):
         )
 
     def server_close(self):
+        self.logger.debug('server_close')
+        return socketserver.TCPServer.server_close(self)
+
+    def finish_request(self, request, client_address):
+        self.logger.debug('finish_request(%s, %s)',
+                          request, client_address)
+        return socketserver.TCPServer.finish_request(
+                self, request, client_address,
+        )
+
+    def close_request(self, request_address):
+        self.logger.debug('close_request(%s)', request_address)
+        return socketserver.TCPServer.close_request(
+                self, request_address,
+        )
+
+    def shutdown(self):
+        self.logger.debug('shutdown()')
+        return socketserver.TCPServer.shutdown(self)
+
+if __name__ == '__main__':
+    import socket
+    import threading
+
+    address = ('localhost', 0)  # the core and port, or against 0 port-number
+    server = EchoServer(address, EchoRequestHandler)
+    ip, port = server.server_address  # check port
+
+    # Start server in a thread
+    t = threading.Thread(target=server.serve_forever)
+    t.setDaemon(True)  # work in background
+    t.start()
+
+    logger = logging.getLogger('client')
+    logger.info('Server on %s:%s', ip, port)
+
+    # Connect to the server
+    logger.debug('creating socket')
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    logger.debug('connecting to server')
+    s.connect((ip, port))
+
+    # Send data
+    message = 'Hello, world'.encode()
+
+    logger.debug('sending data: %r', message)
+    len_sent = s.send(message)
+
+    # Get answer
+    logger.debug('waiting for response')
+    response = s.recv(len_sent)
+    logger.debug('response from server: %r', response)
+
+    # Clear resources
+    server.shutdown()
+    logger.debug('closing socket')
+    s.close()
+    logger.debug('done')
+    server.socket.close()
+'''
+
+#2 socketserver echo simple
+
+import socketserver
+
+
+class EchoRequestHandler(socketserver.BaseRequestHandler):
+
+    def handle(self):
+        # Echo message for client
+        data = self.request.recv(1024)
+        self.request.send(data)
+        return
+
+
+if __name__ == '__main__':
+    import socket
+    import threading
+
+    address = ('localhost', 0)
+    server = socketserver.TCPServer(address, EchoRequestHandler)
+    ip, port = server.server_address
+
+    t = threading.Thread(target=server.serve_forever)
+    t.setDaemon(True)
+    t.start()
+
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    s.connect((ip, port))
+
+    message = 'Hello, world'.encode()
+    print('Sending : {!r}'.format(message))
+    len_sent = s.send(message)
+
+    response = s.recv(len_sent)
+    print('Received: {!r}'.format(response))
+
+    server.shutdown()
+    s.close()
+    server.socket.close()
+
+#3 socketserver threaded
