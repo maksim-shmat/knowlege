@@ -108,3 +108,43 @@ PARSED: http://netloc/path;param?query=arg#frag
 '''
 
 #6 urllib parse urlunparse
+
+'''
+from urllib.parse import urlparse, urlunparse
+
+original = 'http://netloc/path;param?query=arg#frag'
+print('ORIG  :', original)
+parsed = urlparse(original)
+print('PARSED:', type(parsed), parsed)
+t = parsed[:]
+print('TUPLE :', type(t), t)
+print('NEW   :', urlunparse(t))
+
+RESULTS:
+ORIG  : http://netloc/path;param?query=arg#frag
+PARSED: <class 'urllib.parse.ParseResult'> ParseResult(scheme='http', netloc='netloc', path='/path', params='param', query='query=arg', fragment='frag')
+TUPLE : <class 'tuple'> ('http', 'netloc', '/path', 'param', 'query=arg', 'frag')
+NEW   : http://netloc/path;param?query=arg#frag
+'''
+
+#7 urllib parse urlunparseextra
+
+'''
+from urllib.parse import urlparse, urlunparse
+
+original = 'http://netloc/path;?#'
+print('ORIG  :', original)
+parsed = urlparse(original)
+print('PARSED:', type(parsed), parsed)
+t = parsed[:]
+print('TUPLE :', type(t), t)
+print('NEW   :', urlunparse(t))
+
+RESULTS:
+    ORIG  : http://netloc/path;?#
+PARSED: <class 'urllib.parse.ParseResult'> ParseResult(scheme='http', netloc='netloc', path='/path', params='', query='', fragment='')
+TUPLE : <class 'tuple'> ('http', 'netloc', '/path', '', '', '')
+NEW   : http://netloc/path
+'''
+
+#8 urllib parse urljoin
