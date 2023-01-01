@@ -148,3 +148,109 @@ NEW   : http://netloc/path
 '''
 
 #8 urllib parse urljoin
+
+from urllib.parse import urljoin
+
+'''
+print(urljoin('http://www.example.com/path/file.html',
+              'anotherfile.html'))
+print(urljoin('http://www.example.com/path/file.html',
+              '../anotherfile.html'))
+RESULTS:
+    http://www.example.com/path/anotherfile.html
+http://www.example.com/anotherfile.html
+'''
+
+#9 urllib parse urljoin with path
+
+from urllib.parse import urljoin
+
+'''
+print(urljoin('http://www.example.com/path/',
+              '/subpath/file.html'))
+print(urljoin('http://www.example.com/path/',
+              'subpath/file.html'))
+
+RESULTS:
+http://www.example.com/subpath/file.html
+http://www.example.com/path/subpath/file.html
+'''
+
+#10 urllib parse urlencode
+
+from urllib.parse import urlencode
+
+'''
+query_args = {
+        'q': 'query string',
+        'foo': 'bar',
+}
+
+encoded_args = urlencode(query_args)
+print('Encoded:', encoded_args)
+
+RESULTS:
+Encoded: q=query+string&foo=bar
+'''
+
+#11 urllib parse urlencode doseq
+
+from urllib.parse import urlencode
+
+'''
+query_args = {
+        'foo': ['foo1', 'foo2'],
+}
+print('Single  :', urlencode(query_args))
+print('Sequence:', urlencode(query_args, doseq=True))
+
+RESULTS:
+Single  : foo=%5B%27foo1%27%2C+%27foo2%27%5D
+Sequence: foo=foo1&foo=foo2
+'''
+
+#12 urllib parse parse qs
+
+from urllib.parse import parse_qs, parse_qsl
+
+'''
+encoded = 'foo=foo1&foo=foo2'
+
+print('parse_qs :', parse_qs(encoded))
+print('parse_qsl:', parse_qsl(encoded))
+
+RESULTS:
+parse_qs : {'foo': ['foo1', 'foo2']}
+parse_qsl: [('foo', 'foo1'), ('foo', 'foo2')]
+'''
+
+#13 urllib parse quote
+
+from urllib.parse import quote, quote_plus, urlencode
+
+'''
+url = 'http://localhost:8000/~hellhound/'
+print('urlencode() :', urlencode({'url': url}))
+print('quote()     :', quote(url))
+print('quote_plus():', quote_plus(url))
+
+RESULTS:
+urlencode() : url=http%3A%2F%2Flocalhost%3A8000%2F~hellhound%2F
+quote()     : http%3A//localhost%3A8000/~hellhound/
+quote_plus(): http%3A%2F%2Flocalhost%3A8000%2F~hellhound%2F
+'''
+
+#14 urllib parse unquote
+
+from urllib.parse import unquote, unquote_plus
+
+'''
+print(unquote('http%3A//localhost%3A8080/%7Ehelhound/'))
+print(unquote_plus(
+    'http%3A%2F%2Flocalhost%3A8080%2F%7Ehellhound%2F'
+))
+
+RESULTS:
+http://localhost:8080/~helhound/
+http://localhost:8080/~hellhound/
+'''
