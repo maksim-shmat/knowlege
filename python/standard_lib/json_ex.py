@@ -424,3 +424,131 @@ print(json.dumps(obj, default=convert_to_builtin_type)))
 '''
 
 #7.2 json load object hook
+
+import json
+
+'''
+def dict_to_object(d):
+    if '__class__' in d:
+        class_name = d.pop('__class__')
+        module_name = d.pop('__module__')
+        module = __import__(module_name)
+        print('MODULE:', module.__name__)
+        class_ = getattr(module, class_name)
+        print('CLASS:', class_)
+        args = {
+                key: value
+                for key, value in d.items()
+        }
+        print('INSTANCE ARGS:', args)
+        inst = class_(**args)
+    else:
+        inst = d
+    return inst
+
+encoded_object = """
+[{"s": "instance value goes here",
+  "__module__": "json_myobj", '__class__": "MyObj"}]
+  """
+
+myobj_instance = json.loads(
+        encoded_object,
+        object_hook=dict_to_object,
+)
+print(myobj_instance)
+'''
+
+#8 json encoder iterable
+
+import json
+
+'''
+encoder = json.JSONEncoder()
+data = [{'a': 'A', 'b': (2, 4), 'c': 3.0}]
+
+for part in encoder.iterencode(data):
+    print('PART:', part)
+
+RESULTS:
+PART: [
+PART: {
+PART: "a"
+PART: : 
+PART: "A"
+PART: , 
+PART: "b"
+PART: : 
+PART: [2
+PART: , 4
+PART: ]
+PART: , 
+PART: "c"
+PART: : 
+PART: 3.0
+PART: }
+PART: ]
+'''
+
+#9 json encoder default
+
+import json
+import json_myobj  # from #7
+
+'''
+class MyEncoder(json.JSONEncoder):
+
+    def default(self, obj):
+        print('default(', repr(obj), ')')
+        # change object to dict
+        d = {
+                '__class__':__class__.__name__,
+                '__module__':obj.__module__,
+        }
+        d.update(obj.__dict__)
+        return d
+
+obj = json_myobj.MyObj('internal date')
+print(obj)
+print(MyEncoder().encode(obj))
+'''
+
+#10 json decoder object hook
+
+import json
+
+'''
+class MyDecoder(json.JSONDecoder):
+
+    def __init__(self):
+        json.JSONDecoder.__init__(
+                self,
+                object_hook=self.dict_to_object,
+        )
+
+    def dict_to_object(self, d):
+        if '__class__' in d:
+            class_name = d.pop('__class__')
+            module_name = d.pop('__module__')
+            module = __import__(module_name)
+            print('MODULE:', module.__name__)
+            class_ = getattr(module, class_name)
+            print('CLASS:', class_)
+            args = {
+                    key: value
+                    for key, value in d.items()
+            }
+            print('INSTANCE ARGS:', args)
+            inst = class_(**args)
+        else:
+            inst = d
+        return inst
+
+
+encodede_object = """
+[{"s": "instance value goes here",
+  "__module__": "json_myobj", "__class__": "MyObj"}]
+"""
+
+myobj_instance = MyDecoder().decode(encoded_object)
+print(myobj_instance)
+'''
