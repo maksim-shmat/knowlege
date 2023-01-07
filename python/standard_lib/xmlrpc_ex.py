@@ -333,4 +333,173 @@ except KeyboardInterrupt:
     print('Exiting')
 '''
 
+#add xmlrpc instance dotted names client
+
+import  xmlrpc.client
+
+'''
+proxy = xmlrpc.client.ServerProxy('http://localhost:9000')
+print(proxy.dir.list('/tmp'))
+'''
+
 #15 xmlrpc introspection
+
+from xmlrpc.server import (SimpleXMLRPCServer,
+                           list_public_methods)
+import os
+import inspect
+
+'''
+server = SimpleXMLRPCServer(
+        ('localhost', 9000),
+        logRequests=True,
+)
+server.register_introspection_functions()
+
+
+class DirectoryService:
+
+    def _listMethods(self):
+        return list_public_methods(self)
+
+    def _methodHelp(self, method):
+        f = getattr(self, method)
+        return inspect.getdoc(f)
+
+    def list(self, dir_name):
+        """list(dir_name) => [<filenames>]
+        Returns a list containing the contents of
+        the named directory.
+        """
+        return os.listdir(dir_name)
+
+server.register_instance(DirectoryService())
+
+try:
+    print('Use CTRL-C to exit')
+    server.serve_forever()
+except KeyboardInterrupt:
+    print('Exiting')
+'''
+
+#add xmlrpc instance with prefix
+
+from xmlrpc.server import SimpleXMLRPCServer
+import os
+import inspect
+
+'''
+server = SimpleXMLRPCServer(
+    ('localhost', 9000),
+    logRequest=True,
+)
+
+def expose(f):
+    f.exposed = True
+    return f
+
+def is_exposed(f):
+    return getattr(f, 'exposed', False)
+
+
+class MyService:
+    PREFIX = 'prefix'
+
+    def _dispatch(self, method, params):
+        if not method.startswith(self.PREFIX + '.'):
+            raise Exception(
+                'method "{}" is not supported'.format(method)
+            )
+        method_name = method.partition('.')[2]
+        func = getattr(self, method_name)
+        if not is_exposed(func):
+            raise Exception(
+                'method "{}" is not supported'.format(method)
+            )
+        return func(*params)
+
+    @expose
+    def public(self):
+        return 'This is public'
+
+    def private(self):
+        return 'This is private'
+
+server.register_instance(MyService())
+
+try:
+    print('Use Control-C to exit')
+    server.serve_forever()
+except KeyboardInterrupt:
+    print('Exiting')
+'''
+
+#add xmlrpc instance with prefix client
+
+import xmlrpc.client
+'''
+proxy = xmlrpc.client.ServerProxy('http://localhost:9000')
+print('public():', proxy.prefix.public())
+try:
+    print('private():', proxy.prefix.public())
+except Exception as err:
+    print('\nERROR:', err)
+try:
+    print('public() without prefix:', proxy.public())
+except Exception as err:
+    print('\nERROR:', err)
+'''
+
+#16 xmlrpc introspectiono
+
+from xmlrpc.server import (SimpleXMLRPCServer,
+                           list_public_methods)
+import os
+import inspect
+
+'''
+server = SimpleXMLRPCServer(
+        ('localhost', 9000),
+        logRequests=True,
+)
+server.register_introspection_functions()
+
+
+class DirectoryService:
+
+    def _listMethods(self):
+        return list_public_methods(self)
+
+    def _methodHelp(self, method):
+        f = getattr(self, method)
+        return inspect.getdoc(f)
+
+    def list(self, dir_name):
+        """list(dir_name) => [<filenames>]
+        Returns a list containing the contents of
+        the named directory.
+        """
+        return os.listdir(dir_name)
+
+server.register_instance(DirectoryService())
+
+try:
+    print('Use CTRL-C to exit')
+    server.serve_forever()
+except KeyboardInterrupt:
+    print('Exiting')
+'''
+
+#17 xmlrpc introspection client
+
+import xmlrpc.client
+
+'''
+proxy = xmlrpc.client.ServerProxy('http://localhost:9000')
+for method_name in proxy.system.listMethods():
+    print('=' * 60)
+    print(method_name)
+    print('-' * 60)
+    print(proxy.system.methodHelp(method_name))
+    print()
+'''
