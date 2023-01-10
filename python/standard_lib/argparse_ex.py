@@ -247,4 +247,195 @@ options:
   -c C
 '''
 
-#10 
+#10 argparse raw description help formatter
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser(
+        add_help=True,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description="""
+        description
+            not
+                wrapped""",
+        epilog="""
+        epilog
+            not
+                wrapped""",
+)
+
+parser.add_argument(
+        '-a', action="store_true",
+        help="""argument
+        help is
+        wrapped
+        """,
+)
+
+parser.print_help()
+
+RESULTS:
+usage: [-h] [-a]
+
+        description
+            not
+                wrapped
+
+options:
+  -h, --help  show this help message and exit
+  -a          argument help is wrapped
+
+        epilog
+            not
+                wrapped
+'''
+
+#11 argparse raw text help formatter
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser(
+        add_help=True,
+        formatter_class=argparse.RawTextHelpFormatter,
+        description="""
+        description
+            not
+                wrapped""",
+        epilog="""
+        epilog
+            not
+                werapped""",
+)
+
+parser.add_argument(
+        '-a', action="store_true",
+        help="""argument
+        help is not
+        wrapped
+        """,
+)
+
+parser.print_help()
+
+RESULTS:
+usage: [-h] [-a]
+
+        description
+            not
+                wrapped
+
+options:
+  -h, --help  show this help message and exit
+  -a          argument
+                      help is not  # <-
+                      wrapped      # <-
+                      
+
+        epilog
+            not
+                werapped
+'''
+
+#12 argparse metavar type help formatter
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser(
+        add_help=True,
+        formatter_class=argparse.MetavarTypeHelpFormatter,
+)
+
+parser.add_argument('-i', type=int, dest='notshown1')
+parser.add_argument('-f', type=float, dest='notshown2')
+
+parser.print_help()
+
+RESULTS:
+usage: [-h] [-i int] [-f float]
+
+options:
+  -h, --help  show this help message and exit
+  -i int
+  -f float
+'''
+
+#13 argparse parent base
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser(add_help=False)
+
+parser.add_argument('--user', action="store")
+parser.add_argument('--password', action="store")
+
+#13.1 argparse uses parent
+
+import argparse
+import argparse_parent_base
+
+
+parser = argparse.ArgumentParser(
+        parents=[argparse_parent_base.parent],
+)
+
+parser.add_argument('--local-arg',
+                    action="store_true",
+                    default=False)
+print(parser.parse_args())
+'''
+
+#14 argparse conflict handler resolve
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser(conflict_handler='resolve')
+
+parser.add_argument('-a', action="store")
+parser.add_argument('-b', action="store", help='Short alone')
+parser.add_argument('--long-b', '-b',
+                    action="store",
+                    help='Long and short together')
+
+print(parser.parse_args(['-h']))
+
+RESULTS:
+usage: [-h] [-a A] [--long-b LONG_B]
+
+options:
+  -h, --help            show this help message and exit
+  -a A
+  --long-b LONG_B, -b LONG_B
+                        Long and short together
+'''
+
+#15 argparse conflict handler resolve2
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser(conflict_handler='resolve')
+
+parser.add_argument('-a', action="store")
+parser.add_argument('--long-b','-b',
+                    action="store",
+                    help='Long and short together')
+parser.add_argument('-b', action="store", help='Short alone')
+
+print(parser.parse_args(['-h']))
+
+RESULTS:
+usage: [-h] [-a A] [--long-b LONG_B] [-b B]
+
+options:
+  -h, --help       show this help message and exit
+  -a A
+  --long-b LONG_B  Long and short together  # <-
+  -b B             Short alone
+'''
+
+#16 argparse default grouping
