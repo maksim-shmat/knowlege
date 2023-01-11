@@ -439,3 +439,141 @@ options:
 '''
 
 #16 argparse default grouping
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser(description='Short sample app')
+
+parser.add_argument('--optional', action="store_true",
+                    default=False)
+parser.add_argument('positional', action="store")
+
+print(parser.parse_args())
+'''
+
+#17 argparse uses parent with group
+
+import argparse
+#import argparse_parent_with_group
+
+'''
+parser = argparse.ArgumentParser(
+        parent = [argparse_parent_with_group.parser],
+)
+
+parser.add_argument('--local-arg',
+                    action="store_true",
+                    default=False)
+
+print(parser.parse_args())
+'''
+
+#18 argparse mutually exclusive
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser()
+
+group = parser.add_mutually_exclusive_group()
+group.add_argument('-a', action='store_true')
+group.add_argument('-b', action='store_true')
+
+print(parser.parse_args())
+
+RESULTS: with: $ python3 argparse_mutually_exclusive.py -a
+         Namespace(a=True, b=False)
+
+         with: $ python3 argparse_mutually_exclusive.py -b
+         Namespace(a=False, b=True)
+
+         with: $ python3 argparse_mutually_exclusive.py -a -b
+         usage: argparse_mutually_exclusive.py [-h] [-a | -b]
+         argparse_mutually_exclusive.py: error: argument -b: not allowed
+         with argument -a
+# either -a either -b
+'''
+
+#19 argparse subparser
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser()
+
+subparsers = parser.add_subparsers(help='commands')
+
+# list command
+list_parser = subparsers.add_parser(
+        'list', help='List contents')
+list_parser.add_argument(
+        'dirname', action='store',
+        help='Directory to list')
+
+# create command
+create_parser = subparsers.add_parser(
+        'create', help='Create a directory')
+create_parser.add_argument(
+        'dirname', action='store',
+        help='New directory to create')
+create_parser.add_argument(
+        '--read-only', default=False, action='store_true',
+        help='Set permissions to prevent writing to the directory',
+)
+
+# delete command
+delete_parser = subparsers.add_parser(
+        'delete', help='Remove a directory')
+delete_parser.add_argument(
+        'dirname', action='store', help='The directory to remove')
+delete_parser.add_argument(
+        '--recursive', '-r', default=False, action='store_true',
+        help='Remove the contents of the directory, too',
+)
+
+print(parser.parse_args())
+
+# python3 argparse_subparsers.py -h
+'''
+
+#20 argparse nargs
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser()
+
+parser.add_argument('--three', nargs=3)
+
+parser.add_argument('--optional', nargs='?')
+parser.add_argument('--all', nargs='*', dest='all')
+parser.add_argument('--one-or-more', nargs='+')
+
+print(parser.parse_args())
+
+# $ python3 argparse_nargs.py -h
+'''
+
+#21 argparse type
+
+import argparse
+
+
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-i', type=int)
+parser.add_argument('-f', type=float)
+parser.add_argument('--file', type=open)
+
+try:
+    print(parser.parse_args())
+except IOError as msg:
+    parser.error(str(msg))
+
+# $ python3 argparse_type.py -i 1
+# $ python3 argparse_type.py -f 3.14
+# $ python3 argparse_type.py --file argparse_type.py
+
+
+#22 argparse chices
