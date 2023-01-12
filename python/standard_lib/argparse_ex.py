@@ -576,4 +576,45 @@ except IOError as msg:
 # $ python3 argparse_type.py --file argparse_type.py
 
 
-#22 argparse chices
+#22 argparse choices
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser()
+
+parser.add_argument(
+        '--mode',
+        choices=('read-only', 'read-write')
+)
+
+print(parser.parse_args())
+'''
+# $ python3 argparse_choices.py -h
+# $ python3 argparse_choices.py --mode read-only
+# $ python3 argparse_choices.py --mode invalid
+
+#23 argparse FileType
+
+import argparse
+
+'''
+parser = argparse.ArgumentParser()
+
+parser.add_argument('-i', metavar='in-file',
+                    type=argparse.FileType('rt'))
+parser.add_argument('-o', metavar='out-file',
+                    type=argparse.FileType('wt'))
+
+try:
+    results = parser.parse_args()
+    print('Input file:', results.i)
+    print('Output file:', results.o)
+except IOError as msg:
+    parser.error(str(msg))
+'''
+# $ python3 argparse_FileType.py -h
+# $ python3 argparse_FileType.py -i argparse_FileType.py -o tmp_file.txt
+# $ python3 argparse_FileType.py -i no_such_file.txt
+
+#24 argparse custom action
