@@ -175,4 +175,98 @@ none.url           : False
 none.description   : False
 '''
 
-#9 
+#9 configparser value types, for types.ini
+
+from configparser import ConfigParser
+
+'''
+parser = ConfigParser()
+parser.read('types.ini')
+
+print('Integers:')
+for name in parser.options('ints'):
+    string_value = parser.get('ints', name)
+    value = parser.getint('ints', name)
+    print('  {:<12} : {!r:<7} -> {}'.format(
+        name, string_value, value))
+
+print('\nFloats:')
+for name in parser.options('floats'):
+    string_value = parser.get('floats', name)
+    value = parser.getfloat('floats', name)
+    print('  {:<12} : {!r:<7} -> {:0.2f}'.format(
+        name, string_value, value))
+
+print('\nBooleans:')
+for name in parser.options('booleans'):
+    string_value = parser.get('booleans', name)
+    value = parser.getboolean('booleans', name)
+    print('  {:<12} : {!r:<7} -> {}'.format(
+        name, string_value, value))
+
+RESULTS:
+Integers:
+  positive     : '1'     -> 1
+  negative     : '-5'    -> -5
+
+Floats:
+  positive     : '0.2'   -> 0.20
+  negative     : '-3.14' -> -3.14
+
+Booleans:
+  number_true  : '1'     -> True
+  number_false : '0'     -> False
+  yn_true      : 'yes'   -> True
+  yn_false     : 'no'    -> False
+  tf_true      : 'true'  -> True
+  tr_false     : 'false' -> False
+  onoff_true   : 'on'    -> True
+  onoff_false  : 'false' -> False
+'''
+
+#10 configparser custom types
+
+from configparser import ConfigParser
+import datetime
+
+'''
+def parse_iso_datetime(s):
+    print('parse_iso_datetime({!r})'.format(s))
+    return datetime.datetime.strptime(s, '%Y-%m-%dT%H:%M:%S.%f')
+
+parser = ConfigParser(
+        converters={
+            'datetime': parse_iso_datetime,
+        }
+)
+parser.read('custom_types.ini')
+
+string_value = parser['datetimes']['due_date']
+value = parser.getdatetime('datetimes', 'due_date')
+print('duei_date : {!r} -> {!r}'.format(string_value, value))
+'''
+
+#11 configparser allow no value
+
+import configparser
+
+'''
+try:
+    parser = configparser.ConfigParser()
+    parser.read('allow_no_value.ini')
+except configparser.ParsingError as err:
+    print('Could not parse:', err)
+
+# Allow use parameters without values
+print('\nTrying again with allow_no_value=True')
+parser = configparser.ConfigParser(allow_no_value=True)
+parser.read('allow_no_value.ini')
+for flag in ['turn_feature_on', 'turn_other_feature_on']:
+    print('\n', flag)
+    exists = parser.has_option('flags', flag)
+    print('  has_option:', exists)
+    if exists:
+        print('    get:', parser.get('flags', flag))
+'''
+
+#12 
