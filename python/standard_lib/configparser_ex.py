@@ -269,4 +269,152 @@ for flag in ['turn_feature_on', 'turn_other_feature_on']:
         print('    get:', parser.get('flags', flag))
 '''
 
-#12 
+#12 configparser populate
+
+import configparser
+
+'''
+parser = configparser.SafeConfigParser()
+
+parser.add_section('bug_tracker')
+parser.set('bug_tracker', 'url', 'http://localhost:8080/bugs')
+parser.set('bug_tracker', 'username', 'deadhound')
+parser.set('bug_tracker', 'password', 'secret')
+
+for section in parser.sections():
+    print(section)
+    for name, value in parser.items(section):
+        print('  {} = {!r}'.format(name, value))
+
+RESULTS:
+<stdin>:277: DeprecationWarning: The SafeConfigParser class has been renamed to ConfigParser in Python 3.2. This alias will be removed in Python 3.12. Use ConfigParser directly instead.
+bug_tracker
+  url = 'http://localhost:8080/bugs'
+  username = 'deadhound'
+  password = 'secret'
+'''
+
+#13 configparser remove
+
+from configparser import ConfigParser
+
+'''
+parser = ConfigParser()
+parser.read('multisection.ini')
+
+print('Read values:\n')
+for section in parser.sections():
+    print(section)
+    for name, value in parser.items(section):
+        print('  {} = {!r}'.format(name, value))
+
+parser.remove_option('bug_tracker', 'password')
+parser.remove_section('wiki')
+
+print('\nModified values:\n')
+for section in parser.sections():
+    print(section)
+    for name, value in parser.items(section):
+        print('  {} = {!r}'.format(name, value))
+
+RESULTS:
+Read values:
+
+bug_tracker
+  url = 'http://localhost:8080/bugs/'
+  username = 'dhellhound'
+  password = 'SECRET'
+wiki
+  url = 'http://localhost:8080/wiki/'
+  username = 'dhellhound'
+  password = 'SECRET'
+
+Modified values:
+
+bug_tracker
+  url = 'http://localhost:8080/bugs/'
+  username = 'dhellhound'
+'''
+
+#14 configparser write
+
+import configparser
+import sys
+
+'''
+parser = configparser.ConfigParser()
+
+parser.add_section('bug_tracker')
+parser.set('bug_tracker', 'url', 'http://localhost:8080/bugs')
+parser.set('bug_tracker', 'username', 'dhellhound')
+parser.set('bug_tracker', 'password', 'secret')
+
+parser.write(sys.stdout)
+
+RESULTS:
+:w !python3
+[bug_tracker]
+url = http://localhost:8080/bugs
+username = dhellhound
+password = secret
+
+# After read and second write comments will be autoremove
+'''
+
+#15 configparser defaults
+
+import configparser
+
+# Definite names of parameters
+option_names = [
+        'from-default',
+        'from-section', 'section-only',
+        'file-only', 'init-only', 'init-and-file',
+        'from-vars',
+]
+
+# Init analizator with row of default values
+DEFAULTS = {
+        'from-default': 'value from defaults passed to init',
+        'init-only': 'value from defaults passed to init',
+        'init-and-file': 'value from defaults passed to init',
+        'from-section': 'value from defaults passed to init',
+        'from-vars': 'value from defaults passed to init',
+}
+parser = configparser.ConfigParser(defaults=DEFAULTS)
+
+print('Defaults before loading file:')
+defaults = parser.defaults()
+for name in option_names:
+    if name in defaults:
+        print('  {:<15} = {!r}'.format(name, defaults[name]))
+
+# Load config file
+parser.read('with-defaults.ini')
+
+print('\nDefaults after loading file:')
+defaults = parser.defaults()
+for name in option_names:
+    if name in defaults:
+        print('  {:<15} = {!r}'.format(name, defaults[name]))
+
+# Redefinite row of local values?
+vars = {'from-vars': 'value from vars'}
+
+# Show values of all parameters
+print('\nOption lookup:')
+for name in option_names:
+    value = parser.get('sect', name, vars=vars)
+    print('  {:<15} = {!r}'.format(name, value))
+
+# Show error messages for not exists parameters
+print('\nError cases:')
+try:
+    print('No such option:', parser.get('sect', 'no-option'))
+except configparser.NoOptionError as err:
+    print(err)
+
+try:
+    print('No such section:', parser.get('no-sect', 'no-option'))
+except configparser.NoSectionError as err:
+    print(err)
