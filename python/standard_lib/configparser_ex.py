@@ -362,9 +362,11 @@ password = secret
 '''
 
 #15 configparser defaults
+# Need tests
 
 import configparser
 
+'''
 # Definite names of parameters
 option_names = [
         'from-default',
@@ -418,3 +420,116 @@ try:
     print('No such section:', parser.get('no-sect', 'no-option'))
 except configparser.NoSectionError as err:
     print(err)
+'''
+
+#16 configparser interpolation
+
+import configparser
+
+'''
+parser = configparser.ConfigParser()
+parser.read('interpolation.ini')
+
+parser.add_section('bug_tracker')
+parser.set('bug_tracker', 'url',
+           'http://%(server)s:%(port)s/bugs')
+
+try:
+    print(parser.get('bug_tracker', 'url'))
+except configparser.InterpolationMissingOptionError as err:
+    print('ERROR:', err)
+
+RESULTS:
+Traceback (most recent call last):
+  File "<stdin>", line 432, in <module>
+  File "/usr/lib/python3.10/configparser.py", line 1212, in add_section
+    super().add_section(section)
+  File "/usr/lib/python3.10/configparser.py", line 659, in add_section
+    raise DuplicateSectionError(section)
+configparser.DuplicateSectionError: Section 'bug_tracker' already exists
+
+EXPECTED RESULTS:
+    Original value    : http://localhost:8080/bugs/
+    Altered port value: http://localhost:9090/bugs/
+    Without interpolation: %(protocol)s://%(server)s:%(port)s/bugs/
+'''
+
+#17 configparser interpolation defaults
+
+from configparser import ConfigParser
+
+'''
+parser = ConfigParser()
+parser.read('interpolation_defaults.ini')
+
+print('URL:', parser.get('bug_tracker', 'url'))
+
+RESULTS:
+Traceback (most recent call last):
+  File "<stdin>", line 465, in <module>
+  File "/usr/lib/python3.10/configparser.py", line 782, in get
+    d = self._unify_values(section, vars)
+  File "/usr/lib/python3.10/configparser.py", line 1153, in _unify_values
+    raise NoSectionError(section) from None
+configparser.NoSectionError: No section: 'bug_tracker'
+'''
+
+#18 configparser interpolation recursion
+
+import configparser
+
+'''
+parser = configparser.ConfigParser()
+
+parser.add_section('sect')
+parser.set('sect', 'opt', '%(opt)s')
+
+try:
+    print(parser.get('sect', 'opt'))
+except configparser.InterpolationDepthError as err:
+    print('ERROR:', err)
+
+RESULTS:  # norm
+ERROR: Recursion limit exceeded in value substitution: option 'opt' in section 'sect' contains an interpolation key which cannot be substituted in 10 steps. Raw value: '%(opt)s'
+'''
+
+#19 configparser escape  # spesial symbols
+
+# into file .ini write: [escape]
+#                       value = a literal %% most be escaped
+from configparser import ConfigParser
+import os
+
+'''
+filename = 'escape.ini'
+config = ConfigParser()
+config.read([filename])
+
+value = config.get('escape', 'value')
+
+print(value)
+
+RESULTS:
+    a literal % must be escaped
+'''
+
+#20 configparser extendedinterpolation
+
+from configparser import ConfigParser, ExtendedInterpolation
+
+'''
+parser = ConfigParser(interpolation=ExtendedInterpolation())
+parser.read('extended_interpolation.ini')
+
+print('Original value    :', parser.get('bug_tracker', 'url'))
+
+parser.set('intranet', 'port', '9000')
+print('Altered port value:', parser.get('bug_tracker', 'url',
+                                        raw=True))
+
+RESULTS:
+Original value    : http://localhost:8080/bugs/
+Altered port value: http://${intranet:server}:${intranet:port}/bugs/
+'''
+
+#21 configparser nointerpolation
