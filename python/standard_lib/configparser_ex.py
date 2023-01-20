@@ -533,3 +533,15 @@ Altered port value: http://${intranet:server}:${intranet:port}/bugs/
 '''
 
 #21 configparser nointerpolation
+
+from configparser import ConfigParser
+
+'''
+parser = ConfigParser(interpolation=None)
+parser.read('interpolation.ini')
+
+print('Without interpolation:', parser.get('bug_tracker', 'url'))
+
+RESULTS:
+Without interpolation: %(protocol)s://%(server)s:%(port)s/bugs/
+'''

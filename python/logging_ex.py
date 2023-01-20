@@ -3,7 +3,7 @@
 ######1 Import logging Library
 
 import logging
-
+'''
 logging.warning("This is a simple Python logging example")
 
 ######2 Logging messages to log file
@@ -13,11 +13,35 @@ logging.basicConfig(filename="jill.log")
 logging.warning('This is a WARNING message')
 logging.error('This is an ERROR message')
 logging.critical('This is a CRITICAL message')
+'''
+#2.1 logging file example
+
+import logging
+
+'''
+LOG_FILENAME = 'logging_example.out'
+logging.basicConfig(
+        filename=LOG_FILENAME,
+        level=logging.DEBUG,
+)
+
+logging.debug('This message should go to the log file')
+
+with open(LOG_FILENAME, 'rt') as f:
+    body = f.read()
+
+print('FILE:')
+print(body)
+
+RESULTS:
+FILE:
+DEBUG:root:This message should go to the log file
+'''
 
 ######3 Logging messages to log file using handler
 
 import logging
-
+'''
 # create a logger
 logger = logging.getLogger('mylogger')
 
@@ -236,3 +260,109 @@ logging.info('Trying to divide 1 by 0')
 print(1/0)
 logging.info('The division succeeded')
 logging.info('Ending program')
+'''
+
+# 12 logging rotatingfile example
+
+import glob
+import logging
+import logging.handlers
+
+'''
+LOG_FILENAME = 'logging_rotatingfile_example.out'
+
+# set logging level
+my_logger = logging.getLogger('MyLogger')
+my_logger.setLevel(logging.DEBUG)
+
+# Add handler
+handler = logging.handlers.RotatingFileHandler(
+        LOG_FILENAME,
+        maxBytes=20,
+        backupCount=5,
+)
+my_logger.addHandler(handler)
+
+# Write message to the logging journal
+for i in range(20):
+    my_logger.debug('i = %d' % i)
+
+# Show list of created files
+logfiles = glob.glob('%s*' % LOG_FILENAME)
+for filename in logfiles:
+    print(filename)
+
+RESULTS:
+logging_rotatingfile_example.out.5
+logging_rotatingfile_example.out.2
+logging_rotatingfile_example.out.4
+logging_rotatingfile_example.out.3
+logging_rotatingfile_example.out
+logging_rotatingfile_example.out.1
+'''
+#13 logging level example
+
+import logging
+import sys
+
+'''
+LEVELS = {
+        'debug': logging.DEBUG,
+        'info': logging.INFO,
+        'warning': logging.WARNING,
+        'error': logging.ERROR,
+        'critical': logging.CRITICAL,
+}
+
+if len(sys.argv) > 1:
+    level_name = sys.argv[1]
+    level = LEVELS.get(level_name, logging.NOTSET)
+    logging.basicConfig(level=level)
+
+logging.debug('This is a debug message')
+logging.info('This is an info message')
+logging.warning('This is an warning message')
+logging.error('This is an error message')
+logging.critical('This is a critical error message')
+'''
+
+#14 logging modules example
+
+import logging
+
+'''
+logging.basicConfig(level=logging.WARNING)
+
+logger1 = logging.getLogger('package1.module1')
+logger2 = logging.getLogger('package2.module2')
+
+logger1.warning('This message comes from one module')
+logger2.warning('This comes from another module')
+
+RESULTS:
+WARNING:package1.module1:This message comes from one module
+WARNING:package2.module2:This comes from another module
+'''
+
+#15 logging captureWarnings()
+
+import logging
+import warnings
+
+'''
+logging.basicConfig(
+        level=logging.INFO,
+)
+
+warnings.warn('This warning is not sent to the logs')
+
+logging.captureWarnings(True)
+
+warnings.warn('This warnig is sent to the logs')
+
+RESULTS:
+/home/jack/django2/knowlege/python/logging_ex.py:357: UserWarning: This warning is not sent to the logs
+  warnings.warn('This warning is not sent to the logs')
+WARNING:py.warnings:/home/jack/django2/knowlege/python/logging_ex.py:361: UserWarning: This warnig is sent to the logs
+  warnings.warn('This warnig is sent to the logs')
+'''
