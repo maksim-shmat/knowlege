@@ -97,3 +97,99 @@ Monetary formatting:
 '''
 
 #2 locale currency
+
+import locale
+
+'''
+sample_locales = [
+        ('USA', 'en_US'),
+        ('France', 'fr_FR'),
+        ('Spain', 'es_PT'),
+        ('Portugal', 'pt_PT'),
+        ('Poland', 'pl_PL'),
+        ('Belarus', 'be_BE'),
+]
+
+for name, loc in sample_locales:
+    locale.setlocale(locale.LC_ALL, loc)
+    print('{:>10}: {:>10}  {:>10}'.format(
+        name,
+        locale.currency(1234.56),
+        locale.currency(-1234.54),
+    ))
+'''
+
+#3 locale grouping
+
+import locale
+
+'''
+sample_locales = [
+        ('USA', 'en_US'),
+        ('France', 'fr_FR'),
+]
+
+print('{:>10} {:>10} {:>15}'.format(
+    'Locale', 'Integer', 'Float')
+)
+for name, loc in sample_locales:
+    locale.setlocale(locale.LC_ALL, loc)
+
+    print('{:>10}'.format(name), end=' ')
+    print(locale.format('%10d', 123456, grouping=True), end=' ')
+    print(locale.format('%15.2f', 123456.78, grouping=True))
+
+RESULTS:
+    Locale    Integer           Float
+<stdin>:139: DeprecationWarning: This method will be removed in a future version of Python. Use 'locale.format_string()' instead.
+<stdin>:140: DeprecationWarning: This method will be removed in a future version of Python. Use 'locale.format_string()' instead.
+       USA    123,456      123,456.78
+    France    123 456      123 456,78
+'''
+
+#4 locale delocalize
+
+import locale
+
+'''
+sample_locales = [
+        ('USA', 'en_US'),
+        ('France', 'fr_FR'),
+]
+
+for name, loc in sample_locales:
+    locale.setlocale(locale.LC_ALL, loc)
+    localized = locale.format('%0.2f', 123456.78, grouping=True)
+    delocalized = locale.delocalize(localized)
+    print('{:>10}: {:>10}  {:>10}'.format(
+        name,
+        localized,
+        delocalized,
+    ))
+
+RESULTS:
+<stdin>:162: DeprecationWarning: This method will be removed in a future version of Python. Use 'locale.format_string()' instead.
+       USA: 123,456.78   123456.78
+    France: 123 456,78   123456.78
+'''
+
+#5 locale data
+
+import locale
+import time
+
+'''
+sample_locales = [
+        ('USA', 'en_US'),
+        ('France', 'fr_FR'),
+]
+
+for name, loc in sample_locales:
+    locale.setlocale(locale.LC_ALL, loc)
+    format = locale.nl_langinfo(locale.D_T_FMT)
+    print('{:>10}: {}'.format(name, time.strftime(format)))
+
+RESULTS:
+     USA: Tue 24 Jan 2023 04:43:11 AM +03
+    France: mar. 24 janv. 2023 04:43:11
+'''
