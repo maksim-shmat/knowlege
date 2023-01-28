@@ -435,3 +435,25 @@ OK (skipped=4)
 '''
 
 #15 unittest expectedfailure
+
+import unittest
+
+'''
+class Test(unittest.TestCase):
+
+    @unittest.expectedFailure
+    def test_never_passes(self):
+        self.assertTrue(False)
+
+
+    @unittest.expectedFailure
+    def test_always_passes(self):
+        self.assertTrue(True)
+
+RESULTS:
+ux
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+FAILED (expected failures=1, unexpected successes=1)
+'''
