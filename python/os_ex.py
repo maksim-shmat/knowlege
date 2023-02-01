@@ -79,4 +79,92 @@ After rename: ['rename_finish.txt']
 After replace: 'ending with contents of rename_new_contents.txt'
 '''
 
-#5 
+#5 os process user example
+
+import os
+
+'''
+TEST_GID = 502  # change to real user
+TEST_UID = 502
+
+
+def show_user_info():
+    print('User (acutal/effective)   : {} / {}'.format(
+        os.getuid(), os.geteuid()))
+    print('Group (actual/effective)  : {} / {}'.format(
+        os.getgid(), os.getegid()))
+    print('Actual Groups  :', os.getgroups())
+
+print('BEFORE CHANGE:')
+show_user_info()
+print()
+
+try:
+    os.setegid(TEST_GID)
+except OSError:
+    print('ERROR: Could not change effective group. '
+          'Return as root.')
+else:
+    print('CHANGE GROUP:')
+    show_user_info()
+    print()
+
+try:
+    os.seteuid(TEST_UID)
+except OSError:
+    print('ERROR: Could not change effective user. '
+          'Return as root.')
+else:
+    print('CHANGE USER:')
+    show_user_info()
+    print()
+
+RESULTS:
+BEFORE CHANGE:
+User (acutal/effective)   : 1001 / 1001
+Group (actual/effective)  : 1001 / 1001
+Actual Groups  : [4, 10, 24, 27, 30, 46, 118, 126, 998, 1001]
+
+ERROR: Could not change effective group. Return as root.
+ERROR: Could not change effective user. Return as root.
+
+Need: $ sudo python3 os_process_user_example.py
+'''
+
+#6 os environ example
+
+import os
+
+'''
+print('Initial value:', os.environ.get('TESTVAR', None))
+print('Child process:')
+os.system('echo $TESTVAR')
+
+os.environ['TESTVAR'] = 'THIS VALUE WAS CHANGED'
+
+print()
+print('Change value:', os.environ['TESTVAR'])
+print('Child process:')
+os.system('echo $TESTVAR')
+
+del os.environ['TESTVAR']
+
+print()
+print('Removed value:', os.environ.get('TESTVAR', None))
+print('Child process:')
+os.system('echo $TESTVAR')
+
+RESULTS:
+Initial value: None
+Child process:
+
+
+Change value: THIS VALUE WAS CHANGED
+Child process:
+THIS VALUE WAS CHANGED
+
+Removed value: None
+Child process:
+'''
+
+#7 
