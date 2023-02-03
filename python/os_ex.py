@@ -295,4 +295,55 @@ WORKER 1: Finishing
 PARENT: Child done: (1330731, 256)
 '''
 
-#13 os waitpid example
+#13 os waitpid() example, and wait3(), wait4() return more info
+
+import os
+import sys
+import time
+
+'''
+workers = []
+for i in range(2):
+    print('PARENT {}: Forking {}'.format(os.getpid(), i))
+    worker_pid = os.fork()
+    if not worker_pid:
+        print('WORKER {}: Starting'.format(i))
+        time.sleep(2 + i)
+        print('WORKER {}: Finishing'.format(i))
+        sys.exit(i)
+    workers.append(worker_pid)
+
+for pid in workers:
+    print('PARENT: Waiting for {}'.format(pid))
+    done = os.waitpid(pid, 0)
+    print('PARENT: Child done:', done)
+
+RESULTS:
+PARENT 1415647: Forking 0
+PARENT 1415647: Forking 1
+WORKER 0: Starting
+PARENT: Waiting for 1415648
+WORKER 1: Starting
+WORKER 0: Finishing
+PARENT: Child done: (1415648, 0)
+PARENT: Waiting for 1415649
+WORKER 1: Finishing
+PARENT: Child done: (1415649, 256)
+'''
+
+#14 os strerror
+
+import errno
+import os
+
+'''
+for num in [errno.ENOENT, errno.EINTR, errno.EBUSY]:
+    name = errno.errorcode[num]
+    print('[{num:>2}] {name:<6}: {msg}'.format(
+        name=name, num=num, msg=os.strerror(num)))
+
+RESULTS:
+[ 2] ENOENT: No such file or directory
+[ 4] EINTR : Interrupted system call
+[16] EBUSY : Device or resource busy
+'''
