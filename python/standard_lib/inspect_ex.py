@@ -439,7 +439,7 @@ locals:
 import inspect
 import pprint
 
-
+'''
 def show_stack():
     for level in inspect.stack():
         print('{}[{}]\n -> {}'.format(
@@ -448,7 +448,7 @@ def show_stack():
             level.code_context[level.index].strip(),
         ))
         pprint.pprint(level.frame.f_locals)
-        pritn()
+        print()
 
 def recurse(limit):
     local_variable = '.' * limit
@@ -460,3 +460,43 @@ def recurse(limit):
 
 if __name__ == '__main__':
     recurse(2)
+
+RESULTS:
+jack@Cesar:~/django2/knowlege/python/standard_lib$ python3 inspect_ex.py 
+/home/jack/django2/knowlege/python/standard_lib/inspect_ex.py[444]
+ -> for level in inspect.stack():
+{'level': FrameInfo(frame=<frame at 0x7f05593bb4c0, file '/home/jack/django2/knowlege/python/standard_lib/inspect_ex.py', line 450, code show_stack>, filename='/home/jack/django2/knowlege/python/standard_lib/inspect_ex.py', lineno=444, function='show_stack', code_context=['    for level in inspect.stack():\n'], index=0)}
+
+/home/jack/django2/knowlege/python/standard_lib/inspect_ex.py[456]
+ -> show_stack()
+{'limit': 0, 'local_variable': ''}
+
+/home/jack/django2/knowlege/python/standard_lib/inspect_ex.py[458]
+ -> recurse(limit - 1)
+{'limit': 1, 'local_variable': '.'}
+
+/home/jack/django2/knowlege/python/standard_lib/inspect_ex.py[458]
+ -> recurse(limit - 1)
+{'limit': 2, 'local_variable': '..'}
+
+/home/jack/django2/knowlege/python/standard_lib/inspect_ex.py[462]
+ -> recurse(2)
+{'__annotations__': {},
+ '__builtins__': <module 'builtins' (built-in)>,
+ '__cached__': None,
+ '__doc__': 'inspect about.',
+ '__file__': '/home/jack/django2/knowlege/python/standard_lib/inspect_ex.py',
+ '__loader__': <_frozen_importlib_external.SourceFileLoader object at 0x7f05591b5540>,
+ '__name__': '__main__',
+ '__package__': None,
+ '__spec__': None,
+ 'example': <module 'example' from '/home/jack/django2/knowlege/python/standard_lib/example.py'>,
+ 'inspect': <module 'inspect' from '/usr/lib/python3.10/inspect.py'>,
+ 'pprint': <module 'pprint' from '/usr/lib/python3.10/pprint.py'>,
+ 'recurse': <function recurse at 0x7f0558fa6950>,
+ 'show_stack': <function show_stack at 0x7f0559357d90>}
+'''
+
+#19 inspect with CLI
+
+# $ python3 -m inspect -d example  (-d - details?)
