@@ -34,3 +34,12 @@ urlpatterns = patterns('django.views.generic',
             name='photo_detail'
         ),
 )
+
+#2 examples with +=
+
+from dnango.conf.urls.static import static
+from django.conf import settings
+
+
+urlpatterns += static(settings.MEDIA_URL,
+        document_root=settings.MEDIA_ROOT)
