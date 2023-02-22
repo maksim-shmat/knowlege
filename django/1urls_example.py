@@ -582,4 +582,10 @@ urlpatterns = patterns('',
             name='property_detail'),
 )
 
-######
+#1 urls dinamic vs hardcode
+
+<a href="(% url 'index' %}">Home</a>  # better than hardcode
+
+< href="/catalog/">Home</a>  # Hard Code
+
+#2
