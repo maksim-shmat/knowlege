@@ -38,6 +38,60 @@ def index(request):
                            'num_visits': num_visits},
                   )
 
-#3 Create base template: index.html in /WebBooks/catalog/templates/index.html
+#3 Create base template: base_generic.html in /WebBooks/catalog/templates/base_generic.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block title %}<title>Shmat Store</title>{% endblock %}
+  <meta charset="utr-8">
+  <meta name="viewport" content="width=device-width,
+                        initial-scale=1">
+  <link rel="stylesheet"
+    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/
+    bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/
+              jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/
+              js/bootstrap.min.js"></script>
+
+  <!-- Add static CSS-file -->
+  {% load static %}
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  {% block head %}
+    <img src="{% static 'images/logotip.jpg' %}"
+    style="width:100px; height:100px;" align="absmiddle">
+    <font size=7, color="blue">Site "Shmat Store"</font>
+  {% endblock %}
+</head>
+
+<body>
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="col-sm-2">
+      {% block sidebar %}
+      <ul class="sidebar-nav">
+        <li><a href="{% url 'index' %}">Head page</a></li>
+        <li><a href="">All books</a></li>
+        <li><a href="">All authors</a></li>
+      </ul>
+      {% endblock %}
+      </div>
+      
+      <div class="col-sm-10 ">
+      {% block content %}{% endblock %}
+      {% block footer %}
+        {% block copyright %}
+      <p>Copyright OOO "Mans and books", 2023. All rights reserved</p>
+        {% endblock %}
+      {% endblock %}
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+#4
 
 
