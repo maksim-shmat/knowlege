@@ -92,6 +92,75 @@ def index(request):
 </body>
 </html>
 
-#4
+#4 create index.html in /WebBooks/catalog/templates/index.html
+# names in templates the same names from view, content(dict)
+# content={'num_books': num_books,
+          #'num_instances': num_instances,
+          #'num_insatances_available': num_instances_available,
+          #'num_authors': num_authors}
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Head page</h1>
+
+  <p>Welcome to <em>Shmat Store</em>, It is simple web-site, readed on Django,
+     it is project for fun.</p>
+  
+  <h2>Dinamical content</h2>
+
+    <p>Data base of site Shmat Store contain next strings:</p>
+    <ul>
+      <li><strong>How many books:</strong> {{ num_books }}</li>
+      <li><strong>How many exemplars of books:
+          </strong> {{ num_instances }}</li>
+      <li><strong>How many exemplars in cart:
+          </strong> {{ num_instances_available }}</li>
+      <li><strong>How many authors of books:
+          </strong> {{ num_authors }}</li>
+    </ul>
+{% endblock %}
+
+#5 /WebBooks/urls.py
+
+from django.contrib import admin
+from django.urls import path
+from catalog import views
+from django.conf.urls import url
 
 
+urlpatterns = [
+        path('', views.index, name='index'),
+        path('admin/', admin.site.urls),
+        url(r'^books/$', views.BookListView.as_view(), name='books'),
+]
+
+#6 catalog/views.py
+
+from django.views import generic
+
+class BookListView(generic.ListView):
+    model = Book
+
+#7 /WebBooks/catalog/templates/catalog/book_list.html
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>List of books from db</h1>
+  {% if book_list %}
+  <ul>
+    {% for book in book_list %}
+    <li>
+      <a href="{{ book.get_absolute_url }}">
+               {{ book.title }}</a>
+               ({{book.genre}})
+    </li>
+    {% endfor %}
+  </ul>
+  {% else %}
+    <p>Not books in db</p>
+  {% endif %}
+{% endblock %}
+
+#8 
