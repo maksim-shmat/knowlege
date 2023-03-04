@@ -73,7 +73,7 @@ def index(request):
       {% block sidebar %}
       <ul class="sidebar-nav">
         <li><a href="{% url 'index' %}">Head page</a></li>
-        <li><a href="">All books</a></li>
+        <li><a href="{% url 'books' %}">All books</a></li>
         <li><a href="">All authors</a></li>
       </ul>
       {% endblock %}
@@ -133,6 +133,9 @@ urlpatterns = [
         path('', views.index, name='index'),
         path('admin/', admin.site.urls),
         url(r'^books/$', views.BookListView.as_view(), name='books'),
+        url(r'^book/(?P<pk>/d+)$', views.BookDetailView.as_view(),
+                                   name='book-detail'),
+        #   r'book/(?P<stub>[-\w]+)$'  For stubs like /catalog/book/secret_of_power against /catalog/book/33
 ]
 
 #6 catalog/views.py
@@ -140,6 +143,10 @@ urlpatterns = [
 from django.views import generic
 
 class BookListView(generic.ListView):
+    model = Book
+
+
+class BookDetailView(generic.DetailView):
     model = Book
 
 #7 /WebBooks/catalog/templates/catalog/book_list.html
@@ -163,4 +170,38 @@ class BookListView(generic.ListView):
   {% endif %}
 {% endblock %}
 
-#8 
+#8 /WebBooks/catalog/templates/catalog/book_detail.html
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+  <h1>Name of the book: {{ book.title }}</h1>
+  
+  <p><strong>Genre:</strong> {{ book.genre }}</p>
+  <p><strong>Annotation:</strong> {{book.summary }}</p>
+  <p><strong>ISBN:</strong> {{ book.isbn }}</p>
+  <p><strong>Language</strong> {{book.language }}</p>
+    {% for author in book.author.all %}
+      <p><strong>Author:</strong>
+        <a href="">{{ author.first_name }}
+                   {{ author.last_name }}</a></p>
+    {% endfor %}
+
+<div style="margin-left:20px;margin-top:20px">
+  <h4>How many exemplars in db</h4>
+  {% for copy in book.bookinstance_set.all %}
+    <hr><p class="{% if copy.status == 1 %} text-success
+                  {% elif copy.status == 2 %} text-danger
+                  {% else %} text_warning
+                  {% endif %}"> {{ copy.get_status_display }}</p>
+    <p><strong>Imprint:</strong> {{copy.imprint}}</p>
+    <p class="text-muted"><strong>Number of Invent:</strong> {{copy.id}}</p>
+    <p><strong>Status of book exemplar:</strong> {{copy.status}}</p>
+  {% endfor %}
+</div>
+{% endblock %}
+<p><strong>Author:</strong> <a href="">{{ author.first_name }}
+{{ author.last_name }}</a></p>
+
+#9
