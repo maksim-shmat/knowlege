@@ -13,3 +13,19 @@
 df    ds  df
 --  = --  --.
 dx    dx  ds
+
+#4 sum to sum
+
+f(x + y) = f(x) + f(y).
+
+#5 sum to times
+
+f(x + y) = f(x)f(y).
+
+#6 times to sum
+
+f(xy) = f(x) + f(y).
+
+#7 times to times
+
+f(xy) = f(x)f(y).
