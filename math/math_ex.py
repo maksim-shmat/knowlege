@@ -29,3 +29,14 @@ f(xy) = f(x) + f(y).
 #7 times to times
 
 f(xy) = f(x)f(y).
+
+#8 Powers
+-----------
+ x+y    x y
+S    = S S
+-----------
+   x y   xy
+( S ) = S
+-----------
+
+#9
