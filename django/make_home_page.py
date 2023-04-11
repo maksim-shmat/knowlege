@@ -74,13 +74,37 @@ def index(request):
       <ul class="sidebar-nav">
         <li><a href="{% url 'index' %}">Head page</a></li>
         <li><a href="{% url 'books' %}">All books</a></li>
-        <li><a href="">All authors</a></li>
+        <li><a href="{% url 'authors' %}">All authors</a></li>
       </ul>
       {% endblock %}
       </div>
       
       <div class="col-sm-10 ">
       {% block content %}{% endblock %}
+
+      {% block pagination %}
+        {% if is_paginated %}
+          <div class="pagination">
+            <span class="page-links">
+              {% if page_obj.has_previous %}
+                <a href="{{ request.path }}?page={{
+                         page_obj.previous_page_number }}
+                         ">Previous</a>
+              {% endif %}
+              <span class="page-current">
+                Page {{ page_obj.number }} from
+                     {{ page_obj.paginator.num_pages }}
+              </span>
+              {% if page_obj.has_next %}
+                <a href="{{ request.path }}?page={{
+                         page_obj.next_page_number }}
+                         ">Next</a>
+              {% endif %}
+            </span>
+          </div>
+        {% endif %}
+      {% endblock %}
+
       {% block footer %}
         {% block copyright %}
       <p>Copyright OOO "Mans and books", 2023. All rights reserved</p>
@@ -135,6 +159,7 @@ urlpatterns = [
         url(r'^books/$', views.BookListView.as_view(), name='books'),
         url(r'^book/(?P<pk>/d+)$', views.BookDetailView.as_view(),
                                    name='book-detail'),
+        url(r'^authors/$', views.AuthorListView.as_view(), name='authors'),
         #   r'book/(?P<stub>[-\w]+)$'  For stubs like /catalog/book/secret_of_power against /catalog/book/33
 ]
 
@@ -144,10 +169,16 @@ from django.views import generic
 
 class BookListView(generic.ListView):
     model = Book
+    paginate_by = 3
 
 
 class BookDetailView(generic.DetailView):
     model = Book
+
+
+class AuthorListView(generic.ListView):
+    model = Author
+    paginate_by = 4
 
 #7 /WebBooks/catalog/templates/catalog/book_list.html
 
@@ -170,7 +201,7 @@ class BookDetailView(generic.DetailView):
   {% endif %}
 {% endblock %}
 
-#8 /WebBooks/catalog/templates/catalog/book_detail.html
+#8 book_detail.html /WebBooks/catalog/templates/catalog/book_detail.html
 
 {% extends "base_generic.html" %}
 
@@ -204,4 +235,20 @@ class BookDetailView(generic.DetailView):
 <p><strong>Author:</strong> <a href="">{{ author.first_name }}
 {{ author.last_name }}</a></p>
 
-#9
+#9 autor_list.html /WebBooks/catalog/templates/catalog/autor_list.html
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+  <h1>List of authors in db</h1>
+
+  {% if author_list %}
+    {% for author in author_list.all %}
+    <p>{{ author.first_name }}  {{ author.last_name }},
+      <strong>Birth-</strong>{{author.date_of_birth}},
+      <strong>Death-</strong>{author.date_of_death}}</p>
+    {% endfor %}
+  {% else %}
+    <p>In db not data author about</p>
+  {% endif %}
+{% endblock %}
