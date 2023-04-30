@@ -24,3 +24,10 @@ DJANGO_DEBUG = ''  # it False
 #4 pythohn manage.py check -deploy
 
 check deploy settings
+
+#5 Generating a SECRET_KEY variable
+
+(virtual_env) python3 manage.py shell
+>>> from secret_key_generator import secret_key_generator
+>>> print(secret_key_generator.generate())
+

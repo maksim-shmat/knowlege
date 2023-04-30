@@ -20,3 +20,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 ...
 SECRET_KEY = my_randomly_generated_key
+
+#4 Postgresql in .env
+
+DATABASE_URL=postgress://postgress:your_password@localhost:5432/ local_postgresql
