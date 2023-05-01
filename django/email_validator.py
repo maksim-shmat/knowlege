@@ -4,7 +4,10 @@
 
 from django import forms
 from django.forms import Form, ModelForm
-from django.core.validators import EmailValidator
+from django.core.exceptions import ValidationError
+from django.core.validators import (EmailValidator,
+                                    validate_email,
+                                    )
 
 
 class ContactForm(Form):
@@ -66,5 +69,73 @@ class ContactForm(Form):
                         254 characters'
                         }
                     )
-
+# Clean form  
+            email_3 = forms.CharField(
+                    label = 'Email Using CharField and Using Clean Method',
+                    required = False,
+                    help_text = 'Email address in example@example.com
+                    format for contacting you should we have questions about
+                    your message.',
+            )
     
+    def clean_email_3(self):
+        email = self.cleaned_data['email_3']
+        if email != '':
+            try:
+                validate_email(email)
+            except ValidationError:
+                self.add_error(
+                        'email_3',
+                        f'The following is not a valid email address: {email}'
+                        )
+        else:
+            self.add_error(
+                    'email_3',
+                    'This field is required'
+            )
+        return email
+
+#2 Method clean()
+
+from django import forms
+from django.forms import Form, ModelForm
+...
+
+
+class ContactForm(Form):
+    conditional_required = form.CharField(
+            label = 'Required only of field labeled "email_3" has a value',
+            help_text = 'This field is only required if the field labeled
+            "email_e Field" has a value',
+            required = False,
+    )
+
+    def clean(self):
+        email = self.cleaned_data['email_3']
+        text_field = self.cleaned_data[
+                'conditional_required'
+        ]
+
+        if email and not text_field:
+            self.add_error(
+                    'conditional_required',
+                    'If there is a value in the field labeled
+                    "email_3" then this field is required'
+            )
+
+#3 Using custom field from create_custom_field.py
+
+from django import forms
+from django.forms import Form, ModelForm
+
+import MultipleEmailField
+
+
+class ContactForm(Form):
+
+    multiple_emails = MultipleEmailField(
+            label = 'Multiple Email Field',
+            help_text = 'Please enter one or more email addresses,
+            each separated by a comma and no spaces',
+            required = True,
+    )
