@@ -411,4 +411,54 @@ def contact(request):
     # Reference form instance (bound/unbound) is sent to template for rendering
     return render(request, 'about/contact.html', {'form':form})
 
-##########
+#1 views.py
+
+from django.views.generic.edit import FormView
+from .forms import ContactForm
+
+
+class FormClassView(FormView):
+    template_name = 'chapter_5/form-class.html'
+    form_class = ContactForm
+    success_url = '/chapter-5/contact-form-success/'
+
+# Dummy code for urls.py
+from django.urls import reverse
+from django.views.generic.edit import FormView
+
+
+class FormClassView(FormView):
+    ...
+    def get_success_url(self, **kwargs):
+        return reverse('pattern_name', args=(value,))
+
+# urls.py
+
+from django.urls import re_path
+from django.views.generic import (
+                                  TemplateView
+                                )
+from .views import FormClassView
+
+
+urlpatterns = [
+        re_path(
+            r'^chapter-5/form-class/?$',
+            FormClassView.as_view()
+        ),
+
+        re_path(
+                r'^chapter-5/contact-form-class/?$',
+                TemplateView.as_view(
+                    template_name = 'chapter_5/contact-success.html'
+                ),
+                kwargs = {
+                    'title': 'FormatClassView Success Page',
+                    'page_id': 'form-class-success',
+                    'page_class': 'form-class-success-page',
+                    'h1_tag': 'This is the FormClassView Success
+                    Page Using ContactForm',
+                    },
+                ]
+
+#2
