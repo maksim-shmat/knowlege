@@ -450,7 +450,7 @@ urlpatterns = [
         re_path(
                 r'^chapter-5/contact-form-class/?$',
                 TemplateView.as_view(
-                    template_name = 'chapter_5/contact-success.html'
+                    template_name = 'chapter_5/contact-success.html')
                 ),
                 kwargs = {
                     'title': 'FormatClassView Success Page',
@@ -461,4 +461,63 @@ urlpatterns = [
                     },
                 ]
 
-#2
+#2 HTTP request methods - get()
+...
+from django.views.generic.edit import FormView
+from django.template.response import (
+                                      TemplateResponse
+                                      )
+
+class FormClassView(FormView):
+    ...
+    def get(self, request, *args, **kwargs):
+        initial = {
+                'full_name': 'FirstName LastName',
+                'email_1': 'example1@example.com',
+                # Add A Value For Every Field...
+                }
+        return TemplateResponse(
+                request,
+                self.template_name,
+                {
+                    'title': 'FormClassView Page',
+                    'page_id': 'form-class-id',
+                    'page_class': 'form-class-page',
+                    'h1_tag': 'This is the FormClassView Page
+                    Using ContactForm',
+                    'form': self.form_class,
+                }
+        )
+
+#3 post()
+...
+from django.views.generic.edit import FormView
+from django.http import HttpResponseRedirect
+from django.template.response import (
+                                      TemplateResponse
+                                      )
+
+class FormClassView(FormView):
+    ...
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            return HttpResponseRedirect(
+                    self.success_url
+            )
+        else:
+            return TemplateResponse(
+                    request,
+                    self.template_name,
+                    {
+                        'title': 'FormClassView Page - Please Correct
+                        The Errors Below',
+                        'page_id': 'form-class-id',
+                        'page_class': 'form-class-page errors-found',
+                        'h1_tag': 'This is the FormClassView Page
+                        Using ContactForm<br /><small class="error-msg">Errors Found</small>',
+                        'form': form,
+                    }
+                    )
+#4
