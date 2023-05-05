@@ -520,4 +520,177 @@ class FormClassView(FormView):
                         'form': form,
                     }
                     )
-#4
+#4 From Django 4.0? New form?
+# Linking a model to a form
+# forms.py
+
+...
+from django.forms import Form, ModelForm
+from ..chapter_3.models import Vehicle
+
+
+class VehicleForm(ModelForm):
+    class Meta:
+        model = Vehicle
+        fields = [
+                'vin',
+                'sold',
+                'price',
+                'make',
+                'vehicle_model',
+                'endine',
+        ]
+
+# View class - CreateView
+
+# view.py
+...
+from django.http import HttpResponseRedirect
+from django.views.generic.edit import (...,
+                                       CreateView
+                                    )
+from django.template.response import (
+                                      TemplateResponse
+                                    )
+from .forms import ContactForm, VehicleForm
+
+
+class ModelFormClassCreateView(CreateView):
+    template_name = 'chapter_5/model-form-class.html'
+    form_class = VehicleForm
+    success_ulr = '/chapter-5/vehicle-form-success/'
+
+    def get(self, request, *args, **kwargs):
+        return TemplateResponse(
+                request,
+                self.template_name,
+                {
+                    'title': 'ModelFormClassCreateView Page',
+                    'page_id': 'model-form-class-id',
+                    'page_class': 'model-form-class-page',
+                    'h1_tag': 'This is the
+                    ModelFormClassCreateView Class Page Using VehicleForm',
+                    'form': self.form_class(),
+                }
+            )
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+
+        if form.is_valid():
+            vehicle = form.instance
+            vehicle.save()
+            return HttpResponseRedirect(
+                    self.success_url
+            )
+        else:
+            return TemplateResponse(
+                    request,
+                    self.template_name,
+                    {
+                        'title': 'ModelFormClassCreateView 
+                        Page - Please Correct The Errors Below',
+                        'page_id': 'model-form-class-id',
+                        'page_class': 'model-form-class-page-error-found',
+                        'h1_tag': 'This is the
+                        ModelFormClassCreateView Page Using VehicleForm<br/
+                        ><small class="error-msg">Errors Found</small>',
+                        'form': form,
+                    }
+            )
+
+# urls.py
+
+from django.urls import re_path
+from django.views.generic import (
+                                  TemplateView
+                                )
+from .views import (
+                    FormClassView,
+                    ModelFormClassCreateView
+                )
+
+urlpatterns = [
+        ...,
+        re_path(
+            r'^chapter-5/model-form-class/?$',
+            ModelFormClassCreateView.as_view(),
+        ),
+        re_path(
+            r'^chapter-5/vehicle-form-success/?$',
+            TemplateView.as_view(
+                template_name = 'chapter_5/vehicle-success.html'
+            ),
+            kwargs = {
+                'title': 'ModelFormClass Success Page',
+                'page_id': 'model-form-class-success',
+                'page_class': 'model-form-class-success-page',
+                'h1_tag': 'This is the ModelFormClass Success Page Using
+                VehicleForm',
+            }
+        ),
+    ]
+
+#5 View class - UpdateView
+
+# urls.py
+
+from django.urls import re_path
+from .views import (
+                    ...,
+                    ModelFormClassUpdateView
+                )
+...
+urlpatterns = [
+        ...,
+        re_path(
+            'chapter-5/model-form-class/(?P<id>[0-9])/?$',
+            ModelFormClassUpdateView.as_view(),
+            name = 'vehicle_detail'
+        ),
+    ]
+
+# views.py
+...
+from django.http import HttpResponseRedirect
+from django.template.response import (
+                                      TemplateResponse
+                                    )
+from django.view.generic.edit import (
+                                      ...,
+                                      UpdateView
+                                    )
+from .forms import VehicleForm
+from ..chapter_3.models import Vehicle
+
+
+class ModelFormClassUpdateView(UpdateView):
+    template_name = 'chapter_5/model-form-class.html'
+    form_class = VehicleForm
+    success_url = '/chapter-5/vehicle-form-success/'
+
+    def get(self, request, id, *args, **kwargs):
+        try:
+            vehicle = Vehicle.object.get(pk=id)
+        except Vehicle.DoesNotExist:
+            form = self.form_class()
+        else:
+            form = self.form_class(instance=vehicle)
+
+        return TemplateResponse(
+                request,
+                self.template_name,
+                {
+                    'title': 'ModelFormClassUpdateView Page',
+                    'page_id': 'model-form-class-id',
+                    'page_class': 'model-form-class-page',
+                    'h1_tag': 'This is the
+                    ModelFormClassUpdateView Class Page Using VehicleForm',
+                    'form': form,
+                }
+            )
+
+    def post(self, request, id, *args, **kwargs):
+        # Use the same code as we did for the ModelFormClassCreateView class
+
+#6
