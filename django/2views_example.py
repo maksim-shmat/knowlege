@@ -693,4 +693,119 @@ class ModelFormClassUpdateView(UpdateView):
     def post(self, request, id, *args, **kwargs):
         # Use the same code as we did for the ModelFormClassCreateView class
 
-#6
+#6 Formset function - formset_factory
+
+# forms.py
+
+from django import forms
+from django.forms import Form, ModelForm
+from django.forms import (
+                          ...,
+                          formset_factory
+                        )
+...
+
+
+class ProspectiveBuyerForm(Form):
+    first_name = forms.CharField(
+            label = 'First Name',
+            help_text = 'Enter your first name only',
+            required = True,
+            error_messages = {
+                'required': 'Please provide us with a first name',
+            }
+    )
+    last_name = forms.CharField(
+            label = 'Last Name',
+            help_text = 'Enter your last name only',
+            required = True,
+            error_messages = {
+                'required': 'Please provide us with a last name',
+            }
+    )
+
+ProspectiveBuyersFormSet = formset_factory(  # or modelformset_factory()
+        ProspectiveBuyerForm,
+        extra = 1
+)
+
+# views.py
+
+...
+from django.http import HttpResponseRedirect
+from django.template.respnse import (
+                                     TemplateResponse
+                                    )
+from django.views.generic.edit import (
+                                       ...,
+                                       CreateView
+                                      )
+from .forms import ..., ProspectiveBuyerFormSet
+from ..chapter3.models import Vihicle
+
+
+class ModelFormClassCreateView(CreateView):
+    ...
+    def get(self, request, *args, **kwargs):
+        buyer_formset = ProspectiveBuyerFormSet()
+        return TemplateResponse(
+                request,
+                self.template_name,
+                {
+                    ...
+                    'form': self.form_class(),
+                    'buyer_formset': buyer_formset,
+                }
+        )
+
+    def post(self, request, *args, **kwargs):
+        form = self.form_class(request.POST)
+        buyer_formset = ProspectiveBuyerFormSet(
+                request.POST
+        )
+        if form.is_valid():
+            ...
+        else:
+            return TemplateResponse(
+                    request,
+                    self.template_name,
+                    {
+                        ...
+                        'form': form,
+                        'buyer_formset': buyer_formset,
+                    }
+            )
+
+# model-form-class.html
+...
+{% extends 'chapt_5/base/base_template_1.html' %}
+{% load static %}
+...
+{% block body_content %}
+  ...
+  <form method="post" id="form">
+    {% csrf_token %}
+    {{ form }}
+    {% if buyer_formset %}
+      <h3>Prospective Buyers</h3>
+      {{ buyer_formset.non_form_errors }}
+      {{ buyer_formset.management_form }}
+
+      {% for form in buyer_formset %}
+        <div class="formset-container {{ buyer_formset.prefix }}">
+          <div class="first-name">
+            {{ form.first_name.label }}: {{ form.first_name }}
+          </div>
+          <div class="last-name">
+            {{ form.last_name.label }}: {{ form.last_name }}
+          </div>
+        </div>
+      {% endfor %}
+    {% endif %}
+
+    <button id="add-formset" type="button">Add Another Prospective Buyer</button>
+    <input type="submit" value="Save Vehicle">
+  </form>
+{% endblock %}
+
+#7
