@@ -808,4 +808,54 @@ class ModelFormClassCreateView(CreateView):
   </form>
 {% endblock %}
 
-#7
+#7 Dynamic inline formsets
+
+#/templates/chapter_5/base/base_template_1.html
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+      ...
+      <script defer type="text/javascript" src="{{
+      base_url }}{% static 'chapter_5/js/site-js.js' %}"></
+      script>
+    </head>
+      ...
+</html>
+
+# /static/chapter_5/js/site-js.js
+let formsetContainer = document.querySelectorAll(
+        '.formset-container'
+),
+form = document.querySelector('#form'),
+addFormsetButton = document.querySelector(
+        '#add-formset'
+),
+totalForms = document.querySelector(
+        '#id_form-TOTAL_FORMS'
+),
+formsetNum = formsetContainer.length - 1;
+
+addFormsetButton.addEventListener(
+        'click',
+        $addFormset
+);
+
+furnction $addFormset(e) {
+        e.preventDefault();
+
+        let newForm = fromsetContainer[0].cloneNode(true),
+            formRegex = RegExp(`form-(\\d){1}-`,'g');
+
+        formsetNum++
+        newForm.innerHTML = newForm.innerHTML.replace(
+            formRegex,
+            'form-${formsetNum}-'
+        );
+        form.insertBefore(newForm, addFormsetButton);
+
+        totalForms.setAttribute(
+            'value',
+            '${formsetNum + 1}'
+        );
+}
+
+#8
