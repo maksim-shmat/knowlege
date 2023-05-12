@@ -34,4 +34,44 @@ from ..chapter_3.modles import (
 class SellerAdmin(UserAdmin):
     pass
 
-#2
+#2 Changelist view-related options
+
+actions_on_bottom = True
+actions_on_top = True
+
+actions_selection_counter = True
+
+list_display = (
+        'username',
+        'email',
+        'first_name',
+        'last_name',
+        'name',
+        'is_staff',
+        'is_superuser',
+)
+
+list_display_links = (
+        'username',
+        'name',
+)
+
+list_editable = (
+        'first_name',
+        'last_name',
+)
+
+list_filter = (
+        'is_staff',
+        'is_superuser',
+        'is_active',
+        'name',
+        'groups'
+)
+
+list_per_page = 20
+
+ordering = ('username',)
+ordering = ('-username',)
+
+
