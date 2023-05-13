@@ -74,4 +74,55 @@ list_per_page = 20
 ordering = ('username',)
 ordering = ('-username',)
 
+preserver_filters = False
+
+search_fields = (
+        'username',
+        'first_name',
+        'last_name',
+        'name',
+        'email'
+)
+
+exclude = ('first_name',)
+
+fields = ('username', 'password', 'first_name', 'last_name',)
+# fields not fredshiped with fieldsets
+fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': (
+                'usernae',
+                'password',
+            ),
+        }),
+        (('Personal Info'), {'fields': (
+            'first_name',
+            'last_name',
+            'name',
+            'email',
+        )}),
+        (('Permissions'), {'fields': (
+            'is_active',
+            'is_staff',
+            'is_superuser',
+            'groups',
+            'user_permissions',
+        )}),
+        (('Important Dates'), {'fields': (
+            'last_login',
+            'date_joined',
+        )}),
+        (('Vehicles'), {
+            'description': ('Vehicles that this user is selling.'),
+            'fields': (
+                'vehicles',
+            ),
+        }),
+)
+
+filter_horizontal = ('vehicles',)
+
+filter_vertical = 
+
 
