@@ -125,4 +125,50 @@ filter_horizontal = ('vehicles',)
 
 filter_vertical = 
 
+#3 Class StackedInline admin.py
+...
+from django.contrib.admin import ..., StackedInline
+
+
+class VehicleInline(StackedInline):
+    model = Vehicle
+    extra = 1
+
+
+class EngineAdmin(ModelAdmin):
+    ...
+    inlines = [VehicleInline,]
+
+#4 Class TabularInline admin.py
+...
+from django.contrib.admin import ..., TabularInline
+
+
+class VehicleInline(TabularInline):
+    model = Vehicle
+    extra = 1
+
+#5 ManyToMany field inlines admin.py
+...
+from django.contrib.admin import ..., TabularInline
+
+
+class VehiclesInline(TabularInline):
+    model = Seller.vehicles.through
+    extra = 1
+
+
+class SellerAdmim(UserAdmin):
+    inlines = [VehiclesInline,]
+
+#6 Option - radio_field admin.py
+...
+from django.contrib import admin
+from django.contrib.admin import ModelAdmin
+
+
+class VehicleAdmin(ModelAdmin):
+    radio_fields = {'engine': admin.HORIZONTAL,}  or VERTICAL
+
+#7 Option - save_on_top
 
