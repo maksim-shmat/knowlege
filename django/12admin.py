@@ -170,5 +170,62 @@ from django.contrib.admin import ModelAdmin
 class VehicleAdmin(ModelAdmin):
     radio_fields = {'engine': admin.HORIZONTAL,}  or VERTICAL
 
-#7 Option - save_on_top
+#7 More options
 
+save_on_top = True
+
+add_fieldsets = (
+        (None, {
+            'classes': ('wide',),
+            'fields': (
+                'username',
+                'password1',
+                'password2',
+            ),
+        }),
+        (('Personal Info'), {'fields': (
+            'first_name',
+            'last_name',
+            'name',
+            'email',
+        )}),
+)
+
+prepopulated_fields = {
+        'username': ('first_name', 'last_name',)
+}
+
+#8 Method - get_form()
+# Create EngineForm, EngineSuperUserForm, AddEngineForm in forms.py with pass
+
+from .forms import AddEngineForm, EngineForm
+...
+
+class EngineAdmin(ModelAdmin):
+    ...
+    #form = EngineForm
+
+    def get_form(self, request, obj=None, **kwargs):
+        if obj:
+            return EngineForm
+        else:
+            return AddEngineForm
+    return super(EngineAdmin, self).get_form(request, obj, **kwargs)
+
+# for superuser condition
+
+from .forms import ..., EngineSuperUserForm
+...
+
+class EngineAdmin(ModelAdmin):
+    ...
+    def get_form(self, request, obj=None, **kwargs):
+        if obj:
+            if request.user.is_superuser:
+                return EngineSuperUserForm
+            else:
+                return EngineForm
+        else:
+            return AddEngineForm
+
+#9
