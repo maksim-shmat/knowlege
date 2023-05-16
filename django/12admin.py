@@ -228,4 +228,20 @@ class EngineAdmin(ModelAdmin):
         else:
             return AddEngineForm
 
-#9
+#9 Method - save_model()
+
+class EngineAdmin(ModelAdmin):
+    ...
+    def save_model(self, request, obj, form, change):
+        print(obj.__dict__)
+        # Code actions before save here
+        super().save_model(request, obj, form, change)
+        # Code actions after save here
+
+#10 Method - delete_model()
+
+class EngineAdmin(self, request, obj):
+    print(obj.__dict__)
+    # Code actions before save here
+    super().delete_model(request, obj)
+    # Code actions after save here
