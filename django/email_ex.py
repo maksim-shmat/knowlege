@@ -52,4 +52,69 @@ MESSAGE_TAGS = {
         CRITICAL: 'critical',
 }
 
-#7
+#7 Creating a message
+# views.py
+...
+from django.contrib import messages
+from django.template.response import TemplateResponse
+from django.views.generic.edit import FormView
+
+
+class FormClassView(FormView):
+    ...
+    def post(self, request, *args, **kwargs):
+        ...
+        if form.is_valid():
+            messages.add_message(
+                    request,
+                    messages.SUCCESS,
+                    'Your contact form submitted successfully'
+            )
+            context = {
+                    'title': 'FormClassView Page',
+                    'page_id': 'form-class-id',
+                    'page_class': 'form-class-page',
+                    'h1_tag': 'This is the FormClassView Page Using ContactForm',
+                    'form': form,
+            }
+        else:
+            messages.add_message(
+                    request,
+                    messages.ERROR,
+                    'There was a problem submitting your contact form.<br />Please review the highlighted fields below.'
+            )
+            context = {
+                    'title': 'FormClassView Page - Please
+                    Correct The Errors Below',
+                    'page_id': 'form-class-id',
+                    'page_class': 'form-class-page errors-found',
+                    'h1_tag': 'This is the FormClassView Page Using ContactForm<br /><small class="error-msg">Errors Found</small>',
+                    'form': form,
+            }
+            return TemplateResponse(
+                    request,
+                    self.template_name,
+                    context
+            )
+            ...
+
+#7.1 analog
+...
+class FormClassView(FormView):
+    ...
+    def post(self, request, *args, **kwargs):
+        ...
+        if form.is_valid():
+            messages.success(
+                    request,
+                    'Your contact form submitted successfuly'
+            )
+            ...
+        else:
+            messages.error(
+                    request,
+                    'There was a problem submitting your contact form.<br />Please review the highlighted fields below.'
+            )
+    ...
+
+#8
