@@ -117,4 +117,105 @@ class FormClassView(FormView):
             )
     ...
 
-#8
+#8 Using a custom message level
+
+from django.views.generic.edit import FormView
+...
+from django.conf import settings
+
+
+class FormClassView(FormView):
+    ...
+    def post(self, request, *args, **kwargs):
+        ...
+        if form.is_valid():
+            messages.add_message(
+                    request,
+                    settings.CRITICAL,
+                    'This is critical!'
+            )
+            ...
+
+#9 With extra tags
+
+from django.contrib import messages
+from django.views.generic.edit import FormView
+from django.conf import settings
+
+...
+
+class FormClassView(FormView):
+    ...
+    def post(self, request, *args, **kwargs):
+        ...
+        if form.is_valid():
+            messages.success(
+                    request,
+                    'Your contact form submitted successfully',
+                    extra_tags = 'bold'
+            )
+            ...
+
+#10 silently fails
+
+from django.contrib import messages
+from django.views.generic.edit import FormView
+from django.conf import settings
+
+...
+
+class FormClassView(FormView):
+    ...
+    def post(self, request, *args, **kwargs):
+        ...
+        if form.is_valid():
+            messages.success(
+                    request,
+                    'Your contact form submitted successfully',
+                    fail_silently=True
+            )
+            ...
+
+#11 Displaying messages form-class.html
+...
+{% block body_content %}
+  ...
+  <form method="post">
+    {% csrf_token %}
+    
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}
+          <li{% if message.tage %} class="{{message.tags }}"{% endif %}>
+          {{ message|safe }}
+          </li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+    ...
+
+#12 As plain text emails
+# forms.py
+...
+from django.core.mail import EmailMessage
+...
+
+class ContactForm(Form):
+    ...
+    def send_email(self, request):
+        data = self.cleaned_data
+        msg_body = 'Hello World'
+        email = EmailMessage(
+                subject = 'New Contact Form Entry',
+                body = msg_body,
+                from_email = 'no-reply@example.com',
+                reply_to = ['no-reply@example.com'],
+                cc = []
+                bcc = []
+                to = [data['email_1']],
+                attachments = [],
+                headers = {},
+        )
+
+        email.content_subtype = 'plain'
+        email.send()
