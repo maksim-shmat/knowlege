@@ -502,4 +502,44 @@ class FormClass_View(FormView):
   </head>
 ...
 
-#20
+#20 Adding context
+# forms.py
+
+from django.conf import settings
+from django.template.loader import get_template
+from xhtml2pdf import pisa
+...
+
+class ContactForm(Form):
+    ...
+    def generate_pdf(self, request):
+        data = self.cleaned_data
+        context = {'data': data}
+        dest = open(settings.STATIC_ROOT + '/chapter_7/pdf/test_2.pdf', 'w+b')
+        template = get_template('chapter_7/pdfs/pdf_template.html')
+        html = template.render(context)
+        result = pisa.CreatePDF(
+                html,
+                dest = dest,
+        )
+        
+        return HttpResponse(result.err)
+
+# pdf_template.html
+...
+      <div class="body-content">
+        <h2>Hello World</h2>
+        <h3>The field contents are listed below</h3>
+        <ul>
+          <li>Full Name: {{ data.full_name }}</li>
+          <li>Email Field Example 1: {{ data.email_1 }}</li>
+          <li>Email Field Example 2: {{ data.email_2 }}</li>
+          <li>Email field Example 3: {{ data.email_3 }}</li>
+          <li>Conditionally Required Field: {{ data.conditional_required }}</li>
+          <li>Multiple Emails Field: {{ data.multiple_emails }}</li>
+          <li>Message: {{ data.message }}</li>
+        </ul>
+        {% lorem 50 p %}<pdf:pdf-next-page />{% lorem 50 p %}
+      </div>
+...
+
