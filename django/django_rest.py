@@ -1,10 +1,40 @@
 """ About Django REST(Representational state transfer)."""
 
-# first install it:
+#1 first install it:
 pip3 install djangorestframework
+pip install markdown
+pip install django-filter
 
-# then add to the INSTALLED_APPS in settings.py with name
-rest_framework
+#2 then add to the INSTALLED_APPS in settings.py with name
+
+INSTALLED_APPS = [
+        ...
+        'rest_framework',
+]
+REST_FRAMEWORK = {
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.
+            DjangoModelPermissionsOrAnonReadOnly'
+        ],
+}
+
+#3 Register the URL patterns
+# urls.py
+from django.contrib import admin
+from django.urls import include, path
+from django.views.generic import TemplateView
+
+
+urlpatterns = [
+        path('admin/', admin.site.urls),
+        path(
+            '',
+            TemiplateView.as_view(
+                template_name = 'chapter_8/index.html'
+            )
+        ),
+        path('api-auth/', include('rest_framework.urls'))
+]
 
 ###### Serializer class based on Django REST framework
 
@@ -159,4 +189,77 @@ urlpatterns = [
         url(r'^rest-auth/', include('rest_framework.urls',namespace='rest_framework')),
 ]
 
+#100 Create serializers.py
+from rest_framework.serializers import ModelSerializer
+from ..chapter3.models import (
+        Seller,
+        Vehicle,
+        Engine,
+        VehicleModel
+)
 
+class EngineSerializer(ModelSerializer):
+    class Meta:
+        model = Engine,
+        fields = '__all__'
+
+
+class VehicleModelSerializer(ModelSerializer):
+    class Meta:
+        model = VehicleModel,
+        fields = '__all__'
+
+
+class VehicleSerializer(ModelSerializer):
+    class Meta:
+        model = Vehicle,
+        fields = '__all__'
+
+
+class SellerSerializer(ModleSerializer):
+    class Meta:
+        model = Seller,
+        fields = '__all__'
+
+#101 viewset classes
+# views.py
+
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.viewsets import ModelViewSet
+from .serializer import (
+        EngineSerializer,
+        SellerSerializer,
+        VehicleSerializer,
+        VehicleModelSerializer
+)
+from ..chapter_3.models import(
+        Engine,
+        Seller,
+        Vehicle,
+        VehicleModel
+)
+
+class EngineViewSet(ModelViewSet):
+    queryset = Engine.objects.all().order_by('name')
+    serializer_class = EngineSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class VehicleModelViewSet(ModelViewSet):
+    queryset = VehicleModle.objects.all().order_by('name')
+    serializer_class = VehicleModelSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class VehicleViewSet(ModelViewSet):
+    queryset = Vehicle.objects.all().order_by('price')
+    serializer_class = VehicleSerializer
+    permission_classes = [IsAuthenticated]
+
+
+class SellerViewSet(ModelViewSet):
+    queryset = Seller.objects.all()
+    serializer_class = SellerSerializer
+    permission_classes = [IsAuthenticated]
+
+#102
