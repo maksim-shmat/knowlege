@@ -238,6 +238,9 @@ from ..chapter_3.models import(
         Vehicle,
         VehicleModel
 )
+from django.template.response import TemplateResponse
+from django.views.generic import View
+
 
 class EngineViewSet(ModelViewSet):
     queryset = Engine.objects.all().order_by('name')
@@ -262,4 +265,42 @@ class SellerViewSet(ModelViewSet):
     serializer_class = SellerSerializer
     permission_classes = [IsAuthenticated]
 
-#102
+
+class GetSellerView(View):
+    template_name = 
+    'chapter_8/spa_pages/get_seller.html'
+
+    def get(self, request, *args, **kwargs):
+        context = {}
+        return TemplateResponse(
+                request,
+                self.template_name,
+                context
+        )
+
+#102 Using URL routers
+# urls.py
+...
+from rest_framework import routers
+from .views import (
+        EngineViewSet,
+        SellerViewSet,
+        VehicleViewSet,
+        VehicleModelViewSet
+)
+
+router = routers.DefaultRouter()
+router.register(r'engines', EngineViewSet)
+router.register(r'sellers', SellerViewSet)
+router.register(r'vehicles', VehicleViewSet)
+router.register(
+        r'vehicle-models',
+        VehicleModelViewSet
+)
+
+urlpatterns = [
+        ...
+        path('chapter-8/', include(router.urls)),
+        path('api-auth/', include('rest_framework.urls')),
+]
+
