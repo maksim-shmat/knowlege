@@ -43,7 +43,7 @@ class GetSellerView(View):
   </div>
 {% endblock %}
 
-#3 Writing th JavaScript
+#3 Writing with JavaScript
 
 # /becoming_a_django_entdev/chapter_8/static/chapter_8/js/site-js.js
 function $gotoSPA_Page() {
@@ -66,4 +66,33 @@ function $gotoSPA_Page() {
         });
 }
 
-#4
+#3.1 async JavaScript
+# site-js.js
+function $gotSPA_Page() {
+        ...
+        fetch(url, {
+            method: `GET`,
+            headers: {
+                `Content-Type`: `application/json`,
+            }
+        }).then(async(response) => {
+            return await response.json();
+        }).then(async(data) => {
+            const thisData = await data;
+            container.innerHTML = JSON.stringify(
+                thisData
+            );
+        });
+}
+
+#4 urls.py
+from .views import ..., GetSellerView
+...
+urlpatterns = [
+        ...
+        path(
+            'chapter-8/get-seller/',
+            GetSellerView.as_view(),
+            name = 'get-seller'
+        ),
+]
