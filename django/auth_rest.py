@@ -54,3 +54,59 @@ class GetSellerWithTokenView(APIView):
             perm_granted = False
             
             context = {
+                    'request': request,
+                    'seller': seller,
+            }
+
+            seller = SellerSerializer(
+                    seller,
+                    context = context
+            )
+
+            new_context = {
+                    'seller': seller.data,
+                    'perm_granted': perm_granted
+            }
+
+            return JsonResponse(new_context)
+
+#4 site-js.js
+function $gotoSPA_Page() {
+        ...
+        var url = `/chapter-8/sellertoken/${id}/`;
+
+        fetch(url, {
+            method: `GET`,
+            headers: {
+                `Content-Type`: `application/json`,
+                `Authorization`: `Token your_token`,
+                `User`: `test`
+        }}).token(async(response) => {
+            return await response.text();
+        }).then(async(data) => {
+            container.innerHTML = await data;
+        });
+}
+
+#5 urls.py
+from .view import ..., GetSellerView, GetSellerHTMLView,
+GetSellerWithTokenView
+...
+urlpatterns = [
+        ...
+        path(
+            'chapter-8/get-seller/',
+            GetSellerView.as_view(),
+            name = 'get-seller'
+        ),
+        path(
+            'chapter-8/seller/<int:id>/',
+            GetSellerHTMLView.as_view(),
+            name = 'seller-detail'
+        ),
+        path(
+            'chapter-8/sellertoken/<int:id>/',
+            GetSellerWithTokenView.as_view(),
+            name = 'seller-token-detail'
+        ),
+]
