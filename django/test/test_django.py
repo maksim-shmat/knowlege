@@ -206,4 +206,80 @@ calss QuestionIndexViewTests(TestCase):
                 ['<Question: Past question 2.>', '<Question: Past question 1.>']
         )
 
-#7
+#7 Basic unit test script
+
+from django.test import SimpleTestCase):
+
+
+class TestingCalibrator(SimpleTestCase):
+    def setUp(self):
+        pass
+
+    def tearDown(self):
+        pass
+
+    def test_pass(self):
+        '''Checks if True == True, Value set to True'''
+        self.assertFalse(True)
+
+# $ python manage.py test becoming_a_django_entdev.chapter_9
+
+#8 Testing Django Models
+# models.py
+...
+MAKE_CHOICES = (
+        ...
+        (8, 'Jeep'),
+        ...
+)
+
+# tests.py
+from django.test import ..., TestCase
+from djmoney.money import Money
+from ..chapter_3.models import (
+        Engine,
+        Seller,
+        Vehicle,
+        VehicleModel
+)
+
+class ModelUnitTestCase(TestCase):
+    def setUp(self):
+        model = VehicleModel.objects.create(
+                name = 'Grand Cherokee Laredo 4WD',
+                make = 8
+        )
+        engine = Engine.objects.create(
+                name = '3.6L FI FFV DO',
+                vehicle_model = model
+        )
+        vehicle = Vehicle.objects.create(
+                vin = 'aa890123456789012',
+                sold = False,
+                price = Money(39875, 'USD'),
+                make = 8,
+                vehicle_model = model,
+                engine = engine
+        )
+        seller = Seller.objects.create_user(
+                'test',
+                'testing@example.com',
+                'testpassword',
+                is_staff = True,
+                is_superuser = True,
+                is_active = True,
+                name = 'Chapter 9 Seller 1'
+        )
+        seller.vehicles.set([vehicle])
+
+    def test_full_vehicle_name(self):
+        vehicle_1 = Vehicle.objects.get(
+                vin = 'aa890123456789012'
+        )
+        self.assertEqual(
+                vehicle_1.full_vehicle_name(),
+                'Jeep Grand Cherokee Laredo 4WD - 3.6L FI
+                FFV DO'
+        )
+
+#9 
