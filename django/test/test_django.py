@@ -282,4 +282,68 @@ class ModelUnitTestCase(TestCase):
                 FFV DO'
         )
 
-#9 
+#9 Testing HTTP view requests
+# tests.py
+
+from django.contrib.auth.models import AnonymousUser
+from django.test import ..., RequestFactory, TestCase
+from ..chapter_4.views import practice_your_view
+
+
+class YearRequestTestCase(TestCase):
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_methodbased(self):
+        request = self.factory.get(
+                '/my_year_path/2022/'
+        )
+        request.user = AnonymousUser()
+        response = practice_year_view(request, 2022)
+        self.assertEqual(response.status_code, 200)
+
+#10 Testing class based views
+# tests.py
+
+from django.contrib.auth.models import AnonymousUser
+from django.test import ..., RequestFactory, TestCase
+from ..chapter_4.views import ..., VehicleView
+
+
+class VehicleRequestTestCase(TestCase):
+    fixtures = ['chapter_3']
+
+    def setUp(self):
+        self.factory = RequestFactory()
+
+    def test_classbased(self):
+        request = self.factory.get('/vehicle/1/')
+        request.user = AnonymousUser()
+        response = VehicleView.as_view()(request, 1)
+        self.assertEqual(response.status_code, 200)
+
+#11 Using the Client() class
+# tests.py
+
+from django.test import ..., Client, TestCase
+from ..chapter_3.models import ..., Seller
+
+
+class SellerClientTestCase(TestCase):
+    fixtures = ['chapter_3']
+
+    def setUp(self):
+        self.user = Seller.objects.get(id=1)
+        self.client = Client()
+        self.client.login(
+                username = self.user.username,
+                password = 'mynewpassword'
+        )
+
+    def test_get(self):
+        response = self.client.get(
+                '/chapter-8/seller/1/'
+        )
+        self.assertEqual(response.status_code, 200)
+        seller = response.context['seller']
+        self.assertEqual(seller.name, 'Test Biz Name')
