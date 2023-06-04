@@ -347,3 +347,47 @@ class SellerClientTestCase(TestCase):
         self.assertEqual(response.status_code, 200)
         seller = response.context['seller']
         self.assertEqual(seller.name, 'Test Biz Name')
+
+#12 Testing Django REST API endpoint
+
+from rest_framework.test import APITestCase, APIClient
+
+class EngineAPITestCase(APITestCase):
+    fixtures = ['chapter_3']
+
+    def setUp(self):
+        self.user = Seller.objects.get(id=1)
+        self.client = APIClient()
+        self.client.login(
+                username = self.user.username,
+                password = 'mynewpassword'
+        )
+
+    def test_post(self):
+        response = self.client.post(
+                '/chapter-8/engines/',
+                {'name': 'New Engine'},
+                format = 'json'
+        )
+        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.data['name'], 'New
+        Engine')
+
+#13 Updating an object test case
+
+from rest_framework.test import APITestCase, APIClient
+
+
+class EngineAPITestCase(APITestCase):
+    ...
+    def test_put(self):
+        response = self.client.put(
+                '/chapter-8/engines/1/',
+                {'name': 'My Changed Engine Name'},
+                format = 'json'
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(
+                response.data['name'],
+                'My Changed Engine Name'
+        )
