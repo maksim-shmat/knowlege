@@ -240,4 +240,20 @@ result = tuple_1[slice_object]
 print(result)
 print()
 
-######13
+#1 traditional way
+
+a, b = 1, 2
+c = a
+a = b
+b = c
+print(a, b)
+(2, 1)
+
+#1.1 other
+
+a, b = 0, 1
+a, b = b, a
+print(a, b)
+(1, 0)
+
+#2 
