@@ -574,4 +574,23 @@ results:
         Full name: Marie Curie
         Location: Paris
 
-#25
+#25 
+>>> d = {}
+>>> d.setdefault('a', {}).setdefault('b', []).append(1)
+>>> d
+{'a': {'b': [1]}}
+
+#26 ChainMap
+from collections import ChainMap
+
+default_connection = {'host': 'localhost', 'port': 4567}
+connection = {'port': 5578}
+conn = ChainMap(connection, default_connection)
+print(conn['port'])
+print(conn['host'])
+print(conn.maps)
+conn['host'] = 'pakipakijitiemoe.com'  # let's add host
+print(conn.maps)
+del conn['port']
+
+#27
