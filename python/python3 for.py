@@ -38,7 +38,7 @@ for surname in surnames:
 
 for position, surname in enumerate(surnames):
     print(position, surname)
-
+'''
 #4 iterating multiple sequences
 
 people = ['Conrad', 'Deepak', 'Heinrich', 'Tom']
@@ -53,7 +53,7 @@ Conrad 29
 Deepak 30
 Heinrich 34
 Tom 36
-'''
+
 #4.1 with enumerate
 
 people = ['Conrad', 'Deepak', 'Heinrich', 'Tom']
@@ -62,4 +62,4 @@ for position, person in enumerate(people):
     age = ages[position]
     print(person, age)
 
-#4.2
+
