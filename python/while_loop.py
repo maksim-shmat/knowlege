@@ -209,3 +209,23 @@ while True:
     print(f"\nHello, {formatted_name}!")
 
 #15
+n = 39
+reminders = []
+while n > 0:
+    remainder = n % 2 # remainder of division by 2
+    remainders.insert(0, remainder) # we keep track of remainders
+    n // = 2 # we divide n by 2
+
+print(reminders)
+
+#15.1 with divmode
+
+n = 39
+reminders = []
+while n > 0:
+    n, remainder = divmod(n, 2)
+    reminders.insert(0, remainder)
+
+print(remainders)
+
+#16
