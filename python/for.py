@@ -78,3 +78,17 @@ nationalities = ['Poland', 'India', 'South Africa', 'England']
 for data in zip(people, ages, nationalities):
     person, age, nationality = data
     print(person, age, nationality)
+
+#5 infinite iterators
+
+from itertools import count
+
+for n in count(5, 3):
+    if n > 20:
+        break
+    print(n, end=', ')
+
+# Results:
+# 5, 8, 11, 14, 17, 20,
+
+#6
