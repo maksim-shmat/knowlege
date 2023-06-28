@@ -141,4 +141,26 @@ daily_sales_total()
 daily_sales_total(10.00)
 daily_sales_total(5.00, 1.50, '123.79')
 
-#6
+#6 connect to a db
+
+def connect(**options):
+    conn_params = {
+            'host': options.get('host', '127.0.0.1'),
+            'port': options.get('port', 5432),
+            'user': options.get('user', ''),
+            'pwd': options.get('pwd', ''),
+    }
+    print(conn_params)
+    # we then connect to the db (connected out)
+    # db.connect(**conn_params)
+
+connect()
+connect(host='127.0.0.1', port=5433)
+connect(port=5431, user='herus', pwd='generallissimus')
+
+# RESULTS:
+# {'host': 127.0.0.1', 'port': 5432, 'user': '', 'pwd': ''}
+# {'host': 127.0.0.1', 'port': 5433, 'user': '', 'pwd': ''}
+# {'host': 127.0.0.1', 'port': 5431, 'user': 'herus', 'pwd': 'generallissimus'}
+
+#7
