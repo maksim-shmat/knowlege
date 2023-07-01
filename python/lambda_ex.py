@@ -1,4 +1,4 @@
-"""Lambda function about."""
+"""Lambda function = anonimous function, about."""
 
 square = lambda a: a*a
 # call lambda function
@@ -82,4 +82,34 @@ sorted(list_of_people, key=get_last_name)
 get_last_name = lambda person: person.last_name  # for example
 sorted(list_of_people, key=get_last_name)
 
-#3
+#3 filter regular
+
+def is_multiple_of_five(n):
+    return not n % 5
+
+def get_multiples_of_five(n):
+    return list(filter(is_multiple_of_five, range(n)))
+
+#3.1 filter lambda
+
+def get_multiples_of_five(n):
+    return list(filter(lambda k: not k % 5, range(n)))
+
+#4 lambda explained
+
+#4.1 adder
+
+def adder(a, b):
+    return a + b
+
+# is equivalent to:
+adder_lambda = lambda a, b: a + b
+
+#4.2 to uppercase
+def to_upper(s):
+    return s.upper()
+
+# is equivalent to:
+to_upper_lambda = lambda s: s.upper()
+
+#5
