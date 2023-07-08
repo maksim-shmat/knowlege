@@ -5,3 +5,7 @@
 $ locate calibre
 
 and delete handle file by file
+
+#2 How del Thonny
+
+sudo find / -iname "*thonny*"  # handle it
