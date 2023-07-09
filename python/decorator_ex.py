@@ -1,6 +1,6 @@
 """About the decorators."""
 
-'''
+
 def  outer_function():
     """Assign task to student"""
 
@@ -235,7 +235,7 @@ def authorized_only(method):
 @authenticated_only
 def execute(action, *args, **kwargs):
     return action()
-'''
+
 #1
 # old Python 2.4
 class MyClass:
@@ -261,5 +261,3 @@ print(MyClass.smeth())
 print(MyClass.cmeth())
 print(MyClass1.smeth1())
 print(MyClass1.cmeth2())  # ?
-
-
