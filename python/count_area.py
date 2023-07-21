@@ -48,10 +48,14 @@ print(square.get_geometric_type())  # Square
 square.plot(0.93, (74, 75))  # Plotting at (74, 75), ratio 0.93.
 
 # RESULTS:
-
+'''
 259.8076211353316
 RegularHexagon
 Plotting at (75, 77), ratio 0.8.
 144
 Square
 Plotting at (74, 75), ratio 0.93.
+'''
+# Check Method Resolution order (MRO)
+print(square.__class__.__mro__)
+(<class '__main__.Square'>, <class '__main__.RegularPolygon'>, <class '__main__.Polygon'>, <class '__main__.Shape'>, <class '__main__.Plotter'>, <class 'object'>)
