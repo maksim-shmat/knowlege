@@ -132,7 +132,7 @@ finally:
     f.close()
     print('(Cleance: Close file)')
 '''
-##13
+#13
 
 filename = 'jill.txt'
 
@@ -150,7 +150,7 @@ print(pi_string)
 print(f"{pi_string[:52]}...")
 print(len(pi_string))
 
-##14 len of words in file and exceptp FileNotFoundError:
+#14 len of words in file and exceptp FileNotFoundError:
 
 def count_words(filename):
     """Count words in file."""
@@ -170,4 +170,113 @@ filenames = ['jill.txt', 'jill.py']
 for filename in filenames:
     count_words(filename)
 
-##15 
+#15 Reading ang writing in binary mode
+
+with open('example.bin', 'wb') as fw:
+    fw.write(b'This is binary data...')
+
+with open('example.bin', 'rb') as f:
+    print(f.read())  # prints: b'This is binary data...'
+
+
+#16 Protecting agains overriding an existing file
+
+with open('write_x.txt', 'x') as fw:
+    fw.write('Writing line 1')  # this succeeds
+
+with open('write_x.txt', 'x') as fw:
+    fw.write('Writing line 2')  # Traceback... FileExistError
+
+#17 Checking for file and directory existence
+
+import os
+
+filename = 'jill.txt'
+path = os.path.dirname(os.path.abspath(filename))
+
+print(os.path.isfile(filename))  # True
+print(os.path.isdir(path))  # True
+print(path)
+
+#18 Manipulation file and directories
+
+from collections import Counter
+from string import ascii_letters
+
+chars = ascii_letters + ' '
+
+def sanitize(s, chars):
+    return ''.join(c for c in s if c in chars)
+
+def reverse(s):
+    return s[::-1]
+
+with open('jill.txt') as stream:
+    lines = [line.rstrip() for line in stream]
+
+with open('claire.txt', 'w') as stream:
+    stream.write('\n'.join(reverse(line) for line in lines))
+
+# now we can calculate some statistics
+lines = [sanitize(line, chars) for line in lines]
+whole = ' '.join(lines)
+cnt = Counter(whole.lower().split())
+print(cnt.most_common(3))
+
+#19 Manipulation oriented to disc operations
+
+import shutil
+import os
+
+
+BASE_PATH = 'ops_example'  # this will be out base path
+os.mkdir(BASE_PATH)
+
+path_b = os.path.join(BASE_PATH, 'A', 'B')
+path_c = os.path.join(BASE_PATH, 'A', 'C')
+path_d = os.path.join(BASE_PATH, 'A', 'D')
+
+os.makedirs(path_b)
+os.makedirs(path_c)
+
+for filename in ('ex1.txt', 'ex2.txt', 'ex3.txt'):
+    with open(os.path.join(path_b, filename), 'w') as stream:
+        stream.write(f'Some content here in {filename}\n')
+
+shutil.move(path_b, path_d)
+
+shutil.move(
+        os.path.join(path_d, 'ex1.txt'),
+        os.path.join(path_d, 'ex1d.txt')
+)
+
+#20 Manipulating pathnames
+
+import os
+
+filename = 'fear.txt'
+path  = os.path.abspath(filename)
+
+print(path)
+print(os.path.basename(path))
+print(os.path.dirname(path))
+print(os.path.splitext(path))
+print(os.path.split(path))
+
+readme_path = os.path.join(
+        os.path.dirname(path), '..', '..', 'README.rst')
+print(readme_path)
+print(os.path.normpath(readme_path))
+
+#21 Temporary files and directories
+
+import os
+from tempfile import NamedTemporaryFile, TemporaryDirectory
+
+with TemporaryDirectory(dir='.') as td:
+    print('Temp directory:', td)
+    with NamedTemporaryFile(dir=td) as t:
+        name = t.name
+        print(os.path.abspath(name))
+
+#22
