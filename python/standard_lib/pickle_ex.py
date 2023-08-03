@@ -81,7 +81,7 @@ print(type(laptop1))
 laptop1.details()
 
 ######4 Pickle a dataframe
-
+'''
 import numpy as np
 import pandas as pd
 import pickle
@@ -99,9 +99,9 @@ picklefile5 = open('df_marks', 'wb')
 # pickle the dataframe
 pickle.dump(df, picklefile5)
 picklefile5.close()
-
+'''
 ### Unpickle a dataframe
-
+'''
 import numpy as np
 import pandas as pd
 import pickle
@@ -116,7 +116,7 @@ picklefile.close()
 # print the dataframe
 print(type(df))
 print(df)
-
+'''
 #5 new Apr 16
 
 import pickle
@@ -371,7 +371,8 @@ reloaded = pickle.loads(dumped)
 print('\nRELOADED GRAPH:')
 show_edges(reloaded)
 
-'''RESULTS:
+'''
+RESULTS:
 ORIGINAL GRAPH:
  root ->  a (139947175062272)
     a ->  b (139947175061744)
@@ -388,3 +389,38 @@ RELOADED GRAPH:
     a ->  a (139947175062608)
  root ->  b (139947175062032)
 '''
+
+#11 simple example
+
+import pickle
+from dataclasses import dataclass
+
+
+@dataclass
+class Person:
+    first_name: str
+    last_name: str
+    id: int
+
+    def greet(self):
+        print(f'Hi, I am {self.first_name} {self.last_name}'
+              f' and my ID is {self.id}'
+        )
+
+people = [
+        Person('Mobi-Tan', 'Kekoby', 113),
+        Person('Anankey', 'Skrulkroker', 114),
+]
+
+# save data in binary format to a file
+with open('data.pickle', 'wb') as stream:
+    pickle.dump(people, stream)
+
+# load data from a file
+with open('data.pickle', 'rb') as stream:
+    peeps = pickle.load(stream)
+
+for person in peeps:
+    person.greet()
+
+
