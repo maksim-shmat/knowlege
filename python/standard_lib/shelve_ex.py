@@ -109,3 +109,12 @@ with shelve.open('test_shelf.db', writeback=True) as s:
 with shelve.open('test_shelf.db', writeback=True) as s:
     print('\nPreserved:')
     pprint.pprint(s['key1'])
+
+#7 writeback by defolt is False beacause eat memory
+
+with shelve.open('shelf2.shelve', writeback=True) as db:
+    db['a_list'] = [11, 13, 17]
+    db['a_list'].append(19)
+    print(db['a_list'])  # [11, 13, 17, 19]
+
+#8
