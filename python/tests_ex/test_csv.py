@@ -181,5 +181,54 @@ def test_invalid_types(self, field, value, min_user):
     min_user[field] = value
     assert not is_valid(min_user)
 
-#3
+#3 test_api
 
+class TestExport:
+
+    @pytest.fixture
+    def csv_file(self, tmpdir):
+        yield tmpdir.join("out.csv")
+
+    @pytest.fixture
+    def existing_file(self, tmpdir):
+        existing = tmpdir.join('existing.csv')
+        existing.write('Please leave me alone...')
+        yield existing
+
+#3.1
+
+def test_export(self, users, csv_file):
+    export(csv_file, users)
+
+    lines = csv_file.readlines()
+
+    assert [
+            'email,name,age,role\n',
+            'minimal@example.com,Primus Minimus,18, \n',
+            'full@example.com,Maximus Plenus,65,emperor\n',
+           ] == lines
+
+def test_export_quoting(self, min_user, csv_file):
+    min_user['name'] = 'A name, with a comma'
+
+    export(csv_file, [min_user])
+
+    lines = csv_file.readlines()
+    assert [
+            'email,name,age,role\n',
+            'minimal@example.com,"A name, with a comma",18,\n',
+           ] == lines
+
+#3.2
+
+def test_does_not_overwrite(self, users, existing_file):
+    with pytest.raises(IOError) as err:
+        export(existing_file, users, overwrite=False)
+        assert err.match(
+                r"'{}' already exists\.".format(exitsing_file)
+        )
+
+        # let's also verify the file is still intact
+        assert existin_file.read() == 'Please leave me alone...'
+
+# run tests with: $ pytest -vv tests
