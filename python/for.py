@@ -91,4 +91,34 @@ for n in count(5, 3):
 # Results:
 # 5, 8, 11, 14, 17, 20,
 
-#6
+#6.1 for with exception alternative
+
+n = 100
+found = False
+for a in range(n):
+    if found: break
+    for b in range(n):
+        if found: break
+        for c in range(n):
+            if 42 * a + 17 * b + c == 5096:
+                found = True
+                print(a, b, c) # 79 99 95
+
+#6.2
+
+class ExitLoopException(Exception):
+    pass
+
+try:
+    n = 100
+    for a in range(n):
+        for b in range(n):
+            for c in range(n):
+                if 42 * a + 17 * b + c == 5096:
+                    raise ExitLoopException(a, b, c)
+except ExitLoopException as ele:
+    print(ele) # (79, 99, 95)
+
+#7
+
+
