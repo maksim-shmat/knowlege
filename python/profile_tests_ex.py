@@ -207,3 +207,25 @@ main statement
 main statement
 [2.252054400742054e-06, 2.1149171516299248e-06, 2.152053639292717e-06]
 '''
+#8 triples
+
+def calc_triples(mx):
+    triples = []
+    for a in range(1, mx + 1):
+        for b in range(a, mx + 1):
+            hypotenuse = calc_hypotenuse(a, b)
+            if is_int(hypotenuse):
+                triples.append((a, b, int(hypotenuse)))
+    return triples
+
+def calc_hypotenuse(a, b):
+    return (a**2 + b**2) ** .5  # or return (a*a + b*b) ** .5 for increase speed run
+
+def is_int(n):  # n is expected to be a float
+    return n.is_integer()  # or return n == int(n) for increase speed run
+
+triples = calc_triples(1000)
+
+# $ python -m cProfile profile_test_ex.py
+
+#9
