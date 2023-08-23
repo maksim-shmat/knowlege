@@ -1,6 +1,6 @@
 """Example two."""
 
-'''
+
 try:
     import _thread as thread
 except ImportError:
@@ -243,7 +243,7 @@ def function():
     x = input("Trigger event?")
     if (x == "yes"):
         event.set()
-'''
+
 #7 Daemon threads
 
 import threading
@@ -270,3 +270,134 @@ t2 = threading.Thread(target=printloop)
 
 t1.start()
 t2.start()
+
+#8 Simple example
+
+import threading
+
+
+def sum_and_product(a, b):
+    s, p = a + b, a * b
+    print(f'{a}+{b}={s}, {a}*{b}={p}')
+
+t = threading.Thread(
+        target= sum_and_product, name='SumProd', args=(3, 7)
+)
+t.start()
+
+#RESULTS: 3+7=10, 3*7=21
+
+#8.1 start with info
+
+import threading
+from time import sleep
+
+
+def sum_and_product(a, b):
+    sleep(.2)
+    print_current()
+    s, p = a + b, a * b
+    print(f'{a}+{b}={s}, {a}*{b}={p}')
+
+def status(t):
+    if t.is_alive():
+        print(f'Thread {t.name} is alive.')
+    else:
+        print(f'Thread {t.name} has terminated.')
+
+def print_current():
+    print('The current thread is {}.'.format(
+        threading.current_thread()
+    ))
+    print('Threads: {}'.format(list(threading.enumerate())))
+
+print_current()
+t = theading.Thread(
+        target=sum_and_product, name='SumPro', args=(3, 7)
+)
+t.start()
+status(t)
+t.join()
+status(t)
+
+#9 stopping threads  # it is not need for good architecture programm
+
+import threading
+from time import sleep
+
+
+class Fibo(threading.Thread):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self._running = True
+
+    def stop(self):
+        self._running = False
+
+    def run(self):
+        a, b = 0, 1
+        while self._running:
+            print(a, end=' ')
+            a, b = b, a + b
+            sleep(0.07)
+        print()
+
+fibo = Fibo()
+fibo.start()
+sleep(1)
+fibo.stop()
+fibo.join()
+print('All done.')
+
+#EXPECTED RESULTS 0 1 1 2 3 5 8 13 21 34 55 89 144 233
+# All done
+
+#10 Spawning multiple threads
+
+import threading
+from time import sleep
+from random import random
+
+
+def run(n):
+    t = threading.current_thread()
+    for count in range(n):
+        print(f'Hello from {t.name}! ({count})')
+        sleep(0.2 * random())
+
+obi = threading.Thread(target=run, name='Bobi-Ban', args=(4, ))
+ani = threading.Thread(target=run, name='Aninnin', args=(3, ))
+obi.start()
+ani.start()
+obi.join()
+ani.join()
+
+#11 simulate a race condition
+
+import threading
+from time import sleep
+from random import random
+
+
+counter = 0
+randsleep = lambda: sleep(0.1 * random())
+
+def incr(n):
+    global counter
+    for count in range(n):
+        current = counter
+        randsleep()
+        counter = current + 1
+        randsleep()
+
+n = 5
+t1 = threading.Thread(target=incr, args=(n, ))
+t2 = threading.Thread(target=incr, args=(n, ))
+t1.start()
+t2.start()
+t1.join()
+t2.join()
+print(f'Counter: {counter}')
+
+#EXPECTED RESULTS is 10, but race condition gave no
+
