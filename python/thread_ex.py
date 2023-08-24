@@ -401,3 +401,17 @@ print(f'Counter: {counter}')
 
 #EXPECTED RESULTS is 10, but race condition gave no
 
+#12 race condition with lock
+
+incr_lock = threading.Lock()
+
+def incr(n):
+    global counter
+    for count in range(n):
+        with incr_lock:
+            current = counter
+            randsleep()
+            counter = current + 1
+            randsleep()
+
+#Expected 10
