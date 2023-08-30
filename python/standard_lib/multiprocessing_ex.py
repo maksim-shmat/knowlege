@@ -1149,3 +1149,34 @@ if __name__ == '__main__':
             count=count)
         )
 # python3 -u multiprocessing_wordcount.py  # for .rst
+
+#25 Using a process to add a timeout to a function
+# for hostname
+
+import socket
+from multiprocessing import Process, Queue
+
+
+def resolve(hostname, timeout=5):
+    exitcode, ip = resolve_host(hostname, timeout)
+    if exitcode == 0:
+        return ip
+    else:
+        return hostname
+
+def resolve_host(hostname, timeout):
+    queue = Queue()
+    proc = Process(target=gethostname, args=(hostname, queue))
+    proc.start()
+    proc.join(timeout=timeout)
+
+    if queue.empty():
+        proc.terminate()
+        ip = None
+    else:
+        ip = queue.get()
+    return proc.exitcode, ip
+
+def gethostname(hostname, queue):
+    ip = socket.gethostbyname(hostname)
+    queue.put(ip)
