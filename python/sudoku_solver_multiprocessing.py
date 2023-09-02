@@ -36,7 +36,7 @@ def parallel_batch_solver(puzzles, workers=4):
     chunks = (puzzles[k: k + dim] for k in range(0, len(puzzles), dim))
     with ProcessPoolExecutor(max_workers=workers) as executor:
         futures = (executor.submit(batch_solve, chunk) for chunk in chunks)
-        results = (furure.result() for future in as_completed(futures))
+        results = (future.result() for future in as_completed(futures))
         return reduce(concat, results)
 
 #puzzle_file = os.path.join('puzzles', 'jill_sudoku.txt')
@@ -62,5 +62,3 @@ assert_items_equal = TestCase().assertCountEqual
 assert_items_equal(res_batch, res_parallel_single)
 assert_items_equal(res_batch, res_parallel_batch)
 print('Done.')
-
-
