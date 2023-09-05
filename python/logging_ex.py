@@ -3,7 +3,6 @@
 ######1 Import logging Library
 
 import logging
-'''
 logging.warning("This is a simple Python logging example")
 
 ######2 Logging messages to log file
@@ -13,12 +12,10 @@ logging.basicConfig(filename="jill.log")
 logging.warning('This is a WARNING message')
 logging.error('This is an ERROR message')
 logging.critical('This is a CRITICAL message')
-'''
 #2.1 logging file example
 
 import logging
 
-'''
 LOG_FILENAME = 'logging_example.out'
 logging.basicConfig(
         filename=LOG_FILENAME,
@@ -36,12 +33,10 @@ print(body)
 RESULTS:
 FILE:
 DEBUG:root:This message should go to the log file
-'''
 
 ######3 Logging messages to log file using handler
 
 import logging
-'''
 # create a logger
 logger = logging.getLogger('mylogger')
 
@@ -260,7 +255,6 @@ logging.info('Trying to divide 1 by 0')
 print(1/0)
 logging.info('The division succeeded')
 logging.info('Ending program')
-'''
 
 # 12 logging rotatingfile example
 
@@ -268,7 +262,6 @@ import glob
 import logging
 import logging.handlers
 
-'''
 LOG_FILENAME = 'logging_rotatingfile_example.out'
 
 # set logging level
@@ -299,13 +292,11 @@ logging_rotatingfile_example.out.4
 logging_rotatingfile_example.out.3
 logging_rotatingfile_example.out
 logging_rotatingfile_example.out.1
-'''
 #13 logging level example
 
 import logging
 import sys
 
-'''
 LEVELS = {
         'debug': logging.DEBUG,
         'info': logging.INFO,
@@ -324,13 +315,11 @@ logging.info('This is an info message')
 logging.warning('This is an warning message')
 logging.error('This is an error message')
 logging.critical('This is a critical error message')
-'''
 
 #14 logging modules example
 
 import logging
 
-'''
 logging.basicConfig(level=logging.WARNING)
 
 logger1 = logging.getLogger('package1.module1')
@@ -342,14 +331,12 @@ logger2.warning('This comes from another module')
 RESULTS:
 WARNING:package1.module1:This message comes from one module
 WARNING:package2.module2:This comes from another module
-'''
 
 #15 logging captureWarnings()
 
 import logging
 import warnings
 
-'''
 logging.basicConfig(
         level=logging.INFO,
 )
@@ -365,4 +352,28 @@ RESULTS:
   warnings.warn('This warning is not sent to the logs')
 WARNING:py.warnings:/home/jack/django2/knowlege/python/logging_ex.py:361: UserWarning: This warnig is sent to the logs
   warnings.warn('This warnig is sent to the logs')
-'''
+
+#16 logging example
+
+import logging
+
+logging.basicConfig(
+        filename='ch11.log',
+        level=logging.DEBUG,  # minimum level capture in the file
+        format='[%(asctime)s] %(levelname)s: %(message)s',
+        datefmt='%m/%d/%Y %I:%M:%S %p')
+
+mylist = [1, 2, 3]
+logging.info('Starting to process 'mylist'...')
+
+for position in range(4):
+    try:
+        logging.debug(
+                'Value at position %s is %s', position, mylist[position]
+        )
+    except IndexError:
+        logging.exception('Faulty position: %s', position)
+
+logging.info('Done parsing `mylist`.')
+
+
