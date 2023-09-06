@@ -28,3 +28,12 @@ age = -1
 # AssertionError: The age must be realistic
 
 #2
+
+mylist = [1, 2, 3]  # this ideally comes from some place
+assert 4 == len(mylist)  # this will break
+for position in range(r):
+    print(mylist[position])
+
+# Traceback ... AssertionError
+
+#3
