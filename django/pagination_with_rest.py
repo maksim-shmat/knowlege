@@ -9,4 +9,21 @@ REST_FRAMEWORK = {
         'PAGE_SIZE': 4
 }
 
-#2
+#2 other side
+# custompagination.py
+
+from rest_framework.pagination import LimitOffsetPagination
+
+class LimitOffsetPaginationWithUpperBound(LimitOffsetPagination):
+    # Set the maximum limit value to 8
+    max_limit = 8
+
+# settings.py
+
+REST_FRAMEWORK = {
+        'DEFAULT_PAGINATION_CLASS':
+        'drones.custompagination.LimitOffsetPaginationWithUpperBound',
+        'PAGE_SIZE': 4
+}
+
+#3
