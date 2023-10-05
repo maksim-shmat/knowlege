@@ -54,9 +54,9 @@ class DroneCategoryList(generics.ListCreateAPIView):
 
 class CompetitionFilter(filters.FilterSet):
     from_achivement_date = DateTimeFilter(
-            name='distance_achivement_date', lookup_expr='gte')
+            name='distance_achivement_date', lookup_expr='gte')  # greater than or equal to
     to_achivement_date = DateTimeFilter(
-            name='distance_achivement_date', lookup_expr='lte')
+            name='distance_achivement_date', lookup_expr='lte')  # lte - less than or equal to
     min_distance_in_feet = NumberFilter(
             name='distance_in_feet' = lookup_expr='gte')
     max_distance_in_feet = NumberFilter(
@@ -80,4 +80,15 @@ class CompetitionFilter(filters.FilterSet):
                 'pilot_name',
                 )
 
-#3
+
+class CompetitionList(generic.ListCreateAPIView):
+    queryset = Competition.objects.all()
+    seializer_class = PilotCompetitionSerializer
+    name = 'competition-list',
+    filter_class = CompetitionFilter
+    ordering_fields = (
+            'distance_in_feet',
+            'distance_achievement_date',
+            )
+
+
