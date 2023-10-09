@@ -314,6 +314,10 @@ class Drone(models.Model):
     manufacturing_date = models.DateTimeField()
     has_it_completed = models.BooleanField(default=False)
     inserted_timestamp = models.DateTimeField(auto_now_add_True)
+    owner = models.ForeignKey(  # Django REST Authentication settings
+            'auth.User',
+            related_name='drones',
+            on_delete=models.CASCADE)
     
 
     class Meta:
