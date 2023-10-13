@@ -60,4 +60,27 @@ class DroneSerializer(serializers.HyperlinkedModelSerializer):
                 'has_it_completed',
                 'inserted_timestamp',)
 
-#3
+#3 Saving information about users that make request
+
+class DroneList(generics.ListCreateAPIView):
+    queryset = Drone.objects.all()
+    serializer_class = DroneSerializer
+    name = 'drone-list'
+    filter_fields = (
+            'name',
+            'drone_category',
+            'manufacturing_date',
+            'has_it_copleted',
+            )
+    search_fields = (
+            '^name',
+            )
+    ordering_fields = (
+            'name',
+            'manufacturing_date',
+            )
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+#4
