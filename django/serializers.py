@@ -61,6 +61,7 @@ class DroneSerializer(serializers.HyperlinkedModelSerializer):
                 'inserted_timestamp',)
 
 #3 Saving information about users that make request
+# view.py
 
 class DroneList(generics.ListCreateAPIView):
     queryset = Drone.objects.all()
@@ -79,8 +80,22 @@ class DroneList(generics.ListCreateAPIView):
             'name',
             'manufacturing_date',
             )
+    permission_classes = (
+            permissions.IsAuthenticatedOrReadOnly,
+            custompermission.IsCurrentUserOwnerOrReadOnly,
+            )
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-#4
+#4 Setting permission policies
+# view.py
+
+class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
+    queryset = Drone.objects.all()
+    serializer_class = DroneSerializer
+    name = 'drone-detail'
+    permission_classes = (
+            permissions.IsAuthenticatedOrReadOnly,
+            custompermission.IsCurrentUserOwnerOrReadOnly,
+            )
