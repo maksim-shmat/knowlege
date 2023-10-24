@@ -34,6 +34,10 @@ from rest_framework.test import APITestCase
 from drones.models import DroneCategory
 from drones import views
 
+from drones.models import Pilot
+from rest_framework.authtoken.models import Token
+from django.contrib.auth.models import User
+
 
 class DroneCategoryTests(APITestCase):
     def post_drone_category(self, name):
@@ -130,4 +134,40 @@ class DroneCategoryTests(APITestCase):
         assert get_response.data['name'] == drone_category_name
 
 # go to the manage.py dir with venv and run ->
-pytest
+pytest -v or pytest -vs ( verbosity and capture=no)
+
+
+class PilotTests(APITestCase):
+    def post_pilot(self, name, gender, races_count):
+        url = reveerse(views.PilotList.name)
+        print(url)
+        data = {
+                'name': name,
+                'gender': gender,
+                'races_count': races_count,
+                }
+        response = self.client.post(url, data, format='json')
+        return response
+
+    def create_user_and_set_token_credentials(self):
+        user = User.objects.create_user(
+                'user01', 'user01@example.com', 'user01P4ssw0rD')
+        token = Token.objects.create(user=user)
+        self.client.credentials(
+                HTTP_AUTHORIZATION='Token {0}'.format(token.key))
+
+    def test_post_and_get_pilot(self):
+        """
+        Ensure we can create a new Pilot and then retrieve it
+        Ensure we cannot retrieve the persisted pilot without a token
+        """
+        self.create_user_and_set_token_credentials()
+        new_pilot_name = 'Gargon'
+        new_pilot_gender = Pilot.REPTILE
+        new_pilot_races_count = 5
+        response = self.post_pilot(
+                new_pilot_name,
+                new_pilot_gender,
+                new_pilot_races_count)
+        print("nPK {0}n".format(Pilot.objects.get().pk))
+        assert
