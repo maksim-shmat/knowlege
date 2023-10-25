@@ -170,4 +170,20 @@ class PilotTests(APITestCase):
                 new_pilot_gender,
                 new_pilot_races_count)
         print("nPK {0}n".format(Pilot.objects.get().pk))
-        assert
+        assert response.status_code == status.HTTP_201_CREATED
+        assert Pilot.objects.count() == 1
+        saved_pilot = Pilot.objects.get()
+        assert saved_pilot.name == new_pilot_name
+        assert saved_pilot.gender == new_pilot_gender
+        assert saved_pilot.races_count == new_pilot_races_count
+        url = reverse(
+                views.PilotDetail.name,
+                None,
+                {saved_pilot.pk})
+        authorized_get_response = self.client.get(url, format='json')
+        assert authorized_get_response.data['name'] == new_pilot_name
+        # Clean up credentials()
+        unauthorized_get_response = self.client.get(url,
+                format='json')
+        assert unautorized_get_response.status_code ==
+        status.HTTP_401_UNAUTHORIZED
