@@ -283,3 +283,38 @@ class SightingAdmin(admin.ModelAdmin):
     ordering = ['superhero']
 
 admin.site.register(models.Sighting, SightingAdmin)
+
+# admin/base_site.html
+
+{% block extrastyle %}
+  <link href='http://fonts.googleapis.com/css?family=Special+Elite'
+  rel='stylesheet' type='text/css'>
+  <style type="text/css">
+  body, td, th, input {
+          font-family: 'Special Elite', cursive;
+  }
+  </style>
+{% endblock %}
+
+# Adding a rich-text editor
+# templates/admin/posts/change_form.html
+
+{% extends "admin/change_form.html" %}
+
+{% block footer %}
+  {{ block.super }}
+  <script
+src="//cdn.ckeditor.com/4.4.4/standard/ckeditor.js"></script>
+  <script>
+  CKEDITOR.replace("id_message", {
+      toolbar:[
+          ['Bold', 'Italic', '-', 'NumberedList', 'BulletedList'],],
+      width: 600,
+  });
+  </script>
+  <style type="text/css">
+  .cke { clear: both; }
+  </style>
+{% endblock %}
+
+#
