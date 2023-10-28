@@ -245,3 +245,41 @@ class EngineAdmin(self, request, obj):
     # Code actions before save here
     super().delete_model(request, obj)
     # Code actions after save here
+
+#11 models.py for change admin site logic
+
+class Sighting(model.Model):
+    superhero = models.ForeignKey(
+            settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    power = models.CharField(max_length=100)
+    location = models.ForeignKey(Location, on_delete=models.CASCADE)
+    sighted_on = models.DateTimeField()
+
+    def __str__(self):
+        return "{}'s power {} sighted at: {} on {} {}".format(
+                self.superhero,
+                self.power,
+                self.location.country,
+                self.sighted_on)
+
+    def get_absolute_url(self)
+    from django.urls import reverse
+    return reverse('sighting_details', kwargs={'pk': self.id})
+
+
+    class Meta:
+        unique_together = ("superhero", "power")
+        ordering = ["-sighted_on"]
+        verbose_name = "Sighted & Encounter"
+        verbose_name_plural = "Sighteds & Encounters"
+
+
+# admin.py
+
+class SightingAdmin(admin.ModelAdmin):
+    list_display = ('superhero', 'power', 'location', 'sighted_on')
+    date_hierarchy = 'sighted_on'
+    search_fields = ['superhero']
+    ordering = ['superhero']
+
+admin.site.register(models.Sighting, SightingAdmin)
