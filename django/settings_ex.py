@@ -52,4 +52,17 @@ REST_FRAMEWORK = {
             )
 }
 
-#4
+#4 Django Rest Framework settings for secure API
+
+REST_FRAMEWORK = {
+        # Allow unauthenticated access to public content 
+        'DEFAULT_PERMISSION_CLASSES': [
+            'rest_framework.permissions.AllowAny',
+        ]
+}
+
+#4 Cached session backend
+
+SESSION_ENGINE = "django.contrib.sessions.backend.cache"
+
+#5

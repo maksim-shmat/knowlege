@@ -99,3 +99,61 @@ class DroneDetail(generics.RetrieveUpdateDestroyAPIView):
             permissions.IsAuthenticatedOrReadOnly,
             custompermission.IsCurrentUserOwnerOrReadOnly,
             )
+
+#5 serializer.py
+
+from rest_framework import serializers
+from posts import models
+
+
+class PostSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Post
+        fields = ("posted_by_id", "message")
+
+# apiviews.py
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+
+from posts import models
+from .serializers import PostSerializer
+
+
+class PublicPostList(APIView):
+    """Retrurn the most recent public posts by all users."""
+    def get(self, request):
+        msgs = models.Post.objects.public_posts()[:5]
+        data = PostSerializer(msgs, many=True).data
+        return Response(data)
+
+# urls.py
+
+path('api/public/',
+        apiviews.PublicPostList.as_view(), name="api_public")
+
+# go to http://127.0.0.1:8000/api/public/
+
+#6 Hiding th IDs
+
+class PostSerializer(serializer.ModelSerializer):
+    posted_by = serializers.SerializerMethodField()
+
+    def get_posted_by(self, obj):
+        return obj.posteed_by.username
+
+    class Meta:
+        model = models.Post
+        fields = ("posted_by", "message",)
+
+#7 Human browsable interface
+
+# urls.py
+
+from rest_framework.decumentation import include_docs_urls
+
+urlpatterns = [
+        path('api-docs/', include_docs_urls(title='My API')),
+]
+
+#8  
