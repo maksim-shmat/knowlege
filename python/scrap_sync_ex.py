@@ -25,4 +25,4 @@ def main():
 if __name__ == '__main__':
     start_time = time()
     main()
-    print("Run in {:6.3f} secs".format(time() - start_time))
+    print("Ran in {:6.3f} secs".format(time() - start_time))
