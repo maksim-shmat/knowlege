@@ -191,3 +191,122 @@ python manage.py shell
 >>> publishers[0]
 
 #16  Querying using foreign keys
+
+>>> Book.objects.filter(publisher__name='Pak Pucpuc')
+...
+
+#17 Querying using the model name
+
+>>> Publisher.objects.get(book__title='Advanced Deep Learning with Kek')
+...
+
+#18 Querying across foreign key relationships using the object instance
+
+>>> book = Book.objects.get(title='The Talismanium')
+>>> book.publisher
+...
+
+>>> publisher = Publisher.objects.get(name='Pocket Books')
+>>> publisher.book_set.all()
+...
+
+>>> Book.objects.filter(publisher__name='Pocket
+    Books').filter(title='The Talismanium')
+...
+
+#19 querying across a many-to-many relationship using the field lookup
+
+>>> from reviews.models import Contributor
+>>> Contributor.objects.filter(book__title='The Talismanium')
+
+#20 many-to-many query using objects
+
+>>> from reviews.models import Book
+
+>>> book = Book.objects.get(title='The Talismanium')
+>>> book.contributors.all()
+...
+
+#21 many-to-many query using set()
+
+>>> from reviews.models import Contributor
+>>> contributor = Contributor.objects.get(first_names='Rowel')
+>>> contributor.book_set.all()
+...
+
+#22 using the update()
+
+>>> from reviews.models import Contributor
+>>> Contributor.objects.filter(last_names='Tyrrell').
+    update(first_names='Mike')
+>>> Contributor.objects.get(last_names='Tyrrell').
+    first_names
+...
+
+#23 Using the delete()
+
+>>> from reviews.models import Contributor
+>>> Contributor.objects.get(last_names='Watson').delete()
+...
+
+>>> Contributor.objects.get(last_names='Watson')
+Traceback... error
+
+#24 Bulk create and bulk update operations
+
+Person.objects.bulk_create([
+    Person(name='Robert', address='5, Byron bay, NSW'),
+    Person(name='Mark', address="Unit 12, New town, NSW 2000"),
+])
+
+person[0].address = '8, Byron bay, NSW'
+person[1].address = '15, New town, NSW'
+Person.objects.bulk_update(persons, ['address'])
+
+#25 Creating multiple records using bulk_create
+
+>>> from reviews.models import Publisher
+
+>>> Publisher.objects.bulk_create([
+    Publisher(name="New Town Publisher",
+    website="www.newtownexample.com",
+    email='newtown@email.com'),
+    Publisher(name="Byron Bay Press",
+    website='www.byronbayexample.com',
+    email='byronbayexample@email.com'),
+    Publisher(name='Katahita Publisher',
+    website="www.katahitaexample.com",
+    email='katahitaexample@email.com')
+])
+...
+
+#26 updating multiple records using bulk_update
+
+>>> from reviews.models import Publisher
+
+>>> publisher = [Publisher.objects.get(name='New Town Publisher'),
+    Publisher.objects.get(name='Byron Bay Press')]
+>>> publishers[0].website = 'www.newsouthwalespublisher.com'
+>>> publishers[1].website = 'www.newsouthwalespublisher.com'
+
+>>> Publisher.objects.bulk_update(publishers, ["website"])
+...
+
+#27 lookups with Q objects
+
+Person.objects.get(Q(name__startswith='Rob'), | Q(name__startswith='Bob'))
+
+#28 performing a complex query using a Q object
+
+>>> from django.db.models import Q
+>>> from reviews.models import Publisher
+
+>>> Publisher.objects.filter(Q(name__startswith="New")
+        | Q(name__startswith="Idea"))
+...
+
+>>> Publisher.objects.filter(Q(name__startswits="New") &
+        Q(name__endswith="Publisher"))
+...
+
+#29 Verifying whether a queryset contains a given object
