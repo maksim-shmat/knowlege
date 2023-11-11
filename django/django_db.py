@@ -135,3 +135,59 @@ python manage.py shell
 >>> Contributor.objects.filter(first_names='Nobody')
 ...
 
+#12 Filtering by field lookups
+
+>>> from reviews.models import Book
+>>> book = Book.objects.filter(publication_date__gt=date(2023, 1, 1))
+# gt - greater than, lt - less than, lte - less than or equal to, gte.
+>>> book
+...
+>>> book[0].publication_date
+...
+
+#13 Using pattern matching for filtering operations
+
+>>> book = Book.objects.filter(title__contains='Deep learning')
+>>> book
+...
+>>> book[0].title
+...
+
+#14 Retrieving objects by using the exlude()
+
+>>> Contributor.objects.all()
+...
+>>> Contributor.objects.exclude(first_names='Peter')
+
+#15 order_by()
+
+>>> books = Book.objects.order_by("publication_date")
+>>> books
+...
+>>> books[0].publication_date
+...
+>>> books[1].publication_date
+...
+
+
+>>> books = Book.objects.order_by("-publication_date")
+>>> books
+...
+>>> books[0].publication_date
+...
+>>> books[1].publication_date
+...
+
+
+>>> books = Book.objects.order_by('id')  # ('-id')
+>>> books[0].id
+...
+
+>>> books = Books.objects.order_by('title')  # ('-title')
+
+>>> publishers = Publisher.objects.all().values()
+>>> publishers
+...
+>>> publishers[0]
+
+#16  Querying using foreign keys
