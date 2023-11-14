@@ -310,3 +310,13 @@ Person.objects.get(Q(name__startswith='Rob'), | Q(name__startswith='Bob'))
 ...
 
 #29 Verifying whether a queryset contains a given object
+
+>>> from reviews.models import Publisher
+>>> publishers = Publisher.objects.filter(Q(name__startswith="New")
+        | Q(name__endswith="Publisher"))
+>>> publishers
+...
+
+>>> new_town_publisher = Publisher.objects.get(name='New Town Publisher')
+>>> new_town_publisher
+...
