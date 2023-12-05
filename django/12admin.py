@@ -317,4 +317,81 @@ src="//cdn.ckeditor.com/4.4.4/standard/ckeditor.js"></script>
   </style>
 {% endblock %}
 
-#
+#12 castomize admin site with trubles, admin.py
+
+from django.contrib.admin import AdminSite
+from reviews.models import (Publisher, Contrivutor, Book,
+        BookContributor, Review)
+
+
+class BookrAdminSite(AdminSite):
+    title_header = 'Bookr Admin'
+    site_header = 'Bookr administration'
+    index_title = 'Bookr site admin'
+
+admin_site = BookrAdminSite(name='bookr')
+
+# Register your models here.
+admin_site.register(Publisher)
+admin_site.register(Contributor)
+admin_site.register(Book)
+admin_site.register(BookContributor)
+admin_site.register(Review)
+
+# urls.py
+
+from reviews.admin import admin_site
+import reviews.views
+from django.urls import include, path
+
+
+urlpatterns = [
+        path("admin/", admin_site.urls),
+        path("book-search", reviews.views.book_search),
+        path("", include("reviews.urls")),
+]
+
+#13 customize admin site without breaking auto-discovery or any of its other default features
+# put new admin.py at the top level of the Bookr project directory
+
+from django.conrib import admin
+
+
+class BookrAdminSite(admin.AdminSite):
+    title_header = 'Bookr Admin'
+    site_header = 'Bookr administration'
+    index_title = 'Bookr site admin'
+
+# reviews/adminconfig.py
+
+from django.contrib.admin.apps import AdminConfig
+
+
+class ReviewsAdminConfig(AdminConfig):
+    default_site = 'admin.BookrAdminSite'
+
+# settings.py
+
+INSTALLED_APPS = [
+        'reviews.adminconfig.ReviewsAdminConfig',  # <-- replace to this
+        'django.contrib.auth',
+        'dango.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+        'reviews']
+
+# other admin.py how beneathe?
+
+from django.contrib import admin
+from reviews.models import (Publisher, Contributor,
+        Book, BookContributor, Review)
+
+# Register your model here.
+admin.site.register(Publisher)
+admin.site.register(Contributor)
+admin.site.register(Book, BookAdmin)  #<--
+admin.site.register(BookContributor)
+admin.site.register(Review)
+
+#14
