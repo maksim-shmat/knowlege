@@ -1,0 +1,16 @@
+#1 change ; -> ; globally
+:%s/,/;/g
+
+#2 delete first Tab globally
+:g/^^I/d
+
+#3 change Tab to comma globally
+:%s/^I/,/g
+
+#4 remove trach words with Tab
+:%s/noun^I/
+
+------------------------------
+Currently 1079 words 
+from retrieval to break out
+and next word in beneath-> it penetrable

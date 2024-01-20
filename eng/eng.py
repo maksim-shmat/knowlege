@@ -1,16 +1,10 @@
-""" Eng phrases."""
+It`s needless to say,Нет нужды говорить
 
-It`s needless to say
-Нет нужды говорить
+It`s common knowledge that,Это общеизвесетно что
 
-It`s common knowledge that
-Это общеизвесетно, что
+There is no doubt that,Нет сомнений в том что
 
-There is no doubt that
-Нет сомнений в том, что
-
-Let`s discuss pro and contra
-Давайте обсудим за и против
+Let`s discuss pro and contra,Давайте обсудим за и против
 ----------------------------
 Now, where was I?
 Итак, о чём я говорил?
