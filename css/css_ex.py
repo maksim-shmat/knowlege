@@ -233,3 +233,103 @@ ul > li:nth-child(3n + 1) {text-transform: uppercase;}  # for first(default) and
 :nth-child(2n-1) or :nth-child(even)  # for even numbers
 
 tr:nth-child(odd) {background: silver:}  # for all second row in table
+
+tr:nth-last-child(odd) {background: silver}  # for every second row but include last row strictly
+
+#18 selector for numerical elements with one type
+
+p > a:nth-of-type(even) {background: blue; color: white;}  # colored even second link in paragraph
+
+#19 Links
+
+a.external:link, a[href^="http"]:link {color: stateblue;}
+a.external:visited, a[href^="http"]:visited {color: maroon;}
+
+a#footer-copyright:link {background: yellow;}
+a#footer-copyright:visited {background: gray;}
+
+a:link {color: navy;}  # порядок имеет значение
+a:visited {color: gray;}
+a:focus {color: orange;}  # for active uses
+a:hover {color: red;}  # if tuch it with cursor show something
+a:active {color: yellow;}  # user will be this already
+
+Выделение элемента формы в котором установлен курсор
+input:focus {background: silver; font-weight: bold;}
+
+#20 Enabled, disabled
+
+:enabled {font-weight: bold;}
+:disabled {opacity: 0.5;}
+
+#21 Checked, indeterminate for radio buttons for example
+
+:checked {background: silver;}  # ON
+:indeterminate {border: red;}   # Shredinger
+input[type="checkbox"]:not(:checked)  # OFF
+
+# For change how look label
+input[type="checkbox"]:checked + label {
+        color: red;
+        font-style: italic;
+}
+<input id="chbx" type="checkbox"> <label for="chbx">Подпись</label>
+
+#22 Default
+
+[type="checkbox"]:default + label {font-style: italic;}
+
+<input for="chbx">Выставляется при загрузке страницы</label>
+
+#23 Required, optional
+
+input:required {border: 1px solid red;}  # red == #f00
+input:optional {border: 1px solid blue;}  # blue==#ccc
+
+<input type="email" placeholder="enter an email address" required>  # required
+<input type="email" placeholder="optional email address">  # optional
+<input type="email" placeholder="optional email address"   # optional
+    required="false">
+
+variant for css
+input[required] {border: 1px solid red;}  # red==#f00
+input:not([required]) {border: 1px solid blue;}  # blue==#ccc
+
+#24 Valid, Invalid
+# for fields input email address
+
+input[type="email"]:focus {
+        background-position: 100% 50%;
+        background-repeat: no-repeat;
+}
+input [type="email"]:focus:invalid {
+        background-image: url(warning.jpg);
+}
+input[type="email"]:focus:valid {
+        background-image: url(checkmark.jpg);
+}
+<input type="email">
+
+#25 In-range, out-of-range
+
+input[type="number"]:focus {
+        background-position: 100% 50%;
+        background-repeat: no-repeat;
+}
+input[type="number"]:focus:out-of-range {
+        background-image: url(warning.jpg);
+}
+input[type="number"]:focus:in-range {
+        background-image: url(checkmark.jpg);
+}
+<input id="nickels" type="number" min="0" max="1000" />
+
+# with step
+
+input[type="number"]:invalid {color: red;}
+input[type="number"]:in-range {font-weight: bold;}
+
+<input id="by-tens" type="number" min="0" max="1000" step="10"
+    value="23" />  # not valid by no step 10
+
+#26 
