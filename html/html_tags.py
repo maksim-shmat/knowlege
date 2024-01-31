@@ -110,4 +110,62 @@ if you move cursor ont SITCOM, you have info about
   element</a></cite>, published by CHuchong.
 </p>
 
-#15
+#15 sample output
+<samp>404 Not Found</samp>
+
+#16 dl - description list
+
+<h3>Some insilts Worth Hurling</h3>
+<dl>
+  <dt>disingenuflect</dt>
+  <dd>To act in a servile or worshipful manner insincerely
+      or hypocritically.</dd>
+</dl>
+
+#16 Yello highlight
+
+<mark> something</mark>
+
+#17 Зачёркнуто strikethrough
+
+<s>Idiot</s>
+or
+<del>Bimbo</del>
+
+#18 Subscript
+
+<p>
+  Feeling up today? Perhaps your brain is taking a dopamine
+  (C<sub>8</sub>H<sub>11</sub>NO<sub>2</sub>) bath.
+</p>
+
+#19 Superscript
+
+<sup>*</sup>
+
+#20 Image and figcaption for image
+
+</p>
+  <figure>
+    <img src="images/gurardian_of_blideness.jpg"
+    alt="Screenshot of the source code of blah-blah">
+    <figcaption>
+      <b>Figure 1</b>-A want ad buried in the HTML source
+      of <i>The Gugudie</i> newspoper wep page.
+    </figcaption>
+  </figure>
+
+# Image as a link:
+
+<header>
+  <a href="/"><img src="imagesf/list_logo.png" alt="How mane chances?"></a>
+  <h1>Welcome to "Lohotrone!"</h1>
+  <hr>
+</header>
+
+#21 Tables
+
+<tr> - table row
+<td> - table divide
+<thead> - table header
+
