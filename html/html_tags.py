@@ -169,3 +169,172 @@ or
 <td> - table divide
 <thead> - table header
 
+# Css for n-th elements
+td:nth-child(4) {
+        text-align: justify;
+}
+
+# borders
+
+selector {
+        border: width style color;
+}
+
+style: dotted, dashed, double, groove, ridge, inset, outset, solid
+
+#22 Forms
+
+<input type="submit" value="Submit Me!">
+
+<input type="textType" name="textName" value="Первое значение" placeholder="Подсказка а поле">
+
+<input type="text" name="company" size="50">
+
+<input type="number" name="points" value="100">
+
+<input type="range" name="transparency" min="0" max="100" value="100">
+
+<input type="email" name="user-email" placeholder="you@yourdomain.com">
+
+<input type="url" name="homepage" placeholder="e.g., http://domain.com/">
+
+<input type="tel" name="mobile" placeholder="(xxx)xxx-xxxx">
+
+<input type="time" name="start-time">
+
+<input type="password" name="userpassword" autocomplete="current-password">
+
+<input type="search" name="q" placeholder="Type a search term">
+
+<input id="userSession" name="user-session" type="hidden" value="jwr274">
+
+<textarea name="messag" rows="5">
+Default text goes here.
+</textarea>
+
+# method 1 for label
+<label>
+Email:
+    <input type="email" name="user-email" placeholder="you@yourdomani.com">
+</label>
+
+# method 2 for label
+
+<label for="useremail">Email:</label>
+<input id="useremail" type="email" name="user-email" placeholder="example@email.com">
+
+# checkboxes
+
+<input type="checkbox" name="checkName" value="checkValue" [checked]>  # checked without []
+
+<fieldset>
+    <legend>
+            What`s your phobia? (Please check all that apply):
+    </legend>
+    <label>
+        <input type="checkbox" name="phobia"
+                               value="Ants">Myrmecophobia (Fear of ants)<br>
+    </label>
+    <label>
+        <input type="checkbox" name="phobia"
+                               value="Bald">Peladophobia (Fear of becoming bald)
+    </label>
+</fieldset>
+
+# radio buttons
+
+<input type="radio" name="radioGroup" value="radioValue" [checked]>  # checked withot [] work ?!
+
+<fieldset>
+  <legend>
+    Select a delivery method
+  </legend>
+  <div>
+    <input type="radio" id="carrier-pigeon" name="delivery"
+    value="pigeon" [checked]>
+    <label for="carrier-pigeon">Carrier pigeon</label>
+  </div>
+  <div>
+    <input type="radio" id="pony-express" name="delivery"
+    value="pony">
+    <label for="pony-express">Pony express</label>
+  </div>
+</fieldset>
+
+# drop-down selection list
+<form>
+        <div>
+                <label for="hair-color">Select your hair color:
+                </label><br>
+                <select id="hair-color" name="hair-color">
+                        <option value="black">Black</option>
+                        <option value="blonde">Blonde</opion>
+                </select>
+        </div>
+        <div>
+                <label for="hair-style">Select your hair style:
+                </label><br>
+                <select id="hair-style" name"hair-style">
+                        <option value="bouffant">Bouffant</option>
+                        <option value="mohawk">Mohawk</option>
+                </select>
+        </div>
+</form>
+
+# field for select of colors
+
+<input type="color" name="br-color" value="#4f5392">
+
+# field choose a date
+<input type="date" name="appt-date" value="2024-02-01">
+
+# field for choose file
+
+<input type="file" name="user-photo">
+
+# chose the month
+
+<input type="month" name="birthday-month" value="2023-08">
+
+# chose the week
+
+<input type="week" name="vacation-week" value="2023-W34">
+
+#23 ARIA Accessible Rich Internet Applications
+
+ARIA rolels - HTML Semantic Elements
+------------------------------------
+banner -------- header
+complementary - aside
+contentinfo --- footer
+form ---------- form
+main ---------- main
+navigation ---- nav
+region -------- section
+search -------- N/A
+
+article ------- article
+cell ---------- td
+definition ---- dfn
+figure -------- figure
+heading ------- h1 through h6
+img ----------- img or picture
+list ---------- ol or ul
+listitem ------ li
+meter --------- meter
+row ----------- tr
+rowgroup ------ tbody, thead, or tfoot
+rowheader ----- th
+table --------- table
+term ---------- dfn or dt
+
+button -------- button
+checkbox ------ input type="checkbox"
+link ---------- a
+
+option -------- option
+progressbar --- progress
+radio --------- input type="radio"
+textbox ------- input type="text"
+
+#24
