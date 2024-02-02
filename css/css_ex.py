@@ -332,4 +332,305 @@ input[type="number"]:in-range {font-weight: bold;}
 <input id="by-tens" type="number" min="0" max="1000" step="10"
     value="23" />  # not valid by no step 10
 
-#26 
+#26 :target
+
+*:target {border-left: 5px solid gray; background: yellow
+        url (target.png) top right no-repeat;}
+
+#27 :lang
+
+*:lang(fr) {font-style: italic;}
+*[lang|="fr"] {font-style: italic;}
+
+#28 :not()
+
+li:not(.moreinfo) {font-style: italic;}
+
+.moreinfo:not(li) {font-style: italic;}
+
+*:not(section) >table
+
+*:not(thead) >tr>th
+
+*.link:not(li):not(p) {font-style: italic;}
+
+#29 !important, add only before semicolon, strictly
+
+p.dark {color: whitesmoke !important; background: white;}
+
+p.light {color: yellowgreen; font: smaller Times, serif !important;}
+
+h1 {font-style: italic; color: gray !important;}
+.title {color: black; background: silver;}
+*background: black !important;}
+
+<h1 class="title">NightWing</h1>
+
+#30  inherit наследование
+
+#toolbar {color: inherit;}
+
+span {border-color: inherit;}
+
+#31 initial, change for default value
+
+font-weigh: initial
+equals:
+font-weight: normal  # default
+
+#32 unset, inherit and initial as one key word
+
+section {color: white; background: black; font-weight: bold;}
+{all: inherit}  # for inherit all
+
+section {color: white; background: black; font-weight: bold;}
+{color: inherit; background: inherit; font-weight: inherit;}  # for not all inherit
+
+#32
+1fr fr - дробное значение, часть макета например.
+---
+10in - inches,
+
+4.561pt - points  # 1in == 72pt, 18pt == 0.25in
+
+4q - quadriple of millimeter  # 4q == 1mm
+
+1.5pc - cicero or pickes  # 1pc == 12pt, 1in == 1pc
+
+100px - pixels  # 100px != 100pc because screen difference
+
+dpi -dots per inch
+dpcm - dots per centimeter
+dppx - dots per pixel unit  # 1dpx == 96dpi 2017year
+@media (min-resolution: 500dpi)  # show if screen => 500dpi
+
+#33 em, rem and ex, ch
+
+em == font-size  # if {font-size: 14px;}, than 1em == 14px  # em is a tipographic width <m> letter
+
+font-size: 1rem == change to default font-size how determine in browser # raw? width of <m> letter
+or
+font-size: initial
+
+<p>This paragraph inherit font size from root element. What?.</p>
+    <div style="font-size: 30px; background: silver;">
+            <p style="font-size: 1em;">This paragraph show as parrent font element.</p>
+
+            <p style="font-size: 1rem;">This paragraph inherit font size fron root element. But with parrent background.</p>
+    </div>
+
+ex  # is a tipographic height <x> letter
+
+1ch -[0]  # ширина символа с боковыми отступами
+
+# more css units
+
+vm - viewport width unit (if screen width == 937px, then 1vm => 937/100 == 9.37px)
+
+vh - viewport hight unit (if screen width == 650px, then 1vh == 6.5px)
+
+vmin - viewport minimum unit (minimum screen width), if screen 937x650, then 1vmin == 6.5px
+vmax - viewport maximum unit (maxinum screen width), if screen 937x650, then 1max == 9.37px
+
+Use it for bind fonts with screen size
+h1 {font-size: 10vh;}  # this font == 1/10 of screen size
+
+Or use it for elements
+div {width: 50vh; height: 33vw; background: gray;}
+
+#34 Border
+value1;  Aplies value1 to all four sides
+
+value1 value2;  Applies value1 to the top and bottom and value2 to the right and left
+
+value1 value2 value3  Applies v1 to the top, v2 to the right and left, v3 to the bottom
+
+value1 value2 value3 value4  v1 - top, v2 - right, v3 - bottom, v4 - left
+
+#Style:
+    dotted
+    dashed
+    solid
+    double
+    groove
+    ridge
+    insert
+    outset
+
+# Asterisk <*> for everithing on the page
+* {
+        outline: 1px red dashed;
+}
+
+# border radius
+aside {
+        border: 1px solid black;
+        border-radius: 50px 100px 10px;
+}
+it is equivalent:
+aside {
+        border: 1px solid black;
+        border-top-left-radius: 50px;
+        border-top-right-radius: 100px;
+        border-bottom-right-radius: 10px
+        border-bottom-left-radius: 100px;
+}
+
+# horizontal vertical border radius
+
+div {
+        border: 3px outset darkgreen;
+        border-radius: 10px 20px;  # 10px horizontal, 20px vertical
+}
+
+or for details:
+aside {
+        border: 5px dashed red;
+        border-top-left-radius: 50px 75px;
+        border-top-right-radius: 100px 50px;
+        border-bottom-right-radius: 75px 100px;
+        border-bottom-left-radius: 50px 25px;
+}
+
+#35 margin  кайма?
+
+aside {
+        margin-top: 16px;
+        margin-riht: 8px;
+        margin-bottom: 32px;
+        margin-left: 24px;
+}
+
+margin-right: auto;
+margin-left: auto;
+
+value1 - for all four sides
+value1 value2 - v1 to the top, v2 right/left
+value1,2,3 - v1 top, v2 right/left, v3 bottom
+value1,2,3,4 - v1 top, v2 righ, v3 bottom, v4 left
+
+aside {
+        margin: 16px 8px 32px 24px;
+}
+
+#36 Height and width of elements
+
+div {
+        border-radius: 50%;
+        height: 100px;
+        width: 100px;
+}
+
+# min max
+
+selector {
+        min-heigth: 200px;
+        min-width; 200px;
+}
+
+footer {
+        max-height: 200px;
+        max-width: 150px;
+}
+
+# box-sizing
+
+* {
+        box-sizing: border-box;
+}
+
+display: inline-block;
+
+display: block;
+
+#37 # and *
+
+* universal selector
+
+# id selector
+
+<h1 id="page-title">
+
+#page-title {
+                color: maroon;
+                font-family: "Times New Roman", serif;
+                text-transform: uppercase;
+}
+
+#38 > ~ +
+# > child combinator
+parrent > child
+
+aside > h4 {
+        color: green;
+        border-top: 3px solid black;
+        border-bottom: 5px double black;
+        padding: 4px 0;
+        text-transform: uppercase;
+}
+
+# ~ subsequent-sibling combinator
+reference ~ target
+
+h2 ~ ul {
+        background: lightpink;
+        border: 5px outset crimson;
+        list-style-type: square;
+        padding: 8px 20px;
+}
+
+# + next-sibling combinator
+reference + target
+
+h2 + p {
+        font-style: italic;
+}
+
+#39 Selecting elements by attribute
+
+abbr[title] {
+        border: 1px dotted gray;  # all abbr elements that have the title attribute
+}
+
+a[href="https://www.w3.org/"] {  # all an element that have an href 
+        color: green;
+}
+
+a[href^="http://"] {  # all an element that have an href that begins with http://
+        color: red;
+}
+
+div[id*="navbar"] {  # all div elements that have an id that includes the string navbar
+        font-size: 14px;
+}
+
+a[href$=".org"] {
+        color: firebrick;  # all an element that have an href attribute that ends with .org
+}
+
+div[lang|="en"] {
+        color: blue;  # all div elements that have a lang attribute that equals or starts with en
+}
+
+img[alt~="photo"] {
+        border: 12px ridge saddlebrown;  # not match alt attributes that include words such as photograph
+}                                        # or tlephoto (assuming they don't have the whole word photo)
+
+#49 calc() +, -, *, / and ()
+
+for:
+    length
+    frequency
+    angle
+    time  # 2 * 2.5rem(true), but 3.5rem * 2rem(false)
+    percentage
+    number
+    integer  # number + integer == number (5 + 2.7 = 7.7)
+
+for division: 20em/2.75(true), but 20/2.75em(false)
+              20em/0(fale)
+for math symbolls add whitespace for both sides: 2 + 2, but not 2+2(false), because 2 + -2
+
+p {width: calc(90% - 2em);}  # 90% from parrent element minus 2em
+
+
