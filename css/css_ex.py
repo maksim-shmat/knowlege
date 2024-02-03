@@ -616,7 +616,7 @@ img[alt~="photo"] {
         border: 12px ridge saddlebrown;  # not match alt attributes that include words such as photograph
 }                                        # or tlephoto (assuming they don't have the whole word photo)
 
-#49 calc() +, -, *, / and ()
+#40 calc() +, -, *, / and ()
 
 for:
     length
@@ -632,5 +632,298 @@ for division: 20em/2.75(true), but 20/2.75em(false)
 for math symbolls add whitespace for both sides: 2 + 2, but not 2+2(false), because 2 + -2
 
 p {width: calc(90% - 2em);}  # 90% from parrent element minus 2em
+
+#41 attr()
+
+p::before {content: "[" attr(id) "]";}  # add attr before string in every paragraph with [] 
+
+<p id="Start">It is first paragraph.</p>
+<p>Then second paragraph.</p>
+<p id="Finish">It is third paragraph.</p>
+Results:
+    [Start]It is first paragraph.
+    []Then second paragraph.
+    [Finish]It is third paragraph.
+
+# define width field with attr()
+
+input[type="text"] {width: attr(maxlength em);}
+
+<input type="text" maxlength="10">
+
+#42 Colors
+
+rgb(100%,100%,100%)
+or
+rgb(255,255,255)
+
+rgb(100%,0%,0%)  # red
+rgb(50%,0%,0%)  # maroon
+rgb(75%,0%,0%)  # between red and maroon
+
+h1 {color: rgb(75%,50%,50%);}  # for pink, need add green and blue
+or
+h1 {color: rgb(191,127,127);}
+
+# half tones
+
+p.one {color: rgb(0%,0%,0%);}
+p.two {color: rgb(20%,20%,20%);}
+three 40,40,40
+four 60,60,60
+five 80,80,80
+six 0,0,0
+seven 51,51,51
+eight 102,102,102
+nine 153,153,153
+ten 204,204,204
+
+# for "enfante terrible"
+
+P.one {color: rgb(300%,4200%,100%);}  # css comment /* 100%,100%,100% */
+P.two {color: rgb(0%,-40%,-5000%);}  # 0%,0%,0%
+p.three {color: rgb(42,444,-13);}  # 42,255,0
+
+# convert percentage to rgb numbers
+
+if it 25% red, 35.5% green and 60% blue
+multiple it in 255
+equals: 63.75, 95.625 and 153
+Result: rgb(64,96,153)
+
+# RGBa with alpha chanel (clarity)
+
+rgba(255,255,255,0.5)  # fourth is clarity from 0-1
+rgba(100%,100%,100%,0.5)
+
+# HSL - Hue(tone), Saturation(consistence) and Lightness
+
+p.one {color: hsl(0,0%,0%);}  # black and white
+p.two {color: hsl(60,0%,25%);}  # hue(tone) >50 is full color
+p.three {color: hsl(120,0%,50%);}
+p.four {color: hsl(180,0%,75%);}
+p.five {color: hsl(240,0%,0%);}
+p.six {color: hsl(300,0%,25%);}
+p.seven {color: hsl(360,0%,50%);}
+
+# HSLa with alpha chanel (clarity)
+
+p.one {color: hsl(0,0%,0%,1);}
+p.two {color: hsl(0,0%,0%,0.8);}
+
+# transparent and currentColor
+
+rgba(0,0,0,0) - transparent(fool clarity) i.e white
+
+main {color: gray; border-color: currentColor;}  # Gray color border
+
+# Angles for HSL color circle
+
+deg - 360 degrees
+grad - 400 graduces
+rad - 2Пrad(6.2832rad)
+turn - around HSL color circle
+
+  0deg    0grad    0rad        0turn
+ 45deg   50grad    0.785rad    0.125turn
+ 90deg  100grad    1.571rad     0.25turn
+180deg  200grad    3.142rad      0.5turn
+270deg  300grad    4.712rad     0.75turn
+356deg  400grad    6.283rad        1turn
+
+#43 Time, and frequency(частота) for sound
+
+a[href] {transition-duration: 2.4s;}
+or
+a[href] {transition-duration: 2400ms;}
+
+h1 {pitch: 128hz;}  # Hz count
+or
+h1 {pitch: 0.128khz;}  # kHz count or KHZ? Chick it. For what?
+
+#44 positioning
+
+25% 35px  # 25% horizontal, 35px vertical
+35px 25%  # 35px horizontal, 25% vertical
+
+25% left  # false
+35px right # false
+right left  # stupid
+top bottom  # child
+
+left 25%  # true
+rigth 35px  # true
+
+right10px bottom 30px  # go to the left on 10px from right bring
+                       # and go to top on 30px from bottom bring
+#45 Users variable
+
+html {
+        --base-color: #639;
+        --highlight-color: # AEA;
+}
+
+h1 {color: var(--base-color);}
+h2 {color: var(--highlight-color);}
+
+or
+
+htm {
+        --zuza: #639;
+        --pipa: #AEA;
+}
+
+h1 {color: var(--zuza);}
+h1 {color: var(--pipa);}
+
+# how it uses
+html {
+        --base-color: #639;
+}
+aside {
+        --base-color: #F60;
+}
+h1 {color: var(--base-color);}
+
+<body>
+    <h1>First level header</h1><p>Base text</p>
+    <aside>
+        <h1>FIRST LEVEL HEADER</h1><p>Other text</p>  # With othe color
+    </aside>
+    <h1>First level header</h1><p>Base text</p>
+</body>
+
+# how more uses
+
+html {
+        --gutter: 3ch;  # var it is an object for OOP
+        --offset: 1;
+}
+
+ul li {margin-left: calc(var(--gutter) * var(--offset));}
+ul ul li {--offset: 2;}
+ul ul ul li {--offset: 3;}
+
+# it equals without users var
+
+ul li {margin-left: 3ch;}
+ul ul li {margin-left: 6ch;}
+ul ul ul li {margin-left: 9ch;}
+
+# @supports for browsers how not know users variables
+
+@supports (color: var(--custom)) {
+        rules with users variables
+}
+
+@supports (--custom: value) {
+        alt rules
+}
+
+#46 Pseudo-classes
+
+article > p:first-child {
+        font-style: italic;
+}
+
+p.intro:first-child {
+        font-style: italic;
+        text-indent: 0;
+}
+
+article *:first-child
+
+# last-child()
+
+p:last-child {
+        margin-bottom: 24px;
+}
+
+# nth-child()
+
+p:nth-child(2)  # any p element that's the second child of parrent
+p:nth-child(3n)  # third, sixth, ninth...
+p:nth-child(3n+2)  # if (n=0) - second, (n=1) - fitth, (n=2) - eight any p element
+p:nth-child(even)  # 2,4,6 and so on
+p:nth-child(odd)  # 1,3,5 
+
+tr:nth-child(even) {
+        background-color: lightgray;  # colored every second row in a table for example
+}
+
+# :nth-child(n of list)
+:nth-child(even of h1, h2)
+
+# :nth-last-child()
+
+element:nth-last-chld(n [of list]){
+        property1: value1;
+        property2: value2;
+        ...
+}
+
+# only-child
+
+section *:only-child {
+        color: plum;
+}
+
+aside: first-child {
+        border: 5px double black;
+}
+
+# :first-of-type
+
+aside:first-of-type {
+        border: 5px douple black;
+}
+
+# last-of-type
+
+p:last-of-type {
+        margin-bottom: 24px;
+}
+
+# nth-of-type
+
+p:nth-of-type(3n) {
+        background-color: gray;
+}
+
+# nth-last-of-type
+
+# only-of-type
+
+article div:only-of-type {
+        margin: 24px 8px;
+}
+
+# state
+
+input[type="text"]:disabled {
+        background-color: lightgray;
+        color: darkgray;
+}
+
+# state: checked
+
+input[type="checkbox"]:checked {
+        box-shadow: 0 0 10px 3px red;
+}
+
+input[type="checkbox"]:checked + label {
+        color: red;
+}
+
+# state: default
+
+input[type="radio"]:default {
+        box-shadow: 0 0 5px 1px forestgreen;
+}
+
+input[type="radio"]:default + label {
+        color: forestgreen;
+}
+
 
 

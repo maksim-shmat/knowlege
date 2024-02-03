@@ -27,7 +27,7 @@ cyan
 teal
 lightcyan
 
-olyve
+olyve  # olive?
 olivedrab
 yellowgreen
 darkolivegreen
@@ -115,3 +115,13 @@ sandybrown
 peru
 bisque
 burlywood
+
+???
+fuchsia
+lime 
+navy
+purple
+silver
+
+???
+forestgreen
