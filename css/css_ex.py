@@ -404,6 +404,14 @@ dpcm - dots per centimeter
 dppx - dots per pixel unit  # 1dpx == 96dpi 2017year
 @media (min-resolution: 500dpi)  # show if screen => 500dpi
 
+px  pixels        1/96 of an inch
+pt  points        1/72 of an inch
+cm  centimeters   37.8px or about 0.4in
+mm  millimeters   1/10 of a cm; about 3.8px
+Q   quarter-mm    1/40 of a cm; about 1px
+in  inches        96px; about 2.54cm
+pc  picas         1/6 of an inch; 16px
+
 #33 em, rem and ex, ch
 
 em == font-size  # if {font-size: 14px;}, than 1em == 14px  # em is a tipographic width <m> letter
@@ -633,6 +641,27 @@ for math symbolls add whitespace for both sides: 2 + 2, but not 2+2(false), beca
 
 p {width: calc(90% - 2em);}  # 90% from parrent element minus 2em
 
+# exmpls
+calc(50vw + 10px)
+calc(100vh - 5rem)
+calc(10% * 3)
+calc(100% / 8)
+calc(100vw - (5rem + 10px))
+
+article {
+        width: calc(100% - 15rem);
+}
+
+# min max clamp
+
+article {
+        width: max(75vw, 450px);
+}
+
+article {
+        width: clamp(450px, calc(100% - 15rem), 1200px);  # 450px is lower bound, 1200 upper bound, 100% - 15rem is width
+}
+
 #41 attr()
 
 p::before {content: "[" attr(id) "]";}  # add attr before string in every paragraph with [] 
@@ -696,7 +725,8 @@ Result: rgb(64,96,153)
 rgba(255,255,255,0.5)  # fourth is clarity from 0-1
 rgba(100%,100%,100%,0.5)
 
-# HSL - Hue(tone), Saturation(consistence) and Lightness
+# HSL - Hue(tone) это цвет, Saturation(consistence) это Насыщенность(т.е. степень чистоты цвета)
+# Lightness(brightness) - степень отличия от белого и чёрного (
 
 p.one {color: hsl(0,0%,0%);}  # black and white
 p.two {color: hsl(60,0%,25%);}  # hue(tone) >50 is full color
@@ -925,5 +955,409 @@ input[type="radio"]:default + label {
         color: forestgreen;
 }
 
+# state: dusabled
+
+button:disabled {
+        cursor: not-allowed;
+        opacity: .5;
+}
+
+# state: enabled
+
+button:enabled {
+        box-shadow: 0 0 5px 3px seagreen;
+        color: seagreen;
+}
+
+# state: in-range
+
+input[type="range"]: in range {
+        background-color: lawngreen;
+}
+
+#state: invalid
+
+input[type="email"]:invalid {
+        background: lavenderblush;
+}
+
+# state: optional
+
+input[type="text"]:optional {
+        background-color: lightgoldenrod yellow;
+}
+
+# state: out-of-range
+
+input[type="range"]:out-of-range {
+        background-color: tomato;
+}
+
+# state: read-only
+
+textarea:read-only {
+        border: 0;
+        resize: none;
+}
+
+# state: read-write
+
+span:read-write {
+        background: honeydew;
+        caret-color: crimson;
+}
+
+# state: required
+
+input[type="text"]:required {
+        background-color: yellow;
+}
+
+# state: valid
+
+input[type="email"]:valid {
+        background: palegreen;
+}
+
+# pseudo-class :active  #! :hover:active (true) :active:hover(false)
+
+button {
+        background-color: purple;
+}
+button:active {
+        background-color: fuchsia;
+}
+
+# pseudo-class :focus or :focus-within
+
+input:focus {
+        background-color: lightsteelblue;
+}
+
+# pseudo-class :hover
+
+button:hover {
+        box-shasow: 10px 5px 5px grey;
+}
+
+# Link-Related Pseudo-Classes
+# :link < :visited < :hover < :active  # 1< 2< 3, 4
+
+# :any-link
+
+aside a:any-link {
+        text-decoration-color: mediumvioletred;
+        text-decoration-style: wavy;
+}
+
+# :link
+
+a:link {
+        color: red,
+        text-decoration-color: red;
+}
+
+# :target
+
+button: target {
+        cursor: not-allowed;
+        opacity: .5;
+}
+
+# :visited
+
+a:visited {
+        color: pink;
+        text-decoration-color: pink;
+}
+
+# Functional pseudo-classes
+
+# :is()
+
+:is(h1, h2, h3) {
+        margin: 20px 16px;
+}
+
+p:is(:first-child, :last-child, :only-child) {
+        margin: 24px;
+}
+
+# :not()
+
+:not(.decorative) {
+        font-family: Georgia, serif;
+}
+
+p:not(:first-child, :last-child, :only-chld) {
+        margin: 24px;
+}
+
+img: not(img[alt]) {
+        outline: 3px solid red;
+}
+
+# :where()
+
+# :has()
+
+aside:has(>p) {
+        border: 1px solid black;
+}
+
+aside:has(div) {
+        margin-top: 20px
+}
+
+h1:has(+62) {
+        margin-bottom: 24px;
+}
+
+h3:has(~backquote) {
+        font-style: italic;
+}
+
+#47 Pseudo elemets
+
+# ::after
+
+a[href^='http']::after {
+        content: url(images/Icon_External_Link.png);
+        padding-left: 2px;
+}
+
+<label for="user-name">Name:</label>
+input id="user-name"
+      type="text"
+      required>
+<span></span>
+
+label for="user-email">Email:</label>
+input id="user-email"
+      type="email"
+      placeholder="e.g., you@domain.com"
+      required>
+<span></span>
+
+input:invalid + span::after {
+        content: '\2717';
+        color: red;
+}
+input:valid + span::after {
+        content: '\2717';
+        color: green;
+}
+
+# ::before
+
+CSS:
+.tip::before {
+        content: 'TIP';
+        display: block;
+        color: green;
+        font-size: 12px;
+}
+
+HTML:
+<aside class="tip">
+  The content generated by the <code>::before</code> pseudo-element
+  is inline, so it flows along with the surrounding elements. If you
+  want your generated content to be a block element (to enable you,
+  for example, to style the pseudo-element`s width and/or height), add
+  either <code>display:block</code> or <code>display: inline-block</code>
+  to the pseudo-element`s declaration block.
+</aside>
+
+# ::first-letter
+
+CSS:
+h2 + p::first-letter {
+        color: crimson;
+        font-size: 32px;
+}
+
+# ::first-line
+
+h2 + p::first-line {
+        text-transform: uppercase;
+}
+
+#48 Comments in CSS
+/* comment */
+\* comment */ ???
+/*comment*\  ???
+
+#49 text-shadow
+
+text-shadow: offset-x offset-y blur-radius color;
+
+div {
+        color: steelblue;
+        font-size: 15vw;
+        text-shadow: 7px 7px 5px cornflowerblue;
+}
+
+text-shadow:
+    7px 7px 5px cornflowerblue,
+    9px 9px 5px darkblue;
+
+#50 Background image
+<body>
+  <div>
+  </div>
+</body>
+
+CSS:
+div {
+        background-image: url("images/picture01.png");
+        border: 1px solid black;
+        height: 75vh;
+        width: 75vw;
+}
+
+body {
+        margin: 0;
+        font-size: 100%;
+        background-image: url("images/picture02.jpg");
+        height: 100vh;
+        width: 100vw;
+}
+
+#
+background-position: x y
+
+background-size: width height | keyword
+  contain
+  cower
+
+background-repeat: horizontal vertical keyword
+  repeat
+  space
+  round
+  no-repeat
+  repeat-x
+  repeat-y
+
+background-clip: keyword
+
+background-origin: keyword
+
+background-attachment: keyword
+  local
+  scrol
+  fixed
+
+background-color
+
+background-image
+
+# linear-gradient
+
+linear-gradient(angle, color1 stop1%, colr2 stop2%, ..., colorN stopN%)
+
+div {
+        background: linear-gradient(to bottom right, yellow,
+            greenyellow 50%, darkgreen);
+        border: 1px solid black;
+        height: 50vh;
+        width: 50vw;
+}
+
+# radial-gradient
+
+radial-gradient(shape, size at position, color1 stop1%, colr2 stip2%, ..., colorN stopN%)
+  shape
+  size
+  single length value as 15rem
+  two length value as 15rem 10rem
+  closest-side
+  farthest-side
+  closest-corner
+  farthest-corner
+  position
+  color1, color2
+  stop1, stop2
+
+div {
+        background: radial-gradient(cosest-corner at 250px 100px,
+            yellow, darkgreen);
+        border: 1px solid black;
+        height: 50vh;
+        width: 50vw;
+}
+
+# conic gradient
+
+conic-gradient(from angle at x y, color1, color2, ..., colorN)
+
+#color-wheel {
+  width: 33vw;
+  height:33vw;
+  background: conic-gradient(
+          from 90deg,
+          hsl(0 100% 50%),
+          hsl(330 100% 50%),
+          hsl(300 100% 50%),
+          hsl(270 100% 50%),
+          hsl(240 100% 50%),
+          hsl(210 100% 50%),
+          hsl(180 100% 50%),
+          hsl(150 100% 50%),
+          hsl(120 100% 50%),
+          hsl(90 100% 50%),
+          hsl(60 100% 50%),
+          hsl(30 100% 50%),
+          hsl(0 100% 50%),
+  );
+  clip-path: circle(50%);
+}
+
+#51 Fonts
+
+serif - засечка
+sans - (without) from french word
+
+font-family: ideal, safe, default;
+
+font-family: "Gill Sans", Verdanda, sans-serif;
+
+<head>
+  <meta charset="utf-8">
+  <title>Link to a web font family</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?
+  family=Roboto:ital, wght@0,400;1,400;1,700&display=swap"
+  rel="stylesheet">
+  <style>
+    <body {
+            font-family: Roboto, Tahoma, sans-serif;
+    }
+  </style>
+</head>
+
+# how get downloaded font?
+
+@font-face {
+        font-family: 'name';
+        font-style: style;
+        font-weight: weight;
+        src: url('filename.woff2') format('woff2');
+}
+
+@font-face {
+        font-display: swap;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        src: url('roboto-regular.woff2') format('woff2');
+}
+@font-face {
+        font-display: swap;
+        font-family: 'Roboto';
+        font-style: italic;
+        font-weight: 400;
+        src: url('roboto-italic.woff2') format('woff2');
+}
 
 

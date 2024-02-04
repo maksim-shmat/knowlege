@@ -27,7 +27,7 @@ cyan
 teal
 lightcyan
 
-olyve  # olive?
+olive
 olivedrab
 yellowgreen
 darkolivegreen
@@ -86,7 +86,7 @@ orange
 lightgray
 slategrey
 lightslategrey
-grey
+grey?
 gray
 dimgrey
 dimgray
@@ -125,3 +125,48 @@ silver
 
 ???
 forestgreen
+lavenderblush
+lightgoldenrodyellow
+honeydew
+dodgerblue
+blanchedalmond
+mintcream
+
+orchid
+thistle
+plum
+violet
+darkmagenta
+mediumorchid
+darkviolet
+ghostwhite
+mediumblue
+midnightblue
+darkblue
+cornflowerblue
+lightsteelblue
+aliceblue
+steelblue
+lightskyblue
+lightblue
+powderblue
+cadetblue
+azure
+lightseagreen
+mediumaquamarine
+mediumspringgreen
+springgreen
+mediumseagreen
+lightgreen
+palegreen
+darkseagreen
+limegreen
+ivory
+lightyellow
+cornsilk
+darkgoldenrod
+wheat
+navajowhite
+tan
+gainsboro
+
