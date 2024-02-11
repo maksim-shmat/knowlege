@@ -1317,9 +1317,10 @@ conic-gradient(from angle at x y, color1, color2, ..., colorN)
 serif - засечка
 sans - (without) from french word
 
-font-family: ideal, safe, default;
-
-font-family: "Gill Sans", Verdanda, sans-serif;
+body {font-family: Times, 'Times New Roman', 'New Century Schoolbook', Georgia, 'New York', serif;}
+h1, h2, h3, h4 {font-family: Charcoal, sans-serif;}
+code, pre, tt, kbd {font-family: monospace;}
+p.signature {font-family: cursive;}
 
 <head>
   <meta charset="utf-8">
@@ -1339,32 +1340,91 @@ font-family: "Gill Sans", Verdanda, sans-serif;
 # how get downloaded font?
 
 @font-face {
-        font-family: 'name';
-        font-style: style;
-        font-weight: weight;
-        src: url('filename.woff2') format('woff2');
-}
-
-@font-face {
         font-display: swap;
-        font-family: 'Roboto';
+        font-family "SwitzeraADF";
         font-style: normal;
         font-weight: 400;
-        src: url('roboto-regular.woff2') format('woff2');
+        src: local("SwitzeraADF-Regular"),
+             local("Switzera-Regular"),
+             url("/fonts/SwitzeraADF-Regular.otf") format("opentype"),  # Запасной ресурс
+             url("SwitzeraADV-Regular.true") format("truetype");
 }
 @font-face {
-        font-display: swap;
-        font-family: 'Roboto';
-        font-style: italic;
-        font-weight: 400;
-        src: url('roboto-italic.woff2') format('woff2');
+        font-family: "SwitzeraADF";                           # Bold font for bold, 
+        font-weight: bold;                                    # and other font BoldItalic for bold and italic style
+        src: url("SwitzeraADF-Bold.otf") format("opentype");  
 }
+@font-face {
+        font-family: "SwitzeraADF";
+        font-weight: normal;
+        font-style: italic;
+        font-stretch: condensed;
+        src: url("SwitzeraADF-CondItalic.otf") format("opentype");  # if need italic font
+
+@font-face {
+        font-family: "MyFont";
+        src: url("myfont-math.otf" format("opentype");  # Загружать шрифт если
+        unicode-range: U+22??;  # from U+2200 to 22FF   # обнаружены символы math
+
+# font chortage
+<font-weight> <font-size> <line-height> <font-family>
+
+h1 {font: italic 900 small-caps 20px Verdana, Helvetica, Arial, sans-serif;}
+h2 {font: bold normal italic 24px Verdana, Helvetica, Arial, sans-serif;}
+
+body {font-size: 12px;}
+h2 {font: bold italic 200%/1.2 Verdana, Helvetica, Arial, sans-serif;}  # Font size 24px/ and string height 28.8px
+
+formats:
+    embedded-opentype  .eot  (Embedded OpenType)
+    opentype           .otf  (OpenType)
+    svg                .svg  (Scalable Vector Graphics)
+    truetype           .ttf  (TrueType)
+    woff               .woff (Web Open Font Format)
+
+font-weigh:
+    normal, bold, bolder, lighter, 100, 200, 300, 400, 500, 600, 700, 800, 900
+    normal - 400
+    bold   - 600, 700
+
+    "Light" - 100, 200, 300
+    "Normal", "Regular", "Romain", "Book" - 400
+    "Medium" - 500
+    "Extra Bold" = 800, 900  # or "Black" and "UltraBlack"
+
+font-size:
+    p.one {font-size: xx-small;}  # 10px
+                      x-small     # 12px
+                      small       # 14px
+                      medium      # 16px
+                      large       # 19px
+                      x-large     # 24px
+                      xx-large    # 32px
+
+# font-size-adjust for diff height fonts if it need shows like one
+
+p {font: 10px Verdana, sans-serif; font-size-adjust: auto;}
+p.c12 {font-family: Times, serif;}
+
+# bolder and lighter for inheritance
+
+p {font-weight: normal;}
+p em {font-weight: bolder;}  # to 700
+
+h1 {font-weight: bold;}
+h1 b {font-weight: bolder;}  # to 800
+
+div {font-weight: 100;}
+div strong {font-weight: bolder;}  # to 400
 
 # text decoration
 
-a {
-        text-decoration-line: none;
-}
+p.one {text-decoration: underline;}  # подчеркнуть
+p.two {text-decoration: overline;}  # линия сверху
+p.three {text-decoration: line-through;} # зачёркнуто
+p.four {text-decoration: blink;}  # мигать  don't supported is old function
+p.five {text-decoration: none;}  # no underline links and stop all effects whole
+                                 # But! For daltonics NEED link line!
 
 text-decoration-color: hsl(250, 100%, 75%);
 text-decoration-style: dotted
@@ -1394,4 +1454,36 @@ p + p {
         text-indent: 1.5rem;
 }
 
+# text-shadow, to heavy to weight of page and speed load
 
+text-shadow: rgb(128,128,255) -5px -0.5em;  # shadow in left with blure
+
+p.c9 {colora; black; text-shadow: gray 2px 2px 4px;}
+p.c10 {color: white; text-shadow: 0 0 4px black;}
+p.c11 {color: black; text-shadow: 1em 0.5em 5px red, -0.5em -1em
+        hsl(100,75%,25%,0.33);)  # full blure shadow in right-down
+
+# White-space  # Запретить переносы, чтобы создать табличку например
+# nowrap
+
+td {white-space: nowrap;}
+
+<table><tr>
+<td>Text no wrap.</td>
+<td>And then no wrap.</td>
+<td>And then.</td>
+<td>White-space rule.</td>
+</tr></table>
+
+# pre-wrap and pre-line for correct view
+
+<p style="whit-space: pre-wrap;">  # browser don't touch whitespaces strictly
+
+<p style="white-space: pre-line;">  # browser use normal lines
+
+Value    WhiteSpaces    break strings    New string
+pre-line    yes             no             yes
+normal      yes             no             yes
+nowrap      yes             no             no
+pre         no              yes            no
+pre-wrap    no              yes            yes

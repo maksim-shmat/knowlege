@@ -539,4 +539,43 @@ hsl(180deg 50% 20%)  # dark mode color
         }
 }
 
-#20
+#20 making images responsive
+
+image {
+        max-width: 100%;
+        height: auto;
+}
+
+image {
+        max-height: 100%;
+        width: auto;
+}
+
+# sizes
+
+sizes="(max-width: 600px) 90vw,
+       (max-width: 100px) 60vw,
+       30vw"
+
+<img src="/images/img-small.jpg" alt="smth"
+    sizes="(max-width: 600px) 90vw,
+           (max-width: 1000px) 60vw,
+           30vw"
+    srcset="/images/img-small.jpg 450w,
+            /images/img-medium.jpg 900w,
+            /images/img-large.jpg 1350w">
+
+#21 Get your content to scale with the device
+
+<meta name="viewport" content="width=device-width,
+  initial-scale=1.0">
+
+#22 How change page for difference screens (desctop/mobile)
+
+@media (min-width: 750px) {
+        aside {
+            display: block;
+        }
+}
+
+
