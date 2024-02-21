@@ -155,6 +155,12 @@ gap: row-gap-value [column-gap-value];
         gap: 1vw;
 }
 
+#grid {display: grid; height: 500px;
+  grid-template-rows: 100px 1fr 1fr 75px;
+  grid-row-gap: 15px;
+  grid-template-columns: 15% 1fr 1fr;
+  grid-column-gap: 1em;}
+
 #10 Assigning grid items using line numbers
 
 item {
@@ -236,7 +242,7 @@ item {
         grid-row-end: -1;
 }
 
-# asigning the items to the are
+# asigning the items to the area
 
 item {
         grid-area: name;
@@ -288,4 +294,97 @@ main > p:nth-child(even) {
         background: hsl(208deg 50% 80%);
 }
 
-#13
+#13 naming for rows and columns
+
+# grid {display: grid;
+        grid-template-columns:
+            [start col-a] 200px [col-b] 50% [col-c] 100px [stop and last];
+        grid-template-rows:
+            [start masthead] 3em [comment]% calc(100%-5em) [footer] 2em [stop end];
+        }
+
+#14 fr дольные части
+
+grid-template-columns: 1fr 1fr 1fr 1fr;
+equals
+grid-template-columns: 25% 25% 25% 25%;
+add one column
+grid-template-columns: 1fr 1fr 1fr 1fr 1fr
+equals
+grid-template-columns: 20% 20% 20% 20% 20%
+
+grid-template-columns: 1fr 2fr 1fr;
+equals
+grid-template-columns: 0.25 0.5 0.25;
+or
+grid-template-columns: 1fr 3.14159fr 1fr;
+
+width: 100em; grid-template-columns: 15em 4.5fr 3fr 10%;
+
+grid-template-columns: 15em 4.5fr minmax(5em,3fr) 10%;  # minmax for 3 column
+
+#15 repeat()
+
+#grid {display: grid;
+  grid-template-columns: repeat(3, 2em 1fr 1fr) 2em;}  # 3*(2em 1fr 1fr) + 2em
+
+#grid {display: grid;
+  grid-template-columns: repeat(4, 10px [col-start] 250px [col-end]) 10px;}
+
+# double-named columns, if lines is in one place
+
+grid-template-rows: repeat(3, [top] 5em [bottom]);
+grid-template-rows: [top] 5em [bottom top] 5em [top bottom] 5em [bottom];
+
+#16 grid-template-areas
+
+#grid {display: grid;
+  grid-template-areas:
+      "h h h h"
+      "l c c r"
+      "l f f f ";}
+equals
+# grid {display: grid;
+  grid-template-areas:
+      "header header header header"
+      "leftside content content content rightside"
+      "leftside footer footer footer";}
+
+#17 named grid
+
+#grid {display: grid;
+  grid-template-rows: repeat(10, (R) 1.5em);
+  grid-template-columns: 2em repeat(5, [col-A] 5em [col-B] 5em) 2em;}
+.one {
+        grid-row: R 3 / 7;
+        grid-column: col-B / span 2;}
+.two {
+        grid-row: R / span R 2;
+        grid-column: col-A 3 / span 2 col-A;}
+.three {
+        grid-row: 9;
+        grid-column: col-A -2;}
+
+#18 auto-flow
+
+<ol id="grid">
+  <li>1</li>
+  <li>2</li>
+  <li>3</li>
+  <li>4</li>
+</ol>
+
+#grid {display: grid; width: 45em; height: 8em;  # in row
+  grid-auto-flow: row;}
+#grid li {grid-row: auto; grid-column: auto;}
+
+#grid {display: grid; width: 45em; height: 8em;  # in column
+  grid-auto-flow: column;}
+#grid li {grid-row: auto; grid-column: auto;}
+
+#grid {display: grid; widht: 45em; height: 8em;  # with sizes
+  grid-auto-flow: column;}
+#grid li {grid-row: auto; grid-column: auto;
+  width: 7em; height: 1.5em;}
+
+#19

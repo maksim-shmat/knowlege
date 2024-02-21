@@ -578,4 +578,33 @@ sizes="(max-width: 600px) 90vw,
         }
 }
 
+#23 nav
 
+nav {
+        display: flex;
+        flex-direction: column;  # row, row-reverse, column, column-reverse, auto
+        border-bottom: 1px solid #ccc;
+}
+a {
+        margin: 0 5px;
+        padding: 5px 15px;
+        border-radius: 3px 3px 0 0;
+        background-color: #ddaa00;
+        text-decoration: none;
+        color: #ffffff;
+}
+a: hover, a:focus, a:active {
+        background-color: #ffcc22;
+        color: black;
+        text-decoration: underline;
+}
+
+<nav>
+  <a href="/">Home</a>
+  <a href="/about">About</a>
+  <a href="/blog">Blog</a>
+  <a href="/jobs">Careers</a>
+  <a href="/content">Contact Us</a>
+</nav>
+
+#23

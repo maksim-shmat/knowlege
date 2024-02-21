@@ -63,6 +63,37 @@ media="screen, projection"
 title="Default" or "Big Text", or "more something"  # for different file.css, and for group files.css use one title name
 # if title is than it default
 
+# media for diff screens with: all, print, screen, speech
+
+HTML
+
+<link rel="stylesheet" type="text/css" media="screen, speech"
+  href="visual.css">
+or
+<link rel="stylesheet" type="text/css" media="screen"
+  href="article-screen.css">
+<link rel="stylesheet" type="text/css" media="print"
+  href="article-print.css">
+
+CSS
+
+@import url(visual.css) screen;
+@import url(outloud.css) speech;
+@import url(article-print.css) print;
+or
+<style type="text/css">
+body {background: white; color: black;}
+@media screen {
+        body {font-family: sans-serif;}
+        h1 {margin-top: 1em;}
+}
+@media print {
+        body {font-family: self;}
+        h1 {margin-top: 2em; border-bottom: 1px solid silver;}
+}
+</style>
+
+
 #7 style for HTML
 
 <p style="color: maroon;">Бордовый цвет. The most wonderful of all breackfast foods</p>
@@ -103,6 +134,8 @@ span.warning {font-style: italic;}  # for span element
 .urgent {font-style: italic:}  # for other
 .warning.urgent {background: silver;}  # for both
 
+.warning a {color: yellow;}  # for all <a> units
+
 #8 # - selector id, * - for all elements
 
 *#first-para {font-weight: bold;}  # bold for all elements with id=first-para
@@ -134,7 +167,7 @@ Use
 *[class|="btn"] {border-radius: 5px}
 <button class="btn-small-arrow-active">Шёлкни тут!</button>
 
-#10 Formatting with keywords and tilde for all elements
+#10 Formatting with keywords and ~ (tilde) for all elements
 
 p[class~="warning"] {font-weight: bold;}  # for all with 'warning'
 span[class~="barren"] {font-style: italic;}  # for all with 'barren'
@@ -553,7 +586,10 @@ display: block;
 
 #37 # and *
 
-* universal selector
+* universal selector means <all>
+a, p, img, h1, h2, h3, h4, h5... { font-weight: bold; }
+equals
+* { font-weight: bold; }
 
 # id selector
 
@@ -1093,9 +1129,21 @@ p:not(:first-child, :last-child, :only-chld) {
         margin: 24px;
 }
 
-img: not(img[alt]) {
+img:not(img[alt]) {
         outline: 3px solid red;
 }
+
+a[href^="http://"]:not([href^="http://mysite.com"])
+or
+a[href^="http://"]:not([href*="mysite.com"])  # * - contains
+
+.footnote:not(div)
+
+img:not(.portrait)
+
+li:not(:first-child)
+
+a[href^="http://"]:not([href*="google.com"]):not([href="yahoo.com"])
 
 # :where()
 
@@ -1117,12 +1165,14 @@ h3:has(~backquote) {
         font-style: italic;
 }
 
-#47 Pseudo elemets
+#47 Pseudo-classes and pseudo-elements
+::focus, ::before, ::after, ::selection
 
 # ::after
 
-a[href^='http']::after {
-        content: url(images/Icon_External_Link.png);
+
+a[href$=".pdf"], a[href^="https://", a[href^="http://"]::after {  # $ - ends with
+        content: url(images/Icon_External_Link.png) no-repeat;
         padding-left: 2px;
 }
 
@@ -1149,7 +1199,6 @@ input:valid + span::after {
 }
 
 # ::before
-
 CSS:
 .tip::before {
         content: 'TIP';
@@ -1263,6 +1312,25 @@ div {
         width: 50vw;
 }
 
+background-image: linear-gradient(top left,black,white);
+
+background-image: linear-gradient(45deg, rgb(0,0,0), rgb(204,204,204));
+is the save as this
+background-image: linear-gradient(bottom left, rgb(0,0,0), rgb(204,204,204));
+
+background-image: linear-gradient(left, black, rgb(255,255,255), #FFFFFF, HSL(0,0.0%));
+
+background-image: linear-gradient(left, #900 20%, #FCO 10%, #FCO 90%, #900 80%);
+
+# Repeating linear gradient
+
+background-image: repeating-linear-gradient(bottom left, #900 20px, #FCO 30px, #900 40px)
+
+background-image: repeating-lenear-gradient(45deg, #900 0, #900 10px, #FCO 10px, #FCO 20px);
+
+background: repeating-linear-gradient(bottom left, #900 20px, #FCO 30px, #900 40px)
+
+
 # radial-gradient
 
 radial-gradient(shape, size at position, color1 stop1%, colr2 stip2%, ..., colorN stopN%)
@@ -1285,6 +1353,20 @@ div {
         height: 50vh;
         width: 50vw;
 }
+
+background-image: radial-gradient(20% 40%, circle, red, blue);
+
+background-image: radial-gradient(20% 40%, circle-side, red, blue);
+
+background-image: radial-gradient(20% 40%, circle closest-corner, red, blue);
+
+background-image: radial-gradient(20% 40%, circle fartherst-side, red, blue);
+
+background-image; radial-gradient(20% 40%, circle farthest-corner, red, blue);
+
+background-image: radial-gradient(20% 40%, circle, red 20%, orange 80%, yellow);
+
+
 
 # conic gradient
 
@@ -1311,6 +1393,11 @@ conic-gradient(from angle at x y, color1, color2, ..., colorN)
   );
   clip-path: circle(50%);
 }
+
+# Repeating radial gradient
+
+background-image: repeating-radial-gradient(circle, red 20px, orange 30px,
+        yellow 40px, red 50px);
 
 #51 Fonts
 
@@ -1487,3 +1574,35 @@ normal      yes             no             yes
 nowrap      yes             no             no
 pre         no              yes            no
 pre-wrap    no              yes            yes
+
+#52 Making lists look great
+
+<ul>tag:<ul class="mainList">
+
+ul.mainList > li > ul >li
+
+#53 Count points
+
+inherit - 0 point
+tag selector - 1 point
+class selector - 10 pints
+ID selector - 100 pints
+inline selector - 1000 points
+
+p = 1 (tag)
+.byline = 10 (class)
+p.byline = 11(tag, class)
+#banner = 100(ID)
+#banner p = 101(ID, tag)
+#banner.byline = 110(ID, class)
+a:link = 11(tag, class)
+p:first-line = 2 (tag, class)
+h2 strong = 2 (tag, tag)
+#wrapper #content.byline a:hover = 221(ID, class, tag)
+
+# How style will be use in browser?
+
+p.email { color: blue;}
+.byline a {color: red;}  # This, because it last
+
+#54
