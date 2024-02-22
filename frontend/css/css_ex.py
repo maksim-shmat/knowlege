@@ -1605,4 +1605,63 @@ h2 strong = 2 (tag, tag)
 p.email { color: blue;}
 .byline a {color: red;}  # This, because it last
 
-#54
+#54 image caption
+
+img.figure {
+        float: right;
+        margin-left: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #666;
+        background-color: #CCC;
+        padding: 10px;
+}
+
+<img src="../images/grass.jpg" alt="Apartment Grass" width="200" height="200"
+class="figure">
+
+.figure  # доступно
+
+figcaption {
+        font: bold 1em/normal Verdana, Arial, Helvetica, sans-serif;
+        color: #333;
+        text-align: center;
+        background-color: #e6f3ff;
+        border: 1px dashed #666;
+        padding: 5px;
+}
+
+<figure>
+  <img src="../imges/dandelion.jpg" alt="Dandelius" height="220"
+  width="224"/>
+<figcaption>Figure 6: The dumbdelion: scruge-pruge farmer.
+</figcaption>
+</figure>
+
+<style>
+figure img {
+        border: 1px solid #666;
+        background-color: #FFF;
+        pdding: 4px;
+}
+
+figcaption {
+        font: 1.1em/normal Arial, Helvetica, sans-serif;
+        text-align: center;
+        margin: 10px 0 0 0;
+}
+</style>
+
+figure {
+        float: left;
+        width: 210px;
+        margin: 0 10px 10px 10px;
+}
+
+figure {
+        display: inline-block;
+        vertical-align: top;
+        width: 200px;
+        margin: 0 10px 10px 20px;
+}
+
+#55
