@@ -1076,6 +1076,10 @@ button:hover {
         box-shasow: 10px 5px 5px grey;
 }
 
+# create the :hover style
+
+a:hover { background-position: 0 -39px;}  # Here's the trick!
+
 # Link-Related Pseudo-Classes
 # :link < :visited < :hover < :active  # 1< 2< 3, 4
 
@@ -1664,4 +1668,168 @@ figure {
         margin: 0 10px 10px 20px;
 }
 
-#55
+#55 Transforms, transitions and animations
+
+transform: rotate(10deg);
+transform: rotate(-45deg);
+
+.button:hover {
+        transform: scale(1.2);
+}
+
+transform: scale(.5,2);
+
+transform: scaleY(2);
+transform: scaleX(3.5);
+transform: scale(-1);
+transform: scale(-1,1);
+
+.button:active {
+        translate(1px,2px);
+}
+
+transform: translateY(-.5em);
+
+transform: skew(45deg, 0);
+transform: skew(0,45deg);
+transform: skew(25deg,10deg);
+
+transform: rotate(45deg) scale(2);
+
+transform: skew(45deg,0deg) scale(.5) translate(400px, 500px) rotate(90deg);
+
+transform-origin: left top;
+transform-origin: 0 0;
+transform-origin: 0% 0%;
+transform-origin: right bottom;
+transform-origin: 100% 100%;
+
+#56 Change color of button
+
+.navButton {
+        bacground-color: orange;
+        transition-property: background-color;
+        transition-duration: 1s;  # or .5s or 500ms
+        # or transition-property: color, background-color, border-color;
+        # transition-duration .25s, .75s, 2s;
+}
+.navButton:hover {
+        background-color: blue;
+}
+
+transition-timing-function: ease-in-out;  # linear, ease, ease-in, ease-out, ease-in-out
+transition-timing-function: cubic-bezier(.20, .96, .76, .07);
+
+transition-delay: .5s
+
+.navButton {
+        color: black;
+        background-color: #FF6603;
+        border: 5px solid #660034;
+        transition-property: color, background-color, border-color;
+        transition-duration: 1s, 1s, .5s;
+        transition-delay: 0, 0, 1s;
+}
+.navButton:hover {
+        color: white;
+        background-color: #660034;
+        border-color: #FF6603;
+        transiton-delay: 0;
+}
+
+transition: all 1s ease-in .5s;
+
+transition:
+    color 1s,
+    background-color 1s,
+    border-color .5s 1s;
+
+# animations
+
+@keyframes fadeIn {
+        from {
+            opacity: 0;
+            color: red;
+            width: 50%;
+        }
+        to {
+            opacity: 1;
+        }
+}
+
+HTML
+<div>
+  .announcement {
+          animation-name: fadeIn;  # fadeIn, blink;
+          animation-duration: 1s;  # 1s, 3s;
+          #animation-timing-function: ease-out;
+          -webkit-animation-name: fadeIn;
+          -webkit-animation-duration: 1s;
+          -moz-animation-name: fadeIn;
+          -moz-animation-duration: 1s;
+          -o-animation-name: fadeIn;
+          -o-animation-duration: 1s;
+          animation-name: fadeIn;
+          animation-duration: 1s;
+}
+</div>
+
+@keyframes backgroundGlow {
+        from {
+            background-color: yellow;
+        }
+        50% {
+            transform: scale(1.5);
+            background-color: blue;
+        }
+        to {
+            transform: scale(3);
+            background-color: red;
+        }
+}
+
+@keyframes glow {
+        from {
+            background-color: yellow;
+        }
+        20%, 60% {
+            background-color: blue;
+        }
+        40% 80% {
+            background-color: orange;
+        }
+        to {
+            background-color: red;
+        }
+}
+
+@keyframes growAndGlow {
+        from {
+            background-color: yellow;
+            animation-timing-function: cubic-bezier(1, .03, 1, .115);
+        }
+        50% {
+            transform: scale(1.5);
+            background-color: blue;
+            animation-timing-function: linear:
+        }
+        to {
+            transform: scale(3);
+            background-color: red;
+        }
+}
+
+animation-iteration-count: 10;
+
+.announcement {
+        animation-name: fadeIn;
+        animation-duration: .25s;
+        animation-iteration-count: infinite;
+        animation-direction: alternate;
+        animation-fill-mode: forwards;
+}
+or shortly
+.fade {
+        animation: fadeOut 2s ease-in-out 2 alternate 5s forwards,
+        glow 5s;
+}
