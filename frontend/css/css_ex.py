@@ -1566,6 +1566,16 @@ td {white-space: nowrap;}
 <td>White-space rule.</td>
 </tr></table>
 
+# table hide empty cells
+
+table {
+        empty-cells: hide;
+}
+
+# background for tables
+
+.price {background-color: #F33;}
+
 # pre-wrap and pre-line for correct view
 
 <p style="whit-space: pre-wrap;">  # browser don't touch whitespaces strictly
@@ -1833,3 +1843,157 @@ or shortly
         animation: fadeOut 2s ease-in-out 2 alternate 5s forwards,
         glow 5s;
 }
+
+# animation paused
+
+.fade {
+        animation: fadeOut 2s ease-in-out 2 alternate 5s forwards,
+        glow 5s;
+}
+.fade:hover {
+        animation-play-state: paused;
+}
+
+nav a {
+        -webkit-transition: -webkit-transform .5s,
+                            background-color 1s ease-in .5s;
+        -moz-transition: -moz-transform .5s,
+                         background-color 1s ease-in .5s;
+        -o-tansition: -o-transform .5s,
+                      background-color 1s ease-in .5s;
+        transition: transform .5s,
+                    background-color 1s ease-in .5s;
+}
+
+#57 micro clear fix
+
+.clear:after {
+        content: " ";
+        display: table;
+        clear: both;
+}
+.clear {
+        zoom:1;
+}
+
+#58 Multiple columns
+
+.multicol {
+        column-count: 3;
+        column-gap: 1em;
+        column-rule: 1px dotted black;
+}
+
+#59 Wrapping for float sidebar
+
+<div class="wrapper">
+<div class="sidebar">Sidebar content here</div>
+<div class="main">Main content for page, this column has a lot of text and is
+much taller than the sidebar.</div>
+</div>
+
+.wrapper {background: url(images/col_bg.gif) repeat-y left top;}
+
+# for both sidebars
+
+<div class="wrapper1">
+<div class="wrapper2">
+<div class="sidebar1">Sidebar content here</div>
+<div class="sidebar2">Second sidebar</div>
+<div class="main">Main content for page, this column has a lot of text and is
+much taller than the two sidebars.</div>
+</div>
+</div>
+
+.wrapper1 {background: url(images/col1_bg.gif) repeat-y left top;}
+.wrapper2 {background: url(images/col2_bg.gif) repeat-y right top;}
+
+# wrap all three columns in a wrapping element, with gradient?
+
+<div class="wrapper">
+  <div class="sidebar1"> ... content here ...</div>
+  <div class="main"> ... content here ...</div>
+  <div class="sidebar2"> ... content here ...</div>
+</div>
+
+.wrapper {
+        background-image: linear-gradient(left,
+            red 0%,
+            red 25%,
+            white 25%,
+            white 25%,
+            blue 75%,
+            blue 100%);
+}
+
+#60 Videos and flash
+
+img, video, embed, object {
+        max-width: 100%;
+}
+
+#61 Adding Phone Styles, one two and three columns in diff devices
+
+@media (max-width:480px){
+}
+
+.columnWrapper, .main, .sidebar1, .sidebar2 {
+        float: none;
+        width: auto;
+}
+
+.main {
+        border: none;
+}
+
+.sidebar1, .sidebar2 {
+        border-top: 2px solid black;
+        margin-top: 25px;
+        padding-top: 10px;
+}
+
+header h1 {
+        font-size: 1.5em;
+}
+
+nav {
+        text-align: center;
+}
+
+nav li {
+        float: none;
+        display: inline-block;
+}
+
+nav a {
+        float: none;
+        display: inline-block;
+        border: none;
+}
+
+@media (max-width:480px) {
+        .columnWrapper, .main, .sidebar1, .sidebar2 {
+            float: none;
+            width: auto;
+}
+        .main {
+            border: none;
+        }
+        .sidebar1, .sidebar2 {
+            border-top: 2px solid black;
+            margin-top: 25px;
+            padding-top: 10px;
+        }
+        header h1 {
+            font-size: 1.5em;
+        }
+        nav {
+            text-align: center;
+        }
+        nav li {
+            display: inline-block;
+            border: none;
+        }
+}
+
+#62
